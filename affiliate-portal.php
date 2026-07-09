@@ -29,23 +29,64 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
     <style>
         @keyframes blobMove1 {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            25% { transform: translateX(-40%) translateY(-20px); }
-            50% { transform: translateX(-50%) translateY(-10px); }
-            75% { transform: translateX(-60%) translateY(10px); }
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            25% {
+                transform: translateX(-40%) translateY(-20px);
+            }
+
+            50% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+
+            75% {
+                transform: translateX(-60%) translateY(10px);
+            }
         }
+
         @keyframes blobMove2 {
-            0%, 100% { transform: translate(0, 0); }
-            33% { transform: translate(30px, -15px); }
-            66% { transform: translate(-20px, 20px); }
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            33% {
+                transform: translate(30px, -15px);
+            }
+
+            66% {
+                transform: translate(-20px, 20px);
+            }
         }
+
         @keyframes blobMove3 {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(-40px, -20px); }
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-40px, -20px);
+            }
         }
-        .blob-1 { animation: blobMove1 18s ease-in-out infinite; }
-        .blob-2 { animation: blobMove2 14s ease-in-out infinite; }
-        .blob-3 { animation: blobMove3 16s ease-in-out infinite; }
+
+        .blob-1 {
+            animation: blobMove1 18s ease-in-out infinite;
+        }
+
+        .blob-2 {
+            animation: blobMove2 14s ease-in-out infinite;
+        }
+
+        .blob-3 {
+            animation: blobMove3 16s ease-in-out infinite;
+        }
     </style>
 
     <main class="relative w-full grow">
@@ -387,55 +428,137 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                 <p class="mt-2 text-sm text-gray-500 font-medium">Optimized traffic monetization attributes built for performance</p>
             </div>
 
-            <div class="flex flex-col lg:flex-row gap-6">
-                <div class="lg:w-5/12">
-                    <div class="group relative bg-white border border-gray-200/80 rounded-2xl p-7 sm:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_20px_70px_rgba(18,140,126,0.15)] hover:border-emerald-300 transition-all duration-500 ease-out overflow-hidden h-full">
-                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-50/30 via-white to-white"></div>
-                        <div class="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#128c7e]/20 via-[#128c7e] to-emerald-300/20"></div>
-                        <div class="absolute -top-8 -right-8 w-40 h-40 bg-gradient-to-br from-[#128c7e]/10 via-emerald-100/15 to-transparent rounded-full blur-2xl group-hover:scale-150 group-hover:opacity-80 transition-all duration-700"></div>
-                        <div class="relative z-10 flex flex-col sm:flex-row lg:flex-col gap-5">
-                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#128c7e] to-[#0e6f64] text-white flex items-center justify-center text-xl shadow-md shadow-emerald-200/40 shrink-0 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-emerald-200/60 transition-all duration-500">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 text-sm text-slate-700">
+
+                <!-- Card 1 -->
+                <div class="group relative overflow-hidden rounded-3xl bg-white border border-gray-200 shadow-sm hover:shadow-[0_22px_70px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
+                    <!-- Accent Bar -->
+                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#128c7e] via-emerald-400 to-emerald-100"></div>
+
+                    <!-- Number Badge -->
+                    <div class="absolute top-5 right-5 text-5xl font-black text-emerald-50 group-hover:text-emerald-100 transition-colors">
+                        01
+                    </div>
+
+                    <div class="relative p-6 sm:p-7">
+                        <div class="flex items-start gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 text-[#128c7e] flex items-center justify-center text-xl shadow-sm group-hover:bg-[#128c7e] group-hover:text-white transition-all duration-300 shrink-0">
                                 <i class="fa-solid fa-bolt"></i>
                             </div>
-                            <div class="space-y-3">
-                                <h3 class="text-xl font-bold text-gray-900 group-hover:text-[#128c7e] transition-colors duration-300">High-Converting Funnels</h3>
-                                <p class="text-sm text-gray-500 font-medium leading-relaxed group-hover:text-gray-600 transition-colors duration-300">Our target search dossiers sell themselves. Route users onto optimized landing frames fine-tuned to squeeze maximum conversions from raw hits.</p>
+
+                            <div class="min-w-0 pt-1">
+                                <h4 class="font-black text-gray-900 text-base leading-snug">
+                                    High-Converting Funnels
+                                </h4>
+                                <div class="mt-2 w-12 h-1 rounded-full bg-[#128c7e]/20"></div>
                             </div>
+                        </div>
+
+                        <p class="mt-5 text-sm text-gray-500 leading-relaxed font-semibold">
+                            Our target search dossiers sell themselves. Route users onto optimized landing frames fine-tuned to squeeze maximum conversions from raw hits.
+                        </p>
+
+                        <div class="mt-6 flex items-center justify-between pt-5 border-t border-gray-100">
+                            <span class="inline-flex items-center gap-2 text-xs font-bold text-[#128c7e]">
+                                <span class="w-6 h-6 rounded-full bg-emerald-50 flex items-center justify-center">
+                                    <i class="fa-solid fa-check text-[10px]"></i>
+                                </span>
+                                Optimized traffic flow
+                            </span>
+
+                            <span class="w-9 h-9 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-400 group-hover:text-[#128c7e] group-hover:border-emerald-100 group-hover:bg-emerald-50 transition-all">
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </span>
                         </div>
                     </div>
                 </div>
 
-                <div class="lg:w-7/12 flex flex-col sm:flex-row gap-6">
-                    <div class="sm:w-1/2">
-                        <div class="group relative bg-white border border-gray-200/80 rounded-2xl p-6 sm:p-7 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_20px_70px_rgba(18,140,126,0.15)] hover:border-emerald-300 transition-all duration-500 ease-out overflow-hidden h-full">
-                            <div class="absolute inset-0 bg-gradient-to-br from-emerald-50/30 via-white to-white"></div>
-                            <div class="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#128c7e]/20 via-[#128c7e] to-emerald-300/20"></div>
-                            <div class="absolute -top-8 -right-8 w-36 h-36 bg-gradient-to-br from-[#128c7e]/10 via-emerald-100/15 to-transparent rounded-full blur-2xl group-hover:scale-150 group-hover:opacity-80 transition-all duration-700"></div>
-                            <div class="relative z-10 space-y-4">
-                                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#128c7e] to-[#0e6f64] text-white flex items-center justify-center text-base shadow-md shadow-emerald-200/40 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-emerald-200/60 transition-all duration-500">
-                                    <i class="fa-solid fa-chart-pie"></i>
-                                </div>
-                                <h3 class="text-base font-bold text-gray-900 group-hover:text-[#128c7e] transition-colors duration-300">Real-Time S2S Telemetry</h3>
-                                <p class="text-sm text-gray-500 font-medium leading-relaxed group-hover:text-gray-600 transition-colors duration-300">Track hits, dynamic sub-ids logs, payout matrix parameters changes, and full downstream postback integration responses live in your terminal dashboard layer.</p>
-                            </div>
-                        </div>
+                <!-- Card 2 -->
+                <div class="group relative overflow-hidden rounded-3xl bg-white border border-gray-200 shadow-sm hover:shadow-[0_22px_70px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
+                    <!-- Accent Bar -->
+                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#128c7e] via-emerald-400 to-emerald-100"></div>
+
+                    <!-- Number Badge -->
+                    <div class="absolute top-5 right-5 text-5xl font-black text-emerald-50 group-hover:text-emerald-100 transition-colors">
+                        02
                     </div>
 
-                    <div class="sm:w-1/2">
-                        <div class="group relative bg-white border border-gray-200/80 rounded-2xl p-6 sm:p-7 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_20px_70px_rgba(18,140,126,0.15)] hover:border-emerald-300 transition-all duration-500 ease-out overflow-hidden h-full">
-                            <div class="absolute inset-0 bg-gradient-to-br from-emerald-50/30 via-white to-white"></div>
-                            <div class="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#128c7e]/20 via-[#128c7e] to-emerald-300/20"></div>
-                            <div class="absolute -top-8 -right-8 w-36 h-36 bg-gradient-to-br from-[#128c7e]/10 via-emerald-100/15 to-transparent rounded-full blur-2xl group-hover:scale-150 group-hover:opacity-80 transition-all duration-700"></div>
-                            <div class="relative z-10 space-y-4">
-                                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#128c7e] to-[#0e6f64] text-white flex items-center justify-center text-base shadow-md shadow-emerald-200/40 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-emerald-200/60 transition-all duration-500">
-                                    <i class="fa-solid fa-sack-dollar"></i>
-                                </div>
-                                <h3 class="text-base font-bold text-gray-900 group-hover:text-[#128c7e] transition-colors duration-300">Guaranteed Fast Payouts</h3>
-                                <p class="text-sm text-gray-500 font-medium leading-relaxed group-hover:text-gray-600 transition-colors duration-300">No excessive processing delays or hidden escrow windows. Submit funding request balances straight into your verified Payoneer account nodes instantly.</p>
+                    <div class="relative p-6 sm:p-7">
+                        <div class="flex items-start gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 text-[#128c7e] flex items-center justify-center text-xl shadow-sm group-hover:bg-[#128c7e] group-hover:text-white transition-all duration-300 shrink-0">
+                                <i class="fa-solid fa-chart-pie"></i>
                             </div>
+
+                            <div class="min-w-0 pt-1">
+                                <h4 class="font-black text-gray-900 text-base leading-snug">
+                                    Real-Time S2S Telemetry
+                                </h4>
+                                <div class="mt-2 w-12 h-1 rounded-full bg-[#128c7e]/20"></div>
+                            </div>
+                        </div>
+
+                        <p class="mt-5 text-sm text-gray-500 leading-relaxed font-semibold">
+                            Track hits, dynamic sub-ids logs, payout matrix parameters changes, and full downstream postback integration responses live in your terminal dashboard layer.
+                        </p>
+
+                        <div class="mt-6 flex items-center justify-between pt-5 border-t border-gray-100">
+                            <span class="inline-flex items-center gap-2 text-xs font-bold text-[#128c7e]">
+                                <span class="w-6 h-6 rounded-full bg-emerald-50 flex items-center justify-center">
+                                    <i class="fa-solid fa-check text-[10px]"></i>
+                                </span>
+                                Live tracking system
+                            </span>
+
+                            <span class="w-9 h-9 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-400 group-hover:text-[#128c7e] group-hover:border-emerald-100 group-hover:bg-emerald-50 transition-all">
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </span>
                         </div>
                     </div>
                 </div>
+
+                <!-- Card 3 -->
+                <div class="group relative overflow-hidden rounded-3xl bg-white border border-gray-200 shadow-sm hover:shadow-[0_22px_70px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
+                    <!-- Accent Bar -->
+                    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#128c7e] via-emerald-400 to-emerald-100"></div>
+
+                    <!-- Number Badge -->
+                    <div class="absolute top-5 right-5 text-5xl font-black text-emerald-50 group-hover:text-emerald-100 transition-colors">
+                        03
+                    </div>
+
+                    <div class="relative p-6 sm:p-7">
+                        <div class="flex items-start gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 text-[#128c7e] flex items-center justify-center text-xl shadow-sm group-hover:bg-[#128c7e] group-hover:text-white transition-all duration-300 shrink-0">
+                                <i class="fa-solid fa-sack-dollar"></i>
+                            </div>
+
+                            <div class="min-w-0 pt-1">
+                                <h4 class="font-black text-gray-900 text-base leading-snug">
+                                    Guaranteed Fast Payouts
+                                </h4>
+                                <div class="mt-2 w-12 h-1 rounded-full bg-[#128c7e]/20"></div>
+                            </div>
+                        </div>
+
+                        <p class="mt-5 text-sm text-gray-500 leading-relaxed font-semibold">
+                            No excessive processing delays or hidden escrow windows. Submit funding request balances straight into your verified Payoneer account nodes instantly.
+                        </p>
+
+                        <div class="mt-6 flex items-center justify-between pt-5 border-t border-gray-100">
+                            <span class="inline-flex items-center gap-2 text-xs font-bold text-[#128c7e]">
+                                <span class="w-6 h-6 rounded-full bg-emerald-50 flex items-center justify-center">
+                                    <i class="fa-solid fa-check text-[10px]"></i>
+                                </span>
+                                Faster payout access
+                            </span>
+
+                            <span class="w-9 h-9 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-gray-400 group-hover:text-[#128c7e] group-hover:border-emerald-100 group-hover:bg-emerald-50 transition-all">
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -476,8 +599,11 @@ if (session_status() === PHP_SESSION_NONE) session_start();
         document.addEventListener('DOMContentLoaded', calculateProjections);
     </script>
 
-    <footer class="w-full bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-400 font-semibold">
-        &copy; 2026 Identity Search AI Affiliate Portal. All rights reserved. Developed and Designed by <a href="https://sahedahmed.netlify.app/" target="_blank" class="text-[#128c7e] font-bold">Enostation IT</a>.
+    <footer class="relative overflow-hidden w-full border-t border-gray-200 py-6 text-center text-xs text-gray-400 font-semibold">
+        <div class="absolute inset-0 -z-10" style="background: linear-gradient(180deg, #ffffff 0%, #fafdfa 40%, #f5fcf7 60%, #ffffff 100%);"></div>
+        <div class="text-center">
+            &copy; 2026 Identity Search AI Affiliate Portal. All rights reserved. Developed and Designed by <a href="https://sahedahmed.netlify.app/" target="_blank" class="text-[#128c7e] font-bold">Enostation IT</a>.
+        </div>
     </footer>
 
 </body>

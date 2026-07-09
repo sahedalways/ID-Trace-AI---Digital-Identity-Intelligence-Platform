@@ -36,7 +36,7 @@ function getActiveNavClass($current_page, $target_pages) {
     }
 </style>
 
-<nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+<nav id="affiliateNavbar" class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm transition-all duration-300">
     <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             
@@ -195,6 +195,17 @@ window.addEventListener('click', function() {
     const mobileMenu = document.getElementById('mobileAffiliateMenu');
     if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
         mobileMenu.classList.add('hidden');
+    }
+});
+
+window.addEventListener('scroll', function() {
+    const nav = document.getElementById('affiliateNavbar');
+    if (window.scrollY > 20) {
+        nav.classList.add('bg-emerald-50/60', 'backdrop-blur-3xl', 'shadow-[0_8px_32px_rgba(18,140,126,0.12)]', 'border-b-emerald-200/50');
+        nav.classList.remove('bg-white', 'shadow-sm', 'border-b-gray-200');
+    } else {
+        nav.classList.remove('bg-emerald-50/60', 'backdrop-blur-3xl', 'shadow-[0_8px_32px_rgba(18,140,126,0.12)]', 'border-b-emerald-200/50');
+        nav.classList.add('bg-white', 'shadow-sm', 'border-b-gray-200');
     }
 });
 </script>
