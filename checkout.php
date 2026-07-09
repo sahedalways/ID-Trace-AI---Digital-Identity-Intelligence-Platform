@@ -104,7 +104,7 @@ try {
         $customerPayload = [
             'email' => $checkout_email,
             'name' => $saved_name,
-            'description' => 'ID Trace Profile',
+            'description' => 'Identity Search Profile',
             'address' => [
                 'line1' => $saved_street,
                 'postal_code' => $saved_zip,
@@ -275,7 +275,7 @@ $billing_cycle_text = $billing_intervals[$plan['name']] ?? 'every ' . $plan['val
             <?php include 'checkout_payment.php'; ?>
 
             <div class="border border-emerald-100 bg-emerald-50/40 rounded-2xl p-4 text-xs text-gray-600 font-medium leading-relaxed border-dashed">
-                By Subscribing, you authorize ID Trace AI to charge you according to the terms until you cancel. You will be charged <span class="font-bold text-gray-900">$<?php echo number_format($plan['price'], 2); ?></span> immediately to unlock full account access logs.
+                By Subscribing, you authorize Identity Search AI to charge you according to the terms until you cancel. You will be charged <span class="font-bold text-gray-900">$<?php echo number_format($plan['price'], 2); ?></span> immediately to unlock full account access logs.
             </div>
 
             <div class="space-y-3">

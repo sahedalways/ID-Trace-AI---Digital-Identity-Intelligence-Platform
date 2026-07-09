@@ -50,8 +50,8 @@ if (isset($_GET['action'])) {
                         
                         <div style='padding: 14px 20px; border-bottom: 1px solid #E5E7EB; text-align: center; background-color: #F9FAFB;'>
                             <div style='display: inline-block; vertical-align: middle; text-align: center;'>
-                                <img src='https://i.postimg.cc/SQnMm8sh/2313362.png' alt='ID Trace AI Logo' style='width: 28px; height: 28px; display: inline-block; vertical-align: middle; margin-right: 6px; border: 0;'>
-                                <span style='font-size: 14px; font-weight: 800; color: #111827; letter-spacing: -0.3px; font-family: \"Roboto\", sans-serif; display: inline-block; vertical-align: middle;'>ID Trace <span style='font-size: 10px; font-weight: 900; background-color: #000000; color: #FFFFFF; padding: 1.5px 5px; border-radius: 3.5px; margin-left: 3px; vertical-align: middle; letter-spacing: 0.5px;'>AI</span></span>
+                                <img src='https://i.postimg.cc/SQnMm8sh/2313362.png' alt='Identity Search AI Logo' style='width: 28px; height: 28px; display: inline-block; vertical-align: middle; margin-right: 6px; border: 0;'>
+                                <span style='font-size: 14px; font-weight: 800; color: #111827; letter-spacing: -0.3px; font-family: \"Roboto\", sans-serif; display: inline-block; vertical-align: middle;'>Identity Search <span style='font-size: 10px; font-weight: 900; background-color: #000000; color: #FFFFFF; padding: 1.5px 5px; border-radius: 3.5px; margin-left: 3px; vertical-align: middle; letter-spacing: 0.5px;'>AI</span></span>
                             </div>
                         </div>
                         

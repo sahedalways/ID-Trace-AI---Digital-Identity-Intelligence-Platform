@@ -12,7 +12,7 @@ if (session_status() === PHP_SESSION_NONE) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Terms of Service — ID Trace AI</title>
+    <title>Terms of Service — Identity Search AI</title>
     <?php include 'head.php'; ?>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white bg-slate-50">
@@ -58,7 +58,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
                         <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
                             <p><b>Report / Dossier:</b> Means a structured, aggregated compilation of open-source intelligence metrics providing public profile data footprints relative to a validated identity query target.</p>
-                            <p><b>Platform Engine:</b> The interactive UI configuration mechanisms, scanning infrastructure algorithms, database layers, and API network gateways accessible under the ID Trace AI brand parameters.</p>
+                            <p><b>Platform Engine:</b> The interactive UI configuration mechanisms, scanning infrastructure algorithms, database layers, and API network gateways accessible under the Identity Search AI brand parameters.</p>
                             <p><b>Private User:</b> Any natural individual looking up infrastructure parameters for personal safety optimization, independent reputation tracking, or private validation objectives outside of primary commercial reselling channels.</p>
                         </div>
                     </div>

@@ -106,7 +106,7 @@ function renderIconicSemicolonField($rawData, $iconClass) {
             <div class="text-5xl font-bold text-black tracking-tight print:text-4xl">
                 <?= (int)$ai['id_trace_score'] ?><span class="text-xl text-black/50 font-medium tracking-normal"> / 100</span>
             </div>
-            <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black/60 block">ID Trace Score</span>
+            <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-black/60 block">Identity Search Score</span>
         </div>
     </div>
 <?php endif; ?>

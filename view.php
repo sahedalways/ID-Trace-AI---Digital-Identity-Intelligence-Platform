@@ -79,7 +79,7 @@ if (isset($all_reviews) && is_array($all_reviews)) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title><?php echo escapeHtml($cleanName); ?> (<?php echo escapeHtml($cleanSource); ?>) - ID Trace AI</title>
+    <title><?php echo escapeHtml($cleanName); ?> (<?php echo escapeHtml($cleanSource); ?>) - Identity Search AI</title>
     <?php include 'head.php'; ?>
     <style>
         body { 

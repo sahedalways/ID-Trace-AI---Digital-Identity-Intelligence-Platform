@@ -32,7 +32,7 @@ $currentIconClass = $engineIcons[$engine] ?? 'fa-solid fa-magnifying-glass text-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Search Result — ID Trace AI</title>
+    <title>Search Result — Identity Search AI</title>
     <?php include 'head.php'; ?>
 
     <style>

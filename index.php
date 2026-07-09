@@ -1,7 +1,7 @@
 <?php
 /**
  * File: index.php
- * Automated Intel Search Portal Engine Node — ID Trace AI
+ * Automated Intel Search Portal Engine Node — Identity Search AI
  */
 require_once 'config.php';
 
@@ -49,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>ID Trace AI - Digital Intelligence Tool</title>
-    <meta name="title" content="ID Trace AI - Digital Intelligence Tool">
+    <title>Identity Search AI - Digital Intelligence Tool</title>
+    <meta name="title" content="Identity Search AI - Digital Intelligence Tool">
     <meta name="description" content="Identity Tracing tool that will analyze digital footprint of any person and generate intelligent report">
     <?php include 'head.php'; ?>
 </head>

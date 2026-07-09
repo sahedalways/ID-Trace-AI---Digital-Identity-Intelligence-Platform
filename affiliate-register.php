@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Become an Affiliate Partner - ID Trace AI</title>
+    <title>Become an Affiliate Partner - Identity Search AI</title>
     <?php include 'affiliate-head.php'; ?>
 </head>
 <body class="min-h-screen text-slate-900 font-sans antialiased flex flex-col justify-between selection:bg-[#128c7e] selection:text-white bg-[#f9fafb]">

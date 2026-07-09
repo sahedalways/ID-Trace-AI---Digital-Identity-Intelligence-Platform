@@ -1,6 +1,6 @@
-# ID Trace AI
+# Identity Search AI
 
-ID Trace AI is a Vanilla PHP based OSINT (Open Source Intelligence) platform that helps analyze an individual's public digital footprint across multiple online sources and generates intelligent identity reports.
+Identity Search AI is a Vanilla PHP based OSINT (Open Source Intelligence) platform that helps analyze an individual's public digital footprint across multiple online sources and generates intelligent identity reports.
 
 The platform is designed for identity verification, online research, due diligence, recruitment, fraud prevention, and digital trust analysis.
 

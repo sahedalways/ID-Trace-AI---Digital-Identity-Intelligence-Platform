@@ -60,7 +60,7 @@ define('BREVO_API_KEY', env('BREVO_API_KEY'));
 
 // Custom domain identities for authentication mailers
 define('MAIL_FROM_EMAIL', env('MAIL_FROM_EMAIL', 'support@idtrace.ai'));
-define('MAIL_FROM_NAME', env('MAIL_FROM_NAME', 'ID Trace AI'));
+define('MAIL_FROM_NAME', env('MAIL_FROM_NAME', 'Identity Search AI'));
 
 // 5. Google OAuth2 Configuration
 define('GOOGLE_CLIENT_ID', env('GOOGLE_CLIENT_ID'));

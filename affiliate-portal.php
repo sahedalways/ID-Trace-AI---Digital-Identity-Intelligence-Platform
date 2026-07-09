@@ -1,7 +1,7 @@
 <?php
 /**
  * File: affiliate-portal.php
- * Landing Index Homepage for the ID Trace AI Affiliate Network.
+ * Landing Index Homepage for the Identity Search AI Affiliate Network.
  * Markets network value propositions and routes users to authentication vectors.
  * Verified layout synchronized directly with global system UI dimensions.
  */

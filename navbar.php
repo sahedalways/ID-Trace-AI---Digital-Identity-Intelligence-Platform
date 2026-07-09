@@ -65,7 +65,7 @@ $logout_url = BASE_URL . "logout.php?return=" . urlencode($relative_return);
                         </svg>
                     </span>
                     <span class="bg-gradient-to-r from-gray-900 to-gray-800 bg-clip-text text-transparent font-bold tracking-tight">
-                        ID Trace<span class="text-[14px] font-bold bg-black text-white px-2.5 py-0.5 rounded-md ml-1.5 align-middle tracking-wider">AI</span>
+                        Identity Search<span class="text-[14px] font-bold bg-black text-white px-2.5 py-0.5 rounded-md ml-1.5 align-middle tracking-wider">AI</span>
                     </span>
                 </a>
             </div>

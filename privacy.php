@@ -12,7 +12,7 @@ if (session_status() === PHP_SESSION_NONE) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Privacy Policy — ID Trace AI</title>
+    <title>Privacy Policy — Identity Search AI</title>
     <?php include 'head.php'; ?>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white bg-slate-50">
