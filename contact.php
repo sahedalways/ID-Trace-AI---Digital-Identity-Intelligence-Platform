@@ -1,6 +1,6 @@
 <?php
 /**
- * Identity Trace AI — Secure Digital Communications Core Gateway
+ * Identity Search AI — Secure Digital Communications Core Gateway
  * File: contact.php
  */
 require_once 'config.php';
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <!-- BODY MAIN SECTOR WITH SMALL TEXT LAYOUT -->
                         <div style='padding: 24px 20px; text-align: left;'>
                             <h2 style='font-size: 16px; font-weight: 700; color: #111827; margin-top: 0; margin-bottom: 10px;'>We received your support request</h2>
-                            <p style='font-size: 11px; color: #4B5563; font-weight: 400; line-height: 1.5; margin-bottom: 18px;'>Thank you for reaching out to Identity Trace AI. We have successfully logged your technical data request, and our engineering team will review your inquiry and respond shortly.</p>
+                            <p style='font-size: 11px; color: #4B5563; font-weight: 400; line-height: 1.5; margin-bottom: 18px;'>Thank you for reaching out to Identity Search AI. We have successfully logged your technical data request, and our engineering team will review your inquiry and respond shortly.</p>
                             
                             <div style='background-color: #FAFAFA; border: 1px solid #E5E7EB; border-radius: 10px; padding: 12px; margin-bottom: 18px;'>
                                 <div style='margin-bottom: 8px; font-size: 11px; color: #4B5563;'><b style='color: #111827;'>Name:</b> {$escapedName}</div>
@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div style='display: block; margin-bottom: 8px;'>
                                 <span style='font-size: 16px; display: inline-block; vertical-align: middle;'>🕵️‍♂️</span>
                             </div>
-                            <p style='font-size: 9px; color: #4B5563; font-weight: 500; margin: 0 0 4px 0;'>&copy; 2026 - Identity Trace AI</p>
+                            <p style='font-size: 9px; color: #4B5563; font-weight: 500; margin: 0 0 4px 0;'>&copy; 2026 - Identity Search AI</p>
                             <p style='font-size: 9px; color: #4B5563; font-weight: 400; margin: 0;'>
                                 <a href='mailto:support@idtrace.ai' style='color: #128c7e; text-decoration: none;'>support@idtrace.ai</a>
                             </p>

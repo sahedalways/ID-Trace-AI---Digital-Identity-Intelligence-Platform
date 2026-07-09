@@ -1,6 +1,6 @@
 <?php
 /**
- * Identity Trace AI — User Promotional Ledger View
+ * Identity Search AI — User Promotional Ledger View
  * File: my-promo.php
  * Style Profile: Premium Whitebridge Multi-Sector Corporate Intel Layout
  */
@@ -30,7 +30,7 @@ function escapeHtml($str) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>My Promo Codes — Identity Trace AI</title>
+    <title>My Promo Codes — Identity Search AI</title>
     <?php include 'head.php'; ?>
     <style>
         body { background-color: #f9fafb !important; color: #1e293b !important; }
@@ -104,7 +104,7 @@ function escapeHtml($str) {
 
     </main>
 
-    <footer class="w-full text-center py-6 border-t border-gray-200 bg-white/50 backdrop-blur-sm text-xs font-semibold text-gray-400 mt-12">&copy; 2026 Identity Trace AI. All rights reserved.</footer>
+    <footer class="w-full text-center py-6 border-t border-gray-200 bg-white/50 backdrop-blur-sm text-xs font-semibold text-gray-400 mt-12">&copy; 2026 Identity Search AI. All rights reserved. Developed and Designed by <a href="https://sahedahmed.netlify.app/" target="_blank">Enostation IT</a>.</footer>
 
     <!-- =========================================================================
          CLIPBOARD COPY ENGINE LOGIC SEQUENCE

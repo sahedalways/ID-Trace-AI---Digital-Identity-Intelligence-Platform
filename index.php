@@ -333,7 +333,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </main>
 
-    <section class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 mt-10 py-14 md:pt-6 md:pb-16">
+    <section class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 mt-0 sm:mt-10 pt-4 sm:pt-14 pb-8 sm:pb-16">
         <!-- Section Header -->
         <div class="text-center max-w-2xl mx-auto mb-10">
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-100 text-xs font-bold text-emerald-800 tracking-wide shadow-sm">

@@ -182,7 +182,7 @@ try {
                         </tr>
                         <tr class="hover:bg-slate-50/30 transition-colors">
                             <td class="px-4 py-3.5 font-mono text-indigo-600 font-bold">[cid]</td>
-                            <td class="px-4 py-3.5 text-gray-500 leading-relaxed">Unique internal transaction tracking click token generated directly across the Identity Trace platform layer.</td>
+                            <td class="px-4 py-3.5 text-gray-500 leading-relaxed">Unique internal transaction tracking click token generated directly across the Identity Search platform layer.</td>
                         </tr>
                         <tr class="hover:bg-slate-50/30 transition-colors">
                             <td class="px-4 py-3.5 font-mono text-indigo-600 font-bold">[tid]</td>
@@ -196,7 +196,7 @@ try {
     </main>
 
     <footer class="w-full bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-400 font-semibold">
-        &copy; <?= date('Y'); ?> Identity Trace AI Affiliate Portal. All rights reserved.
+        &copy; <?= date('Y'); ?> Identity Search AI Affiliate Portal. All rights reserved.
     </footer>
 
 </body>

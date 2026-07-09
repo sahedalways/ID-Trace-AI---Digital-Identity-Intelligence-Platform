@@ -1,6 +1,6 @@
 <?php
 /**
- * Identity Trace AI — External Promotional Verification API Core
+ * Identity Search AI — External Promotional Verification API Core
  * File: promo-checker.php
  * Endpoint Layout: promo-checker.php?key=xxx&promo=xxx
  */

@@ -1,6 +1,6 @@
 <?php
 /**
- * Identity Trace AI — Secure Asynchronous Stripe Webhook Operations Core Engine
+ * Identity Search AI — Secure Asynchronous Stripe Webhook Operations Core Engine
  * File: stripe-webhook.php
  */
 require_once 'config.php';

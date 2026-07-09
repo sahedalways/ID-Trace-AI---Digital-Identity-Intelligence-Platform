@@ -1,6 +1,6 @@
 <?php
 /**
- * Identity Trace AI — User Target Intelligence Archives Node
+ * Identity Search AI — User Target Intelligence Archives Node
  * File: my-report.php
  */
 require_once 'config.php';
@@ -44,7 +44,7 @@ try {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>My Reports — Identity Trace AI</title>
+    <title>My Reports — Identity Search AI</title>
     <?php include 'head.php'; ?>
     <style>
         body { background-color: #f9fafb !important; color: #111827 !important; }
@@ -194,7 +194,7 @@ try {
     </main>
 
     <footer class="w-full text-center py-6 border-t border-gray-200 bg-white/50 backdrop-blur-sm text-xs font-semibold text-gray-400 mt-12">
-        <p>&copy; 2026 Identity Trace AI. All rights reserved.</p>
+        <p>&copy; 2026 Identity Search AI. All rights reserved. Developed and Designed by <a href="https://sahedahmed.netlify.app/" target="_blank">Enostation IT</a>.</p>
     </footer>
 
 </body>

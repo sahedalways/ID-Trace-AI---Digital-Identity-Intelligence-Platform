@@ -331,7 +331,7 @@ $sub2_display = !empty($client['sub2']) ? htmlspecialchars($client['sub2']) : 'â
     </main>
 
     <footer class="w-full bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-400 font-semibold">
-        &copy; <?= date('Y'); ?> Identity Trace AI Affiliate Portal. All rights reserved.
+        &copy; <?= date('Y'); ?> Identity Search AI Affiliate Portal. All rights reserved.
     </footer>
 
 </body>

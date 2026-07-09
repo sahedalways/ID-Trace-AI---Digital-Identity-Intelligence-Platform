@@ -1,6 +1,6 @@
 <?php
 /**
- * Identity Trace AI — Terms of Service Legal Workspace
+ * Identity Search AI — Terms of Service Legal Workspace
  * File: terms.php
  */
 require_once 'config.php';
@@ -42,7 +42,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     </button>
                     <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
                         <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
-                            <p>1.1. These rules lay down the standard terms and conditions for the utilization of the platform console located at IDTrace.io and any background scanning automated outputs provided by Identity Trace AI.</p>
+                            <p>1.1. These rules lay down the standard terms and conditions for the utilization of the platform console located at IDTrace.io and any background scanning automated outputs provided by Identity Search AI.</p>
                             <p>1.2. Services are managed, systematically deployed, and legally administered under international operational mandates by our registered business entity framework in the State of Wyoming, USA.</p>
                             <p>1.3. Users confirm explicit, uncompromised consent to these provisions and undertake to fully comply with them when initializing data tracking modules inside this portal in any way or form.</p>
                         </div>
@@ -74,7 +74,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
                             <p>3.1. To initialize digital footprint audits, trace data arrays, or persist historical intelligence records, operators must establish a workspace profile using an active electronic communication signature.</p>
                             <p>3.2. Workspace access codes and single-use verification links are strictly non-transferable. Operators assume direct responsibility for maintaining absolute confidentiality barriers around access tokens and account credentials.</p>
-                            <p>3.3. Identity Trace AI retains autonomous rights to limit access parameters, freeze analytical processing runs, or drop credentials instantly if behavior thresholds are breached or suspicious activity maps are registered.</p>
+                            <p>3.3. Identity Search AI retains autonomous rights to limit access parameters, freeze analytical processing runs, or drop credentials instantly if behavior thresholds are breached or suspicious activity maps are registered.</p>
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     </button>
                     <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
                         <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
-                            <p>4.1. Identity Trace AI acts solely as a specialized discovery overlay pipeline. We do not edit public registers, do not manage open data archives, and make no explicit claims regarding the absolute correctness or completeness of the open-source records returned.</p>
+                            <p>4.1. Identity Search AI acts solely as a specialized discovery overlay pipeline. We do not edit public registers, do not manage open data archives, and make no explicit claims regarding the absolute correctness or completeness of the open-source records returned.</p>
                             <p>4.2. Analytical calculations compile directly onto server environments. Dossier availability parameters vary based on system capacities, platform query limits, and target open-source availability levels.</p>
                             <p>4.3. Rendered dossiers remain persistently accessible within user profile storage sections for a fixed period of 30 days following generation, after which records are dropped automatically from storage layers.</p>
                         </div>
@@ -135,7 +135,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     </button>
                     <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
                         <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
-                            <p>7.1. All foundational software architectures, layout styling parameters, console source configurations, tracking mechanics vectors, icons, design layouts, and system-wide textual expressions are the exclusive ownership properties of Identity Trace AI.</p>
+                            <p>7.1. All foundational software architectures, layout styling parameters, console source configurations, tracking mechanics vectors, icons, design layouts, and system-wide textual expressions are the exclusive ownership properties of Identity Search AI.</p>
                             <p>7.2. Operators are strictly prohibited from copying, distributing, republishing, reverse-engineering, decompiling, or mapping any internal system processing structures or data schema models without explicit written developer consent authorizations.</p>
                         </div>
                     </div>
@@ -149,7 +149,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     </button>
                     <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
                         <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
-                            <p>8.1. Identity Trace AI cannot be held liable, penalized, or legally restricted for delivery downtime or system tracing failures caused by elements passing beyond logical operator control frameworks.</p>
+                            <p>8.1. Identity Search AI cannot be held liable, penalized, or legally restricted for delivery downtime or system tracing failures caused by elements passing beyond logical operator control frameworks.</p>
                             <p>8.2. These exceptions incorporate, but are not limited to, global web protocol network failures, cloud server infrastructure outages, acts of God, unexpected third-party target API structural redesign blocks, or sweeping regulatory updates.</p>
                         </div>
                     </div>
@@ -163,7 +163,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     </button>
                     <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
                         <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
-                            <p>9.1. Under no structural or judicial criteria can Identity Trace AI, its technical architects, or corporate entities be held liable for losses or complications resulting from user-side actions executed based on dossier analysis records.</p>
+                            <p>9.1. Under no structural or judicial criteria can Identity Search AI, its technical architects, or corporate entities be held liable for losses or complications resulting from user-side actions executed based on dossier analysis records.</p>
                             <p>9.2. This system compiles open OSINT variables and explicitly does not perform operations as a consumer reporting entity. All tracking results are completely barred from evaluation processes governed by Fair Credit Reporting Act (FCRA) provisions.</p>
                             <p>9.3. Governing legal jurisdiction parameters reside entirely under the statutory framework rules of the State of Wyoming, USA, without regard to conflict of law criteria.</p>
                         </div>

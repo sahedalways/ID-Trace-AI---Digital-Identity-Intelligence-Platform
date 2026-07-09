@@ -1,6 +1,6 @@
 <?php
 /**
- * Identity Trace AI — Affiliate Layout Navigation Component
+ * Identity Search AI — Affiliate Layout Navigation Component
  * File: affiliate-navbar.php
  */
 

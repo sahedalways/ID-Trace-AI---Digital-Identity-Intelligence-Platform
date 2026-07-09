@@ -1,6 +1,6 @@
 <?php
 /**
- * Identity Trace AI — Automated Transactional Reporting Matrix
+ * Identity Search AI — Automated Transactional Reporting Matrix
  * File: email_report.php
  * Context: Included within process.php context sequence maps or ran as daemon hooks
  */
@@ -119,7 +119,7 @@ try {
                     <div style='display: block; margin-bottom: 8px;'>
                         <span style='font-size: 16px; display: inline-block; vertical-align: middle;'>🕵️‍♂️</span>
                     </div>
-                    <p style='font-size: 9px; color: #4B5563; font-weight: 500; margin: 0 0 4px 0;'>&copy; 2026 - Identity Trace AI</p>
+                    <p style='font-size: 9px; color: #4B5563; font-weight: 500; margin: 0 0 4px 0;'>&copy; 2026 - Identity Search AI</p>
                     <p style='font-size: 9px; color: #4B5563; font-weight: 400; margin: 0;'>
                         <a href='mailto:support@idtrace.ai' style='color: #128c7e; text-decoration: none;'>support@idtrace.ai</a>
                     </p>

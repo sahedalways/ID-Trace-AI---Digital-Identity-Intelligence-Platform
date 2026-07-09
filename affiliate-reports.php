@@ -416,7 +416,7 @@ if ($total_pages < 1) $total_pages = 1;
     </main>
 
     <footer class="w-full bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-400 font-semibold">
-        &copy; <?= date('Y'); ?> Identity Trace AI Affiliate Portal. All rights reserved.
+        &copy; <?= date('Y'); ?> Identity Search AI Affiliate Portal. All rights reserved.
     </footer>
 
     <!-- DYNAMIC CLIENT TIMEZONE EVALUATOR SCRIPT -->

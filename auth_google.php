@@ -1,6 +1,6 @@
 <?php
 /**
- * Identity Trace AI — Google Auth Router Terminal
+ * Identity Search AI — Google Auth Router Terminal
  * File: auth_google.php
  */
 require_once 'config.php';

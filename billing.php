@@ -48,7 +48,7 @@ $default_pm = $cust['invoice_settings']['default_payment_method'] ?? null;
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Billing Management — Identity Trace AI</title>
+    <title>Billing Management — Identity Search AI</title>
     <?php include 'head.php'; ?>
     <script src="https://js.stripe.com/v3/"></script>
 </head>

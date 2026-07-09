@@ -1,6 +1,6 @@
 <?php
 /**
- * Identity Trace AI — Global Layout Navigation Component
+ * Identity Search AI — Global Layout Navigation Component
  * File: navbar.php
  */
 

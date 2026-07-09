@@ -256,6 +256,6 @@ if (!empty($target['avatar'])) {
 
     </main>
 
-    <footer class="w-full py-6 border-t border-slate-100 text-center text-[10px] font-bold uppercase tracking-wider text-slate-400">&copy; 2026 Identity Trace AI.</footer>
+    <footer class="w-full py-6 border-t border-slate-100 text-center text-[10px] font-bold uppercase tracking-wider text-slate-400">&copy; 2026 Identity Search AI. Developed and Designed by <a href="https://sahedahmed.netlify.app/" target="_blank">Enostation IT</a>.</footer>
 </body>
 </html>

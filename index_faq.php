@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Identity Trace AI — Landing Page FAQ Component Module
+ * Identity Search AI — Landing Page FAQ Component Module
  * File: index_faq.php
  */
 ?>
@@ -33,7 +33,7 @@
         </h2>
 
         <p class="mt-3 text-xs sm:text-sm text-gray-500 font-medium leading-relaxed">
-            Find quick answers about Identity Trace AI, digital footprint scanning, reports, data sources, and payment policy.
+            Find quick answers about Identity Search AI, digital footprint scanning, reports, data sources, and payment policy.
         </p>
     </div>
 
@@ -50,7 +50,7 @@
                         </div>
 
                         <span class="text-base font-black text-gray-900 group-hover:text-[#128c7e] transition-colors leading-snug">
-                            What is Identity Trace AI
+                            What is Identity Search AI
                         </span>
                     </div>
 
@@ -63,7 +63,7 @@
                     <div class="px-5 sm:px-6 pb-6">
                         <div class="pl-0 sm:pl-14">
                             <p class="text-sm text-gray-600 font-semibold leading-relaxed">
-                                Identity Trace AI is an advanced investigative profiling engine that aggregates, structures, and correlates publicly accessible OSINT parameters into highly cohesive intelligence dossiers in real time. Instead of manually parsing hours of scattered public items, our system automatically tracks footprints, cross-examines indicators, and maps the output into a single scannable canvas to help verify digital authenticity instantly.
+                                Identity Search AI is an advanced investigative profiling engine that aggregates, structures, and correlates publicly accessible OSINT parameters into highly cohesive intelligence dossiers in real time. Instead of manually parsing hours of scattered public items, our system automatically tracks footprints, cross-examines indicators, and maps the output into a single scannable canvas to help verify digital authenticity instantly.
                             </p>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                         </div>
 
                         <span class="text-base font-black text-gray-900 group-hover:text-[#128c7e] transition-colors leading-snug">
-                            Why choose Identity Trace AI over standard background lookups
+                            Why choose Identity Search AI over standard background lookups
                         </span>
                     </div>
 
@@ -92,7 +92,7 @@
                     <div class="px-5 sm:px-6 pb-6">
                         <div class="pl-0 sm:pl-14">
                             <p class="text-sm text-gray-600 font-semibold leading-relaxed">
-                                Traditional screening checks take days or weeks and rely on stale historical datasets. Identity Trace AI delivers real-time information processing across hundreds of live open-source vectors in roughly 2 minutes, allowing you to secure fast, accurate insights without hidden operational costs or delays.
+                                Traditional screening checks take days or weeks and rely on stale historical datasets. Identity Search AI delivers real-time information processing across hundreds of live open-source vectors in roughly 2 minutes, allowing you to secure fast, accurate insights without hidden operational costs or delays.
                             </p>
                         </div>
                     </div>

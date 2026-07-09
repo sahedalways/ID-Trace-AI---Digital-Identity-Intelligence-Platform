@@ -34,7 +34,7 @@ $google_auth_url = BASE_URL . "auth_google.php?return=" . urlencode($return_path
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Sign in or create an account — Identity Trace AI</title>
+    <title>Sign in or create an account — Identity Search AI</title>
     <?php include 'head.php'; ?>
 
     <style>
@@ -134,7 +134,7 @@ $google_auth_url = BASE_URL . "auth_google.php?return=" . urlencode($return_path
 
     <footer class="w-full border-t border-gray-200/60 bg-white/50 backdrop-blur-sm">
         <div class="max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 text-center text-xs font-semibold text-gray-500">
-            <p>&copy; 2026 Identity Trace AI. All rights reserved.</p>
+            <p>&copy; 2026 Identity Search AI. All rights reserved. Developed and Designed by <a href="https://sahedahmed.netlify.app/" target="_blank">Enostation IT</a>.</p>
         </div>
     </footer>
 

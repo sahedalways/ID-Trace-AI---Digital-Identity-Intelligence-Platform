@@ -1,6 +1,6 @@
 <?php
 /**
- * Identity Trace AI — Secure Dynamic Authentication Operations Handler
+ * Identity Search AI — Secure Dynamic Authentication Operations Handler
  * File: auth_handler.php
  */
 require_once 'config.php';
@@ -73,7 +73,7 @@ if (isset($_GET['action'])) {
                                 <span style='font-size: 18px; display: inline-block; vertical-align: middle;'>🕵️‍♂️</span>
                             </div>
                             
-                            <p style='font-size: 10px; color: #4B5563; font-weight: 500; margin: 0 0 6px 0;'>&copy; 2026 - Identity Trace AI</p>
+                            <p style='font-size: 10px; color: #4B5563; font-weight: 500; margin: 0 0 6px 0;'>&copy; 2026 - Identity Search AI</p>
                             
                             <p style='font-size: 10px; color: #4B5563; font-weight: 400; margin: 0;'>
                                 <a href='mailto:support@idtrace.ai' style='color: #128c7e; text-decoration: none;'>support@idtrace.ai</a>

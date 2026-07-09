@@ -84,7 +84,7 @@ $invoice_date = date('F d, Y', strtotime($tx['created_at']));
             <div class="space-y-4">
                 <div class="flex items-center gap-2 select-none">
                     <span class="text-2xl">🕵️‍♂️</span>
-                    <h1 class="text-xl font-medium tracking-tight text-gray-700">Identity Trace <span class="bg-[#128c7e] text-white text-sm font-black px-2 py-0.5 rounded inline-flex items-center justify-center tracking-widest mt-0.5">AI</span></h1>
+                    <h1 class="text-xl font-medium tracking-tight text-gray-700">Identity Search <span class="bg-[#128c7e] text-white text-sm font-black px-2 py-0.5 rounded inline-flex items-center justify-center tracking-widest mt-0.5">AI</span></h1>
                 </div>
 
                 <div class="text-xs space-y-1 pt-2 font-medium text-gray-700 leading-normal">
@@ -103,9 +103,9 @@ $invoice_date = date('F d, Y', strtotime($tx['created_at']));
 
         <!-- SECTION 2: SIDE-BY-SIDE COMPANY ADDRESS AND CUSTOMER PROFILE -->
         <div class="grid grid-cols-2 gap-8 pt-8 mt-2 text-xs font-medium text-gray-500 leading-relaxed">
-            <!-- Left Side: Identity Trace Corporate Contact Profiles -->
+            <!-- Left Side: Identity Search Corporate Contact Profiles -->
             <div>
-                <p class="font-bold text-gray-900 text-sm mb-1">Identity Trace AI</p>
+                <p class="font-bold text-gray-900 text-sm mb-1">Identity Search AI</p>
                 <p>30 North Gould Street</p>
                 <p>Sheridan, Wyoming 82801</p>
                 <p>United States</p>

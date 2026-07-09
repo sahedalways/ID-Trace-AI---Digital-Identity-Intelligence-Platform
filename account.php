@@ -105,7 +105,7 @@ $cleanName = !empty($user['name']) ? htmlspecialchars($user['name']) : 'User Pro
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title><?php echo $cleanName; ?> — Identity Trace AI</title>
+    <title><?php echo $cleanName; ?> — Identity Search AI</title>
     <?php include 'head.php'; ?>
     <style>
         body { background-color: #f9fafb !important; color: #111827 !important; }
@@ -226,7 +226,7 @@ $cleanName = !empty($user['name']) ? htmlspecialchars($user['name']) : 'User Pro
     </main>
 
     <footer class="w-full text-center py-6 border-t border-gray-200 bg-white/50 backdrop-blur-sm text-xs font-semibold text-gray-400 mt-12">
-        <p>&copy; 2026 Identity Trace AI. All rights reserved.</p>
+        <p>&copy; 2026 Identity Search AI. All rights reserved. Developed and Designed by <a href="https://sahedahmed.netlify.app/" target="_blank">Enostation IT</a>.</p>
     </footer>
 
     <script>

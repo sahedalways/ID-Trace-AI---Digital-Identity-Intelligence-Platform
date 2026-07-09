@@ -233,7 +233,7 @@ if (isset($all_reviews) && is_array($all_reviews)) {
 
     <footer class="w-full border-t border-gray-200/60 bg-white/50 backdrop-blur-sm">
         <div class="max-w-4xl w-full mx-auto px-4 sm:px-6 py-6 text-center sm:flex sm:justify-between sm:items-center text-xs font-semibold text-gray-500">
-            <p>&copy; 2026 Identity Trace AI. All rights reserved.</p>
+            <p>&copy; 2026 Identity Search AI. All rights reserved. Developed and Designed by <a href="https://sahedahmed.netlify.app/" target="_blank">Enostation IT</a>.</p>
             <div class="flex justify-center gap-5 mt-2 sm:mt-0">
                 <a href="#" class="hover:text-gray-900 transition-colors">Terms of Service</a>
                 <a href="#" class="hover:text-gray-900 transition-colors">Privacy Policy</a>

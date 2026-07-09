@@ -5,7 +5,7 @@ require_once 'my-plan-controller.php';
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>My Subscription Plan — Identity Trace AI</title>
+    <title>My Subscription Plan — Identity Search AI</title>
     <?php include 'head.php'; ?>
     <style>
         body { background-color: #f9fafb !important; color: #111827 !important; }

@@ -40,7 +40,7 @@ $plan_design_meta = [
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Pricing - Identity Trace AI</title>
+    <title>Pricing - Identity Search AI</title>
     <?php include 'head.php'; ?>
     <style>
         body { background-color: #f9fafb !important; color: #111827 !important; }

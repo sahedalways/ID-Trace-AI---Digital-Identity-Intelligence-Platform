@@ -1,6 +1,6 @@
 <?php
 /**
- * Identity Trace AI — Privacy Policy Legal Workspace
+ * Identity Search AI — Privacy Policy Legal Workspace
  * File: privacy.php
  */
 require_once 'config.php';
@@ -72,7 +72,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     </button>
                     <div class="privacy-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
                         <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
-                            <p>3.1. Identity Trace AI acts as a search interface pipeline. The platform does not host, create, or maintain the underlying biographical entries returned inside our intelligence dossiers.</p>
+                            <p>3.1. Identity Search AI acts as a search interface pipeline. The platform does not host, create, or maintain the underlying biographical entries returned inside our intelligence dossiers.</p>
                             <p>3.2. All analytical results are gathered dynamically on-demand from publicly searchable registers, social network tracks, metadata indexes, and open web directories.</p>
                             <p>3.3. Generated profiling history dossiers are automatically purged from our staging servers 30 days after creation to guarantee user query isolation.</p>
                         </div>

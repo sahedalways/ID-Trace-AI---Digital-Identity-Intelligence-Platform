@@ -1,6 +1,6 @@
 <?php
 /**
- * Identity Trace AI — Unified Landing Page Footer Component
+ * Identity Search AI — Unified Landing Page Footer Component
  * File: index_footer.php
  * Context: Included at the bottom of index.php structures
  */

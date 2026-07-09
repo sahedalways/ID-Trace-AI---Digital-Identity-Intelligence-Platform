@@ -125,7 +125,7 @@ unset($_SESSION['test_error'], $_SESSION['test_http_code'], $_SESSION['test_head
     </main>
 
     <footer class="w-full bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-400 font-semibold">
-        &copy; <?= date('Y'); ?> Identity Trace AI Affiliate Portal. Debug Matrix Node.
+        &copy; <?= date('Y'); ?> Identity Search AI Affiliate Portal. Debug Matrix Node.
     </footer>
 
 </body>

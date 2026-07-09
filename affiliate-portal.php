@@ -31,7 +31,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
             </h1>
             
             <p class="text-gray-500 text-xs sm:text-sm max-w-xl mx-auto font-medium leading-relaxed">
-                Join the official Identity Trace AI partner ecosystem. Monetize traffic streams by routing users into our next-gen predictive OSINT data intelligence funnels.
+                Join the official Identity Search AI partner ecosystem. Monetize traffic streams by routing users into our next-gen predictive OSINT data intelligence funnels.
             </p>
 
             <div class="flex justify-center items-center pt-2">
@@ -220,7 +220,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
     </script>
 
     <footer class="w-full bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-400 font-semibold">
-        &copy; 2026 Identity Trace AI Affiliate Portal. All rights reserved. Run with absolute precision.
+        &copy; 2026 Identity Search AI Affiliate Portal. All rights reserved. Run with absolute precision.
     </footer>
 
 </body>

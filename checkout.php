@@ -161,7 +161,7 @@ $billing_cycle_text = $billing_intervals[$plan['name']] ?? 'every ' . $plan['val
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Checkout — Identity Trace AI</title>
+    <title>Checkout — Identity Search AI</title>
     <?php include 'head.php'; ?>
     <script src="https://js.stripe.com/v3/"></script>
     <style>
@@ -287,7 +287,7 @@ $billing_cycle_text = $billing_intervals[$plan['name']] ?? 'every ' . $plan['val
     </main>
 
     <footer class="w-full text-center py-6 border-t border-gray-200 bg-white/50 backdrop-blur-sm text-xs font-semibold text-gray-400 mt-12">
-        <p>&copy; 2026 Identity Trace AI. All rights reserved.</p>
+        <p>&copy; 2026 Identity Search AI. All rights reserved. Developed and Designed by <a href="https://sahedahmed.netlify.app/" target="_blank">Enostation IT</a>.</p>
     </footer>
 
     <!-- INTERCEPT PAYLOAD EXECUTION TO INJECT VERIFIED BILLING_DETAILS INTO STRIPE FRONTEND OBJECT -->
