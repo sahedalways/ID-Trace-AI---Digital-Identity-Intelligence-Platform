@@ -20,7 +20,7 @@
         padding-bottom: 0.25rem;
     }
 </style>
-<section class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 py-10 md:py-12 border-t border-gray-200/60">
+<section class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 py-10 md:py-12 mb-8 border-t border-gray-200/60">
     <!-- FAQ Header -->
     <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
         <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-100 text-xs font-bold text-emerald-800 tracking-wide shadow-sm">
