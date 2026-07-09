@@ -34,4 +34,9 @@ if (session_status() === PHP_SESSION_NONE) {
         background-color: #FAFAFA !important;
         color: #111827 !important;
     }
+    html { scroll-behavior: smooth; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #128c7e; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #0e6f64; }
 </style>
