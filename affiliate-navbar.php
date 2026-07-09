@@ -37,7 +37,7 @@ function getActiveNavClass($current_page, $target_pages) {
 </style>
 
 <nav class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             
             <div class="flex-shrink-0">
@@ -97,21 +97,25 @@ function getActiveNavClass($current_page, $target_pages) {
                     <a href="affiliate-logout.php" class="text-[13px] font-bold text-rose-600 hover:text-rose-700 transition bg-rose-50 hover:bg-rose-100/70 px-3.5 py-2 rounded-xl flex items-center gap-1.5 ml-2">
                         <i class="fa-solid fa-right-from-bracket text-sm"></i> Logout
                     </a>
-                <?php else: ?>
-                    <a href="affiliate-login.php" class="px-3.5 py-2 transition-all <?= getActiveNavClass($active_script, ['affiliate-login.php', 'affiliate-forgot.php']) ?>">
-                        Affiliate Login
-                    </a>
-                    <a href="affiliate-register.php" class="bg-[#128c7e] hover:bg-[#0e6f64] text-white font-bold px-4.5 py-2 rounded-xl transition-all shadow-xs text-center tracking-wide ml-1">
-                        Affiliate Register
-                    </a>
-                    
-                    <!-- Desktop Separator & User Portal Link (Only for Logged Out users) -->
-                    <div class="w-px h-5 bg-gray-200 mx-2"></div>
-                    <a href="index.php" class="text-slate-600 hover:text-slate-900 px-3.5 py-2 font-semibold flex items-center gap-1.5 transition">
-                        <i class="fa-solid fa-house text-[11px] text-gray-400"></i> User Portal
-                    </a>
                 <?php endif; ?>
             </div>
+
+            <?php if (!$isLoggedIn): ?>
+            <div class="hidden lg:flex items-center gap-2 text-[15px] ml-auto">
+                <a href="affiliate-login.php" class="px-3.5 py-2 transition-all <?= getActiveNavClass($active_script, ['affiliate-login.php', 'affiliate-forgot.php']) ?>">
+                    Affiliate Login
+                </a>
+                <a href="affiliate-register.php" class="bg-[#128c7e] hover:bg-[#0e6f64] text-white font-bold px-4.5 py-2 rounded-xl transition-all shadow-xs text-center tracking-wide ml-1">
+                    Affiliate Register
+                </a>
+                
+                <!-- Desktop Separator & User Portal Link (Only for Logged Out users) -->
+                <div class="w-px h-5 bg-gray-200 mx-2"></div>
+                <a href="index.php" class="text-slate-600 hover:text-slate-900 px-3.5 py-2 font-semibold flex items-center gap-1.5 transition">
+                    <i class="fa-solid fa-house text-[11px] text-gray-400"></i> User Portal
+                </a>
+            </div>
+            <?php endif; ?>
 
             <div class="flex items-center gap-4">
                 <?php if ($isLoggedIn): ?>

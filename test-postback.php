@@ -125,7 +125,7 @@ unset($_SESSION['test_error'], $_SESSION['test_http_code'], $_SESSION['test_head
     </main>
 
     <footer class="w-full bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-400 font-semibold">
-        &copy; <?= date('Y'); ?> Identity Search AI Affiliate Portal. Debug Matrix Node.
+        &copy; <?= date('Y'); ?> Identity Search AI Affiliate Portal. Debug Matrix Node. Developed and Designed by <a href="https://sahedahmed.netlify.app/" target="_blank" class="text-[#128c7e] font-bold">Enostation IT</a>.
     </footer>
 
 </body>

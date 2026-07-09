@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </main>
 
     <footer class="w-full text-center py-6 border-t border-gray-200 bg-white/50 backdrop-blur-sm text-xs font-semibold text-gray-400">
-        &copy; 2026 Identity Search AI Affiliate Portal. All rights reserved.
+        &copy; 2026 Identity Search AI Affiliate Portal. All rights reserved. Developed and Designed by <a href="https://sahedahmed.netlify.app/" target="_blank" class="text-[#128c7e] font-bold">Enostation IT</a>.
     </footer>
 
 </body>

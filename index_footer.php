@@ -76,7 +76,7 @@
         <!-- Bottom Bar -->
         <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6">
             <p class="text-xs text-gray-400 font-semibold">
-                &copy; 2026 Identity Search AI. All rights reserved. Developed and Designed by <a href="https://sahedahmed.netlify.app/" target="_blank" class="text-gray-500 hover:text-[#128c7e] transition-colors">Enostation IT</a>.
+                &copy; 2026 Identity Search AI. All rights reserved. Developed and Designed by <a href="https://sahedahmed.netlify.app/" target="_blank" class="text-[#128c7e] hover:text-[#0e6f64] transition-colors font-bold">Enostation IT</a>.
             </p>
             <div class="flex items-center gap-4 text-xs text-gray-400 font-semibold">
                 <a href="terms.php" class="hover:text-[#128c7e] transition-colors">Terms</a>

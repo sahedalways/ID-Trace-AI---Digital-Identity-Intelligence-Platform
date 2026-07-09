@@ -1,4 +1,5 @@
 <?php
+
 /**
  * File: affiliate-portal.php
  * Landing Index Homepage for the Identity Search AI Affiliate Network.
@@ -9,27 +10,29 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Affiliate Partner Program — PartnerTerminal</title>
     <?php include 'affiliate-head.php'; ?>
 </head>
+
 <body class="min-h-screen text-slate-900 font-sans antialiased flex flex-col justify-between selection:bg-[#128c7e] selection:text-white bg-[#f9fafb]">
 
     <?php include 'affiliate-navbar.php'; ?>
 
     <main class="w-full grow">
-        
+
         <!-- HERO VALUE STATEMENT SECTION -->
         <section class="max-w-5xl mx-auto px-4 pt-16 pb-12 text-center space-y-6">
             <div class="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-100 text-[#128c7e] text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider">
                 <i class="fa-solid fa-gift animate-bounce text-[11px]"></i> Mega Commission Launched
             </div>
-            
+
             <h1 class="text-4xl sm:text-6xl font-bold text-gray-900 tracking-tight max-w-4xl mx-auto leading-[1.1]">
                 Send Customers.<br>
                 Claim <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#128c7e] to-[#0e6f64]">50% Recurring Cash</span>.
             </h1>
-            
+
             <p class="text-gray-500 text-xs sm:text-sm max-w-xl mx-auto font-medium leading-relaxed">
                 Join the official Identity Search AI partner ecosystem. Monetize traffic streams by routing users into our next-gen predictive OSINT data intelligence funnels.
             </p>
@@ -94,7 +97,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
         <!-- DYNAMIC FORECAST REVENUE CALCULATOR ENGINE -->
         <section class="max-w-6xl mx-auto px-4 py-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
-                
+
                 <div class="lg:col-span-2 bg-white border border-gray-200 rounded-2xl p-6 shadow-sm space-y-6 text-left">
                     <div class="space-y-1">
                         <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wider flex items-center gap-1.5">
@@ -140,7 +143,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
                 <div class="bg-gradient-to-br from-slate-900 to-[#0e6f64] text-white rounded-2xl p-6 shadow-sm flex flex-col justify-between border border-transparent text-left min-h-[220px] relative overflow-hidden">
                     <div class="absolute -right-6 -bottom-6 opacity-5 text-8xl font-bold font-mono select-none pointer-events-none">$$</div>
-                    
+
                     <div class="flex justify-between items-start">
                         <span class="text-[10px] font-bold text-emerald-100 uppercase tracking-wider">Estimated Monthly Passive Revenue</span>
                         <div class="w-8 h-8 rounded-lg bg-white/10 text-emerald-300 flex items-center justify-center text-sm backdrop-blur-xs"><i class="fa-solid fa-chart-line"></i></div>
@@ -224,4 +227,5 @@ if (session_status() === PHP_SESSION_NONE) session_start();
     </footer>
 
 </body>
+
 </html>

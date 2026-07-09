@@ -110,11 +110,7 @@ $currentIconClass = $engineIcons[$engine] ?? 'fa-solid fa-magnifying-glass text-
 
     </main>
 
-    <footer class="w-full border-t border-gray-200/60 bg-white/50 backdrop-blur-sm">
-        <div class="max-w-4xl w-full mx-auto px-4 sm:px-6 py-6 text-center text-xs font-semibold text-gray-500">
-            <p>&copy; 2026 Identity Search AI. All rights reserved. Developed and Designed by <a href="https://sahedahmed.netlify.app/" target="_blank">Enostation IT</a>.</p>
-        </div>
-    </footer>
+    <?php if (file_exists('index_footer.php')) { include 'index_footer.php'; } ?>
 
     <script>
         let activeTab = "<?php echo $engine; ?>";

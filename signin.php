@@ -132,11 +132,7 @@ $google_auth_url = BASE_URL . "auth_google.php?return=" . urlencode($return_path
         <p class="text-center text-xs text-gray-500 font-semibold leading-relaxed mt-6">By continuing, you agree with our <a href="terms.php" class="underline text-gray-700 hover:text-gray-900 transition">Terms</a> and <a href="privacy.php" class="underline text-gray-700 hover:text-gray-900 transition">Privacy Policy</a>.</p>
     </main>
 
-    <footer class="w-full border-t border-gray-200/60 bg-white/50 backdrop-blur-sm">
-        <div class="max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 text-center text-xs font-semibold text-gray-500">
-            <p>&copy; 2026 Identity Search AI. All rights reserved. Developed and Designed by <a href="https://sahedahmed.netlify.app/" target="_blank">Enostation IT</a>.</p>
-        </div>
-    </footer>
+    <?php if (file_exists('index_footer.php')) { include 'index_footer.php'; } ?>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
