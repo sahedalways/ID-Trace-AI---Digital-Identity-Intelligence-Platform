@@ -16,86 +16,306 @@ if (session_status() === PHP_SESSION_NONE) session_start();
     <?php include 'affiliate-head.php'; ?>
 </head>
 
-<body class="min-h-screen text-slate-900 font-sans antialiased flex flex-col justify-between selection:bg-[#128c7e] selection:text-white bg-[#f9fafb]">
+<body class="min-h-screen text-slate-900 font-sans antialiased flex flex-col justify-between selection:bg-[#128c7e] selection:text-white bg-slate-50 relative">
 
     <?php include 'affiliate-navbar.php'; ?>
 
-    <main class="w-full grow">
+    <!-- Full-width Background Decorations -->
+    <div class="absolute inset-x-0 top-0 -z-10 overflow-hidden" style="height: 900px;">
+        <div class="blob-1 absolute top-0 left-1/2 w-[900px] h-[900px] bg-emerald-50 rounded-full blur-3xl opacity-60 -translate-x-1/2 will-change-transform"></div>
+        <div class="blob-2 absolute top-24 -left-20 w-96 h-96 bg-[#128c7e]/10 rounded-full blur-3xl will-change-transform"></div>
+        <div class="blob-3 absolute bottom-0 right-0 w-96 h-96 bg-emerald-100 rounded-full blur-3xl opacity-70 will-change-transform"></div>
+    </div>
+
+    <style>
+        @keyframes blobMove1 {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            25% { transform: translateX(-40%) translateY(-20px); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+            75% { transform: translateX(-60%) translateY(10px); }
+        }
+        @keyframes blobMove2 {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(30px, -15px); }
+            66% { transform: translate(-20px, 20px); }
+        }
+        @keyframes blobMove3 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-40px, -20px); }
+        }
+        .blob-1 { animation: blobMove1 18s ease-in-out infinite; }
+        .blob-2 { animation: blobMove2 14s ease-in-out infinite; }
+        .blob-3 { animation: blobMove3 16s ease-in-out infinite; }
+    </style>
+
+    <main class="relative w-full grow">
 
         <!-- HERO VALUE STATEMENT SECTION -->
-        <section class="max-w-5xl mx-auto px-4 pt-16 pb-12 text-center space-y-6">
-            <div class="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-100 text-[#128c7e] text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider">
-                <i class="fa-solid fa-gift animate-bounce text-[11px]"></i> Mega Commission Launched
-            </div>
+        <section class="w-full mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-16 md:pb-10" style="max-width: 1600px;">
+            <div class="grid lg:grid-cols-2 gap-14 xl:gap-24 items-center">
 
-            <h1 class="text-4xl sm:text-6xl font-bold text-gray-900 tracking-tight max-w-4xl mx-auto leading-[1.1]">
-                Send Customers.<br>
-                Claim <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#128c7e] to-[#0e6f64]">50% Recurring Cash</span>.
-            </h1>
+                <!-- Left Content -->
+                <div class="text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-50 border border-emerald-100 text-xs font-semibold text-emerald-800 tracking-wide shadow-sm">
+                        <span class="w-2 h-2 rounded-full bg-[#128c7e]"></span>
+                        Mega Commission Launched
+                    </div>
 
-            <p class="text-gray-500 text-xs sm:text-sm max-w-xl mx-auto font-medium leading-relaxed">
-                Join the official Identity Search AI partner ecosystem. Monetize traffic streams by routing users into our next-gen predictive OSINT data intelligence funnels.
-            </p>
+                    <h1 class="mt-7 text-3xl sm:text-4xl lg:text-[2.75rem] xl:text-[3.25rem] font-black text-gray-900 tracking-tight max-w-3xl leading-[1.08] mx-auto lg:mx-0">
+                        Send Customers.<br>
+                        Claim <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#128c7e] to-[#0e6f64]">50% Recurring Cash</span>.
+                    </h1>
 
-            <div class="flex justify-center items-center pt-2">
-                <!-- Refactored CTA: Large Text Size, Semibold, Normal Case with Register Icon -->
-                <a href="affiliate-register.php" class="w-full sm:w-auto bg-[#128c7e] hover:bg-[#0e6f64] text-white text-base md:text-lg font-semibold px-12 py-4.5 rounded-xl transition-all shadow-sm flex items-center justify-center gap-3 cursor-pointer border border-transparent">
-                    <i class="fa-solid fa-user-plus text-sm md:text-base"></i> Become an affiliate
-                </a>
+                    <p class="mt-6 text-sm sm:text-base lg:text-lg text-black font-semibold max-w-2xl leading-relaxed mx-auto lg:mx-0">
+                        Join the official Identity Search AI partner ecosystem. Monetize traffic streams by routing users into our next-gen predictive OSINT data intelligence funnels.
+                    </p>
+
+                    <!-- Feature Highlights -->
+                    <div class="mt-9 flex flex-wrap justify-center lg:justify-start gap-3">
+                        <div class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-white border border-gray-200 shadow-sm text-sm font-semibold text-gray-800">
+                            <i class="fa-solid fa-percent text-[#128c7e] text-base"></i>
+                            50% Recurring Commission
+                        </div>
+                        <div class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-white border border-gray-200 shadow-sm text-sm font-semibold text-gray-800">
+                            <i class="fa-solid fa-clock text-[#128c7e] text-base"></i>
+                            Real-Time Tracking
+                        </div>
+                        <div class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-white border border-gray-200 shadow-sm text-sm font-semibold text-gray-800">
+                            <i class="fa-solid fa-wallet text-[#128c7e] text-base"></i>
+                            Instant Payouts
+                        </div>
+                    </div>
+
+                    <div class="mt-9 max-w-2xl mx-auto lg:mx-0 flex flex-col sm:flex-row items-stretch gap-3">
+                        <a href="affiliate-register.php" class="bg-[#128c7e] hover:bg-[#0e6f64] active:scale-[0.98] text-white px-8 py-4 rounded-2xl text-sm lg:text-base font-bold transition-all flex items-center justify-center gap-2.5 shadow-sm shadow-emerald-200 cursor-pointer">
+                            <i class="fa-solid fa-user-plus"></i> Become an affiliate
+                        </a>
+                    </div>
+
+                    <div class="mt-5 flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-2 text-xs lg:text-sm text-gray-600 font-medium">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-check text-[#128c7e]"></i>
+                            Free to join
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-check text-[#128c7e]"></i>
+                            No minimum traffic
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-check text-[#128c7e]"></i>
+                            Lifetime cookie tracking
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Visual -->
+                <div class="relative">
+                    <div class="relative rounded-[32px] border border-emerald-100 bg-white/90 backdrop-blur shadow-[0_25px_80px_rgba(0,0,0,0.10)] overflow-hidden">
+                        <div class="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-gray-100 bg-gradient-to-r from-emerald-50 to-white">
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-12 h-12 rounded-2xl bg-[#128c7e] text-white flex items-center justify-center shadow-sm text-base">
+                                    <i class="fa-solid fa-handshake"></i>
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-sm font-bold text-gray-900">Affiliate Partner Program</p>
+                                    <p class="text-sm text-gray-500 font-medium">Earn 50% recurring commissions</p>
+                                </div>
+                            </div>
+                            <div class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 text-xs font-bold text-emerald-800">
+                                <span class="w-2 h-2 rounded-full bg-[#128c7e] animate-pulse"></span>
+                                Now Live
+                            </div>
+                        </div>
+                        <div class="relative p-5 sm:p-7">
+                            <div class="relative rounded-[28px] overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-emerald-100 border border-emerald-100">
+                                <img
+                                    src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=1200&q=80"
+                                    alt="Affiliate Partner Program"
+                                    class="w-full h-[460px] xl:h-[500px] object-cover">
+                                <div class="absolute inset-0 bg-black/30"></div>
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
+                                <div class="absolute left-0 right-0 bottom-0 p-7 sm:p-9 text-left">
+                                    <div class="max-w-lg">
+                                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 backdrop-blur text-xs font-bold text-[#128c7e] mb-4">
+                                            <i class="fa-solid fa-gem"></i>
+                                            Affiliate Network
+                                        </div>
+                                        <h3 class="text-xl sm:text-2xl xl:text-3xl font-black text-white leading-tight">
+                                            Earn 50% recurring commissions on every referral.
+                                        </h3>
+                                        <p class="mt-3 text-xs sm:text-sm lg:text-base text-white/90 font-medium leading-relaxed">
+                                            Promote Identity Search AI and get paid monthly for every customer you bring.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
         <!-- HIGH-YIELD COMMISSION CHART MATRIX -->
-        <section class="max-w-6xl mx-auto px-4 py-8">
-            <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden text-left">
-                <div class="px-6 py-4 border-b border-gray-100 bg-slate-50/40 flex items-center gap-2">
-                    <i class="fa-solid fa-table-list text-[#128c7e]"></i>
-                    <h3 class="text-xs font-bold text-gray-900 uppercase tracking-wider">Platform Product Commission Matrices</h3>
+        <section class="mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16" style="max-width: 1600px;">
+            <div class="text-center mb-10">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-xs font-bold text-[#128c7e] uppercase tracking-wider mb-4">
+                    <i class="fa-solid fa-chart-simple"></i> Commission Plans
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight">Platform Product Commission Matrices</h2>
+                <p class="mt-2 text-sm text-gray-500 font-medium">Choose a plan and earn 50% recurring commission on every referral</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- M1 Plan -->
+                <div class="group relative bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-lg hover:border-emerald-200 transition-all duration-300 overflow-hidden">
+                    <div class="absolute -top-8 -right-8 w-40 h-40 bg-gradient-to-br from-[#128c7e]/15 via-emerald-200/20 to-transparent rounded-full blur-2xl"></div>
+                    <div class="absolute inset-0 bg-emerald-100/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="relative p-6 space-y-5">
+                        <div class="flex items-center justify-between">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-50 border border-emerald-100 text-[#128c7e] font-bold font-mono text-sm">M1</span>
+                            <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full uppercase tracking-wider">Best Value</span>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="text-3xl font-black text-gray-900">$36<span class="text-sm font-semibold text-gray-400">.00</span></div>
+                            <div class="text-xs text-gray-500 font-medium">per month</div>
+                        </div>
+                        <ul class="space-y-2.5 text-xs font-semibold text-gray-600">
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-check-circle text-[#128c7e] text-sm"></i>
+                                <span>3 Reports <span class="text-gray-400 font-medium">Billed Monthly</span></span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-check-circle text-[#128c7e] text-sm"></i>
+                                <span>Full OSINT Report Access</span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-check-circle text-[#128c7e] text-sm"></i>
+                                <span>Email Support</span>
+                            </li>
+                        </ul>
+                        <div class="pt-3 border-t border-gray-100">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-gray-400 font-medium">Your Payout</span>
+                                <span class="text-lg font-black text-[#128c7e]">$18.00 <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">/mo</span></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="overflow-x-auto w-full">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="border-b border-gray-100 text-[10px] font-bold uppercase tracking-wider text-gray-400 bg-slate-50/10">
-                                <th class="px-6 py-4">Plan Node</th>
-                                <th class="px-6 py-4">Validity Horizon</th>
-                                <th class="px-6 py-4">Retail Value</th>
-                                <th class="px-6 py-4 text-right">Your 50% Payout Split</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100 text-xs font-semibold text-slate-700">
-                            <tr class="hover:bg-slate-50/40 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap"><span class="bg-emerald-50 border border-emerald-100 text-[#128c7e] font-bold font-mono px-2 py-0.5 rounded text-[11px]">M1</span></td>
-                                <td class="px-6 py-4 text-gray-400 font-medium">3 Reports Billed Monthly</td>
-                                <td class="px-6 py-4 font-mono font-bold text-gray-900">$36.00</td>
-                                <td class="px-6 py-4 text-right font-mono font-bold text-sm text-[#128c7e]">+$18.00 <span class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Recurring</span></td>
-                            </tr>
-                            <tr class="hover:bg-slate-50/40 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap"><span class="bg-teal-50 border border-teal-100 text-teal-700 font-bold font-mono px-2 py-0.5 rounded text-[11px]">Q3</span></td>
-                                <td class="px-6 py-4 text-gray-400 font-medium">5 Reports + 2 Free Billed Every 3 Months</td>
-                                <td class="px-6 py-4 font-mono font-bold text-gray-900">$55.00</td>
-                                <td class="px-6 py-4 text-right font-mono font-bold text-sm text-[#128c7e]">+$27.50 <span class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Recurring</span></td>
-                            </tr>
-                            <tr class="hover:bg-slate-50/40 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap"><span class="bg-amber-50 border border-amber-200 text-amber-800 font-bold font-mono px-2 py-0.5 rounded text-[11px]">B6</span></td>
-                                <td class="px-6 py-4 text-gray-400 font-medium">8 Reports + 3 Free Billed Every 6 Months</td>
-                                <td class="px-6 py-4 font-mono font-bold text-gray-900">$72.00</td>
-                                <td class="px-6 py-4 text-right font-mono font-bold text-sm text-[#128c7e]">+$36.00 <span class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Recurring</span></td>
-                            </tr>
-                            <tr class="hover:bg-slate-50/40 transition-colors">
-                                <td class="px-6 py-4 whitespace-nowrap"><span class="bg-sky-50 border border-sky-100 text-sky-800 font-bold font-mono px-2 py-0.5 rounded text-[11px]">Y12</span></td>
-                                <td class="px-6 py-4 text-gray-400 font-medium">12 Reports + 4 Free Billed Annually</td>
-                                <td class="px-6 py-4 font-mono font-bold text-gray-900">$96.00</td>
-                                <td class="px-6 py-4 text-right font-mono font-bold text-sm text-[#128c7e]">+$48.00 <span class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Recurring</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <!-- Q3 Plan -->
+                <div class="group relative bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-lg hover:border-teal-200 transition-all duration-300 overflow-hidden">
+                    <div class="absolute -top-8 -right-8 w-40 h-40 bg-gradient-to-br from-[#128c7e]/15 via-teal-200/20 to-transparent rounded-full blur-2xl"></div>
+                    <div class="absolute inset-0 bg-teal-100/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="relative p-6 space-y-5">
+                        <div class="flex items-center justify-between">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-teal-50 border border-teal-100 text-teal-700 font-bold font-mono text-sm">Q3</span>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="text-3xl font-black text-gray-900">$55<span class="text-sm font-semibold text-gray-400">.00</span></div>
+                            <div class="text-xs text-gray-500 font-medium">per quarter</div>
+                        </div>
+                        <ul class="space-y-2.5 text-xs font-semibold text-gray-600">
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-check-circle text-teal-600 text-sm"></i>
+                                <span>5 Reports + 2 <span class="text-emerald-700 font-bold">Free</span></span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-check-circle text-teal-600 text-sm"></i>
+                                <span>Priority OSINT Analysis</span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-check-circle text-teal-600 text-sm"></i>
+                                <span>Priority Email Support</span>
+                            </li>
+                        </ul>
+                        <div class="pt-3 border-t border-gray-100">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-gray-400 font-medium">Your Payout</span>
+                                <span class="text-lg font-black text-teal-600">$27.50 <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">/q</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- B6 Plan -->
+                <div class="group relative bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-lg hover:border-amber-200 transition-all duration-300 overflow-hidden">
+                    <div class="absolute -top-8 -right-8 w-40 h-40 bg-gradient-to-br from-[#128c7e]/15 via-amber-200/20 to-transparent rounded-full blur-2xl"></div>
+                    <div class="absolute inset-0 bg-amber-100/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="relative p-6 space-y-5">
+                        <div class="flex items-center justify-between">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 font-bold font-mono text-sm">B6</span>
+                            <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full uppercase tracking-wider">Popular</span>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="text-3xl font-black text-gray-900">$72<span class="text-sm font-semibold text-gray-400">.00</span></div>
+                            <div class="text-xs text-gray-500 font-medium">per 6 months</div>
+                        </div>
+                        <ul class="space-y-2.5 text-xs font-semibold text-gray-600">
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-check-circle text-amber-600 text-sm"></i>
+                                <span>8 Reports + 3 <span class="text-emerald-700 font-bold">Free</span></span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-check-circle text-amber-600 text-sm"></i>
+                                <span>Advanced OSINT Analytics</span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-check-circle text-amber-600 text-sm"></i>
+                                <span>Priority Support + API</span>
+                            </li>
+                        </ul>
+                        <div class="pt-3 border-t border-gray-100">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-gray-400 font-medium">Your Payout</span>
+                                <span class="text-lg font-black text-amber-700">$36.00 <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">/6mo</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Y12 Plan -->
+                <div class="group relative bg-white border-2 border-[#128c7e] rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+                    <div class="absolute -top-8 -right-8 w-40 h-40 bg-gradient-to-br from-[#128c7e]/20 via-emerald-200/30 to-transparent rounded-full blur-2xl"></div>
+                    <div class="absolute top-0 right-0">
+                        <div class="bg-[#128c7e] text-white text-[9px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">Best Deal</div>
+                    </div>
+                    <div class="absolute inset-0 bg-emerald-100/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="relative p-6 space-y-5">
+                        <div class="flex items-center justify-between">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-sky-50 border border-sky-100 text-sky-800 font-bold font-mono text-sm">Y12</span>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="text-3xl font-black text-gray-900">$96<span class="text-sm font-semibold text-gray-400">.00</span></div>
+                            <div class="text-xs text-gray-500 font-medium">per year</div>
+                        </div>
+                        <ul class="space-y-2.5 text-xs font-semibold text-gray-600">
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-check-circle text-[#128c7e] text-sm"></i>
+                                <span>12 Reports + 4 <span class="text-emerald-700 font-bold">Free</span></span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-check-circle text-[#128c7e] text-sm"></i>
+                                <span>Full Enterprise OSINT Suite</span>
+                            </li>
+                            <li class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-check-circle text-[#128c7e] text-sm"></i>
+                                <span>Premium Support + API + SLA</span>
+                            </li>
+                        </ul>
+                        <div class="pt-3 border-t border-gray-100">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-gray-400 font-medium">Your Payout</span>
+                                <span class="text-lg font-black text-[#128c7e]">$48.00 <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">/yr</span></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- DYNAMIC FORECAST REVENUE CALCULATOR ENGINE -->
-        <section class="max-w-6xl mx-auto px-4 py-8">
+        <section class="mx-auto px-4 sm:px-6 lg:px-8 py-8" style="max-width: 1600px;">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
 
                 <div class="lg:col-span-2 bg-white border border-gray-200 rounded-2xl p-6 shadow-sm space-y-6 text-left">
@@ -158,28 +378,62 @@ if (session_status() === PHP_SESSION_NONE) session_start();
         </section>
 
         <!-- VALUE ADVANTAGE LOGISTICS SECTION -->
-        <section class="max-w-6xl mx-auto px-4 py-8">
-            <div class="bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 text-left space-y-6">
-                <div class="text-center space-y-1">
-                    <h2 class="text-lg font-bold tracking-tight text-gray-900 uppercase">Engineered for Rapid Conversions</h2>
-                    <p class="text-xs font-mono text-gray-400 uppercase tracking-widest">Optimized Traffic Monetization Attributes</p>
+        <section class="mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16" style="max-width: 1600px;">
+            <div class="text-center mb-10">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-xs font-bold text-[#128c7e] uppercase tracking-wider mb-4">
+                    <i class="fa-solid fa-bolt"></i> Why Join Us
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight">Engineered for Rapid Conversions</h2>
+                <p class="mt-2 text-sm text-gray-500 font-medium">Optimized traffic monetization attributes built for performance</p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-6">
+                <div class="lg:w-5/12">
+                    <div class="group relative bg-white border border-gray-200/80 rounded-2xl p-7 sm:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_20px_70px_rgba(18,140,126,0.15)] hover:border-emerald-300 transition-all duration-500 ease-out overflow-hidden h-full">
+                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-50/30 via-white to-white"></div>
+                        <div class="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#128c7e]/20 via-[#128c7e] to-emerald-300/20"></div>
+                        <div class="absolute -top-8 -right-8 w-40 h-40 bg-gradient-to-br from-[#128c7e]/10 via-emerald-100/15 to-transparent rounded-full blur-2xl group-hover:scale-150 group-hover:opacity-80 transition-all duration-700"></div>
+                        <div class="relative z-10 flex flex-col sm:flex-row lg:flex-col gap-5">
+                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#128c7e] to-[#0e6f64] text-white flex items-center justify-center text-xl shadow-md shadow-emerald-200/40 shrink-0 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-emerald-200/60 transition-all duration-500">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <div class="space-y-3">
+                                <h3 class="text-xl font-bold text-gray-900 group-hover:text-[#128c7e] transition-colors duration-300">High-Converting Funnels</h3>
+                                <p class="text-sm text-gray-500 font-medium leading-relaxed group-hover:text-gray-600 transition-colors duration-300">Our target search dossiers sell themselves. Route users onto optimized landing frames fine-tuned to squeeze maximum conversions from raw hits.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs font-medium text-slate-700">
-                    <div class="p-4 rounded-xl bg-slate-50/40 border border-gray-100 space-y-2">
-                        <div class="w-8 h-8 bg-emerald-50 text-[#128c7e] rounded-lg flex items-center justify-center text-sm shadow-2xs"><i class="fa-solid fa-bolt"></i></div>
-                        <h4 class="font-bold text-gray-900 text-sm">High-Converting Funnels</h4>
-                        <p class="text-gray-400 leading-relaxed font-semibold">Our target search dossiers sell themselves. Route users onto optimized landing frames fine-tuned to squeeze maximum conversions from raw hits.</p>
+                <div class="lg:w-7/12 flex flex-col sm:flex-row gap-6">
+                    <div class="sm:w-1/2">
+                        <div class="group relative bg-white border border-gray-200/80 rounded-2xl p-6 sm:p-7 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_20px_70px_rgba(18,140,126,0.15)] hover:border-emerald-300 transition-all duration-500 ease-out overflow-hidden h-full">
+                            <div class="absolute inset-0 bg-gradient-to-br from-emerald-50/30 via-white to-white"></div>
+                            <div class="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#128c7e]/20 via-[#128c7e] to-emerald-300/20"></div>
+                            <div class="absolute -top-8 -right-8 w-36 h-36 bg-gradient-to-br from-[#128c7e]/10 via-emerald-100/15 to-transparent rounded-full blur-2xl group-hover:scale-150 group-hover:opacity-80 transition-all duration-700"></div>
+                            <div class="relative z-10 space-y-4">
+                                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#128c7e] to-[#0e6f64] text-white flex items-center justify-center text-base shadow-md shadow-emerald-200/40 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-emerald-200/60 transition-all duration-500">
+                                    <i class="fa-solid fa-chart-pie"></i>
+                                </div>
+                                <h3 class="text-base font-bold text-gray-900 group-hover:text-[#128c7e] transition-colors duration-300">Real-Time S2S Telemetry</h3>
+                                <p class="text-sm text-gray-500 font-medium leading-relaxed group-hover:text-gray-600 transition-colors duration-300">Track hits, dynamic sub-ids logs, payout matrix parameters changes, and full downstream postback integration responses live in your terminal dashboard layer.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="p-4 rounded-xl bg-slate-50/40 border border-gray-100 space-y-2">
-                        <div class="w-8 h-8 bg-emerald-50 text-[#128c7e] rounded-lg flex items-center justify-center text-sm shadow-2xs"><i class="fa-solid fa-chart-pie"></i></div>
-                        <h4 class="font-bold text-gray-900 text-sm">Real-Time S2S Telemetry</h4>
-                        <p class="text-gray-400 leading-relaxed font-semibold">Track hits, dynamic sub-ids logs, payout matrix parameters changes, and full downstream postback integration responses live in your terminal dashboard layer.</p>
-                    </div>
-                    <div class="p-4 rounded-xl bg-slate-50/40 border border-gray-100 space-y-2">
-                        <div class="w-8 h-8 bg-emerald-50 text-[#128c7e] rounded-lg flex items-center justify-center text-sm shadow-2xs"><i class="fa-solid fa-sack-dollar"></i></div>
-                        <h4 class="font-bold text-gray-900 text-sm">Guaranteed Fast Payouts</h4>
-                        <p class="text-gray-400 leading-relaxed font-semibold">No excessive processing delays or hidden escrow windows. Submit funding request balances straight into your verified Payoneer account nodes instantly.</p>
+
+                    <div class="sm:w-1/2">
+                        <div class="group relative bg-white border border-gray-200/80 rounded-2xl p-6 sm:p-7 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_20px_70px_rgba(18,140,126,0.15)] hover:border-emerald-300 transition-all duration-500 ease-out overflow-hidden h-full">
+                            <div class="absolute inset-0 bg-gradient-to-br from-emerald-50/30 via-white to-white"></div>
+                            <div class="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-[#128c7e]/20 via-[#128c7e] to-emerald-300/20"></div>
+                            <div class="absolute -top-8 -right-8 w-36 h-36 bg-gradient-to-br from-[#128c7e]/10 via-emerald-100/15 to-transparent rounded-full blur-2xl group-hover:scale-150 group-hover:opacity-80 transition-all duration-700"></div>
+                            <div class="relative z-10 space-y-4">
+                                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#128c7e] to-[#0e6f64] text-white flex items-center justify-center text-base shadow-md shadow-emerald-200/40 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-emerald-200/60 transition-all duration-500">
+                                    <i class="fa-solid fa-sack-dollar"></i>
+                                </div>
+                                <h3 class="text-base font-bold text-gray-900 group-hover:text-[#128c7e] transition-colors duration-300">Guaranteed Fast Payouts</h3>
+                                <p class="text-sm text-gray-500 font-medium leading-relaxed group-hover:text-gray-600 transition-colors duration-300">No excessive processing delays or hidden escrow windows. Submit funding request balances straight into your verified Payoneer account nodes instantly.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -223,7 +477,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
     </script>
 
     <footer class="w-full bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-400 font-semibold">
-        &copy; 2026 Identity Search AI Affiliate Portal. All rights reserved. Run with absolute precision.
+        &copy; 2026 Identity Search AI Affiliate Portal. All rights reserved. Developed and Designed by <a href="https://sahedahmed.netlify.app/" target="_blank" class="text-[#128c7e] font-bold">Enostation IT</a>.
     </footer>
 
 </body>
