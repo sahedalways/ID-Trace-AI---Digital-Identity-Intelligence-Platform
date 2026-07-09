@@ -57,18 +57,80 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php include 'head.php'; ?>
 </head>
 
-<body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white bg-slate-50">
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white bg-slate-50 relative">
 
     <?php include 'navbar.php'; ?>
 
-    <main class="relative overflow-hidden flex-grow w-full mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-16 md:pb-10" style="max-width: 1600px;">
-        <!-- Background Decorations -->
-        <div class="absolute inset-0 -z-10">
-            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[900px] bg-emerald-50 rounded-full blur-3xl opacity-60"></div>
-            <div class="absolute top-24 -left-20 w-96 h-96 bg-[#128c7e]/10 rounded-full blur-3xl"></div>
-            <div class="absolute bottom-0 right-0 w-96 h-96 bg-emerald-100 rounded-full blur-3xl opacity-70"></div>
-        </div>
+    <!-- Full-width Background Decorations -->
+    <div class="absolute inset-x-0 top-0 -z-10 overflow-hidden" style="height: 900px;">
+        <div class="blob-1 absolute top-0 left-1/2 w-[900px] h-[900px] bg-emerald-50 rounded-full blur-3xl opacity-60 -translate-x-1/2 will-change-transform"></div>
+        <div class="blob-2 absolute top-24 -left-20 w-96 h-96 bg-[#128c7e]/10 rounded-full blur-3xl will-change-transform"></div>
+        <div class="blob-3 absolute bottom-0 right-0 w-96 h-96 bg-emerald-100 rounded-full blur-3xl opacity-70 will-change-transform"></div>
+    </div>
 
+    <main class="relative flex-grow w-full mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-16 md:pb-10" style="max-width: 1600px;">
+        <style>
+            @keyframes blobMove1 {
+
+                0%,
+                100% {
+                    transform: translateX(-50%) translateY(0);
+                }
+
+                25% {
+                    transform: translateX(-40%) translateY(-20px);
+                }
+
+                50% {
+                    transform: translateX(-50%) translateY(-10px);
+                }
+
+                75% {
+                    transform: translateX(-60%) translateY(10px);
+                }
+            }
+
+            @keyframes blobMove2 {
+
+                0%,
+                100% {
+                    transform: translate(0, 0);
+                }
+
+                33% {
+                    transform: translate(30px, -15px);
+                }
+
+                66% {
+                    transform: translate(-20px, 20px);
+                }
+            }
+
+            @keyframes blobMove3 {
+
+                0%,
+                100% {
+                    transform: translate(0, 0);
+                }
+
+                50% {
+                    transform: translate(-40px, -20px);
+                }
+            }
+
+            .blob-1 {
+                animation: blobMove1 18s ease-in-out infinite;
+            }
+
+            .blob-2 {
+                animation: blobMove2 14s ease-in-out infinite;
+            }
+
+            .blob-3 {
+                animation: blobMove3 16s ease-in-out infinite;
+            }
+        </style>
+        
         <div class="grid lg:grid-cols-2 gap-14 xl:gap-24 items-center">
 
             <!-- Left Content -->
@@ -271,25 +333,107 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </main>
 
-    <section class="w-full max-w-4xl mx-auto px-4 sm:px-6 py-12 md:pt-4">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-sm space-y-3">
-                <div class="w-10 h-10 bg-emerald-50 text-[#128c7e] flex items-center justify-center rounded-xl text-base shadow-2xs"><i class="fa-solid fa-user-shield"></i></div>
-<h4 class="text-sm font-bold text-gray-900">Smarter Personal Decisions</h4>
-                <p class="text-xs text-black font-semibold leading-normal">Audit individual digital history tracks before scheduling transactions or professional onboarding pipelines.</p>
+    <section class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 mt-10 py-14 md:pt-6 md:pb-16">
+        <!-- Section Header -->
+        <div class="text-center max-w-2xl mx-auto mb-10">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-100 text-xs font-bold text-emerald-800 tracking-wide shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-[#128c7e]"></span>
+                Why Identity Intelligence Matters
             </div>
 
-            <div class="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-sm space-y-3">
-                <div class="w-10 h-10 bg-emerald-50 text-[#128c7e] flex items-center justify-center rounded-xl text-base shadow-2xs"><i class="fa-solid fa-chart-line"></i></div>
-                <h4 class="text-sm font-bold text-gray-900">Increase Company Trust</h4>
-                <p class="text-xs text-black font-semibold leading-normal">Maintain corporate entity transparency thresholds cleanly utilizing open-source historical records lookups.</p>
+            <h2 class="mt-5 text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 tracking-tight leading-tight">
+                Make Smarter, Safer Decisions With Identity Insights
+            </h2>
+
+            <p class="mt-3 text-xs sm:text-sm text-gray-500 font-medium leading-relaxed">
+                Analyze online signals, public traces, and identity patterns before making important decisions.
+            </p>
+        </div>
+
+        <!-- Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-7">
+
+            <!-- Card 1 -->
+            <div class="group relative overflow-hidden bg-white p-6 sm:p-7 rounded-3xl border border-gray-200/80 shadow-sm hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
+                <div class="absolute top-0 right-0 w-28 h-28 bg-emerald-50 rounded-bl-[80px] opacity-70 group-hover:opacity-100 origin-top-right group-hover:scale-[6] transition-all duration-500 ease-in-out"></div>
+
+                <div class="relative space-y-4">
+                    <div class="w-12 h-12 bg-emerald-50 text-[#128c7e] flex items-center justify-center rounded-2xl text-lg shadow-sm border border-emerald-100 group-hover:bg-[#128c7e] group-hover:text-white transition-all duration-300">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </div>
+
+                    <div>
+                        <h4 class="text-base font-black text-gray-900">
+                            Smarter Personal Decisions
+                        </h4>
+                        <p class="mt-2 text-sm text-gray-600 font-semibold leading-relaxed">
+                            Audit individual digital history tracks before scheduling transactions or professional onboarding pipelines.
+                        </p>
+                    </div>
+
+                    <div class="pt-2 flex items-center gap-2 text-xs font-bold text-[#128c7e]">
+                        <span class="w-6 h-6 rounded-full bg-emerald-50 flex items-center justify-center">
+                            <i class="fa-solid fa-check text-[10px]"></i>
+                        </span>
+                        Personal risk awareness
+                    </div>
+                </div>
             </div>
 
-            <div class="bg-white p-6 rounded-2xl border border-gray-200/80 shadow-sm space-y-3">
-                <div class="w-10 h-10 bg-emerald-50 text-[#128c7e] flex items-center justify-center rounded-xl text-base shadow-2xs"><i class="fa-solid fa-ban"></i></div>
-                <h4 class="text-sm font-bold text-gray-900">Avoid Bad Engagements</h4>
-                <p class="text-xs text-black font-semibold leading-normal">Instantly recognize malicious behavior flags or platform spoofing identities before issues materialize.</p>
+            <!-- Card 2 -->
+            <div class="group relative overflow-hidden bg-white p-6 sm:p-7 rounded-3xl border border-gray-200/80 shadow-sm hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
+                <div class="absolute top-0 right-0 w-28 h-28 bg-emerald-50 rounded-bl-[80px] opacity-70 group-hover:opacity-100 origin-top-right group-hover:scale-[6] transition-all duration-500 ease-in-out"></div>
+
+                <div class="relative space-y-4">
+                    <div class="w-12 h-12 bg-emerald-50 text-[#128c7e] flex items-center justify-center rounded-2xl text-lg shadow-sm border border-emerald-100 group-hover:bg-[#128c7e] group-hover:text-white transition-all duration-300">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+
+                    <div>
+                        <h4 class="text-base font-black text-gray-900">
+                            Increase Company Trust
+                        </h4>
+                        <p class="mt-2 text-sm text-gray-600 font-semibold leading-relaxed">
+                            Maintain corporate entity transparency thresholds cleanly utilizing open-source historical records lookups.
+                        </p>
+                    </div>
+
+                    <div class="pt-2 flex items-center gap-2 text-xs font-bold text-[#128c7e]">
+                        <span class="w-6 h-6 rounded-full bg-emerald-50 flex items-center justify-center">
+                            <i class="fa-solid fa-check text-[10px]"></i>
+                        </span>
+                        Better business confidence
+                    </div>
+                </div>
             </div>
+
+            <!-- Card 3 -->
+            <div class="group relative overflow-hidden bg-white p-6 sm:p-7 rounded-3xl border border-gray-200/80 shadow-sm hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
+                <div class="absolute top-0 right-0 w-28 h-28 bg-emerald-50 rounded-bl-[80px] opacity-70 group-hover:opacity-100 origin-top-right group-hover:scale-[6] transition-all duration-500 ease-in-out"></div>
+
+                <div class="relative space-y-4">
+                    <div class="w-12 h-12 bg-emerald-50 text-[#128c7e] flex items-center justify-center rounded-2xl text-lg shadow-sm border border-emerald-100 group-hover:bg-[#128c7e] group-hover:text-white transition-all duration-300">
+                        <i class="fa-solid fa-ban"></i>
+                    </div>
+
+                    <div>
+                        <h4 class="text-base font-black text-gray-900">
+                            Avoid Bad Engagements
+                        </h4>
+                        <p class="mt-2 text-sm text-gray-600 font-semibold leading-relaxed">
+                            Instantly recognize malicious behavior flags or platform spoofing identities before issues materialize.
+                        </p>
+                    </div>
+
+                    <div class="pt-2 flex items-center gap-2 text-xs font-bold text-[#128c7e]">
+                        <span class="w-6 h-6 rounded-full bg-emerald-50 flex items-center justify-center">
+                            <i class="fa-solid fa-check text-[10px]"></i>
+                        </span>
+                        Early warning signals
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -306,26 +450,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const container = document.getElementById("faqAccordionContainer");
             if (!container) return;
 
-            // Force all sliding panels to register full size heights by default layout parameters
-            container.querySelectorAll(".faq-content-slider").forEach(panel => {
-                panel.style.maxHeight = panel.scrollHeight + "px";
-            });
-
             container.addEventListener("click", (e) => {
                 const trigger = e.target.closest(".faq-toggle-trigger");
                 if (!trigger) return;
 
                 const panel = trigger.parentElement.querySelector(".faq-content-slider");
-                const icon = trigger.querySelector("i");
+                const icon = trigger.querySelector(".fa-chevron-down");
 
                 if (panel.style.maxHeight === "0px" || panel.style.maxHeight === "") {
                     panel.style.maxHeight = panel.scrollHeight + "px";
                     panel.style.opacity = "1";
                     icon.style.transform = "rotate(180deg)";
+                    trigger.parentElement.classList.add("active");
                 } else {
                     panel.style.maxHeight = "0px";
                     panel.style.opacity = "0";
                     icon.style.transform = "rotate(0deg)";
+                    trigger.parentElement.classList.remove("active");
                 }
             });
         });
@@ -435,14 +576,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 track.style.transform = 'translateX(-' + (current * 100) + '%)';
             }
 
-            function next() { goTo(current + 1); }
-            function prev() { goTo(current - 1); }
+            function next() {
+                goTo(current + 1);
+            }
 
-            function startAuto() { interval = setInterval(next, 5000); }
-            function stopAuto() { clearInterval(interval); }
+            function prev() {
+                goTo(current - 1);
+            }
 
-            if (nextBtn) nextBtn.addEventListener('click', () => { next(); stopAuto(); startAuto(); });
-            if (prevBtn) prevBtn.addEventListener('click', () => { prev(); stopAuto(); startAuto(); });
+            function startAuto() {
+                interval = setInterval(next, 5000);
+            }
+
+            function stopAuto() {
+                clearInterval(interval);
+            }
+
+            if (nextBtn) nextBtn.addEventListener('click', () => {
+                next();
+                stopAuto();
+                startAuto();
+            });
+            if (prevBtn) prevBtn.addEventListener('click', () => {
+                prev();
+                stopAuto();
+                startAuto();
+            });
 
             slider.addEventListener('mouseenter', stopAuto);
             slider.addEventListener('mouseleave', startAuto);
