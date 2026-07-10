@@ -31,7 +31,7 @@
                     AI-powered digital identity intelligence platform. Analyze public footprints and generate comprehensive reports.
                 </p>
                 <div class="flex items-center gap-3 pt-1">
-                    <a href="mailto:support@idtrace.ai" class="w-9 h-9 rounded-full bg-emerald-50 text-[#128c7e] hover:bg-[#128c7e] hover:text-white flex items-center justify-center transition-all duration-200">
+                    <a href="mailto:support@identitysearch.ai" class="w-9 h-9 rounded-full bg-emerald-50 text-[#128c7e] hover:bg-[#128c7e] hover:text-white flex items-center justify-center transition-all duration-200">
                         <i class="fa-solid fa-envelope text-xs"></i>
                     </a>
                     <a href="contact.php" class="w-9 h-9 rounded-full bg-emerald-50 text-[#128c7e] hover:bg-[#128c7e] hover:text-white flex items-center justify-center transition-all duration-200">
@@ -76,7 +76,7 @@
         <!-- Bottom Bar -->
         <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6">
             <p class="text-xs text-gray-400 font-semibold">
-                &copy; 2026 Identity Search AI. All rights reserved. Developed and Designed by <a href="https://sahedahmed.netlify.app/" target="_blank" class="text-[#128c7e] hover:text-[#0e6f64] transition-colors font-bold">Enostation IT</a>.
+                &copy; 2026 Identity Search AI. All rights reserved.
             </p>
             <div class="flex items-center gap-4 text-xs text-gray-400 font-semibold">
                 <a href="terms.php" class="hover:text-[#128c7e] transition-colors">Terms</a>

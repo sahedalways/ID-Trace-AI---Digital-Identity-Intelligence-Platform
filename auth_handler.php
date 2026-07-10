@@ -15,12 +15,12 @@ if (isset($_GET['action'])) {
 
     // Extract the dynamic relative path parameter directly from the current active request context
     $return_path = isset($_GET['return']) ? trim($_GET['return']) : '/index.php';
-    
+
     // Security Guard: Restrict path formatting strictly to relative locations to eliminate open-redirect flaws
     if (empty($return_path) || strpos($return_path, '/') !== 0) {
         $return_path = '/index.php';
     }
-    
+
     // Construct absolute local redirection engine string natively using BASE_URL
     $final_redirect_target = BASE_URL . ltrim($return_path, '/');
 
@@ -38,7 +38,7 @@ if (isset($_GET['action'])) {
 
         try {
             $otp_code = (string)random_int(100000, 999999);
-            
+
             $_SESSION['auth_pending_email'] = $email;
             $_SESSION['auth_otp_token']    = $otp_code;
             $_SESSION['auth_otp_expires']  = time() + 600; // 10-Minute window
@@ -47,36 +47,36 @@ if (isset($_GET['action'])) {
             $htmlBody = "
                 <div style='background-color: #FAFAFA; padding: 24px 12px; font-family: \"Roboto\", -apple-system, BlinkMacSystemFont, sans-serif;'>
                     <div style='max-width: 380px; margin: 0 auto; background-color: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.04);'>
-                        
+
                         <div style='padding: 14px 20px; border-bottom: 1px solid #E5E7EB; text-align: center; background-color: #F9FAFB;'>
                             <div style='display: inline-block; vertical-align: middle; text-align: center;'>
                                 <img src='https://i.postimg.cc/SQnMm8sh/2313362.png' alt='Identity Search AI Logo' style='width: 28px; height: 28px; display: inline-block; vertical-align: middle; margin-right: 6px; border: 0;'>
                                 <span style='font-size: 14px; font-weight: 800; color: #111827; letter-spacing: -0.3px; font-family: \"Roboto\", sans-serif; display: inline-block; vertical-align: middle;'>Identity Search <span style='font-size: 10px; font-weight: 900; background-color: #000000; color: #FFFFFF; padding: 1.5px 5px; border-radius: 3.5px; margin-left: 3px; vertical-align: middle; letter-spacing: 0.5px;'>AI</span></span>
                             </div>
                         </div>
-                        
+
                         <div style='padding: 28px 24px; text-align: left;'>
                             <h2 style='font-size: 19px; font-weight: 700; color: #111827; margin-top: 0; margin-bottom: 12px; font-family: \"Roboto\", sans-serif; text-align: left;'>Verification Code</h2>
                             <p style='font-size: 13px; color: #4B5563; font-weight: 400; line-height: 1.5; margin-bottom: 24px; font-family: \"Roboto\", sans-serif; text-align: left;'>Use the single-use verification code below to complete your login sequence.</p>
-                            
+
                             <div style='text-align: center; margin-bottom: 24px;'>
                                 <div style='background-color: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 10px; padding: 10px; text-align: center; font-size: 22px; font-weight: 800; letter-spacing: 4px; color: #128c7e; font-family: \"Roboto\", sans-serif; display: inline-block; min-width: 150px;'>
                                     {$otp_code}
                                 </div>
                             </div>
-                            
+
                             <p style='font-size: 12px; color: #9CA3AF; font-weight: 400; line-height: 1.4; margin-bottom: 0; font-family: \"Roboto\", sans-serif; text-align: left;'>If you did not initiate this request, you can safely disregard this message.</p>
                         </div>
-                        
+
                         <div style='padding: 24px 20px; border-top: 1px solid #F3F4F6; background-color: #FAFAFA; text-align: center; font-family: \"Roboto\", sans-serif;'>
                             <div style='display: block; margin-bottom: 10px;'>
                                 <span style='font-size: 18px; display: inline-block; vertical-align: middle;'>🕵️‍♂️</span>
                             </div>
-                            
+
                             <p style='font-size: 10px; color: #4B5563; font-weight: 500; margin: 0 0 6px 0;'>&copy; 2026 - Identity Search AI</p>
-                            
+
                             <p style='font-size: 10px; color: #4B5563; font-weight: 400; margin: 0;'>
-                                <a href='mailto:support@idtrace.ai' style='color: #128c7e; text-decoration: none;'>support@idtrace.ai</a>
+                                <a href='mailto:support@identitysearch.ai' style='color: #128c7e; text-decoration: none;'>support@identitysearch.ai</a>
                             </p>
                         </div>
 
@@ -127,7 +127,7 @@ if (isset($_GET['action'])) {
 
                 if (!$user) {
                     // NEW USER DETECTED: Put database insertion on hold. Inform frontend to request name parameters.
-                    $_SESSION['auth_signup_verified_email'] = $email; 
+                    $_SESSION['auth_signup_verified_email'] = $email;
                     echo json_encode(['status' => 'require_name']);
                 } else {
                     // EXISTING USER: Log them in straight away
@@ -176,7 +176,7 @@ if (isset($_GET['action'])) {
 
             // New Registration: Write explicit row containing your precise schema matrix columns
             $insert_stmt = $pdo->prepare("
-                INSERT INTO `users` (`email`, `password`, `name`, `avatar`, `country`, `cid`, `created_at`) 
+                INSERT INTO `users` (`email`, `password`, `name`, `avatar`, `country`, `cid`, `created_at`)
                 VALUES (:email, NULL, :name, NULL, :country, :cid, NOW())
             ");
             $insert_stmt->execute([

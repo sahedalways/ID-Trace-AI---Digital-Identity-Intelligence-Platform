@@ -318,7 +318,7 @@ try {
     </script>
 
     <footer class="w-full bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-400 font-semibold">
-        &copy; <?= date('Y'); ?> Identity Search AI Affiliate Portal. All rights reserved. Developed and Designed by <a href="https://sahedahmed.netlify.app/" target="_blank" class="text-[#128c7e] font-bold">Enostation IT</a>.
+        &copy; <?= date('Y'); ?> Identity Search AI Affiliate Portal. All rights reserved.
     </footer>
 
 </body>

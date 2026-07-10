@@ -602,7 +602,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
     <footer class="relative overflow-hidden w-full border-t border-gray-200 py-6 text-center text-xs text-gray-400 font-semibold">
         <div class="absolute inset-0 -z-10" style="background: linear-gradient(180deg, #ffffff 0%, #fafdfa 40%, #f5fcf7 60%, #ffffff 100%);"></div>
         <div class="text-center">
-            &copy; 2026 Identity Search AI Affiliate Portal. All rights reserved. Developed and Designed by <a href="https://sahedahmed.netlify.app/" target="_blank" class="text-[#128c7e] font-bold">Enostation IT</a>.
+            &copy; 2026 Identity Search AI Affiliate Portal. All rights reserved.
         </div>
     </footer>
 

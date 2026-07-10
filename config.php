@@ -59,7 +59,7 @@ define('STRIPE_TEST_SECRET_KEY', env('STRIPE_SECRET_KEY'));
 define('BREVO_API_KEY', env('BREVO_API_KEY'));
 
 // Custom domain identities for authentication mailers
-define('MAIL_FROM_EMAIL', env('MAIL_FROM_EMAIL', 'support@idtrace.ai'));
+define('MAIL_FROM_EMAIL', env('MAIL_FROM_EMAIL', 'support@identitysearch.ai'));
 define('MAIL_FROM_NAME', env('MAIL_FROM_NAME', 'Identity Search AI'));
 
 // 5. Google OAuth2 Configuration

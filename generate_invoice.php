@@ -22,9 +22,9 @@ if (empty($tid)) {
 }
 
 // Securely join users table row to pull checkout_email directly and prevent runtime null notice
-$stmt = $pdo->prepare("SELECT t.*, p.price as plan_cost, p.credit, u.email as checkout_email 
-                       FROM `transactions` t 
-                       LEFT JOIN `plans` p ON t.plan = p.name 
+$stmt = $pdo->prepare("SELECT t.*, p.price as plan_cost, p.credit, u.email as checkout_email
+                       FROM `transactions` t
+                       LEFT JOIN `plans` p ON t.plan = p.name
                        LEFT JOIN `users` u ON t.uid = u.id
                        WHERE t.tid = ? AND t.uid = ? LIMIT 1");
 $stmt->execute([$tid, $user_id]);
@@ -78,7 +78,7 @@ $invoice_date = date('F d, Y', strtotime($tx['created_at']));
 
     <!-- CORE INVOICE STRIPE-MINIMAL CANVAS -->
     <main class="max-w-3xl w-full mx-auto bg-white p-8 sm:p-14 my-6 print-border-none border border-gray-200/80 rounded-3xl shadow-sm text-left">
-        
+
         <!-- SECTION 1: TOP LEFT BRANDING LOGO & METADATA ROWS WITH LARGE PAID LABEL -->
         <div class="flex justify-between items-start gap-4">
             <div class="space-y-4">
@@ -109,9 +109,9 @@ $invoice_date = date('F d, Y', strtotime($tx['created_at']));
                 <p>30 North Gould Street</p>
                 <p>Sheridan, Wyoming 82801</p>
                 <p>United States</p>
-                <p class="text-gray-500 font-medium mt-0.5">support@idtrace.ai</p>
+                <p class="text-gray-500 font-medium mt-0.5">support@identitysearch.ai</p>
             </div>
-            
+
             <!-- Right Side: Clean "Bill To" Address Block Mapping from Transactions Table Columns -->
             <div class="text-left">
                 <h3 class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1">Bill to</h3>

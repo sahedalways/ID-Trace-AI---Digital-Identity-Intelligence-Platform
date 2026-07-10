@@ -38,7 +38,7 @@ try {
 
     // Determine target delivery address fallback routes safely
     $recipientEmail = !empty($viewRow['input_email']) ? trim($viewRow['input_email']) : '';
-    
+
     if (empty($recipientEmail) && !empty($reportRow['uid'])) {
         $userQuery = $dbConnection->prepare("SELECT `email` FROM `users` WHERE `id` = ? LIMIT 1");
         $userQuery->execute([(int)$reportRow['uid']]);
@@ -55,7 +55,7 @@ try {
     $displayTargetName   = !empty($viewRow['name']) ? htmlspecialchars($viewRow['name'], ENT_QUOTES, 'UTF-8') : 'Unknown Target Identity';
     $displayTargetSource = !empty($viewRow['source']) ? htmlspecialchars(ucfirst($viewRow['source']), ENT_QUOTES, 'UTF-8') : 'OSINT Scan System Core';
     $currentDateTimeUtc  = gmdate('Y-m-d H:i') . ' UTC';
-    
+
     // Always route the user to the report parameters directly since the target file renders the failed screen too
     $secureReportUrl  = rtrim(BASE_URL, '/') . '/report.php?id=' . urlencode($targetVid);
 
@@ -82,25 +82,25 @@ try {
     $htmlBody = "
         <div style='background-color: #FAFAFA; padding: 24px 12px; font-family: \"Roboto\", -apple-system, BlinkMacSystemFont, sans-serif;'>
             <div style='max-width: 380px; margin: 0 auto; background-color: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.04);'>
-                
+
                 <div style='padding: 14px 20px; border-bottom: 1px solid #E5E7EB; text-align: center; background-color: #F9FAFB;'>
                     <div style='display: inline-block; vertical-align: middle; text-align: center;'>
                         <img src='https://i.postimg.cc/SQnMm8sh/2313362.png' alt='Identity Search AI Logo' style='width: 28px; height: 28px; display: inline-block; vertical-align: middle; margin-right: 6px; border: 0;'>
                         <span style='font-size: 14px; font-weight: 800; color: #111827; letter-spacing: -0.3px; display: inline-block; vertical-align: middle;'>Identity Search <span style='font-size: 10px; font-weight: 900; background-color: #000000; color: #FFFFFF; padding: 1.5px 5px; border-radius: 3.5px; margin-left: 3px; vertical-align: middle; letter-spacing: 0.5px;'>AI</span></span>
                     </div>
                 </div>
-                
+
                 <div style='padding: 24px 20px; text-align: left;'>
                     <h2 style='font-size: 16px; font-weight: 700; color: #111827; margin-top: 0; margin-bottom: 10px;'>{$headerMessage}</h2>
                     <p style='font-size: 11px; color: #4B5563; font-weight: 400; line-height: 1.5; margin-bottom: 18px;'>{$bodyNarrative}</p>
-                    
+
                     <!-- RENAME: Dossier Metrics -> Report Summary -->
                     <div style='background-color: #FAFAFA; border: 1px solid #E5E7EB; border-radius: 10px; padding: 12px; margin-bottom: 20px;'>
                         <div style='margin-bottom: 6px; font-size: 11px; font-weight: 700; color: #111827; border-bottom: 1px dashed #E5E7EB; padding-bottom: 4px; text-transform: uppercase; letter-spacing: 0.2px;'>Report Summary</div>
                         <div style='margin-bottom: 6px; font-size: 11px; color: #4B5563;'><b style='color: #111827;'>Name:</b> {$displayTargetName}</div>
                         <div style='margin-bottom: 6px; font-size: 11px; color: #4B5563;'><b style='color: #111827;'>Source:</b> {$displayTargetSource}</div>
                         <div style='margin-bottom: 6px; font-size: 11px; color: #4B5563;'>
-                            <b style='color: #111827;'>Status:</b> 
+                            <b style='color: #111827;'>Status:</b>
                             {$statusBadgeHtml}
                         </div>
                         <div style='font-size: 11px; color: #4B5563;'><b style='color: #111827;'>Date:</b> {$currentDateTimeUtc}</div>
@@ -114,14 +114,14 @@ try {
                         <a href='{$secureReportUrl}' target='_blank' style='color: #FFFFFF; font-size: 12px; font-weight: 700; text-decoration: none; padding: 12px 24px; border-radius: 10px; display: inline-block; {$buttonColorStyle}'>Open Report</a>
                     </div>
                 </div>
-                
+
                 <div style='padding: 20px; border-top: 1px solid #F3F4F6; background-color: #FAFAFA; text-align: center;'>
                     <div style='display: block; margin-bottom: 8px;'>
                         <span style='font-size: 16px; display: inline-block; vertical-align: middle;'>🕵️‍♂️</span>
                     </div>
                     <p style='font-size: 9px; color: #4B5563; font-weight: 500; margin: 0 0 4px 0;'>&copy; 2026 - Identity Search AI</p>
                     <p style='font-size: 9px; color: #4B5563; font-weight: 400; margin: 0;'>
-                        <a href='mailto:support@idtrace.ai' style='color: #128c7e; text-decoration: none;'>support@idtrace.ai</a>
+                        <a href='mailto:support@identitysearch.ai' style='color: #128c7e; text-decoration: none;'>support@identitysearch.ai</a>
                     </p>
                 </div>
 

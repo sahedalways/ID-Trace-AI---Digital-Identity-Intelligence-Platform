@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             // Commit tracking entry payload dynamically to data layer table
             $stmt = $pdo->prepare("
-                INSERT INTO `contact` (`uid`, `name`, `email`, `subject`, `body`, `created_at`) 
+                INSERT INTO `contact` (`uid`, `name`, `email`, `subject`, `body`, `created_at`)
                 VALUES (:uid, :name, :email, :subject, :body, NOW())
             ");
             $stmt->execute([
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $htmlBody = "
                 <div style='background-color: #FAFAFA; padding: 24px 12px; font-family: \"Roboto\", -apple-system, BlinkMacSystemFont, sans-serif;'>
                     <div style='max-width: 380px; margin: 0 auto; background-color: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.04);'>
-                        
+
                         <!-- HEADER LOGO STACK -->
                         <div style='padding: 14px 20px; border-bottom: 1px solid #E5E7EB; text-align: center; background-color: #F9FAFB;'>
                             <div style='display: inline-block; vertical-align: middle; text-align: center;'>
@@ -69,12 +69,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <span style='font-size: 14px; font-weight: 800; color: #111827; letter-spacing: -0.3px; display: inline-block; vertical-align: middle;'>Identity Search <span style='font-size: 10px; font-weight: 900; background-color: #000000; color: #FFFFFF; padding: 1.5px 5px; border-radius: 3.5px; margin-left: 3px; vertical-align: middle; letter-spacing: 0.5px;'>AI</span></span>
                             </div>
                         </div>
-                        
+
                         <!-- BODY MAIN SECTOR WITH SMALL TEXT LAYOUT -->
                         <div style='padding: 24px 20px; text-align: left;'>
                             <h2 style='font-size: 16px; font-weight: 700; color: #111827; margin-top: 0; margin-bottom: 10px;'>We received your support request</h2>
                             <p style='font-size: 11px; color: #4B5563; font-weight: 400; line-height: 1.5; margin-bottom: 18px;'>Thank you for reaching out to Identity Search AI. We have successfully logged your technical data request, and our engineering team will review your inquiry and respond shortly.</p>
-                            
+
                             <div style='background-color: #FAFAFA; border: 1px solid #E5E7EB; border-radius: 10px; padding: 12px; margin-bottom: 18px;'>
                                 <div style='margin-bottom: 8px; font-size: 11px; color: #4B5563;'><b style='color: #111827;'>Name:</b> {$escapedName}</div>
                                 <div style='margin-bottom: 8px; font-size: 11px; color: #4B5563;'><b style='color: #111827;'>Email:</b> {$escapedEmail}</div>
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div style='font-size: 11px; color: #4B5563; line-height: 1.4;'><b style='color: #111827; display: block; margin-bottom: 4px;'>Details:</b><div style='color: #6B7280;'>{$escapedBody}</div></div>
                             </div>
                         </div>
-                        
+
                         <!-- FOOTER BRAND SECTOR -->
                         <div style='padding: 20px; border-top: 1px solid #F3F4F6; background-color: #FAFAFA; text-align: center;'>
                             <div style='display: block; margin-bottom: 8px;'>
@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <p style='font-size: 9px; color: #4B5563; font-weight: 500; margin: 0 0 4px 0;'>&copy; 2026 - Identity Search AI</p>
                             <p style='font-size: 9px; color: #4B5563; font-weight: 400; margin: 0;'>
-                                <a href='mailto:support@idtrace.ai' style='color: #128c7e; text-decoration: none;'>support@idtrace.ai</a>
+                                <a href='mailto:support@identitysearch.ai' style='color: #128c7e; text-decoration: none;'>support@identitysearch.ai</a>
                             </p>
                         </div>
 
@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             sendTransactionalMail($input_email, $emailSubject, $htmlBody);
 
             $_SESSION['contact_flash_success'] = "Message dispatched successfully. A confirmation receipt copy has been sent to your inbox.";
-            
+
             // Post/Redirect/Get Execution Termination Loop
             header("Location: " . BASE_URL . "contact.php");
             exit;
@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <main class="flex-grow max-w-xl w-full mx-auto px-4 sm:px-6 pt-12 pb-16">
         <div class="space-y-6">
-            
+
             <div class="text-center space-y-2">
                 <h1 class="text-3xl font-black tracking-tight text-gray-900">Support Center</h1>
                 <p class="text-base text-black font-semibold max-w-sm mx-auto leading-relaxed">
@@ -151,14 +151,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <!-- CONTACT SUBMISSION GATEWAY -->
             <form id="contactSubmissionForm" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="bg-white rounded-3xl border border-gray-200 p-6 sm:p-8 shadow-xl space-y-5 text-left">
-                
+
                 <div class="space-y-1.5">
                     <label for="contact_name" class="text-xs font-black uppercase text-gray-400 tracking-wider">Your Full Name</label>
-                    <input 
-                        type="text" 
-                        name="contact_name" 
+                    <input
+                        type="text"
+                        name="contact_name"
                         id="contact_name"
-                        value="<?php echo htmlspecialchars($preload_name); ?>" 
+                        value="<?php echo htmlspecialchars($preload_name); ?>"
                         placeholder="Enter your name"
                         class="w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-3 text-base text-black font-semibold outline-none focus:border-[#128c7e] focus:bg-white transition"
                         required
@@ -167,11 +167,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="space-y-1.5">
                     <label for="contact_email" class="text-xs font-black uppercase text-gray-400 tracking-wider">Your Email Address</label>
-                    <input 
-                        type="email" 
-                        name="contact_email" 
+                    <input
+                        type="email"
+                        name="contact_email"
                         id="contact_email"
-                        value="<?php echo htmlspecialchars($preload_email); ?>" 
+                        value="<?php echo htmlspecialchars($preload_email); ?>"
                         placeholder="name@example.com"
                         class="w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-3 text-base text-black font-semibold outline-none focus:border-[#128c7e] focus:bg-white transition"
                         required
@@ -180,9 +180,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="space-y-1.5">
                     <label for="contact_subject" class="text-xs font-black uppercase text-gray-400 tracking-wider">Inquiry Subject</label>
-                    <input 
-                        type="text" 
-                        name="contact_subject" 
+                    <input
+                        type="text"
+                        name="contact_subject"
                         id="contact_subject"
                         placeholder="What are you reaching out about?"
                         class="w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-3 text-base text-black font-semibold outline-none focus:border-[#128c7e] focus:bg-white transition"
@@ -192,8 +192,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="space-y-1.5">
                     <label for="contact_body" class="text-xs font-black uppercase text-gray-400 tracking-wider">Message Details</label>
-                    <textarea 
-                        name="contact_body" 
+                    <textarea
+                        name="contact_body"
                         id="contact_body"
                         rows="5"
                         placeholder="Type the full details of your message here..."
@@ -219,12 +219,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const btn = document.getElementById('submitContactBtn');
         const iconNode = document.getElementById('btnIconNode');
         const textNode = document.getElementById('btnTextNode');
-        
+
         if (btn && iconNode && textNode) {
             // Terminate double processing flows instantly
             btn.style.pointerEvents = 'none';
             btn.classList.add('opacity-80');
-            
+
             // Trigger animation processing layouts
             iconNode.className = "fa-solid fa-spinner animate-spin text-sm shrink-0";
             textNode.textContent = "Processing...";

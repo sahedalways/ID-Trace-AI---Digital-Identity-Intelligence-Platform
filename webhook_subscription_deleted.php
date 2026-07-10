@@ -29,15 +29,15 @@ try {
 
     // Legitimate Churn / Overdue Drop detected -> Wiping profile tokens and active balance allocations
     $clear_stmt = $pdo->prepare("
-        UPDATE `users` 
-        SET `stripe_subscription_id` = NULL, 
-            `plan` = NULL, 
-            `credit` = 0, 
-            `validity` = NULL 
+        UPDATE `users`
+        SET `stripe_subscription_id` = NULL,
+            `plan` = NULL,
+            `credit` = 0,
+            `validity` = NULL
         WHERE `id` = ?
     ");
     $clear_stmt->execute([$user_id]);
-    
+
     // Centralized Churn Email dispatch using your universal brand layout framework
     if (!empty($user_email)) {
         $cancelHtmlBody = "
@@ -60,7 +60,7 @@ try {
                         </div>
                         <p style='font-size: 9px; color: #4B5563; font-weight: 500; margin: 0 0 4px 0;'>&copy; 2026 - Identity Search AI</p>
                         <p style='font-size: 9px; color: #4B5563; font-weight: 400; margin: 0;'>
-                            <a href='mailto:support@idtrace.ai' style='color: #128c7e; text-decoration: none;'>support@idtrace.ai</a>
+                            <a href='mailto:support@identitysearch.ai' style='color: #128c7e; text-decoration: none;'>support@identitysearch.ai</a>
                         </p>
                     </div>
                 </div>

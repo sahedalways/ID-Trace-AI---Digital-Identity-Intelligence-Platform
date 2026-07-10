@@ -32,7 +32,7 @@ try {
         $cardholder_name = !empty($user['cardholder_name']) ? $user['cardholder_name'] : $user['name'];
 
         $lines = $object['lines']['data'] ?? [];
-        $plan_name = 'm1'; 
+        $plan_name = 'm1';
         if (!empty($lines)) {
             $price_id = $lines[0]['price']['id'] ?? '';
             $p_stmt = $pdo->prepare("SELECT `name`, `credit`, `free_credit` FROM `plans` WHERE `stripe_price_id` = ? LIMIT 1");
@@ -45,12 +45,12 @@ try {
         }
 
         if (!isset($credits_allocated)) {
-            $credits_allocated = 100; 
+            $credits_allocated = 100;
         }
 
         $unique_tid = generateWebhookTransactionId();
         $next_renewal_timestamp = null;
-        
+
         $sub_ch = curl_init("https://api.stripe.com/v1/subscriptions/" . $stripe_subscription_id);
         curl_setopt($sub_ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($sub_ch, CURLOPT_USERPWD, $api_key . ":");
@@ -79,16 +79,16 @@ try {
         try {
             $tx_query = "INSERT INTO `transactions` (`tid`, `cid`, `stripe_invoice_id`, `uid`, `plan`, `cardholder_name`, `country`, `street`, `zip`, `status`, `created_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'succeeded', NOW())";
             $pdo->prepare($tx_query)->execute([
-                $unique_tid, $affiliate_cid, $stripe_invoice_id, $user_id, $plan_name, $cardholder_name, 
+                $unique_tid, $affiliate_cid, $stripe_invoice_id, $user_id, $plan_name, $cardholder_name,
                 $user['country'] ?? 'XX', $user['street'] ?? '', $user['zip'] ?? ''
             ]);
         } catch (PDOException $e) {
             if ($e->getCode() == 23000 || strpos($e->getMessage(), '1062') !== false) {
-                $pdo->rollBack(); 
+                $pdo->rollBack();
                 echo json_encode(['status' => 'ignored', 'message' => 'Duplicate Invoice Blocked. Handled elsewhere.']);
-                exit; 
+                exit;
             }
-            throw $e; 
+            throw $e;
         }
 
         $pdo->prepare("UPDATE `users` SET `plan` = ?, `stripe_subscription_id` = ?, `validity` = ?, `credit` = `credit` + ? WHERE `id` = ?")
@@ -147,7 +147,7 @@ try {
                         </div>
                         <p style='font-size: 9px; color: #4B5563; font-weight: 500; margin: 0 0 4px 0;'>&copy; 2026 - Identity Search AI</p>
                         <p style='font-size: 9px; color: #4B5563; font-weight: 400; margin: 0;'>
-                            <a href='mailto:support@idtrace.ai' style='color: #128c7e; text-decoration: none;'>support@idtrace.ai</a>
+                            <a href='mailto:support@identitysearch.ai' style='color: #128c7e; text-decoration: none;'>support@identitysearch.ai</a>
                         </p>
                     </div>
                 </div>

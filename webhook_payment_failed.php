@@ -13,7 +13,7 @@ try {
 
     if ($failed_user && !empty($failed_user['email'])) {
         $failed_email = $failed_user['email'];
-        
+
         $failHtmlBody = "
             <div style='background-color: #FAFAFA; padding: 24px 12px; font-family: \"Roboto\", -apple-system, BlinkMacSystemFont, sans-serif;'>
                 <div style='max-width: 380px; margin: 0 auto; background-color: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 14px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.04);'>
@@ -33,7 +33,7 @@ try {
                         </div>
                         <p style='font-size: 9px; color: #4B5563; font-weight: 500; margin: 0 0 4px 0;'>&copy; 2026 - Identity Search AI</p>
                         <p style='font-size: 9px; color: #4B5563; font-weight: 400; margin: 0;'>
-                            <a href='mailto:support@idtrace.ai' style='color: #128c7e; text-decoration: none;'>support@idtrace.ai</a>
+                            <a href='mailto:support@identitysearch.ai' style='color: #128c7e; text-decoration: none;'>support@identitysearch.ai</a>
                         </p>
                     </div>
                 </div>
@@ -42,7 +42,7 @@ try {
 
         $failSubject = "Payment Failed — Identity Search AI";
         sendTransactionalMail($failed_email, $failSubject, $failHtmlBody);
-        
+
         echo json_encode(['status' => 'success', 'message' => 'Checkout checkout failure email alert dispatched.']);
     } else {
         echo json_encode(['status' => 'ignored', 'message' => 'No local profile mapping resolved for system failure alert.']);
