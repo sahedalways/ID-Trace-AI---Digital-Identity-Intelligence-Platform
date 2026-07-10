@@ -78,12 +78,12 @@ require_once 'my-plan-controller.php';
                     </div>
 
                     <div class="pt-4 border-t border-gray-100/70 space-y-3">
-                        <a href="<?php echo BASE_URL; ?>buy-credit.php" class="w-full flex items-center justify-center gap-2 bg-[#128c7e] hover:bg-[#0e6f64] text-white py-4 rounded-xl text-sm font-bold transition shadow-sm cursor-pointer">
+                        <a href="<?php echo BASE_URL; ?>buy-credit.php" class="w-auto flex items-center justify-center gap-2 bg-[#128c7e] hover:bg-[#0e6f64] text-white py-4 px-6 rounded-xl text-sm font-bold transition shadow-sm cursor-pointer">
                             <i class="fa-solid fa-circle-plus"></i> Upgrade Plan / Add Credits
                         </a>
                         
                         <?php if (!$cancel_at_period_end && in_array($subscription_status, ['active', 'trialing'])): ?>
-                            <a href="cancel-subscription.php" onclick="return confirm('Your remaining credits and generated report will be lost on cancellation your plan. Do you want to cancel your subscription?');" class="w-full flex items-center justify-center bg-[#B22222] hover:bg-[#b81032] text-white py-4 rounded-xl text-sm font-bold transition shadow-sm cursor-pointer border border-transparent">
+                            <a href="cancel-subscription.php" onclick="return confirm('Your remaining credits and generated report will be lost on cancellation your plan. Do you want to cancel your subscription?');" class="w-auto flex items-center justify-center bg-[#B22222] hover:bg-[#b81032] text-white py-4 px-6 rounded-xl text-sm font-bold transition shadow-sm cursor-pointer border border-transparent">
                                 Cancel Subscription
                             </a>
                         <?php endif; ?>
