@@ -22,10 +22,7 @@
             <!-- Brand Column -->
             <div class="md:col-span-4 space-y-4">
                 <div class="flex items-center gap-2.5">
-                    <span class="w-9 h-9 rounded-xl bg-[#128c7e] text-white flex items-center justify-center text-sm">
-                        <i class="fa-solid fa-fingerprint"></i>
-                    </span>
-                    <span class="text-lg font-bold text-gray-900 tracking-tight">Identity Search <span class="text-[11px] font-bold bg-black text-white px-2 py-0.5 rounded-md ml-1 align-middle tracking-wider">AI</span></span>
+                    <img src="public/logo.png" alt="Identity Search AI Logo" class="h-12 w-auto">
                 </div>
                 <p class="text-sm text-gray-500 font-medium leading-relaxed max-w-xs">
                     AI-powered digital identity intelligence platform. Analyze public footprints and generate comprehensive reports.

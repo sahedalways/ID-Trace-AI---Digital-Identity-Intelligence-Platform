@@ -236,6 +236,9 @@ $current_wizard_step = $_SESSION['reset_step'];
     </main>
 
     <footer class="w-full text-center py-6 border-t border-gray-200 bg-white/50 backdrop-blur-sm text-xs font-semibold text-gray-400">
+        <div class="flex items-center justify-center gap-2 mb-2">
+            <img src="public/logo.png" alt="Identity Search AI Logo" class="h-12 w-auto">
+        </div>
         &copy; 2026 Identity Search AI Affiliate Portal. All rights reserved.
     </footer>
 

@@ -189,6 +189,9 @@ while ($row = $hist_stmt->fetch(PDO::FETCH_ASSOC)) {
     </script>
 
     <footer class="w-full bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-400 font-semibold">
+        <div class="flex items-center justify-center gap-2 mb-2">
+            <img src="public/logo.png" alt="Identity Search AI Logo" class="h-12 w-auto">
+        </div>
         &copy; <?= date('Y'); ?> Identity Search AI Affiliate Portal. All rights reserved.
     </footer>
 
