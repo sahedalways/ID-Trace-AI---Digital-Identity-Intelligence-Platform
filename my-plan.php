@@ -1,29 +1,34 @@
-<?php 
+<?php
 //File: my-plan.php
-require_once 'my-plan-controller.php'; 
+require_once 'my-plan-controller.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>My Subscription Plan — Identity Search AI</title>
     <?php include 'head.php'; ?>
     <style>
-        body { background-color: #f9fafb !important; color: #111827 !important; }
+        body {
+            background-color: #f9fafb !important;
+            color: #111827 !important;
+        }
     </style>
 </head>
+
 <body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white bg-slate-50">
 
     <?php include 'navbar.php'; ?>
 
     <main class="flex-grow max-w-4xl w-full mx-auto px-4 py-8 space-y-6">
-        
+
         <div class="text-left">
             <h1 class="text-2xl font-bold tracking-tight text-gray-900">Subscription Management</h1>
             <p class="text-xs text-black font-medium mt-1">Review your allocation status limits, metrics, and billing invoice statements.</p>
         </div>
 
         <div class="w-full bg-white border border-gray-200 rounded-2xl p-6 shadow-sm relative overflow-hidden">
-            
+
             <?php if (!empty($user['stripe_subscription_id'])): ?>
                 <div class="space-y-6 text-left">
                     <div>
@@ -34,7 +39,7 @@ require_once 'my-plan-controller.php';
                     </div>
 
                     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4 border-t border-gray-50 pt-5">
-                        <div>
+                        <div class="min-w-0">
                             <span class="text-[11px] font-semibold text-gray-400 block uppercase tracking-wider">Status</span>
                             <?php if (strtolower($subscription_status) === 'active' || strtolower($subscription_status) === 'trialing'): ?>
                                 <span class="text-xs font-semibold uppercase text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200/60 inline-block mt-1">Active</span>
@@ -42,36 +47,36 @@ require_once 'my-plan-controller.php';
                                 <span class="text-xs font-semibold uppercase text-gray-700 bg-gray-50 px-1.5 py-0.5 rounded border border-gray-200 inline-block mt-1"><?php echo htmlspecialchars($subscription_status); ?></span>
                             <?php endif; ?>
                         </div>
-                        <div>
+                        <div class="min-w-0">
                             <span class="text-[11px] font-semibold text-gray-400 block uppercase tracking-wider">Credits</span>
                             <span class="text-sm font-semibold text-gray-900 mt-1 inline-flex items-center">
                                 <?php echo (int)$user['credit']; ?>
                                 <span class="text-xs font-normal text-gray-500 ml-1">Reports</span>
                             </span>
                         </div>
-                        <div>
+                        <div class="min-w-0">
                             <span class="text-[11px] font-semibold text-gray-400 block uppercase tracking-wider">Plan Cost</span>
                             <span class="text-sm font-semibold text-gray-900 mt-1 inline-block">$<?php echo $plan_amount; ?></span>
                         </div>
-                        <div>
+                        <div class="min-w-0">
                             <span class="text-[11px] font-semibold text-gray-400 block uppercase tracking-wider">Frequency</span>
                             <span class="text-sm font-semibold text-gray-900 mt-1 inline-block capitalize"><?php echo $plan_frequency; ?></span>
                         </div>
-                        <div>
+                        <div class="min-w-0">
                             <span class="text-[11px] font-semibold text-gray-400 block uppercase tracking-wider">Payment Card</span>
-                            <span class="text-sm font-semibold text-gray-900 mt-1 inline-block tracking-tight whitespace-nowrap">
+                            <span class="text-sm font-semibold text-gray-900 mt-1 inline-block tracking-tight break-words">
                                 <i class="fa-solid fa-credit-card text-xs mr-0.5 text-gray-400"></i> <?php echo htmlspecialchars($payment_method_display); ?>
                             </span>
                         </div>
-                        <div>
+                        <div class="min-w-0">
                             <span class="text-[11px] font-semibold text-gray-400 block uppercase tracking-wider">Auto Renewal</span>
                             <span class="text-sm font-semibold text-gray-900 mt-1 inline-block"><?php echo $cancel_at_period_end ? 'Disabled' : 'Enabled'; ?></span>
                         </div>
-                        <div>
+                        <div class="min-w-0">
                             <span class="text-[11px] font-semibold text-gray-400 block uppercase tracking-wider">Last Charged</span>
                             <span class="text-sm font-semibold text-gray-900 mt-1 inline-block"><?php echo $last_charge_date; ?></span>
                         </div>
-                        <div>
+                        <div class="min-w-0">
                             <span class="text-[11px] font-semibold text-gray-400 block uppercase tracking-wider">Next Renewal</span>
                             <span class="text-sm font-semibold text-gray-900 mt-1 inline-block"><?php echo $next_charge_date; ?></span>
                         </div>
@@ -81,7 +86,7 @@ require_once 'my-plan-controller.php';
                         <a href="<?php echo BASE_URL; ?>buy-credit.php" class="w-auto flex items-center justify-center gap-2 bg-[#128c7e] hover:bg-[#0e6f64] text-white py-4 px-6 rounded-xl text-sm font-bold transition shadow-sm cursor-pointer">
                             <i class="fa-solid fa-circle-plus"></i> Upgrade Plan / Add Credits
                         </a>
-                        
+
                         <?php if (!$cancel_at_period_end && in_array($subscription_status, ['active', 'trialing'])): ?>
                             <a href="cancel-subscription.php" onclick="return confirm('Your remaining credits and generated report will be lost on cancellation your plan. Do you want to cancel your subscription?');" class="w-auto flex items-center justify-center bg-[#B22222] hover:bg-[#b81032] text-white py-4 px-6 rounded-xl text-sm font-bold transition shadow-sm cursor-pointer border border-transparent">
                                 Cancel Subscription
@@ -173,4 +178,5 @@ require_once 'my-plan-controller.php';
     </main>
 
 </body>
+
 </html>

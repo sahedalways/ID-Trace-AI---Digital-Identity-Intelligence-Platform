@@ -52,7 +52,7 @@
             <div class="md:col-span-2 space-y-4">
                 <h4 class="text-xs font-bold text-gray-900 uppercase tracking-widest">Resources</h4>
                 <ul class="space-y-3">
-                    <li><a href="affiliate-portal.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Affiliate Portal</a></li>
+                    <li><a href="affiliate-portal.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Affiliates</a></li>
                     <li><a href="terms.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Terms of Service</a></li>
                     <li><a href="privacy.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Privacy Policy</a></li>
                 </ul>

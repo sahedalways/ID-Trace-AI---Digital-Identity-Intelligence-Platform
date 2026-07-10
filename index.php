@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         </style>
         
-        <div class="grid lg:grid-cols-2 gap-14 xl:gap-24 items-center">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 xl:gap-24 items-center">
 
             <!-- Left Content -->
             <div class="text-center lg:text-left">
@@ -149,17 +149,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </p>
 
                 <!-- Feature Highlights -->
-                <div class="mt-9 flex flex-wrap justify-center lg:justify-start gap-3">
-                    <div class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-white border border-gray-200 shadow-sm text-sm font-semibold text-gray-800">
-                        <i class="fa-solid fa-user-shield text-[#128c7e] text-base"></i>
+                <div class="mt-9 flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-3">
+                    <div class="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl bg-white border border-gray-200 shadow-sm text-[11px] sm:text-sm font-semibold text-gray-800">
+                        <i class="fa-solid fa-user-shield text-[#128c7e] text-xs sm:text-base"></i>
                         Digital Identity Search
                     </div>
-                    <div class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-white border border-gray-200 shadow-sm text-sm font-semibold text-gray-800">
-                        <i class="fa-solid fa-globe text-[#128c7e] text-base"></i>
+                    <div class="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl bg-white border border-gray-200 shadow-sm text-[11px] sm:text-sm font-semibold text-gray-800">
+                        <i class="fa-solid fa-globe text-[#128c7e] text-xs sm:text-base"></i>
                         Online Footprint Analysis
                     </div>
-                    <div class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-white border border-gray-200 shadow-sm text-sm font-semibold text-gray-800">
-                        <i class="fa-solid fa-file-lines text-[#128c7e] text-base"></i>
+                    <div class="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl bg-white border border-gray-200 shadow-sm text-[11px] sm:text-sm font-semibold text-gray-800">
+                        <i class="fa-solid fa-file-lines text-[#128c7e] text-xs sm:text-base"></i>
                         Smart Identity Reports
                     </div>
                 </div>
@@ -222,17 +222,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <!-- Right Hero Image / Visual -->
             <div class="relative">
-                <div class="relative rounded-[32px] border border-emerald-100 bg-white/90 backdrop-blur shadow-[0_25px_80px_rgba(0,0,0,0.10)] overflow-hidden">
+                <div class="relative rounded-[20px] sm:rounded-[32px] border border-emerald-100 bg-white/90 backdrop-blur shadow-[0_25px_80px_rgba(0,0,0,0.10)] overflow-hidden">
 
                     <!-- Top Mini Header -->
-                    <div class="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-gray-100 bg-gradient-to-r from-emerald-50 to-white">
-                        <div class="flex items-center gap-3.5">
-                            <div class="w-12 h-12 rounded-2xl bg-[#128c7e] text-white flex items-center justify-center shadow-sm text-base">
+                    <div class="flex items-center justify-between px-3 sm:px-6 lg:px-8 py-3 sm:py-5 border-b border-gray-100 bg-gradient-to-r from-emerald-50 to-white">
+                        <div class="flex items-center gap-2.5 sm:gap-3.5">
+                            <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#128c7e] text-white flex items-center justify-center shadow-sm text-xs sm:text-base">
                                 <i class="fa-solid fa-fingerprint"></i>
                             </div>
                             <div class="text-left">
-                                <p class="text-sm font-bold text-gray-900">Identity Search Intelligence</p>
-                                <p class="text-sm text-gray-500 font-medium">AI-powered digital footprint analysis</p>
+                                <p class="text-[11px] sm:text-sm font-bold text-gray-900">Identity Search Intelligence</p>
+                                <p class="text-[10px] sm:text-sm text-gray-500 font-medium">AI-powered digital footprint analysis</p>
                             </div>
                         </div>
                         <div class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 text-xs font-bold text-emerald-800">
@@ -242,7 +242,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
 
                     <!-- Hero Slider -->
-                    <div class="relative p-5 sm:p-7">
+                    <div class="relative p-3 sm:p-5 lg:p-7">
                         <div id="heroSlider" class="relative rounded-[28px] overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-emerald-100 border border-emerald-100 group/slider">
 
                             <div class="slider-track flex transition-transform duration-700 ease-in-out">
@@ -251,19 +251,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <img
                                         src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1200&q=80"
                                         alt="Digital Identity Search"
-                                        class="w-full h-[460px] xl:h-[500px] object-cover">
+                                        class="w-full h-[240px] sm:h-[340px] lg:h-[460px] xl:h-[500px] object-cover">
                                     <div class="absolute inset-0 bg-black/30"></div>
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
-                                    <div class="absolute left-0 right-0 bottom-0 p-7 sm:p-9 text-left">
+                                    <div class="absolute left-0 right-0 bottom-0 p-4 sm:p-7 lg:p-9 text-left">
                                         <div class="max-w-lg">
-                                            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 backdrop-blur text-xs font-bold text-[#128c7e] mb-4">
+                                            <div class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/90 backdrop-blur text-[10px] sm:text-xs font-bold text-[#128c7e] mb-2 sm:mb-4">
                                                 <i class="fa-solid fa-wand-magic-sparkles"></i>
                                                 Identity Search Platform
                                             </div>
-                                            <h3 class="text-xl sm:text-2xl xl:text-3xl font-black text-white leading-tight">
+                                            <h3 class="text-sm sm:text-xl lg:text-2xl xl:text-3xl font-black text-white leading-tight">
                                                 Search smarter. Discover digital identity signals instantly.
                                             </h3>
-                                            <p class="mt-3 text-xs sm:text-sm lg:text-base text-white/90 font-medium leading-relaxed">
+                                            <p class="mt-2 sm:mt-3 text-[10px] sm:text-xs lg:text-sm text-white/90 font-medium leading-relaxed">
                                                 Uncover social profiles, digital traces, and identity intelligence in one streamlined search experience.
                                             </p>
                                         </div>
@@ -275,19 +275,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <img
                                         src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
                                         alt="Data Intelligence Analytics"
-                                        class="w-full h-[460px] xl:h-[500px] object-cover">
+                                        class="w-full h-[240px] sm:h-[340px] lg:h-[460px] xl:h-[500px] object-cover">
                                     <div class="absolute inset-0 bg-black/30"></div>
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
-                                    <div class="absolute left-0 right-0 bottom-0 p-7 sm:p-9 text-left">
+                                    <div class="absolute left-0 right-0 bottom-0 p-4 sm:p-7 lg:p-9 text-left">
                                         <div class="max-w-lg">
-                                            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 backdrop-blur text-xs font-bold text-[#128c7e] mb-4">
+                                            <div class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/90 backdrop-blur text-[10px] sm:text-xs font-bold text-[#128c7e] mb-2 sm:mb-4">
                                                 <i class="fa-solid fa-chart-line"></i>
                                                 AI Intelligence Engine
                                             </div>
-                                            <h3 class="text-xl sm:text-2xl xl:text-3xl font-black text-white leading-tight">
+                                            <h3 class="text-sm sm:text-xl lg:text-2xl xl:text-3xl font-black text-white leading-tight">
                                                 Analyze digital footprints across 50+ platforms.
                                             </h3>
-                                            <p class="mt-3 text-xs sm:text-sm lg:text-base text-white/90 font-medium leading-relaxed">
+                                            <p class="mt-2 sm:mt-3 text-[10px] sm:text-xs lg:text-sm text-white/90 font-medium leading-relaxed">
                                                 Our AI engine scans public data from social networks, professional profiles, and online databases.
                                             </p>
                                         </div>
@@ -299,19 +299,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <img
                                         src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80"
                                         alt="Cyber Security Intelligence"
-                                        class="w-full h-[460px] xl:h-[500px] object-cover">
+                                        class="w-full h-[240px] sm:h-[340px] lg:h-[460px] xl:h-[500px] object-cover">
                                     <div class="absolute inset-0 bg-black/30"></div>
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
-                                    <div class="absolute left-0 right-0 bottom-0 p-7 sm:p-9 text-left">
+                                    <div class="absolute left-0 right-0 bottom-0 p-4 sm:p-7 lg:p-9 text-left">
                                         <div class="max-w-lg">
-                                            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 backdrop-blur text-xs font-bold text-[#128c7e] mb-4">
+                                            <div class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/90 backdrop-blur text-[10px] sm:text-xs font-bold text-[#128c7e] mb-2 sm:mb-4">
                                                 <i class="fa-solid fa-shield-halved"></i>
                                                 Smart Identity Reports
                                             </div>
-                                            <h3 class="text-xl sm:text-2xl xl:text-3xl font-black text-white leading-tight">
+                                            <h3 class="text-sm sm:text-xl lg:text-2xl xl:text-3xl font-black text-white leading-tight">
                                                 Generate detailed intelligence reports in seconds.
                                             </h3>
-                                            <p class="mt-3 text-xs sm:text-sm lg:text-base text-white/90 font-medium leading-relaxed">
+                                            <p class="mt-2 sm:mt-3 text-[10px] sm:text-xs lg:text-sm text-white/90 font-medium leading-relaxed">
                                                 Get AI-powered identity verification, risk assessment, and complete digital footprint analysis.
                                             </p>
                                         </div>

@@ -93,7 +93,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
         <!-- HERO VALUE STATEMENT SECTION -->
         <section class="w-full mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-16 md:pb-10" style="max-width: 1600px;">
-            <div class="grid lg:grid-cols-2 gap-14 xl:gap-24 items-center">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 xl:gap-24 items-center">
 
                 <!-- Left Content -->
                 <div class="text-center lg:text-left">
@@ -112,17 +112,17 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                     </p>
 
                     <!-- Feature Highlights -->
-                    <div class="mt-9 flex flex-wrap justify-center lg:justify-start gap-3">
-                        <div class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-white border border-gray-200 shadow-sm text-sm font-semibold text-gray-800">
-                            <i class="fa-solid fa-percent text-[#128c7e] text-base"></i>
+                    <div class="mt-9 flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-3">
+                        <div class="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl bg-white border border-gray-200 shadow-sm text-[11px] sm:text-sm font-semibold text-gray-800">
+                            <i class="fa-solid fa-percent text-[#128c7e] text-xs sm:text-base"></i>
                             50% Recurring Commission
                         </div>
-                        <div class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-white border border-gray-200 shadow-sm text-sm font-semibold text-gray-800">
-                            <i class="fa-solid fa-clock text-[#128c7e] text-base"></i>
+                        <div class="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl bg-white border border-gray-200 shadow-sm text-[11px] sm:text-sm font-semibold text-gray-800">
+                            <i class="fa-solid fa-clock text-[#128c7e] text-xs sm:text-base"></i>
                             Real-Time Tracking
                         </div>
-                        <div class="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-white border border-gray-200 shadow-sm text-sm font-semibold text-gray-800">
-                            <i class="fa-solid fa-wallet text-[#128c7e] text-base"></i>
+                        <div class="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl bg-white border border-gray-200 shadow-sm text-[11px] sm:text-sm font-semibold text-gray-800">
+                            <i class="fa-solid fa-wallet text-[#128c7e] text-xs sm:text-base"></i>
                             Instant Payouts
                         </div>
                     </div>
@@ -151,15 +151,15 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
                 <!-- Right Visual -->
                 <div class="relative">
-                    <div class="relative rounded-[32px] border border-emerald-100 bg-white/90 backdrop-blur shadow-[0_25px_80px_rgba(0,0,0,0.10)] overflow-hidden">
-                        <div class="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-gray-100 bg-gradient-to-r from-emerald-50 to-white">
-                            <div class="flex items-center gap-3.5">
-                                <div class="w-12 h-12 rounded-2xl bg-[#128c7e] text-white flex items-center justify-center shadow-sm text-base">
+                    <div class="relative rounded-[20px] sm:rounded-[32px] border border-emerald-100 bg-white/90 backdrop-blur shadow-[0_25px_80px_rgba(0,0,0,0.10)] overflow-hidden">
+                        <div class="flex items-center justify-between px-3 sm:px-6 lg:px-8 py-3 sm:py-5 border-b border-gray-100 bg-gradient-to-r from-emerald-50 to-white">
+                            <div class="flex items-center gap-2.5 sm:gap-3.5">
+                                <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#128c7e] text-white flex items-center justify-center shadow-sm text-xs sm:text-base">
                                     <i class="fa-solid fa-handshake"></i>
                                 </div>
                                 <div class="text-left">
-                                    <p class="text-sm font-bold text-gray-900">Affiliate Partner Program</p>
-                                    <p class="text-sm text-gray-500 font-medium">Earn 50% recurring commissions</p>
+                                    <p class="text-[11px] sm:text-sm font-bold text-gray-900">Affiliate Partner Program</p>
+                                    <p class="text-[10px] sm:text-sm text-gray-500 font-medium">Earn 50% recurring commissions</p>
                                 </div>
                             </div>
                             <div class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 text-xs font-bold text-emerald-800">
@@ -167,24 +167,24 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                                 Now Live
                             </div>
                         </div>
-                        <div class="relative p-5 sm:p-7">
-                            <div class="relative rounded-[28px] overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-emerald-100 border border-emerald-100">
+                        <div class="relative p-3 sm:p-5 lg:p-7">
+                            <div class="relative rounded-[20px] sm:rounded-[28px] overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-emerald-100 border border-emerald-100">
                                 <img
                                     src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=1200&q=80"
                                     alt="Affiliate Partner Program"
-                                    class="w-full h-[460px] xl:h-[500px] object-cover">
+                                    class="w-full h-[240px] sm:h-[340px] lg:h-[460px] xl:h-[500px] object-cover">
                                 <div class="absolute inset-0 bg-black/30"></div>
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
-                                <div class="absolute left-0 right-0 bottom-0 p-7 sm:p-9 text-left">
+                                <div class="absolute left-0 right-0 bottom-0 p-4 sm:p-7 lg:p-9 text-left">
                                     <div class="max-w-lg">
-                                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 backdrop-blur text-xs font-bold text-[#128c7e] mb-4">
+                                        <div class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/90 backdrop-blur text-[10px] sm:text-xs font-bold text-[#128c7e] mb-2 sm:mb-4">
                                             <i class="fa-solid fa-gem"></i>
                                             Affiliate Network
                                         </div>
-                                        <h3 class="text-xl sm:text-2xl xl:text-3xl font-black text-white leading-tight">
+                                        <h3 class="text-sm sm:text-xl lg:text-2xl xl:text-3xl font-black text-white leading-tight">
                                             Earn 50% recurring commissions on every referral.
                                         </h3>
-                                        <p class="mt-3 text-xs sm:text-sm lg:text-base text-white/90 font-medium leading-relaxed">
+                                        <p class="mt-2 sm:mt-3 text-[10px] sm:text-xs lg:text-sm text-white/90 font-medium leading-relaxed">
                                             Promote Identity Search AI and get paid monthly for every customer you bring.
                                         </p>
                                     </div>
