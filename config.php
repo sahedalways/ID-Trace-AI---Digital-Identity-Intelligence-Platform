@@ -42,6 +42,7 @@ function env($key, $default = null) {
 }
 
 // 1. Application Configuration
+define('APP_ENV', env('APP_ENV', 'production'));
 define('BASE_URL', env('BASE_URL', 'https://idtrace.ai/'));
 
 // 2. Database Configuration
