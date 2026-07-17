@@ -16,6 +16,10 @@ if (session_status() === PHP_SESSION_NONE) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- Production Favicon Shortcut Link -->
+<link rel="shortcut icon" href="https://i.ibb.co.com/FpJbXPS/idtrace1.webp" type="image/webp">
+<link rel="icon" href="https://i.ibb.co.com/FpJbXPS/idtrace1.webp" type="image/webp">
+
 <!-- Typography Framework Layer — Open Sans Universal Modern Typeface -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

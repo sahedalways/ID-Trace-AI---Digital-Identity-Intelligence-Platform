@@ -105,10 +105,15 @@ function getActiveNavClass($current_page, $target_pages) {
 
             <div class="flex items-center gap-4">
                 <?php if ($isLoggedIn): ?>
-                    <div class="text-right hidden sm:block">
-                        <div class="text-xs font-bold text-gray-900"><?= htmlspecialchars($affiliateName) ?></div>
-                        <div class="text-[10px] font-mono font-bold text-[#128c7e]">Authorized Node</div>
-                    </div>
+                    <a href="affiliate-profile.php" class="hidden sm:flex items-center gap-2 hover:opacity-80 transition">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-[#128c7e] flex items-center justify-center text-white shadow-md">
+                            <i class="fa-solid fa-user text-sm"></i>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-xs font-bold text-gray-900"><?= htmlspecialchars($affiliateName) ?></div>
+                            <div class="text-[10px] font-mono font-bold text-[#128c7e]">Authorized Node</div>
+                        </div>
+                    </a>
                 <?php endif; ?>
                 
                 <div class="relative lg:hidden">
