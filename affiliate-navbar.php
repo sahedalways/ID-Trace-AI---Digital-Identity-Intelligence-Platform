@@ -37,7 +37,7 @@ function getActiveNavClass($current_page, $target_pages) {
 </style>
 
 <nav id="affiliateNavbar" class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm transition-all duration-300">
-    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-[1650px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             
             <div class="flex-shrink-0">

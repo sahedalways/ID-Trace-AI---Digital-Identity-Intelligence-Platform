@@ -106,7 +106,7 @@ while ($row = $hist_stmt->fetch(PDO::FETCH_ASSOC)) {
 
     <?php include 'affiliate-navbar.php'; ?>
 
-    <main class="max-w-4xl w-full mx-auto px-4 sm:px-6 pt-8 pb-16 grow space-y-6">
+    <main class="max-w-[1650px] w-full mx-auto px-4 sm:px-6 pt-8 pb-16 grow space-y-6">
         
         <?php if (!empty($status_msg)): ?>
             <?php

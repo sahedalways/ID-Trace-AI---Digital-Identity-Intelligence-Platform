@@ -114,7 +114,7 @@ try {
 
     <?php include 'affiliate-navbar.php'; ?>
 
-    <main class="max-w-4xl w-full mx-auto px-4 sm:px-6 pt-8 pb-16 grow space-y-6">
+    <main class="max-w-[1650px] w-full mx-auto px-4 sm:px-6 pt-8 pb-16 grow space-y-6">
 
         <?php if (!empty($status_msg)): ?>
             <div class="p-4 rounded-xl text-xs font-bold border <?= $status_success ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-red-50 border-red-200 text-red-600' ?> text-left">

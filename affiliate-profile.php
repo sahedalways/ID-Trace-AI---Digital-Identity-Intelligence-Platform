@@ -140,7 +140,7 @@ $method_icons = [
 <body class="bg-slate-50 text-slate-900 min-h-screen">
     <?php include 'affiliate-navbar.php'; ?>
 
-    <div class="max-w-4xl mx-auto px-4 py-10 space-y-6">
+    <div class="max-w-[1650px] mx-auto px-4 py-10 space-y-6">
 
         <?php if (!$payment_filled): ?>
             <div class="bg-amber-50 border-l-4 border-amber-500 p-5 rounded-2xl flex items-center justify-between shadow-sm">

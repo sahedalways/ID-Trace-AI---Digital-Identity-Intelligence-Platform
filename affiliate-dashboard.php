@@ -72,7 +72,7 @@ try {
 
     <?php include 'affiliate-navbar.php'; ?>
 
-    <main class="max-w-6xl w-full mx-auto px-4 sm:px-6 pt-8 pb-16 grow space-y-6">
+    <main class="max-w-[1650px] w-full mx-auto px-4 sm:px-6 pt-8 pb-16 grow space-y-6">
         
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-white border border-gray-200 p-6 rounded-2xl shadow-sm gap-4">
             <div class="text-left space-y-0.5">

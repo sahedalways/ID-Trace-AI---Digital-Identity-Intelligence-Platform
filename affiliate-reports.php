@@ -221,7 +221,7 @@ if ($total_pages < 1) $total_pages = 1;
 
     <?php include 'affiliate-navbar.php'; ?>
 
-    <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 pt-8 pb-16 grow space-y-6">
+    <main class="max-w-[1650px] w-full mx-auto px-4 sm:px-6 pt-8 pb-16 grow space-y-6">
         
         <!-- REPORT QUERY FORM INPUT SECTION -->
         <div class="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm">
