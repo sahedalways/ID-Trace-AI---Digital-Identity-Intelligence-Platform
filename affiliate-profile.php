@@ -194,7 +194,7 @@ $method_icons = [
                             </span>
                         </div>
                     </div>
-                    <button type="submit" name="update_profile" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase text-[11px] tracking-widest shadow-lg hover:bg-slate-800 transition cursor-pointer">Save Profile</button>
+                    <button type="submit" name="update_profile" class="bg-slate-900 text-white py-3 px-8 rounded-2xl font-black uppercase text-[11px] tracking-widest shadow-lg hover:bg-slate-800 transition cursor-pointer">Save Profile</button>
                 </form>
             </div>
 
@@ -273,7 +273,7 @@ $method_icons = [
                             <i class="fa fa-info-circle mr-1"></i> Note: You cannot edit payment info after saving.
                         </p>
 
-                        <button type="submit" name="update_payment" id="savePaymentBtn" class="w-full bg-emerald-600 text-white py-4 rounded-2xl font-black uppercase text-[11px] tracking-widest shadow-lg hover:bg-emerald-700 transition cursor-pointer hidden">Update Payment Info</button>
+                        <button type="submit" name="update_payment" id="savePaymentBtn" class="bg-emerald-600 text-white py-3 px-8 rounded-2xl font-black uppercase text-[11px] tracking-widest shadow-lg hover:bg-emerald-700 transition cursor-pointer hidden">Update Payment Info</button>
                     </form>
 
                 <?php else: ?>
@@ -330,7 +330,7 @@ $method_icons = [
                             <i class="fa fa-info-circle mr-1"></i> Note: You cannot edit payment info after saving.
                         </p>
 
-                        <button type="submit" name="update_payment" id="savePaymentBtn" class="w-full bg-emerald-600 text-white py-4 rounded-2xl font-black uppercase text-[11px] tracking-widest shadow-lg hover:bg-emerald-700 transition cursor-pointer hidden">Save Payment Info</button>
+                        <button type="submit" name="update_payment" id="savePaymentBtn" class="bg-emerald-600 text-white py-3 px-8 rounded-2xl font-black uppercase text-[11px] tracking-widest shadow-lg hover:bg-emerald-700 transition cursor-pointer hidden">Save Payment Info</button>
                     </form>
                 <?php endif; ?>
             </div>
@@ -345,7 +345,7 @@ $method_icons = [
                     <input type="password" name="new_pass" placeholder="New Password" required minlength="6" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-orange-500">
                     <input type="password" name="confirm_pass" placeholder="Confirm New Password" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-orange-500">
                     <div class="md:col-span-3">
-                        <button type="submit" name="change_password" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-black uppercase text-[11px] tracking-widest shadow-lg hover:bg-slate-800 transition cursor-pointer">Update Security</button>
+                        <button type="submit" name="change_password" class="bg-slate-900 text-white py-3 px-8 rounded-2xl font-black uppercase text-[11px] tracking-widest shadow-lg hover:bg-slate-800 transition cursor-pointer">Update Security</button>
                     </div>
                 </form>
             </div>
