@@ -51,10 +51,11 @@ try {
             WHERE `id` = ?
         ")->execute([$offender_uid]);
 
-        // Mitigation Step 2: Push systemic dispute logs, record indicators and exact pricing data
+        // Mitigation Step 2: Push systemic dispute logs, record indicators, exact pricing data, and flag chargeback
         $pdo->prepare("
             UPDATE `transactions` 
-            SET `dispute_status` = 1, 
+            SET `status` = 'chargeback',
+                `dispute_status` = 1, 
                 `dispute_reason` = ?, 
                 `dispute_amount` = ? 
             WHERE `stripe_invoice_id` = ?

@@ -136,6 +136,27 @@ switch ($eventType) {
         include 'webhook_dispute_created.php';
         break;
 
+    // -------------------------------------------------------------------------
+    // JOB 7: CHARGE REFUNDED — FULL REFUND CHARGEBACK ENFORCEMENT
+    // -------------------------------------------------------------------------
+    case 'charge.refunded':
+        include 'webhook_charge_refunded.php';
+        break;
+
+    // -------------------------------------------------------------------------
+    // JOB 8: DISPUTE CLOSED — FINAL RESOLUTION (WON OR LOST)
+    // -------------------------------------------------------------------------
+    case 'charge.dispute.closed':
+        include 'webhook_dispute_closed.php';
+        break;
+
+    // -------------------------------------------------------------------------
+    // JOB 9: INDIVIDUAL REFUND CREATED — REFUND CHARGEBACK ENFORCEMENT
+    // -------------------------------------------------------------------------
+    case 'refund.created':
+        include 'webhook_refund_created.php';
+        break;
+
     default:
         echo json_encode(['status' => 'unhandled', 'message' => 'Event lifecycle bypassed. Code operations skipped.']);
         break;

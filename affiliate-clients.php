@@ -35,9 +35,19 @@ try {
     $c_nos = $pdo->prepare("SELECT COUNT(*) FROM `users` u INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci WHERE c.`affid` = ? AND (u.`plan` IS NULL OR u.`plan` = '' OR u.`plan` = 'FREE TIER')");
     $c_nos->execute([$affiliateId]);
     $count_no_sub = (int)$c_nos->fetchColumn();
+
+    // Cancelled subscription count (inactive status, no chargeback)
+    $c_cancel = $pdo->prepare("SELECT COUNT(*) FROM `users` u INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci WHERE c.`affid` = ? AND u.`status` = 'inactive' AND NOT EXISTS (SELECT 1 FROM `transactions` t WHERE t.`uid` = u.`id` AND t.`dispute_status` = 1)");
+    $c_cancel->execute([$affiliateId]);
+    $count_cancelled = (int)$c_cancel->fetchColumn();
+
+    // Chargeback subscription count (users with at least one chargeback transaction)
+    $c_cb = $pdo->prepare("SELECT COUNT(DISTINCT u.`id`) FROM `users` u INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci INNER JOIN `transactions` t ON t.`uid` = u.`id` WHERE c.`affid` = ? AND t.`dispute_status` = 1");
+    $c_cb->execute([$affiliateId]);
+    $count_chargeback = (int)$c_cb->fetchColumn();
 } catch (PDOException $e) {
     error_log("Affiliate Counter Fault: " . $e->getMessage());
-    $count_all = $count_active = $count_no_sub = 0;
+    $count_all = $count_active = $count_no_sub = $count_cancelled = $count_chargeback = 0;
 }
 
 // 4. Construct clean SQL queries checking target status columns directly
@@ -48,6 +58,12 @@ switch ($filter_status) {
         break;
     case 'no_sub':
         $status_condition = "AND (u.`plan` IS NULL OR u.`plan` = '' OR u.`plan` = 'FREE TIER')";
+        break;
+    case 'cancelled':
+        $status_condition = "AND u.`status` = 'inactive' AND NOT EXISTS (SELECT 1 FROM `transactions` t WHERE t.`uid` = u.`id` AND t.`dispute_status` = 1)";
+        break;
+    case 'chargeback':
+        $status_condition = "AND EXISTS (SELECT 1 FROM `transactions` t WHERE t.`uid` = u.`id` AND t.`dispute_status` = 1)";
         break;
     case 'all':
     default:
@@ -67,7 +83,9 @@ try {
                 u.`cid` AS usr_click_id, 
                 u.`plan` AS usr_plan_name, 
                 u.`credit` AS usr_credit, 
-                u.`created_at` AS usr_joined_date
+                u.`status` AS usr_status,
+                u.`created_at` AS usr_joined_date,
+                EXISTS(SELECT 1 FROM `transactions` t WHERE t.`uid` = u.`id` AND t.`dispute_status` = 1) AS has_chargeback
               FROM `users` u
               INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci
               WHERE c.`affid` = ? $status_condition
@@ -94,7 +112,9 @@ try {
             'plan_name'   => $display_plan,
             'credit'      => (int)$row['usr_credit'],
             'joined_date' => !empty($row['usr_joined_date']) ? date('Y-m-d', strtotime($row['usr_joined_date'])) : '—',
-            'is_active'   => $has_active_plan
+            'is_active'   => $has_active_plan,
+            'is_chargeback' => (int)$row['has_chargeback'] === 1,
+            'is_cancelled'  => (!$has_active_plan && (int)$row['has_chargeback'] === 0 && ($row['usr_status'] ?? '') === 'inactive')
         ];
     }
 
@@ -123,6 +143,8 @@ try {
                         <option value="all" <?= $filter_status === 'all' ? 'selected' : '' ?>>All Clients (<?= $count_all ?>)</option>
                         <option value="active" <?= $filter_status === 'active' ? 'selected' : '' ?>>Active Subscription (<?= $count_active ?>)</option>
                         <option value="no_sub" <?= $filter_status === 'no_sub' ? 'selected' : '' ?>>No Subscription (<?= $count_no_sub ?>)</option>
+                        <option value="cancelled" <?= $filter_status === 'cancelled' ? 'selected' : '' ?>>Cancelled Subscription (<?= $count_cancelled ?>)</option>
+                        <option value="chargeback" <?= $filter_status === 'chargeback' ? 'selected' : '' ?>>Chargeback Subscription (<?= $count_chargeback ?>)</option>
                     </select>
                 </div>
 
@@ -168,7 +190,15 @@ try {
                                     <?= htmlspecialchars($client['name']) ?>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <?php if ($client['is_active']): ?>
+                                    <?php if ($client['is_chargeback']): ?>
+                                        <span class="inline-flex items-center gap-1 bg-red-50 text-red-700 font-bold px-2.5 py-0.5 rounded text-[10px] border border-red-100">
+                                            Chargeback
+                                        </span>
+                                    <?php elseif ($client['is_cancelled']): ?>
+                                        <span class="inline-flex items-center gap-1 bg-amber-50 text-amber-700 font-bold px-2.5 py-0.5 rounded text-[10px] border border-amber-100">
+                                            Cancelled
+                                        </span>
+                                    <?php elseif ($client['is_active']): ?>
                                         <span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 font-bold px-2.5 py-0.5 rounded text-[10px] border border-emerald-100">
                                             Active
                                         </span>

@@ -182,12 +182,19 @@ try {
     $pdo->prepare("UPDATE `users` SET `cardholder_name` = ?, `country` = ?, `street` = ?, `zip` = ?, `plan` = ?, `stripe_subscription_id` = ?, `validity` = ?, `credit` = `credit` + ? WHERE `id` = ?")
         ->execute([$cardholder_name, $country, $street_address, $zip_code, $plan_name, $stripe_subscription_id, $db_validity_date, $credits_allocated, $user_id]);
 
-    // Insert transaction row parameters allocation matrix
-    $tx_query = "INSERT INTO `transactions` (`tid`, `cid`, `stripe_invoice_id`, `uid`, `plan`, `cardholder_name`, `country`, `street`, `zip`, `status`, `created_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'succeeded', NOW())";
+    // Extract Stripe Charge ID from payment intent for webhook reverse-lookup tracking
+    $stripe_charge_id = $stripe_intent['latest_charge'] ?? null;
+    if (empty($stripe_charge_id) && isset($stripe_intent['charges']['data'][0]['id'])) {
+        $stripe_charge_id = $stripe_intent['charges']['data'][0]['id'];
+    }
+
+    // Insert transaction row parameters allocation matrix (with charge_id for refund/dispute webhook tracking)
+    $tx_query = "INSERT INTO `transactions` (`tid`, `cid`, `stripe_invoice_id`, `stripe_charge_id`, `uid`, `plan`, `cardholder_name`, `country`, `street`, `zip`, `status`, `created_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'succeeded', NOW())";
     $pdo->prepare($tx_query)->execute([
         $unique_tid, 
         $affiliate_cid, 
-        $stripe_invoice_id, 
+        $stripe_invoice_id,
+        $stripe_charge_id, 
         $user_id, 
         $plan_name, 
         $cardholder_name, 

@@ -39,29 +39,7 @@ if (isset($_GET['action'])) {
         try {
             $_SESSION['auth_pending_email'] = $email;
 
-            // DEVELOPMENT MODE BYPASS: Skip OTP entirely and auto-authenticate directly
-            if (APP_ENV === 'development') {
-                $stmt = $pdo->prepare("SELECT `id`, `name`, `email`, `avatar`, `country` FROM `users` WHERE `email` = :email LIMIT 1");
-                $stmt->execute([':email' => $email]);
-                $user = $stmt->fetch();
-
-                if (!$user) {
-                    $_SESSION['auth_signup_verified_email'] = $email;
-                    echo json_encode(['status' => 'require_name']);
-                } else {
-                    $_SESSION['user_logged_in'] = true;
-                    $_SESSION['user_id']        = $user['id'];
-                    $_SESSION['user_email']     = $user['email'];
-                    $_SESSION['user_name']      = $user['name'];
-                    $_SESSION['user_avatar']    = $user['avatar'];
-                    $_SESSION['user_country']   = $user['country'];
-                    unset($_SESSION['auth_pending_email']);
-                    echo json_encode(['status' => 'success', 'redirect' => $final_redirect_target]);
-                }
-                exit;
-            }
-
-            $otp_code = (string)random_int(100000, 999999);
+            $otp_code = (APP_ENV === 'development') ? '123456' : (string)random_int(100000, 999999);
 
             $_SESSION['auth_otp_token']    = $otp_code;
             $_SESSION['auth_otp_expires']  = time() + 600; // 10-Minute window
