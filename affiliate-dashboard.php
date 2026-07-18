@@ -172,7 +172,7 @@ try {
 
             <div class="flex items-center gap-2">
                 <label for="s1Input" class="text-xs font-bold text-gray-500 shrink-0">Sub ID (s1):</label>
-                <input type="text" id="s1Input" placeholder="e.g. dipu" maxlength="64"
+                <input type="text" id="s1Input" placeholder="e.g. James Smith" maxlength="64"
                     class="flex-1 bg-slate-50 border border-gray-200 rounded-lg px-3 py-2 font-mono text-xs text-slate-700 outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 transition-all">
             </div>
         </div>
