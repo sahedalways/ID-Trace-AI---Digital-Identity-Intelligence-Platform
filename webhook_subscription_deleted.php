@@ -33,7 +33,8 @@ try {
         SET `stripe_subscription_id` = NULL,
             `plan` = NULL,
             `credit` = 0,
-            `validity` = NULL
+            `validity` = NULL,
+            `status` = 'inactive'
         WHERE `id` = ?
     ");
     $clear_stmt->execute([$user_id]);
