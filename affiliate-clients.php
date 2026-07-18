@@ -32,7 +32,7 @@ try {
     $count_active = (int)$c_act->fetchColumn();
 
     // No subscription count
-    $c_nos = $pdo->prepare("SELECT COUNT(*) FROM `users` u INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci WHERE c.`affid` = ? AND (u.`plan` IS NULL OR u.`plan` = '' OR u.`plan` = 'FREE TIER')");
+    $c_nos = $pdo->prepare("SELECT COUNT(*) FROM `users` u INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci WHERE c.`affid` = ? AND (u.`plan` IS NULL OR u.`plan` = '' OR u.`plan` = 'FREE TIER') AND u.`status` != 'inactive'");
     $c_nos->execute([$affiliateId]);
     $count_no_sub = (int)$c_nos->fetchColumn();
 
@@ -57,7 +57,7 @@ switch ($filter_status) {
         $status_condition = "AND u.`plan` IS NOT NULL AND u.`plan` != '' AND u.`plan` != 'FREE TIER'";
         break;
     case 'no_sub':
-        $status_condition = "AND (u.`plan` IS NULL OR u.`plan` = '' OR u.`plan` = 'FREE TIER')";
+        $status_condition = "AND (u.`plan` IS NULL OR u.`plan` = '' OR u.`plan` = 'FREE TIER') AND u.`status` != 'inactive'";
         break;
     case 'cancelled':
         $status_condition = "AND u.`status` = 'inactive' AND NOT EXISTS (SELECT 1 FROM `transactions` t WHERE t.`uid` = u.`id` AND t.`dispute_status` = 1)";
