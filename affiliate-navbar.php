@@ -80,7 +80,7 @@ function getActiveNavClass($current_page, $target_pages) {
                         </div>
                     </div>
 
-                    <a href="affiliate-am.php" class="px-3 py-2 rounded-xl flex items-center gap-1.5 transition-all hover:bg-slate-100/50 text-slate-600 hover:text-[#128c7e] text-[13px] font-bold" title="Account Manager">
+                    <a href="affiliate-am.php" class="px-3 py-2 rounded-xl flex items-center gap-1.5 transition-all text-[13px] font-bold <?= getActiveNavClass($active_script, 'affiliate-am.php') ?>" title="Account Manager">
                         <i class="fa-solid fa-user-tie text-sm"></i> AM
                     </a>
 
