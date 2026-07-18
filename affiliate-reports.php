@@ -53,8 +53,10 @@ switch ($filter_date) {
         break;
 }
 
-// Map the dynamic switch date condition to the transactions custom date tracking field name matching your query backticks
+// Map the dynamic switch date condition to table-qualified field names for JOINed queries
 $tx_date_condition = str_replace('created_at', 't.`created_at`', $date_condition);
+$conv_date_condition = str_replace('created_at', 'conv.`created_at`', $date_condition);
+$rec_date_condition = str_replace('created_at', 'rec.`created_at`', $date_condition);
 
 $report_data = [];
 $total_records = 0;
@@ -96,7 +98,7 @@ if ($filter_metric === 'clicks') {
     }
 } 
 elseif ($filter_metric === 'conversions') {
-    $countQuery = "SELECT COUNT(*) FROM `conversions` conv WHERE conv.`affid` = ? $date_condition";
+    $countQuery = "SELECT COUNT(*) FROM `conversions` conv WHERE conv.`affid` = ? $conv_date_condition";
     $cStmt = $pdo->prepare($countQuery);
     $cStmt->execute([$affiliateId]);
     $total_records = (int)$cStmt->fetchColumn();
@@ -105,7 +107,7 @@ elseif ($filter_metric === 'conversions') {
               FROM `conversions` conv
               LEFT JOIN `clicks` clk ON conv.`cid` = clk.`cid`
               LEFT JOIN `users` u ON conv.`uid` = u.`id`
-              WHERE conv.`affid` = ? $date_condition
+              WHERE conv.`affid` = ? $conv_date_condition
               ORDER BY conv.`created_at` DESC LIMIT ? OFFSET ?";
     $stmt = $pdo->prepare($query);
     $stmt->bindValue(1, $affiliateId, PDO::PARAM_INT);
@@ -132,7 +134,7 @@ elseif ($filter_metric === 'conversions') {
     }
 } 
 elseif ($filter_metric === 'recurring') {
-    $countQuery = "SELECT COUNT(*) FROM `recurring` rec WHERE rec.`affid` = ? $date_condition";
+    $countQuery = "SELECT COUNT(*) FROM `recurring` rec WHERE rec.`affid` = ? $rec_date_condition";
     $cStmt = $pdo->prepare($countQuery);
     $cStmt->execute([$affiliateId]);
     $total_records = (int)$cStmt->fetchColumn();
@@ -141,7 +143,7 @@ elseif ($filter_metric === 'recurring') {
               FROM `recurring` rec
               LEFT JOIN `clicks` clk ON rec.`cid` = clk.`cid`
               LEFT JOIN `users` u ON rec.`uid` = u.`id`
-              WHERE rec.`affid` = ? $date_condition
+              WHERE rec.`affid` = ? $rec_date_condition
               ORDER BY rec.`created_at` DESC LIMIT ? OFFSET ?";
     $stmt = $pdo->prepare($query);
     $stmt->bindValue(1, $affiliateId, PDO::PARAM_INT);
