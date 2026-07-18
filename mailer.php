@@ -34,6 +34,8 @@ function sendTransactionalMail($toEmail, $subject, $htmlBody) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
     
     // Pass updated API key via standard HTTPS request headers
     curl_setopt($ch, CURLOPT_HTTPHEADER, [
