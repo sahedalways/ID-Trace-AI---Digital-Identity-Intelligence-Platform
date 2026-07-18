@@ -169,18 +169,32 @@ try {
                     <i class="fa-solid fa-copy text-xs"></i> Copy Link
                 </button>
             </div>
+
+            <div class="flex items-center gap-2">
+                <label for="s1Input" class="text-xs font-bold text-gray-500 shrink-0">Sub ID (s1):</label>
+                <input type="text" id="s1Input" placeholder="e.g. dipu" maxlength="64"
+                    class="flex-1 bg-slate-50 border border-gray-200 rounded-lg px-3 py-2 font-mono text-xs text-slate-700 outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 transition-all">
+            </div>
         </div>
 
     </main>
 
     <script>
+        const baseRefLink = "<?= htmlspecialchars($referralLink) ?>";
+        const refLinkInput = document.getElementById("refLinkInput");
+        const s1Input = document.getElementById("s1Input");
+
+        s1Input.addEventListener("input", function() {
+            const s1 = this.value.trim();
+            refLinkInput.value = s1 ? baseRefLink + "&s1=" + encodeURIComponent(s1) : baseRefLink;
+        });
+
         function copyTrackingLink() {
-            const copyText = document.getElementById("refLinkInput");
             const copyBtn = document.getElementById("copyBtn");
             
-            copyText.select();
-            copyText.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(copyText.value);
+            refLinkInput.select();
+            refLinkInput.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(refLinkInput.value);
             
             copyBtn.innerHTML = `<i class="fa-solid fa-check text-xs"></i> Copied!`;
             copyBtn.style.background = "#059669";
