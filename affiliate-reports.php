@@ -23,6 +23,8 @@ $affiliateId = (int)$_SESSION['affiliate_id'];
 // 2. Capture and sanitize incoming filter parameters (Default changed to clicks)
 $filter_metric = isset($_GET['metric']) ? trim($_GET['metric']) : 'clicks';
 $filter_date   = isset($_GET['date_range']) ? trim($_GET['date_range']) : 'all_time';
+$custom_start  = isset($_GET['start_date']) ? trim($_GET['start_date']) : '';
+$custom_end    = isset($_GET['end_date']) ? trim($_GET['end_date']) : '';
 
 // PAGINATION MATRIX RULES SETUP
 $limit = 25; // Target records per viewport configuration layer
@@ -31,6 +33,7 @@ $offset = ($page - 1) * $limit;
 
 // 3. Resolve dynamic SQL date interval boundaries
 $date_condition = ""; 
+$custom_date_params = [];
 switch ($filter_date) {
     case 'today':
         $date_condition = "AND DATE(created_at) = CURRENT_DATE()";
@@ -46,6 +49,12 @@ switch ($filter_date) {
         break;
     case 'last_month':
         $date_condition = "AND MONTH(created_at) = MONTH(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH)) AND YEAR(created_at) = YEAR(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))";
+        break;
+    case 'custom':
+        if (!empty($custom_start) && !empty($custom_end)) {
+            $date_condition = "AND DATE(created_at) BETWEEN ? AND ?";
+            $custom_date_params = [$custom_start, $custom_end];
+        }
         break;
     case 'all_time':
     default:
@@ -66,7 +75,13 @@ if ($filter_metric === 'clicks') {
     // Count exact total pool parameters
     $countQuery = "SELECT COUNT(*) FROM `clicks` WHERE `affid` = ? $date_condition";
     $cStmt = $pdo->prepare($countQuery);
-    $cStmt->execute([$affiliateId]);
+    $cBind = 1;
+    $cStmt->bindValue($cBind++, $affiliateId, PDO::PARAM_INT);
+    if (!empty($custom_date_params)) {
+        $cStmt->bindValue($cBind++, $custom_date_params[0]);
+        $cStmt->bindValue($cBind++, $custom_date_params[1]);
+    }
+    $cStmt->execute();
     $total_records = (int)$cStmt->fetchColumn();
 
     $query = "SELECT `created_at`, `cid`, `s1`, `s2`, `ip`, `country`, `os`, `browser`, `referrer`, `conversion` 
@@ -74,9 +89,14 @@ if ($filter_metric === 'clicks') {
               WHERE `affid` = ? $date_condition 
               ORDER BY `created_at` DESC LIMIT ? OFFSET ?";
     $stmt = $pdo->prepare($query);
-    $stmt->bindValue(1, $affiliateId, PDO::PARAM_INT);
-    $stmt->bindValue(2, $limit, PDO::PARAM_INT);
-    $stmt->bindValue(3, $offset, PDO::PARAM_INT);
+    $bindIndex = 1;
+    $stmt->bindValue($bindIndex++, $affiliateId, PDO::PARAM_INT);
+    if (!empty($custom_date_params)) {
+        $stmt->bindValue($bindIndex++, $custom_date_params[0]);
+        $stmt->bindValue($bindIndex++, $custom_date_params[1]);
+    }
+    $stmt->bindValue($bindIndex++, $limit, PDO::PARAM_INT);
+    $stmt->bindValue($bindIndex++, $offset, PDO::PARAM_INT);
     $stmt->execute();
     
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -100,7 +120,13 @@ if ($filter_metric === 'clicks') {
 elseif ($filter_metric === 'conversions') {
     $countQuery = "SELECT COUNT(*) FROM `conversions` conv WHERE conv.`affid` = ? $conv_date_condition";
     $cStmt = $pdo->prepare($countQuery);
-    $cStmt->execute([$affiliateId]);
+    $cBind = 1;
+    $cStmt->bindValue($cBind++, $affiliateId, PDO::PARAM_INT);
+    if (!empty($custom_date_params)) {
+        $cStmt->bindValue($cBind++, $custom_date_params[0]);
+        $cStmt->bindValue($cBind++, $custom_date_params[1]);
+    }
+    $cStmt->execute();
     $total_records = (int)$cStmt->fetchColumn();
 
     $query = "SELECT conv.`created_at`, conv.`tid` AS tx_id, conv.`cid`, clk.`s1`, clk.`s2`, clk.`country`, u.`name` AS client_name, conv.`plan`, conv.`payout`, conv.`fire_postback`
@@ -110,9 +136,15 @@ elseif ($filter_metric === 'conversions') {
               WHERE conv.`affid` = ? $conv_date_condition
               ORDER BY conv.`created_at` DESC LIMIT ? OFFSET ?";
     $stmt = $pdo->prepare($query);
-    $stmt->bindValue(1, $affiliateId, PDO::PARAM_INT);
-    $stmt->bindValue(2, $limit, PDO::PARAM_INT);
-    $stmt->bindValue(3, $offset, PDO::PARAM_INT);
+    $bindIndex = 1;
+    $stmt->bindValue($bindIndex++, $affiliateId, PDO::PARAM_INT);
+    if (!empty($custom_date_params)) {
+        $stmt->bindValue($bindIndex++, $custom_date_params[0]);
+        $stmt->bindValue($bindIndex++, $custom_date_params[1]);
+    }
+    $stmt->bindValue($bindIndex++, $affiliateId, PDO::PARAM_INT);
+    $stmt->bindValue($bindIndex++, $limit, PDO::PARAM_INT);
+    $stmt->bindValue($bindIndex++, $offset, PDO::PARAM_INT);
     $stmt->execute();
     
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -136,7 +168,13 @@ elseif ($filter_metric === 'conversions') {
 elseif ($filter_metric === 'recurring') {
     $countQuery = "SELECT COUNT(*) FROM `recurring` rec WHERE rec.`affid` = ? $rec_date_condition";
     $cStmt = $pdo->prepare($countQuery);
-    $cStmt->execute([$affiliateId]);
+    $cBind = 1;
+    $cStmt->bindValue($cBind++, $affiliateId, PDO::PARAM_INT);
+    if (!empty($custom_date_params)) {
+        $cStmt->bindValue($cBind++, $custom_date_params[0]);
+        $cStmt->bindValue($cBind++, $custom_date_params[1]);
+    }
+    $cStmt->execute();
     $total_records = (int)$cStmt->fetchColumn();
 
     $query = "SELECT rec.`created_at`, rec.`tid` AS tx_id, rec.`cid`, clk.`s1`, clk.`s2`, clk.`country`, u.`name` AS client_name, rec.`plan`, rec.`payout`
@@ -146,9 +184,14 @@ elseif ($filter_metric === 'recurring') {
               WHERE rec.`affid` = ? $rec_date_condition
               ORDER BY rec.`created_at` DESC LIMIT ? OFFSET ?";
     $stmt = $pdo->prepare($query);
-    $stmt->bindValue(1, $affiliateId, PDO::PARAM_INT);
-    $stmt->bindValue(2, $limit, PDO::PARAM_INT);
-    $stmt->bindValue(3, $offset, PDO::PARAM_INT);
+    $bindIndex = 1;
+    $stmt->bindValue($bindIndex++, $affiliateId, PDO::PARAM_INT);
+    if (!empty($custom_date_params)) {
+        $stmt->bindValue($bindIndex++, $custom_date_params[0]);
+        $stmt->bindValue($bindIndex++, $custom_date_params[1]);
+    }
+    $stmt->bindValue($bindIndex++, $limit, PDO::PARAM_INT);
+    $stmt->bindValue($bindIndex++, $offset, PDO::PARAM_INT);
     $stmt->execute();
     
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -174,7 +217,13 @@ elseif ($filter_metric === 'chargebacks') {
                    JOIN `clicks` clk ON CONVERT(t.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci = CONVERT(clk.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci
                    WHERE clk.`affid` = ? AND t.`dispute_status` = 1 $tx_date_condition";
     $cStmt = $pdo->prepare($countQuery);
-    $cStmt->execute([$affiliateId]);
+    $cBind = 1;
+    $cStmt->bindValue($cBind++, $affiliateId, PDO::PARAM_INT);
+    if (!empty($custom_date_params)) {
+        $cStmt->bindValue($cBind++, $custom_date_params[0]);
+        $cStmt->bindValue($cBind++, $custom_date_params[1]);
+    }
+    $cStmt->execute();
     $total_records = (int)$cStmt->fetchColumn();
 
     $query = "SELECT t.`created_at`, t.`tid` AS tx_id, t.`cid`, clk.`s1`, clk.`s2`, t.`country`, u.`name` AS client_name, t.`plan`, p.`price`, t.`dispute_reason`
@@ -185,9 +234,14 @@ elseif ($filter_metric === 'chargebacks') {
               WHERE clk.`affid` = ? AND t.`dispute_status` = 1 $tx_date_condition
               ORDER BY t.`created_at` DESC LIMIT ? OFFSET ?";
     $stmt = $pdo->prepare($query);
-    $stmt->bindValue(1, $affiliateId, PDO::PARAM_INT);
-    $stmt->bindValue(2, $limit, PDO::PARAM_INT);
-    $stmt->bindValue(3, $offset, PDO::PARAM_INT);
+    $bindIndex = 1;
+    $stmt->bindValue($bindIndex++, $affiliateId, PDO::PARAM_INT);
+    if (!empty($custom_date_params)) {
+        $stmt->bindValue($bindIndex++, $custom_date_params[0]);
+        $stmt->bindValue($bindIndex++, $custom_date_params[1]);
+    }
+    $stmt->bindValue($bindIndex++, $limit, PDO::PARAM_INT);
+    $stmt->bindValue($bindIndex++, $offset, PDO::PARAM_INT);
     $stmt->execute();
     
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -227,34 +281,47 @@ if ($total_pages < 1) $total_pages = 1;
         
         <!-- REPORT QUERY FORM INPUT SECTION -->
         <div class="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm">
-            <form method="GET" action="affiliate-reports.php" class="flex flex-col sm:flex-row gap-4 items-end justify-between w-full">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full sm:max-w-2xl text-left">
-                    
-                    <div class="space-y-1.5 w-full">
-                        <label class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Metric Type</label>
-                        <select name="metric" class="w-full bg-slate-50 border border-gray-200 text-sm rounded-xl px-3 py-2.5 font-semibold text-slate-700 outline-none focus:border-indigo-500 transition-all">
-                            <option value="clicks" <?= $filter_metric === 'clicks' ? 'selected' : '' ?>>Clicks</option>
-                            <option value="conversions" <?= $filter_metric === 'conversions' ? 'selected' : '' ?>>Conversions</option>
-                            <option value="recurring" <?= $filter_metric === 'recurring' ? 'selected' : '' ?>>Recurring Payouts</option>
-                            <option value="chargebacks" <?= $filter_metric === 'chargebacks' ? 'selected' : '' ?>>Chargebacks</option>
-                        </select>
-                    </div>
+            <form method="GET" action="affiliate-reports.php" class="flex flex-col sm:flex-row gap-3 items-end w-full">
+                
+                <div class="space-y-1.5">
+                    <label class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Metric Type</label>
+                    <select name="metric" class="w-full bg-slate-50 border border-gray-200 text-sm rounded-xl px-3 py-2.5 font-semibold text-slate-700 outline-none focus:border-indigo-500 transition-all">
+                        <option value="clicks" <?= $filter_metric === 'clicks' ? 'selected' : '' ?>>Clicks</option>
+                        <option value="conversions" <?= $filter_metric === 'conversions' ? 'selected' : '' ?>>Conversions</option>
+                        <option value="recurring" <?= $filter_metric === 'recurring' ? 'selected' : '' ?>>Recurring Payouts</option>
+                        <option value="chargebacks" <?= $filter_metric === 'chargebacks' ? 'selected' : '' ?>>Chargebacks</option>
+                    </select>
+                </div>
 
-                    <div class="space-y-1.5 w-full">
-                        <label class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Date Timeline Range</label>
-                        <select name="date_range" class="w-full bg-slate-50 border border-gray-200 text-sm rounded-xl px-3 py-2.5 font-semibold text-slate-700 outline-none focus:border-indigo-500 transition-all">
-                            <option value="all_time" <?= $filter_date === 'all_time' ? 'selected' : '' ?>>All Times History</option>
-                            <option value="today" <?= $filter_date === 'today' ? 'selected' : '' ?>>Today</option>
-                            <option value="yesterday" <?= $filter_date === 'yesterday' ? 'selected' : '' ?>>Yesterday</option>
-                            <option value="this_week" <?= $filter_date === 'this_week' ? 'selected' : '' ?>>This Week</option>
-                            <option value="this_month" <?= $filter_date === 'this_month' ? 'selected' : '' ?>>This Month</option>
-                            <option value="last_month" <?= $filter_date === 'last_month' ? 'selected' : '' ?>>Last Month</option>
-                        </select>
+                <div class="space-y-1.5">
+                    <label class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Date Timeline Range</label>
+                    <select name="date_range" id="dateRangeSelect" onchange="toggleCustomDate()" class="w-full bg-slate-50 border border-gray-200 text-sm rounded-xl px-3 py-2.5 font-semibold text-slate-700 outline-none focus:border-indigo-500 transition-all">
+                        <option value="all_time" <?= $filter_date === 'all_time' ? 'selected' : '' ?>>All Times History</option>
+                        <option value="today" <?= $filter_date === 'today' ? 'selected' : '' ?>>Today</option>
+                        <option value="yesterday" <?= $filter_date === 'yesterday' ? 'selected' : '' ?>>Yesterday</option>
+                        <option value="this_week" <?= $filter_date === 'this_week' ? 'selected' : '' ?>>This Week</option>
+                        <option value="this_month" <?= $filter_date === 'this_month' ? 'selected' : '' ?>>This Month</option>
+                        <option value="last_month" <?= $filter_date === 'last_month' ? 'selected' : '' ?>>Last Month</option>
+                        <option value="custom" <?= $filter_date === 'custom' ? 'selected' : '' ?>>Custom Date</option>
+                    </select>
+                </div>
+
+                <div id="customDateFields" class="flex gap-3 items-end <?= $filter_date === 'custom' ? '' : 'hidden' ?>">
+                    <div class="space-y-1.5">
+                        <label class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider">Start Date</label>
+                        <input type="date" name="start_date" value="<?= htmlspecialchars($custom_start) ?>" class="w-full bg-slate-50 border border-gray-200 text-sm rounded-xl px-3 py-2.5 font-semibold text-slate-700 outline-none focus:border-indigo-500 transition-all">
+                    </div>
+                    <div class="space-y-1.5">
+                        <label class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider">End Date</label>
+                        <input type="date" name="end_date" value="<?= htmlspecialchars($custom_end) ?>" class="w-full bg-slate-50 border border-gray-200 text-sm rounded-xl px-3 py-2.5 font-semibold text-slate-700 outline-none focus:border-indigo-500 transition-all">
                     </div>
                 </div>
 
-                <button type="submit" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm px-6 py-2.5 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-sm">
-                    <i class="fa-solid fa-filter text-sm"></i> Run Reports
+                <div class="ml-auto">
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm px-6 py-2.5 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-sm">
+                        <i class="fa-solid fa-filter text-sm"></i> Run Reports
+                    </button>
+                </div>
                 </button>
             </form>
         </div>
@@ -388,7 +455,7 @@ if ($total_pages < 1) $total_pages = 1;
                     </div>
                     <div class="inline-flex gap-1">
                         <!-- Previous Page Nav Anchor -->
-                        <a href="?metric=<?= urlencode($filter_metric) ?>&date_range=<?= urlencode($filter_date) ?>&page=<?= max(1, $page - 1) ?>" 
+                        <a href="?metric=<?= urlencode($filter_metric) ?>&date_range=<?= urlencode($filter_date) ?><?= $filter_date === 'custom' ? '&start_date=' . urlencode($custom_start) . '&end_date=' . urlencode($custom_end) : '' ?>&page=<?= max(1, $page - 1) ?>" 
                            class="px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-xs font-bold text-slate-600 hover:bg-slate-50 shadow-sm transition-all flex items-center gap-1 <?= $page <= 1 ? 'pointer-events-none opacity-40' : '' ?>">
                             <i class="fa-solid fa-angle-left"></i> Prev
                         </a>
@@ -399,14 +466,14 @@ if ($total_pages < 1) $total_pages = 1;
                         $end = min($total_pages, $page + 2);
                         for ($i = $start; $i <= $end; $i++): 
                         ?>
-                            <a href="?metric=<?= urlencode($filter_metric) ?>&date_range=<?= urlencode($filter_date) ?>&page=<?= $i ?>" 
+                            <a href="?metric=<?= urlencode($filter_metric) ?>&date_range=<?= urlencode($filter_date) ?><?= $filter_date === 'custom' ? '&start_date=' . urlencode($custom_start) . '&end_date=' . urlencode($custom_end) : '' ?>&page=<?= $i ?>" 
                                class="px-3 py-1.5 rounded-lg border text-xs font-bold shadow-sm transition-all <?= $i === $page ? 'bg-indigo-600 border-indigo-600 text-white' : 'bg-white border-gray-200 text-slate-600 hover:bg-slate-50' ?>">
                                 <?= $i ?>
                             </a>
                         <?php endfor; ?>
 
                         <!-- Next Page Nav Anchor -->
-                        <a href="?metric=<?= urlencode($filter_metric) ?>&date_range=<?= urlencode($filter_date) ?>&page=<?= min($total_pages, $page + 1) ?>" 
+                        <a href="?metric=<?= urlencode($filter_metric) ?>&date_range=<?= urlencode($filter_date) ?><?= $filter_date === 'custom' ? '&start_date=' . urlencode($custom_start) . '&end_date=' . urlencode($custom_end) : '' ?>&page=<?= min($total_pages, $page + 1) ?>" 
                            class="px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-xs font-bold text-slate-600 hover:bg-slate-50 shadow-sm transition-all flex items-center gap-1 <?= $page >= $total_pages ? 'pointer-events-none opacity-40' : '' ?>">
                             Next <i class="fa-solid fa-angle-right"></i>
                         </a>
@@ -426,6 +493,16 @@ if ($total_pages < 1) $total_pages = 1;
 
     <!-- DYNAMIC CLIENT TIMEZONE EVALUATOR SCRIPT -->
     <script>
+        function toggleCustomDate() {
+            const sel = document.getElementById('dateRangeSelect');
+            const fields = document.getElementById('customDateFields');
+            if (sel.value === 'custom') {
+                fields.classList.remove('hidden');
+            } else {
+                fields.classList.add('hidden');
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
             // Intercept all nodes tracking string elements injected by database layers
             const timelineCells = document.querySelectorAll('.utc-time-transform');

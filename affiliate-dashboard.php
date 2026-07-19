@@ -85,6 +85,18 @@ try {
             </span>
         </div>
 
+        <!-- Filter Buttons -->
+        <div class="flex flex-wrap items-center gap-2">
+            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mr-1">Filter:</span>
+            <button onclick="filterStats('lifetime')" data-filter="lifetime" class="filter-btn active bg-gray-900 text-white text-[11px] font-bold px-3.5 py-1.5 rounded-lg transition-all cursor-pointer">Lifetime</button>
+            <button onclick="filterStats('today')" data-filter="today" class="filter-btn bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 text-[11px] font-bold px-3.5 py-1.5 rounded-lg transition-all cursor-pointer">Today</button>
+            <button onclick="filterStats('yesterday')" data-filter="yesterday" class="filter-btn bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 text-[11px] font-bold px-3.5 py-1.5 rounded-lg transition-all cursor-pointer">Yesterday</button>
+            <button onclick="filterStats('this_week')" data-filter="this_week" class="filter-btn bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 text-[11px] font-bold px-3.5 py-1.5 rounded-lg transition-all cursor-pointer">This Week</button>
+            <button onclick="filterStats('this_month')" data-filter="this_month" class="filter-btn bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 text-[11px] font-bold px-3.5 py-1.5 rounded-lg transition-all cursor-pointer">This Month</button>
+            <button onclick="filterStats('last_month')" data-filter="last_month" class="filter-btn bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 text-[11px] font-bold px-3.5 py-1.5 rounded-lg transition-all cursor-pointer">Last Month</button>
+            <button onclick="filterStats('this_year')" data-filter="this_year" class="filter-btn bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 text-[11px] font-bold px-3.5 py-1.5 rounded-lg transition-all cursor-pointer">This Year</button>
+        </div>
+
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-5">
             
             <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm text-left relative overflow-hidden flex flex-col justify-between min-h-[120px]">
@@ -93,7 +105,7 @@ try {
                     <div class="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm"><i class="fa-solid fa-wallet"></i></div>
                 </div>
                 <div>
-                    <div class="text-2xl font-black text-gray-900 tracking-tight font-mono">$<?= number_format($user['balance'], 2) ?></div>
+                    <div class="text-2xl font-black text-gray-900 tracking-tight font-mono" id="stat-balance">$<?= number_format($user['balance'], 2) ?></div>
                     <p class="text-[10px] text-gray-400 mt-0.5">Cleared splits ready for payout deployment.</p>
                 </div>
             </div>
@@ -104,7 +116,7 @@ try {
                     <div class="w-7 h-7 rounded-lg bg-slate-50 text-slate-500 flex items-center justify-center text-sm"><i class="fa-solid fa-money-bill-wave"></i></div>
                 </div>
                 <div>
-                    <div class="text-2xl font-black text-gray-900 tracking-tight font-mono">$<?= number_format($user['withdraw'], 2) ?></div>
+                    <div class="text-2xl font-black text-gray-900 tracking-tight font-mono" id="stat-withdrawn">$<?= number_format($user['withdraw'], 2) ?></div>
                     <p class="text-[10px] text-gray-400 mt-0.5">Accumulated funds dispatched securely.</p>
                 </div>
             </div>
@@ -115,7 +127,7 @@ try {
                     <div class="w-7 h-7 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-sm"><i class="fa-solid fa-mouse-pointer"></i></div>
                 </div>
                 <div>
-                    <div class="text-2xl font-black text-gray-900 tracking-tight font-mono"><?= number_format($totalClicks) ?></div>
+                    <div class="text-2xl font-black text-gray-900 tracking-tight font-mono" id="stat-clicks"><?= number_format($totalClicks) ?></div>
                     <p class="text-[10px] text-gray-400 mt-0.5">Raw unique inbound visitor referrals.</p>
                 </div>
             </div>
@@ -126,7 +138,7 @@ try {
                     <div class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm"><i class="fa-solid fa-circle-check"></i></div>
                 </div>
                 <div>
-                    <div class="text-2xl font-black text-emerald-600 tracking-tight font-mono"><?= number_format($totalConversions) ?></div>
+                    <div class="text-2xl font-black text-emerald-600 tracking-tight font-mono" id="stat-conversions"><?= number_format($totalConversions) ?></div>
                     <p class="text-[10px] text-gray-400 mt-0.5">Successful customer purchases logged.</p>
                 </div>
             </div>
@@ -137,7 +149,7 @@ try {
                     <div class="w-7 h-7 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-sm"><i class="fa-solid fa-arrows-rotate"></i></div>
                 </div>
                 <div>
-                    <div class="text-2xl font-black text-gray-900 tracking-tight font-mono"><?= number_format($totalRecurring) ?></div>
+                    <div class="text-2xl font-black text-gray-900 tracking-tight font-mono" id="stat-recurring"><?= number_format($totalRecurring) ?></div>
                     <p class="text-[10px] text-gray-400 mt-0.5">Active continuous 50% split plan loops.</p>
                 </div>
             </div>
@@ -148,7 +160,7 @@ try {
                     <div class="w-7 h-7 rounded-lg bg-red-50 text-red-600 flex items-center justify-center text-sm"><i class="fa-solid fa-triangle-exclamation"></i></div>
                 </div>
                 <div>
-                    <div class="text-2xl font-black text-red-600 tracking-tight font-mono"><?= number_format($totalChargebacks) ?></div>
+                    <div class="text-2xl font-black text-red-600 tracking-tight font-mono" id="stat-chargebacks"><?= number_format($totalChargebacks) ?></div>
                     <p class="text-[10px] text-gray-400 mt-0.5">Disputed sales revoked from balance.</p>
                 </div>
             </div>
@@ -203,6 +215,42 @@ try {
                 copyBtn.innerHTML = `<i class="fa-solid fa-copy text-xs"></i> Copy Link`;
                 copyBtn.style.background = "#111827";
             }, 2500);
+        }
+
+        // Dashboard Stats Filter
+        function filterStats(filter) {
+            // Update active button styles
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-gray-900', 'text-white');
+                btn.classList.add('bg-white', 'border', 'border-gray-200', 'text-gray-600');
+            });
+            const activeBtn = document.querySelector(`[data-filter="${filter}"]`);
+            activeBtn.classList.remove('bg-white', 'border', 'border-gray-200', 'text-gray-600');
+            activeBtn.classList.add('bg-gray-900', 'text-white');
+
+            // Add pulse animation to cards
+            document.querySelectorAll('#stat-withdrawn, #stat-clicks, #stat-conversions, #stat-recurring, #stat-chargebacks').forEach(el => {
+                el.style.opacity = '0.4';
+            });
+
+            fetch(`affiliate-dashboard-stats.php?filter=${encodeURIComponent(filter)}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('stat-withdrawn').textContent = '$' + data.withdrawn;
+                        document.getElementById('stat-clicks').textContent = data.clicks;
+                        document.getElementById('stat-conversions').textContent = data.conversions;
+                        document.getElementById('stat-recurring').textContent = data.recurring;
+                        document.getElementById('stat-chargebacks').textContent = data.chargebacks;
+                    }
+                })
+                .catch(err => console.error('Filter error:', err))
+                .finally(() => {
+                    document.querySelectorAll('#stat-withdrawn, #stat-clicks, #stat-conversions, #stat-recurring, #stat-chargebacks').forEach(el => {
+                        el.style.opacity = '1';
+                        el.style.transition = 'opacity 0.3s ease';
+                    });
+                });
         }
     </script>
 
