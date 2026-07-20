@@ -142,7 +142,6 @@ elseif ($filter_metric === 'conversions') {
         $stmt->bindValue($bindIndex++, $custom_date_params[0]);
         $stmt->bindValue($bindIndex++, $custom_date_params[1]);
     }
-    $stmt->bindValue($bindIndex++, $affiliateId, PDO::PARAM_INT);
     $stmt->bindValue($bindIndex++, $limit, PDO::PARAM_INT);
     $stmt->bindValue($bindIndex++, $offset, PDO::PARAM_INT);
     $stmt->execute();
