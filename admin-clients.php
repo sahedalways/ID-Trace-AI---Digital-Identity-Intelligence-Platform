@@ -49,7 +49,7 @@ $whereClause = !empty($conditions) ? 'WHERE ' . implode(' AND ', $conditions) : 
 try {
     // Count
     $countSql = "SELECT COUNT(DISTINCT u.id) FROM `users` u
-        LEFT JOIN (SELECT uid, ANY_VALUE(affid) as affid FROM `conversions` WHERE affid IS NOT NULL GROUP BY uid) c ON c.uid = u.id
+        LEFT JOIN (SELECT uid, MAX(affid) as affid FROM `conversions` WHERE affid IS NOT NULL GROUP BY uid) c ON c.uid = u.id
         LEFT JOIN (SELECT id, aid, email FROM `affiliates`) a ON c.affid = a.id
         LEFT JOIN `transactions` t ON t.uid = u.id $whereClause";
     $countStmt = $pdo->prepare($countSql);
@@ -63,7 +63,7 @@ try {
                t.dispute_status, t.dispute_amount
         FROM `users` u
         LEFT JOIN (
-            SELECT uid, ANY_VALUE(affid) as affid
+            SELECT uid, MAX(affid) as affid
             FROM `conversions` WHERE affid IS NOT NULL
             GROUP BY uid
         ) c ON c.uid = u.id

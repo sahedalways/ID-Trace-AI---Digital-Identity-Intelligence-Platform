@@ -31,7 +31,7 @@ try {
     $recentAffiliates = $pdo->query("SELECT * FROM `affiliates` ORDER BY `created_at` DESC LIMIT 5")->fetchAll();
 
     // Recent 5 customers
-    $recentCustomers = $pdo->query("SELECT u.*, a.name as aff_name, a.aid FROM `users` u LEFT JOIN (SELECT uid, ANY_VALUE(affid) as affid FROM `conversions` GROUP BY uid) c ON c.uid = u.id LEFT JOIN `affiliates` a ON c.affid = a.id ORDER BY u.created_at DESC LIMIT 5")->fetchAll();
+    $recentCustomers = $pdo->query("SELECT u.*, a.name as aff_name, a.aid FROM `users` u LEFT JOIN (SELECT uid, MAX(affid) as affid FROM `conversions` GROUP BY uid) c ON c.uid = u.id LEFT JOIN `affiliates` a ON c.affid = a.id ORDER BY u.created_at DESC LIMIT 5")->fetchAll();
 
     // Chart data: last 7 months revenue
     $chartRevenue = $pdo->query("
@@ -58,7 +58,7 @@ try {
 
     // Chart data: top 5 affiliates by conversions
     $chartTopAffiliates = $pdo->query("
-        SELECT ANY_VALUE(a.name) as name, COUNT(c.id) as conversions, SUM(c.price) as revenue
+        SELECT MAX(a.name) as name, COUNT(c.id) as conversions, SUM(c.price) as revenue
         FROM `conversions` c
         JOIN `affiliates` a ON c.affid = a.id
         GROUP BY c.affid
