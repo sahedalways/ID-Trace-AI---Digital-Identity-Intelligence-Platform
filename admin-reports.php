@@ -99,7 +99,7 @@ try {
 
 } catch (PDOException $e) {
     error_log("Admin Reports Error: " . $e->getMessage());
-    die("An error occurred.");
+    die("Error: " . $e->getMessage());
 }
 
 function buildQueryString($overrides) {

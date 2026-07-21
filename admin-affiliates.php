@@ -114,7 +114,7 @@ try {
     }
 } catch (PDOException $e) {
     error_log("Admin Affiliates Error: " . $e->getMessage());
-    die("An error occurred.");
+    die("Error: " . $e->getMessage());
 }
 ?>
 <!DOCTYPE html>

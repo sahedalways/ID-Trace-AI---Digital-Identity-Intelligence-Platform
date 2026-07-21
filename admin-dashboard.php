@@ -58,10 +58,10 @@ try {
 
     // Chart data: top 5 affiliates by conversions
     $chartTopAffiliates = $pdo->query("
-        SELECT a.name, COUNT(c.id) as conversions, SUM(c.price) as revenue
+        SELECT ANY_VALUE(a.name) as name, COUNT(c.id) as conversions, SUM(c.price) as revenue
         FROM `conversions` c
         JOIN `affiliates` a ON c.affid = a.id
-        GROUP BY a.name
+        GROUP BY c.affid
         ORDER BY conversions DESC
         LIMIT 5
     ")->fetchAll();
@@ -81,7 +81,12 @@ try {
 
 } catch (PDOException $e) {
     error_log("Admin Dashboard Error: " . $e->getMessage());
-    die("An error occurred loading the admin dashboard.");
+    $errDetail = "Error: " . $e->getMessage();
+    if (str_contains($e->getMessage(), 'admins')) $errDetail .= " | Possible fix: Create the admins table via admins.sql";
+    if (str_contains($e->getMessage(), 'Table') && str_contains($e->getMessage(), 'doesn')) $errDetail .= " | Table not found on server";
+    if (str_contains($e->getMessage(), 'Column')) $errDetail .= " | Column mismatch — check database schema";
+    if (str_contains($e->getMessage(), 'group_by') || str_contains($e->getMessage(), 'only_full_group_by')) $errDetail .= " | SQL group_by mode conflict";
+    die($errDetail);
 }
 
 $success_msg = "";
