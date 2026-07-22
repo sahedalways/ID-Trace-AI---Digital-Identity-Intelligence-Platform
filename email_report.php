@@ -57,7 +57,7 @@ try {
     $currentDateTimeUtc  = gmdate('Y-m-d H:i') . ' UTC';
 
     // Always route the user to the report parameters directly since the target file renders the failed screen too
-    $secureReportUrl  = rtrim(BASE_URL, '/') . '/report.php?id=' . urlencode($targetVid);
+    $secureReportUrl  = rtrim(BASE_URL, '/') . '/report?id=' . urlencode($targetVid);
 
     // =========================================================================
     // RENAME INTERFACES: CONDITIONAL COPY ROUTING MATRIX
