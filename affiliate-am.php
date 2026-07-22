@@ -49,14 +49,14 @@ if (!isset($_SESSION['affiliate_id'])) {
             <div class="relative inline-block mb-8">
                 <div class="profile-ring">
                     <img src="https://i.postimg.cc/BZP7DJSG/IMG-20260425-172607.jpg"
-                         alt="Jason Told"
+                         alt="James Smith"
                          class="w-32 h-32 rounded-[1.7rem] object-cover border-4 border-[#0f172a]">
                 </div>
                 <div class="absolute bottom-1 right-1 w-6 h-6 bg-emerald-500 border-4 border-[#1e293b] rounded-full"></div>
             </div>
 
             <div class="mb-10">
-                <h1 class="text-3xl font-black text-white tracking-tight mb-2">Jason Told</h1>
+                <h1 class="text-3xl font-black text-white tracking-tight mb-2">James Smith</h1>
                 <p class="text-[#128c7e] font-bold text-xs uppercase tracking-[0.2em]">Affiliate Manager</p>
                 <div class="flex items-center justify-center gap-2 mt-4">
                     <span class="h-1 w-1 rounded-full bg-slate-500"></span>
