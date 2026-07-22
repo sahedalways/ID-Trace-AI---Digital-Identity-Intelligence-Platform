@@ -19,11 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($input_name) || empty($input_email)) {
         $_SESSION['optout_flash_error'] = "Name and email are required.";
-        header("Location: opt-out.php");
+        header("Location: opt-out");
         exit;
     } elseif (!filter_var($input_email, FILTER_VALIDATE_EMAIL)) {
         $_SESSION['optout_flash_error'] = "Invalid email address.";
-        header("Location: opt-out.php");
+        header("Location: opt-out");
         exit;
     } else {
         try {
@@ -47,11 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             @sendTransactionalMail($input_email, "Opt-Out Request Confirmation", $htmlBody);
 
             $_SESSION['optout_flash_success'] = "Your opt-out request has been submitted successfully. We will process it within 30 days.";
-            header("Location: opt-out.php");
+            header("Location: opt-out");
             exit;
         } catch (Exception $e) {
             $_SESSION['optout_flash_error'] = "Something went wrong. Please try again later.";
-            header("Location: opt-out.php");
+            header("Location: opt-out");
             exit;
         }
     }
@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ?>
             <?php include 'alert-modal.php'; ?>
 
-            <form action="opt-out.php" method="POST" class="bg-white rounded-3xl border border-gray-200 p-6 sm:p-8 shadow-xl space-y-5 text-left">
+            <form action="opt-out" method="POST" class="bg-white rounded-3xl border border-gray-200 p-6 sm:p-8 shadow-xl space-y-5 text-left">
 
                 <div class="space-y-1.5">
                     <label for="optout_name" class="text-xs font-black uppercase text-gray-400 tracking-wider">Full Name</label>

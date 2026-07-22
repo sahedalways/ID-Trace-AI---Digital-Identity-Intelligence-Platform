@@ -11,7 +11,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true || !isset($_SESSION['user_id'])) {
-    header("Location: " . BASE_URL . "signin.php");
+    header("Location: " . BASE_URL . "signin");
     exit;
 }
 
@@ -327,7 +327,7 @@ $redirect_url = $hasTargetVid ? BASE_URL . "view.php?id=" . urlencode($vid) : BA
                     <p class="text-xs font-semibold text-red-600 leading-relaxed px-2"><?php echo htmlspecialchars($error_message); ?></p>
                 </div>
                 <div class="pt-2">
-                    <a href="<?php echo BASE_URL; ?>buy-credit.php" class="block w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white py-4 rounded-xl font-bold text-sm transition shadow-sm cursor-pointer">
+                    <a href="<?php echo BASE_URL; ?>buy-credit" class="block w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white py-4 rounded-xl font-bold text-sm transition shadow-sm cursor-pointer">
                         Try Again
                     </a>
                 </div>

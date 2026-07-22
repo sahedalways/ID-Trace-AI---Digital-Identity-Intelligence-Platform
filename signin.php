@@ -13,7 +13,7 @@ if (session_status() === PHP_SESSION_NONE) {
 // --- LOGGED-IN SESSION PROTECTION INTERCEPTOR ---
 // If the user is already authenticated, redirect them instantly to the home node
 if (isset($_SESSION['user_id'])) {
-    header("Location: " . BASE_URL . "index.php");
+    header("Location: " . BASE_URL . "index");
     exit;
 }
 
@@ -129,7 +129,7 @@ $google_auth_url = BASE_URL . "auth_google.php?return=" . urlencode($return_path
             </form>
         </div>
 
-        <p class="text-center text-xs text-gray-500 font-semibold leading-relaxed mt-6">By continuing, you agree with our <a href="terms.php" class="underline text-gray-700 hover:text-gray-900 transition">Terms</a> and <a href="privacy.php" class="underline text-gray-700 hover:text-gray-900 transition">Privacy Policy</a>.</p>
+        <p class="text-center text-xs text-gray-500 font-semibold leading-relaxed mt-6">By continuing, you agree with our <a href="terms" class="underline text-gray-700 hover:text-gray-900 transition">Terms</a> and <a href="privacy" class="underline text-gray-700 hover:text-gray-900 transition">Privacy Policy</a>.</p>
     </main>
 
     <?php if (file_exists('index_footer.php')) { include 'index_footer.php'; } ?>

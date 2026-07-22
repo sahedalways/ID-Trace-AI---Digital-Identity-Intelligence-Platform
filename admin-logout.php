@@ -28,5 +28,5 @@ if (ini_get("session.use_cookies")) {
 $_SESSION = [];
 session_destroy();
 
-header("Location: admin-login.php");
+header("Location: admin-login");
 exit;

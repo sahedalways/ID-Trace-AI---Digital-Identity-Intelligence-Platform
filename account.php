@@ -11,7 +11,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Security Enforcement
 if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true || !isset($_SESSION['user_id'])) {
-    header("Location: " . BASE_URL . "signin.php");
+    header("Location: " . BASE_URL . "signin");
     exit;
 }
 
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $_SESSION['flash_msg'] = "Profile intelligence credentials optimized successfully.";
     }
 
-    header("Location: " . BASE_URL . "account.php");
+    header("Location: " . BASE_URL . "account");
     exit;
 }
 
@@ -182,7 +182,7 @@ $cleanName = !empty($user['name']) ? htmlspecialchars($user['name']) : 'User Pro
                 <h3 class="text-sm font-bold text-gray-900">Update Profile Fields</h3>
             </div>
             
-            <form action="account.php" method="POST" class="p-6 space-y-4 text-left">
+            <form action="account" method="POST" class="p-6 space-y-4 text-left">
                 <input type="hidden" name="action" value="update_profile">
                 
                 <div class="space-y-1">

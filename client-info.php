@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
 // 1. Enforce strict authentication walls
 if (!isset($_SESSION['affiliate_id'])) {
-    header("Location: affiliate-login.php");
+    header("Location: affiliate-login");
     exit;
 }
 
@@ -319,7 +319,7 @@ $sub2_display = !empty($client['sub2']) ? htmlspecialchars($client['sub2']) : 'â
                             </div>
                         </div>
 
-                        <a href="report.php?id=<?= urlencode($rep['vid']) ?>" class="px-3 py-1.5 rounded-lg border border-gray-200 text-xs font-bold text-indigo-600 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-all shadow-2xs shrink-0 cursor-pointer flex items-center justify-center" title="Open Target Profile">
+                        <a href="report?id=<?= urlencode($rep['vid']) ?>" class="px-3 py-1.5 rounded-lg border border-gray-200 text-xs font-bold text-indigo-600 hover:bg-indigo-600 hover:text-white hover:border-indigo-600 transition-all shadow-2xs shrink-0 cursor-pointer flex items-center justify-center" title="Open Target Profile">
                             Open
                         </a>
                     </div>

@@ -11,7 +11,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Security Gateway: Enforce authentication constraints before processing data mutations
 if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true || !isset($_SESSION['user_id'])) {
-    header("Location: " . BASE_URL . "signin.php");
+    header("Location: " . BASE_URL . "signin");
     exit;
 }
 
@@ -50,11 +50,11 @@ try {
     }
 
     // Redirect back to the dashboard. The webhook handler module will update the local DB and send the confirmation email instantly.
-    header("Location: " . BASE_URL . "my-plan.php?msg=" . urlencode("Subscription cancellation request processed. Access parameters are updating asynchronously."));
+    header("Location: " . BASE_URL . "my-plan?msg=" . urlencode("Subscription cancellation request processed. Access parameters are updating asynchronously."));
     exit;
 
 } catch (Exception $e) {
     // Gracefully route back to dashboard on exception and show error feedback
-    header("Location: " . BASE_URL . "my-plan.php?error=" . urlencode($e->getMessage()));
+    header("Location: " . BASE_URL . "my-plan?error=" . urlencode($e->getMessage()));
     exit;
 }

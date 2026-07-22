@@ -7,7 +7,7 @@ require_once 'config.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: admin-login.php");
+    header("Location: admin-login");
     exit;
 }
 
@@ -20,7 +20,7 @@ try {
 
     if (!$admin || $admin['status'] !== 'active') {
         session_destroy();
-        header("Location: admin-login.php");
+        header("Location: admin-login");
         exit;
     }
 
@@ -217,7 +217,7 @@ if (isset($_SESSION['flash_error'])) {
                         <h3 class="text-sm font-bold text-gray-900 flex items-center gap-1.5">
                             <i class="fa-solid fa-handshake text-indigo-600"></i> Recent Affiliates
                         </h3>
-                        <a href="admin-affiliates.php" class="text-[11px] font-bold text-indigo-600 hover:underline">View All</a>
+                        <a href="admin-affiliates" class="text-[11px] font-bold text-indigo-600 hover:underline">View All</a>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left">
@@ -259,7 +259,7 @@ if (isset($_SESSION['flash_error'])) {
                         <h3 class="text-sm font-bold text-gray-900 flex items-center gap-1.5">
                             <i class="fa-solid fa-users text-blue-600"></i> Recent Customers
                         </h3>
-                        <a href="admin-clients.php" class="text-[11px] font-bold text-indigo-600 hover:underline">View All</a>
+                        <a href="admin-clients" class="text-[11px] font-bold text-indigo-600 hover:underline">View All</a>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left">

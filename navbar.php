@@ -32,11 +32,11 @@ if ($base_path !== '/' && strpos($current_uri, $base_path) === 0) {
 }
 
 // Build clean authorization endpoint link routing destinations
-$signin_url = BASE_URL . "signin.php?return=" . urlencode($relative_return);
-$logout_url = BASE_URL . "logout.php?return=" . urlencode($relative_return);
+$signin_url = BASE_URL . "signin?return=" . urlencode($relative_return);
+$logout_url = BASE_URL . "logout?return=" . urlencode($relative_return);
 
 // Detect active page for menu highlighting
-$active_page = basename($_SERVER['SCRIPT_FILENAME']);
+$active_page = pathinfo(basename($_SERVER['SCRIPT_FILENAME']), PATHINFO_FILENAME);
 ?>
 
 <style>
@@ -75,14 +75,14 @@ $active_page = basename($_SERVER['SCRIPT_FILENAME']);
 
             <div class="flex items-center gap-3 sm:gap-5">
                 <?php if ($isLoggedIn): ?>
-                    <a href="<?php echo BASE_URL; ?>my-plan.php" class="hidden sm:flex text-base font-semibold items-center gap-2 transition <?= $active_page === 'my-plan.php' ? 'text-[#128c7e]' : 'text-black hover:text-[#128c7e]' ?>">
-                        <i class="fa-regular fa-credit-card <?= $active_page === 'my-plan.php' ? 'text-[#128c7e]' : 'text-slate-400' ?>"></i> Subscription
+                    <a href="<?php echo BASE_URL; ?>my-plan" class="hidden sm:flex text-base font-semibold items-center gap-2 transition <?= $active_page === 'my-plan' ? 'text-[#128c7e]' : 'text-black hover:text-[#128c7e]' ?>">
+                        <i class="fa-regular fa-credit-card <?= $active_page === 'my-plan' ? 'text-[#128c7e]' : 'text-slate-400' ?>"></i> Subscription
                     </a>
-                    <a href="<?php echo BASE_URL; ?>my-report.php" class="hidden sm:flex text-base font-semibold items-center gap-2 transition <?= $active_page === 'my-report.php' ? 'text-[#128c7e]' : 'text-black hover:text-[#128c7e]' ?>">
-                        <i class="fa-solid fa-folder-open text-sm <?= $active_page === 'my-report.php' ? 'text-[#128c7e]' : 'text-slate-400' ?>"></i> Reports
+                    <a href="<?php echo BASE_URL; ?>my-report" class="hidden sm:flex text-base font-semibold items-center gap-2 transition <?= $active_page === 'my-report' ? 'text-[#128c7e]' : 'text-black hover:text-[#128c7e]' ?>">
+                        <i class="fa-solid fa-folder-open text-sm <?= $active_page === 'my-report' ? 'text-[#128c7e]' : 'text-slate-400' ?>"></i> Reports
                     </a>
-                    <a href="<?php echo BASE_URL; ?>my-promo.php" class="hidden sm:flex text-base font-semibold items-center gap-2 transition <?= $active_page === 'my-promo.php' ? 'text-[#128c7e]' : 'text-black hover:text-[#128c7e]' ?>">
-                        <i class="fa-solid fa-ticket text-sm <?= $active_page === 'my-promo.php' ? 'text-[#128c7e]' : 'text-slate-400' ?>"></i> Promo Codes
+                    <a href="<?php echo BASE_URL; ?>my-promo" class="hidden sm:flex text-base font-semibold items-center gap-2 transition <?= $active_page === 'my-promo' ? 'text-[#128c7e]' : 'text-black hover:text-[#128c7e]' ?>">
+                        <i class="fa-solid fa-ticket text-sm <?= $active_page === 'my-promo' ? 'text-[#128c7e]' : 'text-slate-400' ?>"></i> Promo Codes
                     </a>
 
                     <div class="relative">
@@ -92,16 +92,16 @@ $active_page = basename($_SERVER['SCRIPT_FILENAME']);
                         </button>
 
                         <div id="userDropdownMenu" class="hidden absolute right-0 mt-2 w-52 bg-white border border-gray-200 rounded-2xl shadow-xl py-2 z-50 text-base text-black font-semibold">
-                            <a href="<?php echo BASE_URL; ?>my-plan.php" class="flex sm:hidden items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
+                            <a href="<?php echo BASE_URL; ?>my-plan" class="flex sm:hidden items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
                                 <i class="fa-regular fa-credit-card text-slate-400 w-5"></i> My Subscription
                             </a>
-                            <a href="<?php echo BASE_URL; ?>my-report.php" class="flex sm:hidden items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
+                            <a href="<?php echo BASE_URL; ?>my-report" class="flex sm:hidden items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
                                 <i class="fa-solid fa-folder-open text-slate-400 text-sm w-5"></i> My Reports
                             </a>
-                            <a href="<?php echo BASE_URL; ?>my-promo.php" class="flex sm:hidden items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
+                            <a href="<?php echo BASE_URL; ?>my-promo" class="flex sm:hidden items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
                                 <i class="fa-solid fa-ticket text-slate-400 text-sm w-5"></i> Promo Codes
                             </a>
-                            <a href="<?php echo BASE_URL; ?>account.php" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
+                            <a href="<?php echo BASE_URL; ?>account" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
                                 <i class="fa-solid fa-user-gear text-slate-400 w-5"></i> My Profile
                             </a>
                             <hr class="border-gray-100 my-1.5">
@@ -113,16 +113,16 @@ $active_page = basename($_SERVER['SCRIPT_FILENAME']);
                 <?php else: ?>
                     <!-- Desktop View: Inline Row Menu -->
                     <div class="hidden md:flex items-center gap-6">
-                        <a href="<?php echo BASE_URL; ?>buy-credit.php" class="text-base font-semibold transition <?= $active_page === 'buy-credit.php' ? 'text-[#128c7e]' : 'text-black hover:text-[#128c7e]' ?>">
+                        <a href="<?php echo BASE_URL; ?>buy-credit" class="text-base font-semibold transition <?= $active_page === 'buy-credit' ? 'text-[#128c7e]' : 'text-black hover:text-[#128c7e]' ?>">
                             Pricing
                         </a>
-                        <a href="<?php echo htmlspecialchars($signin_url); ?>" class="text-base font-semibold transition <?= $active_page === 'signin.php' ? 'text-[#128c7e]' : 'text-black hover:text-[#128c7e]' ?>">
+                        <a href="<?php echo htmlspecialchars($signin_url); ?>" class="text-base font-semibold transition <?= $active_page === 'signin' ? 'text-[#128c7e]' : 'text-black hover:text-[#128c7e]' ?>">
                             Login
                         </a>
-                        <a href="<?php echo htmlspecialchars($signin_url); ?>" class="text-base font-semibold transition <?= $active_page === 'signin.php' ? 'text-[#128c7e]' : 'text-black hover:text-[#128c7e]' ?>">
+                        <a href="<?php echo htmlspecialchars($signin_url); ?>" class="text-base font-semibold transition <?= $active_page === 'signin' ? 'text-[#128c7e]' : 'text-black hover:text-[#128c7e]' ?>">
                             Register
                         </a>
-                        <a href="<?php echo BASE_URL; ?>buy-credit.php" class="text-base font-semibold <?= $active_page === 'buy-credit.php' ? 'text-[#128c7e] bg-emerald-50' : 'text-black hover:text-[#128c7e] bg-gray-100 hover:bg-gray-200' ?> px-5 py-2.5 rounded-xl transition">
+                        <a href="<?php echo BASE_URL; ?>buy-credit" class="text-base font-semibold <?= $active_page === 'buy-credit' ? 'text-[#128c7e] bg-emerald-50' : 'text-black hover:text-[#128c7e] bg-gray-100 hover:bg-gray-200' ?> px-5 py-2.5 rounded-xl transition">
                             Get Report
                         </a>
                     </div>
@@ -134,7 +134,7 @@ $active_page = basename($_SERVER['SCRIPT_FILENAME']);
                         </button>
 
                         <div id="userDropdownMenu" class="hidden absolute right-0 mt-2 w-52 bg-white border border-gray-200 rounded-2xl shadow-xl py-2 z-50 text-base text-black font-semibold">
-                            <a href="<?php echo BASE_URL; ?>buy-credit.php" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
+                            <a href="<?php echo BASE_URL; ?>buy-credit" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
                                 <i class="fa-solid fa-tag text-slate-400 text-xs w-5"></i> Pricing
                             </a>
                             <a href="<?php echo htmlspecialchars($signin_url); ?>" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
@@ -143,7 +143,7 @@ $active_page = basename($_SERVER['SCRIPT_FILENAME']);
                             <a href="<?php echo htmlspecialchars($signin_url); ?>" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
                                 <i class="fa-solid fa-user-plus text-slate-400 text-xs w-5"></i> Register
                             </a>
-                            <a href="<?php echo BASE_URL; ?>buy-credit.php" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
+                            <a href="<?php echo BASE_URL; ?>buy-credit" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
                                 <i class="fa-solid fa-file-lines text-slate-400 text-xs w-5"></i> Get Report
                             </a>
                         </div>

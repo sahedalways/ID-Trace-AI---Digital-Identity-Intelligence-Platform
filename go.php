@@ -13,7 +13,7 @@ $s2      = isset($_GET['s2']) ? trim($_GET['s2']) : null;
 
 // Fallback protection: If no parameter text is passed, push out to main root index directly
 if (empty($raw_aid)) {
-    header("Location: index.php");
+    header("Location: index");
     exit;
 }
 
@@ -30,7 +30,7 @@ try {
 
 // Fallback protection: Reject traffic routing loops if token entry is unauthorized or missing
 if ($affiliateId <= 0) {
-    header("Location: index.php");
+    header("Location: index");
     exit;
 }
 

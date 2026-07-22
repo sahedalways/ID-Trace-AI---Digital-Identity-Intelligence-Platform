@@ -7,13 +7,13 @@ require_once 'config.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: admin-login.php");
+    header("Location: admin-login");
     exit;
 }
 
 $clientId = (int)($_GET['id'] ?? 0);
 if (!$clientId) {
-    header("Location: admin-clients.php");
+    header("Location: admin-clients");
     exit;
 }
 
@@ -23,7 +23,7 @@ try {
     $client = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$client) {
-        header("Location: admin-clients.php");
+        header("Location: admin-clients");
         exit;
     }
 
@@ -73,7 +73,7 @@ try {
         <main class="p-4 sm:p-6 space-y-6">
 
             <div class="flex items-center gap-3">
-                <a href="admin-clients.php" class="text-gray-400 hover:text-gray-900 transition">
+                <a href="admin-clients" class="text-gray-400 hover:text-gray-900 transition">
                     <i class="fa-solid fa-arrow-left text-sm"></i>
                 </a>
                 <div>

@@ -83,12 +83,12 @@ require_once 'my-plan-controller.php';
                     </div>
 
                     <div class="pt-4 border-t border-gray-100/70 space-y-3">
-                        <a href="<?php echo BASE_URL; ?>buy-credit.php" class="w-auto flex items-center justify-center gap-2 bg-[#128c7e] hover:bg-[#0e6f64] text-white py-4 px-6 rounded-xl text-sm font-bold transition shadow-sm cursor-pointer">
+                        <a href="<?php echo BASE_URL; ?>buy-credit" class="w-auto flex items-center justify-center gap-2 bg-[#128c7e] hover:bg-[#0e6f64] text-white py-4 px-6 rounded-xl text-sm font-bold transition shadow-sm cursor-pointer">
                             <i class="fa-solid fa-circle-plus"></i> Upgrade Plan / Add Credits
                         </a>
 
                         <?php if (!$cancel_at_period_end && in_array($subscription_status, ['active', 'trialing'])): ?>
-                            <a href="cancel-subscription.php" onclick="return confirm('Your remaining credits and generated report will be lost on cancellation your plan. Do you want to cancel your subscription?');" class="w-auto flex items-center justify-center bg-[#B22222] hover:bg-[#b81032] text-white py-4 px-6 rounded-xl text-sm font-bold transition shadow-sm cursor-pointer border border-transparent">
+                            <a href="cancel-subscription" onclick="return confirm('Your remaining credits and generated report will be lost on cancellation your plan. Do you want to cancel your subscription?');" class="w-auto flex items-center justify-center bg-[#B22222] hover:bg-[#b81032] text-white py-4 px-6 rounded-xl text-sm font-bold transition shadow-sm cursor-pointer border border-transparent">
                                 Cancel Subscription
                             </a>
                         <?php endif; ?>
@@ -101,7 +101,7 @@ require_once 'my-plan-controller.php';
                     </div>
                     <h3 class="text-sm font-bold text-gray-900">You have no active subscription</h3>
                     <p class="text-xs text-black font-medium mt-1 mb-6">Activate your account to start generating intelligence reports.</p>
-                    <a href="<?php echo BASE_URL; ?>buy-credit.php" class="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#128c7e] hover:bg-[#0e6f64] text-white py-4 px-12 rounded-xl text-sm font-bold transition shadow-sm cursor-pointer">
+                    <a href="<?php echo BASE_URL; ?>buy-credit" class="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#128c7e] hover:bg-[#0e6f64] text-white py-4 px-12 rounded-xl text-sm font-bold transition shadow-sm cursor-pointer">
                         <i class="fa-solid fa-circle-plus"></i> Activate Subscription
                     </a>
                 </div>
@@ -160,7 +160,7 @@ require_once 'my-plan-controller.php';
                                     </td>
                                     <td class="py-4 px-6 text-center">
                                         <?php if ($tx['status'] === 'succeeded'): ?>
-                                            <a href="generate_invoice.php?tid=<?php echo urlencode($tx['tid']); ?>" target="_blank" class="inline-block bg-[#128c7e] text-white hover:bg-[#0e6f64] border border-transparent text-[10px] font-bold px-3 py-1.5 rounded-lg shadow-sm transition duration-150 tracking-tight" title="Download PDF Invoice">
+                                            <a href="generate_invoice?tid=<?php echo urlencode($tx['tid']); ?>" target="_blank" class="inline-block bg-[#128c7e] text-white hover:bg-[#0e6f64] border border-transparent text-[10px] font-bold px-3 py-1.5 rounded-lg shadow-sm transition duration-150 tracking-tight" title="Download PDF Invoice">
                                                 Download
                                             </a>
                                         <?php else: ?>

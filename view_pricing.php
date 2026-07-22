@@ -62,7 +62,7 @@ $plan_design_meta = [
             <h3 class="text-xl font-bold text-gray-900 tracking-tight">Choose Your Plan</h3>
         </div>
 
-        <form id="embeddedBillingForm" action="<?php echo BASE_URL; ?>checkout.php" method="GET" class="space-y-4" onsubmit="triggerEmbedCtaLoadingState(this)">
+        <form id="embeddedBillingForm" action="<?php echo BASE_URL; ?>checkout" method="GET" class="space-y-4" onsubmit="triggerEmbedCtaLoadingState(this)">
             
             <?php if (!empty($vid)): ?>
                 <input type="hidden" name="id" value="<?php echo htmlspecialchars($vid, ENT_QUOTES, 'UTF-8'); ?>">

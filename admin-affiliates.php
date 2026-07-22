@@ -9,7 +9,7 @@ require_once 'email_activate.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: admin-login.php");
+    header("Location: admin-login");
     exit;
 }
 
@@ -174,10 +174,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 $_SESSION['flash_success'] = "Affiliate '$name' created successfully. ID: $uniqueAid";
             }
         }
-        header("Location: admin-affiliates.php?tab=" . urlencode($tab));
+        header("Location: admin-affiliates?tab=" . urlencode($tab));
         exit;
     }
-    header("Location: admin-affiliates.php?tab=" . urlencode($tab));
+    header("Location: admin-affiliates?tab=" . urlencode($tab));
     exit;
 }
 
@@ -265,9 +265,9 @@ try {
             <!-- Tabs + Search Row -->
             <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
                 <div class="flex items-center gap-2 border-b border-gray-200 pb-0">
-                    <a href="admin-affiliates.php?tab=all" class="px-4 py-2.5 text-[13px] font-bold transition-all border-b-2 <?= $tab === 'all' ? 'border-indigo-600 text-indigo-700' : 'border-transparent text-gray-500 hover:text-gray-900' ?>">All</a>
-                    <a href="admin-affiliates.php?tab=pending" class="px-4 py-2.5 text-[13px] font-bold transition-all border-b-2 <?= $tab === 'pending' ? 'border-amber-500 text-amber-700' : 'border-transparent text-gray-500 hover:text-gray-900' ?>">Pending</a>
-                    <a href="admin-affiliates.php?tab=payments" class="px-4 py-2.5 text-[13px] font-bold transition-all border-b-2 <?= $tab === 'payments' ? 'border-indigo-600 text-indigo-700' : 'border-transparent text-gray-500 hover:text-gray-900' ?>">Payments</a>
+                    <a href="admin-affiliates?tab=all" class="px-4 py-2.5 text-[13px] font-bold transition-all border-b-2 <?= $tab === 'all' ? 'border-indigo-600 text-indigo-700' : 'border-transparent text-gray-500 hover:text-gray-900' ?>">All</a>
+                    <a href="admin-affiliates?tab=pending" class="px-4 py-2.5 text-[13px] font-bold transition-all border-b-2 <?= $tab === 'pending' ? 'border-amber-500 text-amber-700' : 'border-transparent text-gray-500 hover:text-gray-900' ?>">Pending</a>
+                    <a href="admin-affiliates?tab=payments" class="px-4 py-2.5 text-[13px] font-bold transition-all border-b-2 <?= $tab === 'payments' ? 'border-indigo-600 text-indigo-700' : 'border-transparent text-gray-500 hover:text-gray-900' ?>">Payments</a>
                 </div>
 
                 <form method="GET" class="flex items-center gap-2 flex-1 justify-end">
@@ -279,7 +279,7 @@ try {
                     </div>
                     <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs py-2.5 px-5 rounded-xl transition-all cursor-pointer">Search</button>
                     <?php if (!empty($search)): ?>
-                        <a href="admin-affiliates.php?tab=<?= $tab ?>" class="text-[10px] font-bold text-gray-500 hover:text-gray-900 px-2">Clear</a>
+                        <a href="admin-affiliates?tab=<?= $tab ?>" class="text-[10px] font-bold text-gray-500 hover:text-gray-900 px-2">Clear</a>
                     <?php endif; ?>
                 </form>
             </div>
@@ -435,13 +435,13 @@ try {
                                                     <i class="fa-solid fa-ellipsis"></i> More
                                                 </button>
                                                 <div class="hidden absolute right-0 z-50 mt-1 w-44 bg-white border border-gray-200 rounded-xl shadow-lg py-1.5 origin-top-right dropdown-menu">
-                                                    <a href="admin-login-as-affiliate.php?id=<?= $a['id'] ?>" class="flex items-center gap-2 px-3.5 py-2 text-[11px] font-semibold text-gray-700 hover:bg-gray-50 transition">
+                                                    <a href="admin-login-as-affiliate?id=<?= $a['id'] ?>" class="flex items-center gap-2 px-3.5 py-2 text-[11px] font-semibold text-gray-700 hover:bg-gray-50 transition">
                                                         <i class="fa-solid fa-right-to-bracket text-[10px] text-indigo-500"></i> Login as Affiliate
                                                     </a>
-                                                    <a href="admin-affiliate-view.php?id=<?= $a['id'] ?>" class="flex items-center gap-2 px-3.5 py-2 text-[11px] font-semibold text-gray-700 hover:bg-gray-50 transition">
+                                                    <a href="admin-affiliate-view?id=<?= $a['id'] ?>" class="flex items-center gap-2 px-3.5 py-2 text-[11px] font-semibold text-gray-700 hover:bg-gray-50 transition">
                                                         <i class="fa-solid fa-eye text-[10px] text-blue-500"></i> View
                                                     </a>
-                                                    <a href="admin-affiliate-edit.php?id=<?= $a['id'] ?>" class="flex items-center gap-2 px-3.5 py-2 text-[11px] font-semibold text-gray-700 hover:bg-gray-50 transition">
+                                                    <a href="admin-affiliate-edit?id=<?= $a['id'] ?>" class="flex items-center gap-2 px-3.5 py-2 text-[11px] font-semibold text-gray-700 hover:bg-gray-50 transition">
                                                         <i class="fa-solid fa-pen text-[10px] text-amber-500"></i> Edit
                                                     </a>
                                                 </div>

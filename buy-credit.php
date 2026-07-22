@@ -77,7 +77,7 @@ $plan_design_meta = [
                     <h2 class="text-xl font-bold text-gray-900 tracking-tight">Choose Your Plan</h2>
                 </div>
 
-                <form id="billingForm" action="<?php echo BASE_URL; ?>checkout.php" method="GET" class="space-y-4" onsubmit="triggerCtaLoadingState(this)">
+                <form id="billingForm" action="<?php echo BASE_URL; ?>checkout" method="GET" class="space-y-4" onsubmit="triggerCtaLoadingState(this)">
                     
                     <div class="space-y-3">
                         <?php 

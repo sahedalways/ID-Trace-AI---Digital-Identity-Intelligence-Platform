@@ -7,7 +7,7 @@ require_once 'config.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['affiliate_id'])) {
-    header("Location: affiliate-login.php");
+    header("Location: affiliate-login");
     exit;
 }
 ?>

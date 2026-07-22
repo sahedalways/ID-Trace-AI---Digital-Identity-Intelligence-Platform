@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $engine_parameter = urlencode($selected_engine);
 
         // Push the operator explicitly to the professional search engine query-string module
-        header("Location: " . BASE_URL . "search.php?q=" . $url_parameter . "&engine=" . $engine_parameter);
+        header("Location: " . BASE_URL . "search?q=" . $url_parameter . "&engine=" . $engine_parameter);
         exit;
     } else {
         $error = "Please enter a search target or profile identifier to initiate an identity scan.";

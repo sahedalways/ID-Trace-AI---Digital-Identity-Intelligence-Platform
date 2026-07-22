@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
 // 1. Enforce strict authentication walls
 if (!isset($_SESSION['affiliate_id'])) {
-    header("Location: affiliate-login.php");
+    header("Location: affiliate-login");
     exit;
 }
 
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_postback'])) {
         }
     }
     
-    header("Location: affiliate-postback.php");
+    header("Location: affiliate-postback");
     exit;
 }
 
@@ -129,7 +129,7 @@ try {
                 <p class="text-xs text-gray-400 font-medium leading-relaxed">Configure your global automated tracking postback URL. Our platform engine will trigger a live GET request down to this endpoint string whenever a referred conversion occurs.</p>
             </div>
 
-            <form method="POST" action="affiliate-postback.php" class="space-y-4">
+            <form method="POST" action="affiliate-postback" class="space-y-4">
                 <div class="space-y-1.5">
                     <label class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Your Secure Postback Endpoint</label>
                     <input type="text" name="postback_url" placeholder="https://yourdomain.com/postback?clickid=[s2]&payout=[payout]&tx=[tid]" 

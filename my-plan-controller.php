@@ -11,7 +11,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Security Gateway: Enforce authentication constraints before granting dashboard access
 if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true || !isset($_SESSION['user_id'])) {
-    header("Location: " . BASE_URL . "signin.php");
+    header("Location: " . BASE_URL . "signin");
     exit;
 }
 
@@ -49,7 +49,7 @@ try {
 
     if (!$user) {
         session_destroy();
-        header("Location: " . BASE_URL . "signin.php");
+        header("Location: " . BASE_URL . "signin");
         exit;
     }
 

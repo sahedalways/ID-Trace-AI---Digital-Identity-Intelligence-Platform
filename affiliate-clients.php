@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
 // 1. Enforce strict authentication limits
 if (!isset($_SESSION['affiliate_id'])) {
-    header("Location: affiliate-login.php");
+    header("Location: affiliate-login");
     exit;
 }
 
@@ -136,7 +136,7 @@ try {
     <main class="max-w-[1650px] w-full mx-auto px-4 sm:px-6 pt-8 pb-16 grow space-y-6">
         
         <div class="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm">
-            <form method="GET" action="affiliate-clients.php" class="flex flex-col sm:flex-row gap-4 items-end justify-between w-full">
+            <form method="GET" action="affiliate-clients" class="flex flex-col sm:flex-row gap-4 items-end justify-between w-full">
                 <div class="space-y-1.5 w-full sm:max-w-sm text-left">
                     <label class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Subscription Status</label>
                     <select name="status" class="w-full bg-slate-50 border border-gray-200 text-sm rounded-xl px-3 py-2.5 font-semibold text-slate-700 outline-none focus:border-indigo-500 transition-all">
@@ -227,7 +227,7 @@ try {
                                     <?= htmlspecialchars($client['joined_date']) ?>
                                 </td>
                                 <td class="px-6 py-4 text-right whitespace-nowrap">
-                                    <a href="client-info.php?id=<?= $client['id'] ?>" class="text-xs font-bold text-indigo-600 hover:text-indigo-900 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded-xl transition-all inline-flex items-center gap-1">
+                                    <a href="client-info?id=<?= $client['id'] ?>" class="text-xs font-bold text-indigo-600 hover:text-indigo-900 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded-xl transition-all inline-flex items-center gap-1">
                                         View Details
                                     </a>
                                 </td>

@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_optimize'])) {
     $checkReport = $pdo->prepare("SELECT `status` FROM `reports` WHERE `vid` = ? LIMIT 1");
     $checkReport->execute([$vid]);
     if ($checkReport->fetch()) {
-        header("Location: report.php?id=" . urlencode($vid));
+        header("Location: report?id=" . urlencode($vid));
         exit;
     }
 
@@ -156,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_optimize'])) {
 
         $pdo->prepare("UPDATE `users` SET `credit` = GREATEST(0, `credit` - 1) WHERE `id` = ?")->execute([(int)$_SESSION['user_id']]);
 
-        header("Location: report.php?id=" . urlencode($vid));
+        header("Location: report?id=" . urlencode($vid));
         exit;
     }
 }
@@ -191,7 +191,7 @@ if(empty($firstNamePlaceholder)) $firstNamePlaceholder = 'target';
         <div class="p-3.5 bg-red-50 border border-red-200 text-red-700 rounded-xl text-xs font-semibold"><?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
 
-    <form action="analyze.php?id=<?php echo htmlspecialchars($vid); ?>" method="POST" enctype="multipart/form-data" id="optimizationForm" onsubmit="triggerButtonLoadingState(this)">
+    <form action="analyze?id=<?php echo htmlspecialchars($vid); ?>" method="POST" enctype="multipart/form-data" id="optimizationForm" onsubmit="triggerButtonLoadingState(this)">
         <input type="hidden" name="action_optimize" value="1">
         <div class="space-y-6">
 

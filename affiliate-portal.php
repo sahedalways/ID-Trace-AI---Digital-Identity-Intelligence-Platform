@@ -128,7 +128,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                     </div>
 
                     <div class="mt-9 max-w-2xl mx-auto lg:mx-0 flex flex-col sm:flex-row items-stretch gap-3">
-                        <a href="affiliate-register.php" class="bg-[#128c7e] hover:bg-[#0e6f64] active:scale-[0.98] text-white px-8 py-4 rounded-2xl text-sm lg:text-base font-bold transition-all flex items-center justify-center gap-2.5 shadow-sm shadow-emerald-200 cursor-pointer">
+                        <a href="affiliate-register" class="bg-[#128c7e] hover:bg-[#0e6f64] active:scale-[0.98] text-white px-8 py-4 rounded-2xl text-sm lg:text-base font-bold transition-all flex items-center justify-center gap-2.5 shadow-sm shadow-emerald-200 cursor-pointer">
                             <i class="fa-solid fa-user-plus"></i> Become an affiliate
                         </a>
                     </div>

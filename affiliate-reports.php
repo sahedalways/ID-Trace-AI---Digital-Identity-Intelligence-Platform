@@ -14,7 +14,7 @@ error_reporting(E_ALL);
 
 // 1. Enforce strict authentication limits
 if (!isset($_SESSION['affiliate_id'])) {
-    header("Location: affiliate-login.php");
+    header("Location: affiliate-login");
     exit;
 }
 
@@ -280,7 +280,7 @@ if ($total_pages < 1) $total_pages = 1;
         
         <!-- REPORT QUERY FORM INPUT SECTION -->
         <div class="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm">
-            <form method="GET" action="affiliate-reports.php" class="flex flex-col sm:flex-row gap-3 items-end w-full">
+            <form method="GET" action="affiliate-reports" class="flex flex-col sm:flex-row gap-3 items-end w-full">
                 
                 <div class="space-y-1.5">
                     <label class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Metric Type</label>

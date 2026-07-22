@@ -164,7 +164,7 @@ if (isset($all_reviews) && is_array($all_reviews)) {
                             </div>
                         <?php endif; ?>
 
-                        <form id="guestEmailInboundForm" action="view.php?id=<?php echo escapeHtml($vid); ?>" method="POST" class="space-y-4">
+                        <form id="guestEmailInboundForm" action="view?id=<?php echo escapeHtml($vid); ?>" method="POST" class="space-y-4">
                             <div class="relative">
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 pointer-events-none">
                                     <i class="fa-solid fa-envelope text-base"></i>

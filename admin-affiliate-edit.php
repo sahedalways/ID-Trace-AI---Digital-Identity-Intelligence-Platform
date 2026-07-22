@@ -7,13 +7,13 @@ require_once 'config.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: admin-login.php");
+    header("Location: admin-login");
     exit;
 }
 
 $affId = (int)($_GET['id'] ?? 0);
 if (!$affId) {
-    header("Location: admin-affiliates.php");
+    header("Location: admin-affiliates");
     exit;
 }
 
@@ -26,7 +26,7 @@ try {
     $affiliate = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$affiliate) {
-        header("Location: admin-affiliates.php");
+        header("Location: admin-affiliates");
         exit;
     }
 
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $upStmt = $pdo->prepare("UPDATE `affiliates` SET `name` = ?, `email` = ?, `mobile` = ?, `country` = ?, `status` = ?, `contact` = ?, `experience_level` = ?, `traffic_source` = ?, `past_experience` = ? WHERE `id` = ?");
                 $upStmt->execute([$name, $email, $mobile, $country, $status, $contact, $experience_level, $traffic_source, $past_experience, $affId]);
                 $_SESSION['flash_success'] = "Affiliate profile updated successfully.";
-                header("Location: admin-affiliate-edit.php?id=$affId");
+                header("Location: admin-affiliate-edit?id=$affId");
                 exit;
             }
         }
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hashed = password_hash($newPass, PASSWORD_DEFAULT);
             $pdo->prepare("UPDATE `affiliates` SET `password` = ? WHERE `id` = ?")->execute([$hashed, $affId]);
             $_SESSION['flash_success'] = "Password has been reset successfully.";
-            header("Location: admin-affiliate-edit.php?id=$affId");
+            header("Location: admin-affiliate-edit?id=$affId");
             exit;
         }
     }
@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $pdo->prepare("INSERT INTO `affiliate_payments` (`affiliate_id`, `payment_method`, `payment_info`) VALUES (?, ?, ?)")->execute([$affId, $method, $info]);
             }
             $_SESSION['flash_success'] = "Payment info updated.";
-            header("Location: admin-affiliate-edit.php?id=$affId");
+            header("Location: admin-affiliate-edit?id=$affId");
             exit;
         }
     }
@@ -154,7 +154,7 @@ $methodLabels = [
         <main class="p-4 sm:p-6 space-y-6 max-w-4xl">
 
             <div class="flex items-center gap-3">
-                <a href="admin-affiliate-view.php?id=<?= $affId ?>" class="text-gray-400 hover:text-gray-900 transition">
+                <a href="admin-affiliate-view?id=<?= $affId ?>" class="text-gray-400 hover:text-gray-900 transition">
                     <i class="fa-solid fa-arrow-left text-sm"></i>
                 </a>
                 <div>

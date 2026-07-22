@@ -6,7 +6,7 @@
 require_once 'config.php';
 session_start();
 
-if (!isset($_SESSION['user_id'])) { header("Location: signin.php"); exit; }
+if (!isset($_SESSION['user_id'])) { header("Location: signin"); exit; }
 
 $user_id = (int)$_SESSION['user_id'];
 $api_key = STRIPE_TEST_SECRET_KEY;
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     } elseif ($_POST['action'] === 'default') {
         stripeCoreCall("customers/$customer_id", ['invoice_settings' => ['default_payment_method' => $pm_id]], $api_key, 'POST');
     }
-    header("Location: billing.php"); exit;
+    header("Location: billing"); exit;
 }
 
 // 3. Fetch Data

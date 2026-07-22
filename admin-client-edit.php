@@ -7,13 +7,13 @@ require_once 'config.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: admin-login.php");
+    header("Location: admin-login");
     exit;
 }
 
 $clientId = (int)($_GET['id'] ?? 0);
 if (!$clientId) {
-    header("Location: admin-clients.php");
+    header("Location: admin-clients");
     exit;
 }
 
@@ -26,7 +26,7 @@ try {
     $client = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$client) {
-        header("Location: admin-clients.php");
+        header("Location: admin-clients");
         exit;
     }
 } catch (PDOException $e) {
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $upStmt = $pdo->prepare("UPDATE `users` SET `name` = ?, `email` = ?, `country` = ?, `status` = ?, `credit` = ? WHERE `id` = ?");
                 $upStmt->execute([$name, $email, $country, $status, $credit, $clientId]);
                 $_SESSION['flash_success'] = "Customer profile updated successfully.";
-                header("Location: admin-client-edit.php?id=$clientId");
+                header("Location: admin-client-edit?id=$clientId");
                 exit;
             }
         }
@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hashed = password_hash($newPass, PASSWORD_DEFAULT);
             $pdo->prepare("UPDATE `users` SET `password` = ? WHERE `id` = ?")->execute([$hashed, $clientId]);
             $_SESSION['flash_success'] = "Password has been reset successfully.";
-            header("Location: admin-client-edit.php?id=$clientId");
+            header("Location: admin-client-edit?id=$clientId");
             exit;
         }
     }
@@ -101,7 +101,7 @@ if (isset($_SESSION['flash_success'])) {
         <main class="p-4 sm:p-6 space-y-6 max-w-4xl">
 
             <div class="flex items-center gap-3">
-                <a href="admin-client-detail.php?id=<?= $clientId ?>" class="text-gray-400 hover:text-gray-900 transition">
+                <a href="admin-client-detail?id=<?= $clientId ?>" class="text-gray-400 hover:text-gray-900 transition">
                     <i class="fa-solid fa-arrow-left text-sm"></i>
                 </a>
                 <div>

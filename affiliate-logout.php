@@ -33,5 +33,5 @@ $_SESSION = [];
 session_destroy();
 
 // 4. Fire absolute header routing map redirect back onto portal access interface
-header("Location: affiliate-portal.php");
+header("Location: affiliate-portal");
 exit;

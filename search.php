@@ -47,7 +47,7 @@ $currentIconClass = $engineIcons[$engine] ?? 'fa-solid fa-magnifying-glass text-
     <main class="max-w-4xl w-full mx-auto px-4 sm:px-6 py-8 flex-grow">
         
         <section id="searchConsoleWrapper" class="mb-10">
-            <form action="search.php" method="GET" id="intelligenceForm" onsubmit="executeOsintLookup(event)" class="relative flex flex-col sm:flex-row items-stretch sm:items-center w-full bg-white sm:border border-gray-200 focus-within:border-[#128c7e] rounded-2xl transition shadow-xl p-2.5 sm:p-2 z-30 gap-2 sm:gap-0 border">
+            <form action="search" method="GET" id="intelligenceForm" onsubmit="executeOsintLookup(event)" class="relative flex flex-col sm:flex-row items-stretch sm:items-center w-full bg-white sm:border border-gray-200 focus-within:border-[#128c7e] rounded-2xl transition shadow-xl p-2.5 sm:p-2 z-30 gap-2 sm:gap-0 border">
                 
                 <div class="flex items-center w-full bg-transparent gap-1 relative">
                     <div class="relative inline-block text-left pl-1">

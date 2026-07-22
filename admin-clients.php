@@ -7,7 +7,7 @@ require_once 'config.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: admin-login.php");
+    header("Location: admin-login");
     exit;
 }
 
@@ -143,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['form_action'] ?? '') === '
             $_SESSION['flash_success'] = "Customer '$name' created successfully. ID: #$newUserId";
         }
     }
-    header("Location: admin-clients.php?sub=" . urlencode($subFilter));
+    header("Location: admin-clients?sub=" . urlencode($subFilter));
     exit;
 }
 
@@ -187,7 +187,7 @@ function buildClientQs($overrides) {
                     </div>
                     <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm py-3 px-5 rounded-xl transition-all cursor-pointer">Search</button>
                     <?php if (!empty($search)): ?>
-                        <a href="admin-clients.php?sub=<?= $subFilter ?>" class="text-xs font-bold text-gray-500 hover:text-gray-900 px-2">Clear</a>
+                        <a href="admin-clients?sub=<?= $subFilter ?>" class="text-xs font-bold text-gray-500 hover:text-gray-900 px-2">Clear</a>
                     <?php endif; ?>
                 </form>
 
@@ -253,10 +253,10 @@ function buildClientQs($overrides) {
                                                 <i class="fa-solid fa-ellipsis"></i> More
                                             </button>
                                             <div class="hidden absolute right-0 z-50 mt-1 w-40 bg-white border border-gray-200 rounded-xl shadow-lg py-1.5 origin-top-right dropdown-menu">
-                                                <a href="admin-client-detail.php?id=<?= $c['id'] ?>" class="flex items-center gap-2 px-3.5 py-2 text-[11px] font-semibold text-gray-700 hover:bg-gray-50 transition">
+                                                <a href="admin-client-detail?id=<?= $c['id'] ?>" class="flex items-center gap-2 px-3.5 py-2 text-[11px] font-semibold text-gray-700 hover:bg-gray-50 transition">
                                                     <i class="fa-solid fa-eye text-[10px] text-blue-500"></i> View
                                                 </a>
-                                                <a href="admin-client-edit.php?id=<?= $c['id'] ?>" class="flex items-center gap-2 px-3.5 py-2 text-[11px] font-semibold text-gray-700 hover:bg-gray-50 transition">
+                                                <a href="admin-client-edit?id=<?= $c['id'] ?>" class="flex items-center gap-2 px-3.5 py-2 text-[11px] font-semibold text-gray-700 hover:bg-gray-50 transition">
                                                     <i class="fa-solid fa-pen text-[10px] text-amber-500"></i> Edit
                                                 </a>
                                             </div>

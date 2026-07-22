@@ -7,7 +7,7 @@ require_once 'config.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['affiliate_id'])) {
-    header("Location: affiliate-login.php");
+    header("Location: affiliate-login");
     exit;
 }
 
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_withdrawal']))
         error_log("Withdrawal Core Failure: " . $e->getMessage());
         $_SESSION['payout_msg'] = "An error occurred. Please try again.";
     }
-    header("Location: affiliate-payout.php");
+    header("Location: affiliate-payout");
     exit;
 }
 
@@ -242,12 +242,12 @@ while ($row = $hist_stmt->fetch(PDO::FETCH_ASSOC)) {
                     </div>
                     <div>
                         <p class="text-xs font-bold text-amber-800">No Payment Method Saved</p>
-                        <a href="affiliate-profile.php#payment-sec" class="text-[10px] font-bold text-amber-600 underline mt-0.5 inline-block">Setup Payment Profile &rarr;</a>
+                        <a href="affiliate-profile#payment-sec" class="text-[10px] font-bold text-amber-600 underline mt-0.5 inline-block">Setup Payment Profile &rarr;</a>
                     </div>
                 </div>
             <?php endif; ?>
 
-            <form method="POST" action="affiliate-payout.php" class="space-y-4">
+            <form method="POST" action="affiliate-payout" class="space-y-4">
                 <div class="space-y-1">
                     <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Amount (USD)</label>
                     <input type="number" name="withdraw_amount" required step="0.01" min="100.00" max="<?= $balance ?>" value="<?= number_format(max(100.00, $balance), 2, '.', '') ?>"

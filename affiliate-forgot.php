@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_reset_password
             unset($_SESSION['reset_step'], $_SESSION['reset_email'], $_SESSION['reset_otp'], $_SESSION['reset_aff_id']);
             
             $_SESSION['login_redirect_flash_msg'] = "Password configuration reestablished smoothly. Access console via updated signatures.";
-            header("Location: affiliate-login.php");
+            header("Location: affiliate-login");
             exit;
         } catch (PDOException $e) {
             error_log("Affiliate Password Finalize Reset Matrix Error: " . $e->getMessage());
@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_reset_password
 // 5. MANUAL RESET FLUSH FUNCTION: Let the partner drop out of active loops back into baseline states manually if desired
 if (isset($_GET['abort_wizard'])) {
     unset($_SESSION['reset_step'], $_SESSION['reset_email'], $_SESSION['reset_otp'], $_SESSION['reset_aff_id']);
-    header("Location: affiliate-forgot.php");
+    header("Location: affiliate-forgot");
     exit;
 }
 
@@ -173,7 +173,7 @@ $current_wizard_step = $_SESSION['reset_step'];
                         <p class="text-xs text-gray-400 font-semibold leading-relaxed">Provide your locked registration email address token parameters. Our backend dispatcher loop will route a performance token to process verification metrics.</p>
                     </div>
 
-                    <form method="POST" action="affiliate-forgot.php" class="space-y-4">
+                    <form method="POST" action="affiliate-forgot" class="space-y-4">
                         <div class="space-y-1.5">
                             <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Registered Partner Email</label>
                             <input type="email" name="email" id="email" required placeholder="partner@identity-network.com" 
@@ -190,7 +190,7 @@ $current_wizard_step = $_SESSION['reset_step'];
                         <p class="text-xs text-gray-400 font-semibold leading-relaxed">Input the 6-digit verification code token parsed out straight onto your external dynamic network address inbox folder row layout structures.</p>
                     </div>
 
-                    <form method="POST" action="affiliate-forgot.php" class="space-y-4">
+                    <form method="POST" action="affiliate-forgot" class="space-y-4">
                         <div class="space-y-1.5">
                             <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">6-Digit Verification Code</label>
                             <input type="text" name="otp" required maxlength="6" pattern="\d{6}" placeholder="000000" 
@@ -200,7 +200,7 @@ $current_wizard_step = $_SESSION['reset_step'];
                             <button type="submit" name="action_verify_otp" class="w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white font-bold text-sm py-4 px-4 rounded-xl transition-all cursor-pointer border border-transparent shadow-sm flex items-center justify-center gap-1.5">
                                 <i class="fa-solid fa-user-shield text-xs"></i> Validate Identity Match
                             </button>
-                            <a href="affiliate-forgot.php?abort_wizard=1" class="block w-full text-center bg-gray-50 hover:bg-gray-100 text-gray-500 font-bold text-xs py-3.5 rounded-xl transition-all flex items-center justify-center gap-1">
+                            <a href="affiliate-forgot?abort_wizard=1" class="block w-full text-center bg-gray-50 hover:bg-gray-100 text-gray-500 font-bold text-xs py-3.5 rounded-xl transition-all flex items-center justify-center gap-1">
                                 <i class="fa-solid fa-rotate text-[10px]"></i> Request Alternative Token
                             </a>
                         </div>
@@ -212,7 +212,7 @@ $current_wizard_step = $_SESSION['reset_step'];
                         <p class="text-xs text-gray-400 font-semibold leading-relaxed">Update your signature credential arrays. Use structural encryption frameworks metrics guidelines to maintain configuration records safety.</p>
                     </div>
 
-                    <form method="POST" action="affiliate-forgot.php" class="space-y-4">
+                    <form method="POST" action="affiliate-forgot" class="space-y-4">
                         <div class="space-y-3 text-left">
                             <div class="space-y-1.5">
                                 <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">New Secure Password</label>

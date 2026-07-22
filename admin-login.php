@@ -9,7 +9,7 @@ require_once 'config.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (isset($_SESSION['admin_id'])) {
-    header("Location: admin-dashboard.php");
+    header("Location: admin-dashboard");
     exit;
 }
 
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['admin_name'] = $admin['name'];
                     $_SESSION['admin_role'] = $admin['role'];
 
-                    header("Location: admin-dashboard.php");
+                    header("Location: admin-dashboard");
                     exit;
                 }
             } else {
@@ -75,11 +75,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0">
-                    <a href="admin-login.php" class="flex items-center gap-2.5">
+                    <a href="admin-login" class="flex items-center gap-2.5">
                         <img src="public/logo.png" alt="Identity Search AI Logo" class="h-10 w-auto">
                     </a>
                 </div>
-                <a href="index.php" class="text-sm font-semibold text-gray-500 hover:text-gray-900 transition flex items-center gap-1.5">
+                <a href="index" class="text-sm font-semibold text-gray-500 hover:text-gray-900 transition flex items-center gap-1.5">
                     <i class="fa-solid fa-arrow-left text-xs"></i> Back to Site
                 </a>
             </div>
@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php endif; ?>
                 <?php endif; ?>
 
-                <form action="admin-login.php" method="POST" class="space-y-4 text-left">
+                <form action="admin-login" method="POST" class="space-y-4 text-left">
 
                     <div class="space-y-1.5">
                         <label for="email" class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Admin Email</label>

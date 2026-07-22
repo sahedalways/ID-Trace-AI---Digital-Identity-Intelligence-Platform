@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
 // If an active session matrix is already verified, route straight to the dashboard
 if (isset($_SESSION['affiliate_id'])) {
-    header("Location: affiliate-dashboard.php");
+    header("Location: affiliate-dashboard");
     exit;
 }
 
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['affiliate_name'] = $affiliate['name'];
 
                     // 5. Execute secure directional redirect path to dashboard matrix index
-                    header("Location: affiliate-dashboard.php");
+                    header("Location: affiliate-dashboard");
                     exit;
                 }
             } else {
@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php endif; ?>
                 <?php endif; ?>
 
-                <form action="affiliate-login.php" method="POST" class="space-y-4 text-left">
+                <form action="affiliate-login" method="POST" class="space-y-4 text-left">
                     
                     <div class="space-y-1.5">
                         <label for="email" class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Account Email</label>
@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="space-y-1.5">
                         <div class="flex justify-between items-center">
                             <label for="password" class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Secure Password</label>
-                            <a href="affiliate-forgot.php" class="text-xs text-[#128c7e] font-bold hover:underline">Forgot Password?</a>
+                            <a href="affiliate-forgot" class="text-xs text-[#128c7e] font-bold hover:underline">Forgot Password?</a>
                         </div>
                         <input type="password" id="password" name="password" required placeholder="••••••••" 
                             class="w-full text-sm px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#128c7e] focus:bg-white focus:ring-1 focus:ring-[#128c7e] transition-all font-semibold text-gray-900 placeholder-gray-400">
@@ -130,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </form>
 
                 <div class="border-t border-gray-100 pt-4 text-center text-xs font-semibold">
-                    <p class="text-gray-400">Not a network partner yet? <a href="affiliate-register.php" class="text-[#128c7e] font-bold hover:underline">Register as Affiliate</a></p>
+                    <p class="text-gray-400">Not a network partner yet? <a href="affiliate-register" class="text-[#128c7e] font-bold hover:underline">Register as Affiliate</a></p>
                 </div>
             </div>
         </div>

@@ -11,7 +11,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Security Enforcement Matrix Check
 if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true || !isset($_SESSION['user_id'])) {
-    header("Location: " . BASE_URL . "signin.php");
+    header("Location: " . BASE_URL . "signin");
     exit;
 }
 
@@ -181,7 +181,7 @@ try {
 
                         <!-- Action Controls (Clean, content-sized w-auto button on mobile instead of block layout) -->
                         <div class="shrink-0 flex justify-center w-full sm:w-auto">
-                            <a href="<?php echo BASE_URL; ?>report.php?id=<?php echo $cleanVid; ?>" class="inline-flex items-center justify-center bg-[#128c7e] hover:bg-[#0e6f64] text-white py-2.5 px-5 rounded-xl text-xs font-bold shadow-sm transition-colors cursor-pointer gap-1.5 border border-transparent whitespace-nowrap">
+                            <a href="<?php echo BASE_URL; ?>report?id=<?php echo $cleanVid; ?>" class="inline-flex items-center justify-center bg-[#128c7e] hover:bg-[#0e6f64] text-white py-2.5 px-5 rounded-xl text-xs font-bold shadow-sm transition-colors cursor-pointer gap-1.5 border border-transparent whitespace-nowrap">
                                 <i class="fa-solid fa-passport text-xs"></i> View Report
                             </a>
                         </div>

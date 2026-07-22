@@ -15,7 +15,7 @@ $isLoggedIn = isset($_SESSION['affiliate_id']);
 $affiliateName = !empty($_SESSION['affiliate_name']) ? $_SESSION['affiliate_name'] : 'Partner';
 
 // Capture the active filename context to compute precise active menu states
-$active_script = basename($_SERVER['SCRIPT_FILENAME']);
+$active_script = pathinfo(basename($_SERVER['SCRIPT_FILENAME']), PATHINFO_FILENAME);
 
 /**
  * Helper function to output the correct Tailwind classes for active tabs.
@@ -41,50 +41,50 @@ function getActiveNavClass($current_page, $target_pages) {
         <div class="flex items-center justify-between h-16">
             
             <div class="flex-shrink-0">
-                <a href="<?= $isLoggedIn ? 'affiliate-dashboard.php' : 'affiliate-portal.php' ?>" class="flex items-center">
+                <a href="<?= $isLoggedIn ? 'affiliate-dashboard' : 'affiliate-portal' ?>" class="flex items-center">
                     <img src="public/logo.png" alt="Identity Search AI Logo" class="h-12 w-auto">
                 </a>
             </div>
 
             <div class="hidden lg:flex items-center gap-2 text-[15px]">
                 <?php if ($isLoggedIn): ?>
-                    <a href="affiliate-dashboard.php" class="px-3.5 py-2 transition-all <?= getActiveNavClass($active_script, 'affiliate-dashboard.php') ?>">
+                    <a href="affiliate-dashboard" class="px-3.5 py-2 transition-all <?= getActiveNavClass($active_script, 'affiliate-dashboard') ?>">
                         Dashboard
                     </a>
-                    <a href="affiliate-reports.php" class="px-3.5 py-2 transition-all <?= getActiveNavClass($active_script, 'affiliate-reports.php') ?>">
+                    <a href="affiliate-reports" class="px-3.5 py-2 transition-all <?= getActiveNavClass($active_script, 'affiliate-reports') ?>">
                         Reports
                     </a>
-                    <a href="affiliate-clients.php" class="px-3.5 py-2 transition-all <?= getActiveNavClass($active_script, 'affiliate-clients.php') ?>">
+                    <a href="affiliate-clients" class="px-3.5 py-2 transition-all <?= getActiveNavClass($active_script, 'affiliate-clients') ?>">
                         Clients
                     </a>
-                    <a href="affiliate-payout.php" class="px-3.5 py-2 transition-all <?= getActiveNavClass($active_script, 'affiliate-payout.php') ?>">
+                    <a href="affiliate-payout" class="px-3.5 py-2 transition-all <?= getActiveNavClass($active_script, 'affiliate-payout') ?>">
                         Withdraw
                     </a>
                     
                     <div class="relative dropdown-hover-zone py-2">
-                        <button type="button" class="px-3.5 py-2 flex items-center gap-1.5 transition-all outline-none cursor-pointer <?= getActiveNavClass($active_script, ['affiliate-postback.php', 'test-postback.php', 'postback-log.php']) ?>">
+                        <button type="button" class="px-3.5 py-2 flex items-center gap-1.5 transition-all outline-none cursor-pointer <?= getActiveNavClass($active_script, ['affiliate-postback', 'test-postback', 'postback-log']) ?>">
                             <span>Postback</span>
                             <i class="fa-solid fa-chevron-down text-[11px] opacity-70"></i>
                         </button>
                         
                         <div class="hidden dropdown-panel absolute left-0 mt-1 w-52 bg-white border border-gray-200 rounded-2xl shadow-xl py-2 z-50 text-left">
-                            <a href="affiliate-postback.php" class="flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-gray-700 hover:bg-slate-50 font-semibold transition <?= $active_script === 'affiliate-postback.php' ? 'text-[#128c7e] font-bold bg-emerald-50/40' : '' ?>">
+                            <a href="affiliate-postback" class="flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-gray-700 hover:bg-slate-50 font-semibold transition <?= $active_script === 'affiliate-postback' ? 'text-[#128c7e] font-bold bg-emerald-50/40' : '' ?>">
                                 <i class="fa-solid fa-gear text-base text-gray-400"></i> Postback Setup
                             </a>
-                            <a href="test-postback.php" class="flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-gray-700 hover:bg-slate-50 font-semibold transition <?= $active_script === 'test-postback.php' ? 'text-[#128c7e] font-bold bg-emerald-50/40' : '' ?>">
+                            <a href="test-postback" class="flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-gray-700 hover:bg-slate-50 font-semibold transition <?= $active_script === 'test-postback' ? 'text-[#128c7e] font-bold bg-emerald-50/40' : '' ?>">
                                 <i class="fa-solid fa-vial text-base text-gray-400"></i> Test Postback
                             </a>
-                            <a href="postback-log.php" class="flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-gray-700 hover:bg-slate-50 font-semibold transition <?= $active_script === 'postback-log.php' ? 'text-[#128c7e] font-bold bg-emerald-50/40' : '' ?>">
+                            <a href="postback-log" class="flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-gray-700 hover:bg-slate-50 font-semibold transition <?= $active_script === 'postback-log' ? 'text-[#128c7e] font-bold bg-emerald-50/40' : '' ?>">
                                 <i class="fa-solid fa-clock-rotate-left text-base text-gray-400"></i> Postback Logs
                             </a>
                         </div>
                     </div>
 
-                    <a href="affiliate-am.php" class="px-3 py-2 rounded-xl flex items-center gap-1.5 transition-all text-[13px] font-bold <?= getActiveNavClass($active_script, 'affiliate-am.php') ?>" title="Account Manager">
+                    <a href="affiliate-am" class="px-3 py-2 rounded-xl flex items-center gap-1.5 transition-all text-[13px] font-bold <?= getActiveNavClass($active_script, 'affiliate-am') ?>" title="Account Manager">
                         <i class="fa-solid fa-user-tie text-sm"></i> AM
                     </a>
 
-                    <a href="affiliate-logout.php" class="text-[13px] font-bold text-rose-600 hover:text-rose-700 transition bg-rose-50 hover:bg-rose-100/70 px-3.5 py-2 rounded-xl flex items-center gap-1.5 ml-1">
+                    <a href="affiliate-logout" class="text-[13px] font-bold text-rose-600 hover:text-rose-700 transition bg-rose-50 hover:bg-rose-100/70 px-3.5 py-2 rounded-xl flex items-center gap-1.5 ml-1">
                         <i class="fa-solid fa-right-from-bracket text-sm"></i> Logout
                     </a>
                 <?php endif; ?>
@@ -92,16 +92,16 @@ function getActiveNavClass($current_page, $target_pages) {
 
             <?php if (!$isLoggedIn): ?>
             <div class="hidden lg:flex items-center gap-2 text-[15px] ml-auto">
-                <a href="affiliate-login.php" class="px-3.5 py-2 transition-all <?= getActiveNavClass($active_script, ['affiliate-login.php', 'affiliate-forgot.php']) ?>">
+                <a href="affiliate-login" class="px-3.5 py-2 transition-all <?= getActiveNavClass($active_script, ['affiliate-login', 'affiliate-forgot']) ?>">
                     Affiliate Login
                 </a>
-                <a href="affiliate-register.php" class="bg-[#128c7e] hover:bg-[#0e6f64] text-white font-bold px-4.5 py-2 rounded-xl transition-all shadow-xs text-center tracking-wide ml-1">
+                <a href="affiliate-register" class="bg-[#128c7e] hover:bg-[#0e6f64] text-white font-bold px-4.5 py-2 rounded-xl transition-all shadow-xs text-center tracking-wide ml-1">
                     Affiliate Register
                 </a>
                 
                 <!-- Desktop Separator & User Portal Link (Only for Logged Out users) -->
                 <div class="w-px h-5 bg-gray-200 mx-2"></div>
-                <a href="index.php" class="text-slate-600 hover:text-slate-900 px-3.5 py-2 font-semibold flex items-center gap-1.5 transition">
+                <a href="index" class="text-slate-600 hover:text-slate-900 px-3.5 py-2 font-semibold flex items-center gap-1.5 transition">
                     <i class="fa-solid fa-house text-[11px] text-gray-400"></i> User Portal
                 </a>
             </div>
@@ -109,7 +109,7 @@ function getActiveNavClass($current_page, $target_pages) {
 
             <div class="flex items-center gap-4">
                 <?php if ($isLoggedIn): ?>
-                    <a href="affiliate-profile.php" class="hidden sm:flex items-center gap-2 hover:opacity-80 transition">
+                    <a href="affiliate-profile" class="hidden sm:flex items-center gap-2 hover:opacity-80 transition">
                         <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-[#128c7e] flex items-center justify-center text-white shadow-md">
                             <i class="fa-solid fa-user text-sm"></i>
                         </div>
@@ -127,47 +127,47 @@ function getActiveNavClass($current_page, $target_pages) {
                     
                     <div id="mobileAffiliateMenu" class="hidden absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-2xl shadow-xl py-2 z-50 text-left font-semibold text-[14px]">
                         <?php if ($isLoggedIn): ?>
-                            <a href="affiliate-dashboard.php" class="flex items-center gap-2.5 px-4 py-2.5 text-gray-700 hover:bg-gray-50 transition">
+                            <a href="affiliate-dashboard" class="flex items-center gap-2.5 px-4 py-2.5 text-gray-700 hover:bg-gray-50 transition">
                                 <i class="fa-solid fa-chart-pie text-base text-gray-400"></i> Dashboard
                             </a>
-                            <a href="affiliate-reports.php" class="flex items-center gap-2.5 px-4 py-2.5 text-gray-700 hover:bg-gray-50 transition">
+                            <a href="affiliate-reports" class="flex items-center gap-2.5 px-4 py-2.5 text-gray-700 hover:bg-gray-50 transition">
                                 <i class="fa-solid fa-chart-line text-base text-gray-400"></i> Reports
                             </a>
-                            <a href="affiliate-clients.php" class="flex items-center gap-2.5 px-4 py-2.5 text-gray-700 hover:bg-gray-50 transition">
+                            <a href="affiliate-clients" class="flex items-center gap-2.5 px-4 py-2.5 text-gray-700 hover:bg-gray-50 transition">
                                 <i class="fa-solid fa-users text-base text-gray-400"></i> Clients
                             </a>
-                            <a href="affiliate-payout.php" class="flex items-center gap-2.5 px-4 py-2.5 text-gray-700 hover:bg-gray-50 transition">
+                            <a href="affiliate-payout" class="flex items-center gap-2.5 px-4 py-2.5 text-gray-700 hover:bg-gray-50 transition">
                                 <i class="fa-solid fa-wallet text-base text-gray-400"></i> Withdraw
                             </a>
                             
                             <hr class="border-gray-100 my-1.5">
                             <span class="px-4 py-1.5 text-[10px] font-bold text-gray-400 uppercase tracking-wider block">S2S Tools</span>
                             
-                            <a href="affiliate-postback.php" class="flex items-center gap-2.5 pl-6 pr-4 py-2 text-gray-600 hover:bg-gray-50 transition">
+                            <a href="affiliate-postback" class="flex items-center gap-2.5 pl-6 pr-4 py-2 text-gray-600 hover:bg-gray-50 transition">
                                 <i class="fa-solid fa-gear text-base text-gray-400"></i> Setup
                             </a>
-                            <a href="test-postback.php" class="flex items-center gap-2.5 pl-6 pr-4 py-2 text-gray-600 hover:bg-gray-50 transition">
+                            <a href="test-postback" class="flex items-center gap-2.5 pl-6 pr-4 py-2 text-gray-600 hover:bg-gray-50 transition">
                                 <i class="fa-solid fa-vial text-base text-gray-400"></i> Test Tool
                             </a>
-                            <a href="postback-log.php" class="flex items-center gap-2.5 pl-6 pr-4 py-2 text-gray-600 hover:bg-gray-50 transition">
+                            <a href="postback-log" class="flex items-center gap-2.5 pl-6 pr-4 py-2 text-gray-600 hover:bg-gray-50 transition">
                                 <i class="fa-solid fa-clock-rotate-left text-base text-gray-400"></i> Logs
                             </a>
 
                             <hr class="border-gray-100 my-1.5">
-                            <a href="affiliate-logout.php" class="flex items-center gap-2.5 px-4 py-2.5 text-rose-600 hover:bg-rose-50 transition font-bold">
+                            <a href="affiliate-logout" class="flex items-center gap-2.5 px-4 py-2.5 text-rose-600 hover:bg-rose-50 transition font-bold">
                                 <i class="fa-solid fa-right-from-bracket text-base"></i> Logout
                             </a>
                         <?php else: ?>
-                            <a href="affiliate-login.php" class="flex items-center gap-2.5 px-4 py-2.5 text-gray-700 hover:bg-gray-50 transition">
+                            <a href="affiliate-login" class="flex items-center gap-2.5 px-4 py-2.5 text-gray-700 hover:bg-gray-50 transition">
                                 <i class="fa-solid fa-right-to-bracket text-base text-gray-400"></i> Affiliate Login
                             </a>
-                            <a href="affiliate-register.php" class="flex items-center gap-2.5 px-4 py-2.5 text-[#128c7e] hover:bg-emerald-50 transition font-bold">
+                            <a href="affiliate-register" class="flex items-center gap-2.5 px-4 py-2.5 text-[#128c7e] hover:bg-emerald-50 transition font-bold">
                                 <i class="fa-solid fa-user-plus text-base text-emerald-600"></i> Affiliate Register
                             </a>
                             
                             <!-- Mobile Separator & User Portal (Only for Logged Out users) -->
                             <hr class="border-gray-100 my-1.5">
-                            <a href="index.php" class="flex items-center gap-2.5 px-4 py-2.5 text-slate-700 hover:bg-gray-50 transition">
+                            <a href="index" class="flex items-center gap-2.5 px-4 py-2.5 text-slate-700 hover:bg-gray-50 transition">
                                 <i class="fa-solid fa-house text-base text-gray-400"></i> User Portal
                             </a>
                         <?php endif; ?>

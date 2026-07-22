@@ -9,7 +9,7 @@ if (basename($_SERVER['SCRIPT_FILENAME']) == basename(__FILE__)) {
 }
 if (session_status() === PHP_SESSION_NONE) session_start();
 
-$active_script = basename($_SERVER['SCRIPT_FILENAME']);
+$active_script = pathinfo(basename($_SERVER['SCRIPT_FILENAME']), PATHINFO_FILENAME);
 
 $pendingCount = 0;
 $pendingPaymentsCount = 0;
@@ -91,7 +91,7 @@ function getSidebarClass($current, $targets)
 
     <!-- Header with logo + collapse toggle -->
     <div class="flex items-center justify-between px-4 h-16 border-b border-gray-200 flex-shrink-0">
-        <a href="admin-dashboard.php" class="flex items-center gap-3 overflow-hidden">
+        <a href="admin-dashboard" class="flex items-center gap-3 overflow-hidden">
             <img src="public/logo.png" alt="Logo" class="h-9 w-auto flex-shrink-0">
 
         </a>
@@ -102,7 +102,7 @@ function getSidebarClass($current, $targets)
 
     <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
 
-        <a href="admin-dashboard.php" class="sidebar-nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all <?= getSidebarClass($active_script, 'admin-dashboard.php') ?>">
+        <a href="admin-dashboard" class="sidebar-nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all <?= getSidebarClass($active_script, 'admin-dashboard') ?>">
             <i class="fa-solid fa-chart-pie text-base w-5 text-center flex-shrink-0"></i>
             <span class="sidebar-label">Dashboard</span>
         </a>
@@ -111,12 +111,12 @@ function getSidebarClass($current, $targets)
             <span class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Affiliates</span>
         </div>
 
-        <a href="admin-affiliates.php" class="sidebar-nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all <?= ($active_script === 'admin-affiliates.php' && (!isset($_GET['tab']) || $_GET['tab'] === 'all')) ? 'bg-indigo-50 text-indigo-700 border-l-[3px] border-indigo-600 font-bold' : 'text-slate-600 hover:bg-gray-100 hover:text-slate-900' ?>">
+        <a href="admin-affiliates" class="sidebar-nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all <?= ($active_script === 'admin-affiliates' && (!isset($_GET['tab']) || $_GET['tab'] === 'all')) ? 'bg-indigo-50 text-indigo-700 border-l-[3px] border-indigo-600 font-bold' : 'text-slate-600 hover:bg-gray-100 hover:text-slate-900' ?>">
             <i class="fa-solid fa-handshake text-base w-5 text-center flex-shrink-0"></i>
             <span class="sidebar-label">All Affiliates</span>
         </a>
 
-        <a href="admin-affiliates.php?tab=pending" class="sidebar-nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all <?= ($active_script === 'admin-affiliates.php' && isset($_GET['tab']) && $_GET['tab'] === 'pending') ? 'bg-indigo-50 text-indigo-700 border-l-[3px] border-indigo-600 font-bold' : 'text-slate-600 hover:bg-gray-100 hover:text-slate-900' ?>">
+        <a href="admin-affiliates?tab=pending" class="sidebar-nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all <?= ($active_script === 'admin-affiliates' && isset($_GET['tab']) && $_GET['tab'] === 'pending') ? 'bg-indigo-50 text-indigo-700 border-l-[3px] border-indigo-600 font-bold' : 'text-slate-600 hover:bg-gray-100 hover:text-slate-900' ?>">
             <i class="fa-solid fa-clock text-base w-5 text-center flex-shrink-0"></i>
             <span class="sidebar-label">Pending Affiliates</span>
             <?php if ($pendingCount > 0): ?>
@@ -124,7 +124,7 @@ function getSidebarClass($current, $targets)
             <?php endif; ?>
         </a>
 
-        <a href="admin-affiliates.php?tab=payments" class="sidebar-nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all <?= ($active_script === 'admin-affiliates.php' && isset($_GET['tab']) && $_GET['tab'] === 'payments') ? 'bg-indigo-50 text-indigo-700 border-l-[3px] border-indigo-600 font-bold' : 'text-slate-600 hover:bg-gray-100 hover:text-slate-900' ?>">
+        <a href="admin-affiliates?tab=payments" class="sidebar-nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all <?= ($active_script === 'admin-affiliates' && isset($_GET['tab']) && $_GET['tab'] === 'payments') ? 'bg-indigo-50 text-indigo-700 border-l-[3px] border-indigo-600 font-bold' : 'text-slate-600 hover:bg-gray-100 hover:text-slate-900' ?>">
             <i class="fa-solid fa-credit-card text-base w-5 text-center flex-shrink-0"></i>
             <span class="sidebar-label">Affiliate Payments</span>
             <?php if ($pendingPaymentsCount > 0): ?>
@@ -136,12 +136,12 @@ function getSidebarClass($current, $targets)
             <span class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Analytics</span>
         </div>
 
-        <a href="admin-reports.php" class="sidebar-nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all <?= getSidebarClass($active_script, 'admin-reports.php') ?>">
+        <a href="admin-reports" class="sidebar-nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all <?= getSidebarClass($active_script, 'admin-reports') ?>">
             <i class="fa-solid fa-chart-line text-base w-5 text-center flex-shrink-0"></i>
             <span class="sidebar-label">Affiliate Reports</span>
         </a>
 
-        <a href="admin-clients.php" class="sidebar-nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all <?= getSidebarClass($active_script, ['admin-clients.php', 'admin-client-detail.php']) ?>">
+        <a href="admin-clients" class="sidebar-nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all <?= getSidebarClass($active_script, ['admin-clients', 'admin-client-detail']) ?>">
             <i class="fa-solid fa-users text-base w-5 text-center flex-shrink-0"></i>
             <span class="sidebar-label">Customers</span>
         </a>
@@ -149,7 +149,7 @@ function getSidebarClass($current, $targets)
     </nav>
 
     <div class="border-t border-gray-200 p-3 flex-shrink-0">
-        <a href="admin-logout.php" class="sidebar-nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] text-rose-600 hover:bg-rose-50 font-bold transition-all justify-center lg:justify-start">
+        <a href="admin-logout" class="sidebar-nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] text-rose-600 hover:bg-rose-50 font-bold transition-all justify-center lg:justify-start">
             <i class="fa-solid fa-right-from-bracket text-base w-5 text-center flex-shrink-0"></i>
             <span class="sidebar-label">Logout</span>
         </a>

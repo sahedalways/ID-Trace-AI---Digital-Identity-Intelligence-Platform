@@ -7,7 +7,7 @@ require_once 'config.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: admin-login.php");
+    header("Location: admin-login");
     exit;
 }
 
@@ -137,7 +137,7 @@ function buildQueryString($overrides) {
                     </div>
                     <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm py-3 px-5 rounded-xl transition-all cursor-pointer">Search</button>
                     <?php if (!empty($search)): ?>
-                        <a href="admin-reports.php?filter=<?= $filter ?>" class="text-xs font-bold text-gray-500 hover:text-gray-900 px-2">Clear</a>
+                        <a href="admin-reports?filter=<?= $filter ?>" class="text-xs font-bold text-gray-500 hover:text-gray-900 px-2">Clear</a>
                     <?php endif; ?>
                 </form>
 

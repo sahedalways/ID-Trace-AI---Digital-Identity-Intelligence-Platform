@@ -38,7 +38,7 @@ $adminRole = !empty($_SESSION['admin_role']) ? $_SESSION['admin_role'] : 'admin'
                         <div class="text-xs font-bold text-gray-900"><?= htmlspecialchars($adminName) ?></div>
                         <div class="text-[10px] text-gray-400 font-mono"><?= htmlspecialchars($_SESSION['admin_email'] ?? '') ?></div>
                     </div>
-                    <a href="admin-logout.php" class="flex items-center gap-2.5 px-4 py-2.5 text-rose-600 hover:bg-rose-50 transition font-bold text-[13px]">
+                    <a href="admin-logout" class="flex items-center gap-2.5 px-4 py-2.5 text-rose-600 hover:bg-rose-50 transition font-bold text-[13px]">
                         <i class="fa-solid fa-right-from-bracket text-sm"></i> Logout
                     </a>
                 </div>

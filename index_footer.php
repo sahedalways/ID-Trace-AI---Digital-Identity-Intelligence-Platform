@@ -31,7 +31,7 @@
                     <a href="mailto:support@identitysearch.ai" class="w-9 h-9 rounded-full bg-emerald-50 text-[#128c7e] hover:bg-[#128c7e] hover:text-white flex items-center justify-center transition-all duration-200">
                         <i class="fa-solid fa-envelope text-xs"></i>
                     </a>
-                    <a href="contact.php" class="w-9 h-9 rounded-full bg-emerald-50 text-[#128c7e] hover:bg-[#128c7e] hover:text-white flex items-center justify-center transition-all duration-200">
+                    <a href="contact" class="w-9 h-9 rounded-full bg-emerald-50 text-[#128c7e] hover:bg-[#128c7e] hover:text-white flex items-center justify-center transition-all duration-200">
                         <i class="fa-solid fa-headset text-xs"></i>
                     </a>
                 </div>
@@ -41,11 +41,11 @@
             <div class="md:col-span-2 space-y-4">
                 <h4 class="text-xs font-bold text-gray-900 uppercase tracking-widest">Quick Links</h4>
                 <ul class="space-y-3">
-                    <li><a href="buy-credit.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Pricing</a></li>
-                    <li><a href="signin.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Login</a></li>
-                    <li><a href="signin.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Sign Up</a></li>
-                    <li><a href="contact.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Contact Us</a></li>
-                    <li><a href="opt-out.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Opt-Out</a></li>
+                    <li><a href="buy-credit" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Pricing</a></li>
+                    <li><a href="signin" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Login</a></li>
+                    <li><a href="signin" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Sign Up</a></li>
+                    <li><a href="contact" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Contact Us</a></li>
+                    <li><a href="opt-out" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Opt-Out</a></li>
                 </ul>
             </div>
 
@@ -53,11 +53,11 @@
             <div class="md:col-span-2 space-y-4">
                 <h4 class="text-xs font-bold text-gray-900 uppercase tracking-widest">Resources</h4>
                 <ul class="space-y-3">
-                    <li><a href="affiliate-portal.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Affiliates</a></li>
-                    <li><a href="terms.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Terms of Service</a></li>
-                    <li><a href="privacy.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Privacy Policy</a></li>
-                    <li><a href="fcra.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Understanding the FCRA</a></li>
-                    <li><a href="refund.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Billing Cancellation & Refund Policy</a></li>
+                    <li><a href="affiliate-portal" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Affiliates</a></li>
+                    <li><a href="terms" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Terms of Service</a></li>
+                    <li><a href="privacy" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Privacy Policy</a></li>
+                    <li><a href="fcra" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Understanding the FCRA</a></li>
+                    <li><a href="refund" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Billing Cancellation & Refund Policy</a></li>
                 </ul>
             </div>
 
@@ -79,11 +79,11 @@
                 &copy; 2026 Identity Search AI. All rights reserved.
             </p>
             <div class="flex items-center gap-4 text-xs text-gray-400 font-semibold">
-                <a href="terms.php" class="hover:text-[#128c7e] transition-colors">Terms</a>
+                <a href="terms" class="hover:text-[#128c7e] transition-colors">Terms</a>
                 <span class="w-1 h-1 rounded-full bg-gray-300"></span>
-                <a href="privacy.php" class="hover:text-[#128c7e] transition-colors">Privacy</a>
+                <a href="privacy" class="hover:text-[#128c7e] transition-colors">Privacy</a>
                 <span class="w-1 h-1 rounded-full bg-gray-300"></span>
-                <a href="contact.php" class="hover:text-[#128c7e] transition-colors">Support</a>
+                <a href="contact" class="hover:text-[#128c7e] transition-colors">Support</a>
             </div>
         </div>
     </div>

@@ -31,11 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($input_name) || empty($input_email) || empty($input_subject) || empty($input_body)) {
         $_SESSION['contact_flash_error'] = "All form matrix entries are required to route your communication.";
-        header("Location: " . BASE_URL . "contact.php");
+        header("Location: " . BASE_URL . "contact");
         exit;
     } elseif (!filter_var($input_email, FILTER_VALIDATE_EMAIL)) {
         $_SESSION['contact_flash_error'] = "The provided electronic communication address layout remains invalid.";
-        header("Location: " . BASE_URL . "contact.php");
+        header("Location: " . BASE_URL . "contact");
         exit;
     } else {
         try {
@@ -104,11 +104,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['contact_flash_success'] = "Message dispatched successfully. A confirmation receipt copy has been sent to your inbox.";
 
             // Post/Redirect/Get Execution Termination Loop
-            header("Location: " . BASE_URL . "contact.php");
+            header("Location: " . BASE_URL . "contact");
             exit;
         } catch (Exception $dbEx) {
             $_SESSION['contact_flash_error'] = "Operational tracking error: " . $dbEx->getMessage();
-            header("Location: " . BASE_URL . "contact.php");
+            header("Location: " . BASE_URL . "contact");
             exit;
         }
     }

@@ -3,13 +3,13 @@ require_once 'config.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: admin-login.php");
+    header("Location: admin-login");
     exit;
 }
 
 $affId = (int)($_GET['id'] ?? 0);
 if (!$affId) {
-    header("Location: admin-affiliates.php");
+    header("Location: admin-affiliates");
     exit;
 }
 
@@ -19,7 +19,7 @@ $affiliate = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$affiliate || $affiliate['status'] !== 'active') {
     $_SESSION['flash_error'] = "Cannot login as this affiliate. Account may not be active.";
-    header("Location: admin-affiliates.php");
+    header("Location: admin-affiliates");
     exit;
 }
 
@@ -28,5 +28,5 @@ $_SESSION['affiliate_email'] = $affiliate['email'];
 $_SESSION['affiliate_name'] = $affiliate['name'];
 $_SESSION['admin_impersonating'] = true;
 
-header("Location: affiliate-dashboard.php");
+header("Location: affiliate-dashboard");
 exit;

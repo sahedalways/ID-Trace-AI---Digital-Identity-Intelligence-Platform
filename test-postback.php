@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
 // 1. Enforce strict authentication walls
 if (!isset($_SESSION['affiliate_id'])) {
-    header("Location: affiliate-login.php");
+    header("Location: affiliate-login");
     exit;
 }
 
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['fire_test'])) {
     }
 
     // Direct redirection pass onto itself clears submission context loops
-    header("Location: test-postback.php");
+    header("Location: test-postback");
     exit;
 }
 
@@ -83,7 +83,7 @@ unset($_SESSION['test_error'], $_SESSION['test_http_code'], $_SESSION['test_head
                 <p class="text-xs text-gray-400 font-medium leading-relaxed">Simulate a live partner-triggered routing event. Input your complete endpoint URL pattern string with tracking arguments included to test firewall permissions and server response states.</p>
             </div>
 
-            <form method="POST" action="test-postback.php" class="space-y-4">
+            <form method="POST" action="test-postback" class="space-y-4">
                 <div class="space-y-1.5">
                     <label class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Test Destination URL String</label>
                     <input type="url" name="test_url" required 

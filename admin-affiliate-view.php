@@ -7,13 +7,13 @@ require_once 'config.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['admin_id'])) {
-    header("Location: admin-login.php");
+    header("Location: admin-login");
     exit;
 }
 
 $affId = (int)($_GET['id'] ?? 0);
 if (!$affId) {
-    header("Location: admin-affiliates.php");
+    header("Location: admin-affiliates");
     exit;
 }
 
@@ -23,7 +23,7 @@ try {
     $affiliate = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$affiliate) {
-        header("Location: admin-affiliates.php");
+        header("Location: admin-affiliates");
         exit;
     }
 
@@ -77,17 +77,17 @@ $methodLabels = [
         <main class="p-4 sm:p-6 space-y-6">
 
             <div class="flex items-center gap-3">
-                <a href="admin-affiliates.php?tab=<?= $tab ?? 'all' ?>" class="text-gray-400 hover:text-gray-900 transition">
+                <a href="admin-affiliates?tab=<?= $tab ?? 'all' ?>" class="text-gray-400 hover:text-gray-900 transition">
                     <i class="fa-solid fa-arrow-left text-sm"></i>
                 </a>
                 <div class="flex-1">
                     <h1 class="text-xl font-extrabold tracking-tight text-gray-900">Affiliate #<?= str_pad($affiliate['id'], 3, '0', STR_PAD_LEFT) ?></h1>
                     <p class="text-xs text-gray-400">Full profile, payment info, and activity history.</p>
                 </div>
-                <a href="admin-login-as-affiliate.php?id=<?= $affiliate['id'] ?>" class="inline-flex items-center gap-1.5 text-[11px] font-bold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 px-3 py-1.5 rounded-lg transition">
+                <a href="admin-login-as-affiliate?id=<?= $affiliate['id'] ?>" class="inline-flex items-center gap-1.5 text-[11px] font-bold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 px-3 py-1.5 rounded-lg transition">
                     <i class="fa-solid fa-right-to-bracket text-[10px]"></i> Login as Affiliate
                 </a>
-                <a href="admin-affiliate-edit.php?id=<?= $affiliate['id'] ?>" class="inline-flex items-center gap-1.5 text-[11px] font-bold bg-amber-50 text-amber-700 hover:bg-amber-100 px-3 py-1.5 rounded-lg transition">
+                <a href="admin-affiliate-edit?id=<?= $affiliate['id'] ?>" class="inline-flex items-center gap-1.5 text-[11px] font-bold bg-amber-50 text-amber-700 hover:bg-amber-100 px-3 py-1.5 rounded-lg transition">
                     <i class="fa-solid fa-pen text-[10px]"></i> Edit
                 </a>
             </div>

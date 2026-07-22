@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
 // 1. Enforce strict authentication wall intercept limits
 if (!isset($_SESSION['affiliate_id'])) {
-    header("Location: affiliate-login.php");
+    header("Location: affiliate-login");
     exit;
 }
 
@@ -24,7 +24,7 @@ try {
     if (!$user) {
         // Safe fallback logout sequence if user entry vanished from core tables
         session_destroy();
-        header("Location: affiliate-login.php");
+        header("Location: affiliate-login");
         exit;
     }
 

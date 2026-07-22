@@ -12,7 +12,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Enforce login access authorization locks
 if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true || !isset($_SESSION['user_id'])) {
-    header("Location: " . BASE_URL . "signin.php");
+    header("Location: " . BASE_URL . "signin");
     exit;
 }
 

@@ -66,7 +66,7 @@ define('MAIL_FROM_NAME', env('MAIL_FROM_NAME', 'Identity Search AI'));
 // 5. Google OAuth2 Configuration
 define('GOOGLE_CLIENT_ID', env('GOOGLE_CLIENT_ID'));
 define('GOOGLE_CLIENT_SECRET', env('GOOGLE_CLIENT_SECRET'));
-define('GOOGLE_REDIRECT_URI', env('GOOGLE_REDIRECT_URI', 'https://idtrace.ai/auth_google.php'));
+define('GOOGLE_REDIRECT_URI', env('GOOGLE_REDIRECT_URI', 'https://idtrace.ai/auth_google'));
 
 // 6. Google Gemini AI Configuration
 define('GEMINI_API_KEY', env('GEMINI_API_KEY'));

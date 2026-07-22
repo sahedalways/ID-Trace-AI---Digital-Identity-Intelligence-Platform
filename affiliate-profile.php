@@ -6,7 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['affiliate_id'])) {
-    header("Location: affiliate-login.php");
+    header("Location: affiliate-login");
     exit();
 }
 
@@ -21,7 +21,7 @@ $stmt->execute([$affiliate_id]);
 $user = $stmt->fetch();
 
 if (!$user) {
-    header("Location: affiliate-login.php");
+    header("Location: affiliate-login");
     exit();
 }
 
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_profile'])) {
         $up_stmt->execute([$new_name, $new_mobile, $new_country, $affiliate_id]);
         $_SESSION['affiliate_name'] = $new_name;
         $_SESSION['flash_success'] = "Profile updated successfully!";
-        header("Location: affiliate-profile.php");
+        header("Location: affiliate-profile");
             exit();
         } catch (PDOException $e) {
             $error_msg = "Update failed. Please try again.";
@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_payment'])) {
                 $pay_stmt->execute([$affiliate_id, $method, $info]);
             }
             $_SESSION['flash_success'] = "Payment info updated successfully!";
-            header("Location: affiliate-profile.php");
+            header("Location: affiliate-profile");
             exit();
         } catch (PDOException $e) {
             $error_msg = "Database error. Please try again.";

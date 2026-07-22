@@ -170,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
 
                     <div class="pt-2">
-                        <a href="affiliate-login.php" class="block w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white text-xs font-bold py-4 rounded-xl transition-all shadow-sm cursor-pointer border border-transparent">
+                        <a href="affiliate-login" class="block w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white text-xs font-bold py-4 rounded-xl transition-all shadow-sm cursor-pointer border border-transparent">
                             Return to Authentication Gate
                         </a>
                     </div>
@@ -186,7 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     <?php endif; ?>
 
-                    <form action="affiliate-register.php" method="POST" class="space-y-4 text-left">
+                    <form action="affiliate-register" method="POST" class="space-y-4 text-left">
                         
                         <div class="space-y-1.5">
                             <label for="name" class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Full Name *</label>
@@ -252,7 +252,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </form>
 
                     <div class="border-t border-gray-100 pt-4 text-center">
-                        <p class="text-xs text-gray-400 font-semibold">Already a registered partner? <a href="affiliate-login.php" class="text-[#128c7e] font-bold hover:underline">Log in here</a></p>
+                        <p class="text-xs text-gray-400 font-semibold">Already a registered partner? <a href="affiliate-login" class="text-[#128c7e] font-bold hover:underline">Log in here</a></p>
                     </div>
                 </div>
             <?php endif; ?>

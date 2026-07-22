@@ -75,7 +75,7 @@ try {
 
                         <!-- High-Contrast Call To Action Button -->
                         <div style='text-align: center; margin-top: 20px; margin-bottom: 5px;'>
-                            <a href='https://idtrace.ai/my-plan.php' style='display: inline-block; background-color: #000000; color: #FFFFFF; font-size: 11px; font-weight: 700; text-decoration: none; padding: 10px 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);'>Cancel Subscription</a>
+                            <a href='https://idtrace.ai/my-plan' style='display: inline-block; background-color: #000000; color: #FFFFFF; font-size: 11px; font-weight: 700; text-decoration: none; padding: 10px 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);'>Cancel Subscription</a>
                         </div>
                     </div>
 
