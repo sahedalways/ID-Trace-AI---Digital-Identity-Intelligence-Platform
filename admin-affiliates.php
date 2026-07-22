@@ -130,8 +130,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $_SESSION['flash_success'] = "Invoice approved.";
     } elseif ($act === 'reject_payment' && $affId) {
         $payId = (int)($_POST['payment_id'] ?? 0);
+        $wdRow = $pdo->prepare("SELECT `amount` FROM `withdraw` WHERE `id` = ? AND `status` = 'pending' LIMIT 1");
+        $wdRow->execute([$payId]);
+        $wdRow = $wdRow->fetch(PDO::FETCH_ASSOC);
+        if ($wdRow) {
+            $pdo->prepare("UPDATE `affiliates` SET `balance` = `balance` + ? WHERE `id` = ?")->execute([(float)$wdRow['amount'], $affId]);
+        }
         $pdo->prepare("UPDATE `withdraw` SET `status` = 'rejected' WHERE `id` = ?")->execute([$payId]);
-        $_SESSION['flash_success'] = "Payment rejected.";
+        $_SESSION['flash_success'] = "Payment rejected. $" . number_format($wdRow['amount'] ?? 0, 2) . " returned to affiliate balance.";
     } elseif ($act === 'add_affiliate') {
         $name = trim($_POST['name'] ?? '');
         $email = trim($_POST['email'] ?? '');
