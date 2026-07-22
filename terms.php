@@ -24,7 +24,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
             <div class="text-center space-y-2">
                 <h1 class="text-3xl font-black tracking-tight text-gray-900">Terms and Conditions</h1>
-                <p class="text-sm text-gray-500 font-medium leading-relaxed max-w-xl mx-auto">How we process operational dashboard data, secure workspace profiles, and treat open-source records.</p>
+                <p class="text-sm text-gray-500 font-medium leading-relaxed max-w-xl mx-auto">Rules for the use of the platform console and provision of automated intelligence services.</p>
                 <p class="text-xs text-gray-400 font-bold uppercase tracking-widest pt-2">Last Updated: July 2026</p>
             </div>
 
