@@ -1,4 +1,5 @@
 <?php
+
 /**
  * File: terms.php
  * Terms and Conditions — exact content from Terms of Service.docx
@@ -8,10 +9,12 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Terms of Service — Identity Search AI</title>
     <?php include 'head.php'; ?>
 </head>
+
 <body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white bg-slate-50">
 
     <?php include 'navbar.php'; ?>
@@ -28,6 +31,8 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                 <p class="text-xs sm:text-sm text-amber-900 font-semibold leading-relaxed">
                     <i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1"></i>
                     WE ASK THAT YOU KINDLY CLOSELY REVIEW THESE TERMS AND CONDITIONS, INCLUDING THE DISPUTE RESOLUTION CLAUSES, OPTING-OUT LINK AND FCRA AND OTHER USE RESTRICTIONS SET FORTH BELOW) BEFORE YOU USE, ACCESS, POST OR PURCHASE ANY ITEM ON www.identitysearch.ai, THE Identity Search AI APPLICATION, OR ANY OTHER AFFILIATED WEBSITE OR MOBILE APPLICATION THAT LINKS TO AND UTILIZES THESE TERMS (ALL SUCH PLATFORMS, COLLECTIVELY REFERRED TO AS THE "SITE").
+                    Please note that, among other items, these terms contain an agreement to arbitration and a class action waiver giving up a right to a court hearing or jury trial or to participate in class action litigation. Arbitration is mandatory and is the exclusive remedy for any and all disputes unless specified below. Please carefully review the dispute resolution section below.
+                    WE STRONGLY URGE YOU TO CLOSELY REVIEW THESE TERMS AND CONDITIONS IN FULL BEFORE USING OR ACCESSING ANY CONTENT OR PURCHASING ANY PLAN ON OR THROUGH THE SITE. BY VIRTUE OF YOUR USING OR MAKING ANY PURCHASE ON THE SITE, YOU EFFECTIVELY DEMONSTRATE IN FULL YOUR ACCEPTANCE OF THE TERMS AND CONDITIONS SET FORTH BELOW OR OTHERWISE CONTAINED HEREIN. IF YOU DO NOT WISH TO ACCEPT THESE TERMS AND CONDITIONS, PLEASE DO NOT USE, PROVIDE ANY INFORMATION TO, OR PURCHASE ANY ITEMS ON, THE SITE!
                 </p>
             </div>
 
@@ -353,31 +358,34 @@ if (session_status() === PHP_SESSION_NONE) session_start();
         </div>
     </main>
 
-    <?php if (file_exists('index_footer.php')) { include 'index_footer.php'; } ?>
+    <?php if (file_exists('index_footer.php')) {
+        include 'index_footer.php';
+    } ?>
 
     <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const container = document.getElementById("termsAccordionContainer");
-        if (!container) return;
-        container.querySelectorAll(".terms-content-slider").forEach(panel => {
-            panel.style.maxHeight = panel.scrollHeight + "px";
-        });
-        container.addEventListener("click", (e) => {
-            const trigger = e.target.closest(".terms-toggle-trigger");
-            if (!trigger) return;
-            const panel = trigger.parentElement.querySelector(".terms-content-slider");
-            const icon  = trigger.querySelector("i");
-            if (panel.style.maxHeight === "0px" || panel.style.maxHeight === "") {
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.getElementById("termsAccordionContainer");
+            if (!container) return;
+            container.querySelectorAll(".terms-content-slider").forEach(panel => {
                 panel.style.maxHeight = panel.scrollHeight + "px";
-                panel.style.opacity = "1";
-                icon.style.transform = "rotate(180deg)";
-            } else {
-                panel.style.maxHeight = "0px";
-                panel.style.opacity = "0";
-                icon.style.transform = "rotate(0deg)";
-            }
+            });
+            container.addEventListener("click", (e) => {
+                const trigger = e.target.closest(".terms-toggle-trigger");
+                if (!trigger) return;
+                const panel = trigger.parentElement.querySelector(".terms-content-slider");
+                const icon = trigger.querySelector("i");
+                if (panel.style.maxHeight === "0px" || panel.style.maxHeight === "") {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                    panel.style.opacity = "1";
+                    icon.style.transform = "rotate(180deg)";
+                } else {
+                    panel.style.maxHeight = "0px";
+                    panel.style.opacity = "0";
+                    icon.style.transform = "rotate(0deg)";
+                }
+            });
         });
-    });
     </script>
 </body>
+
 </html>
