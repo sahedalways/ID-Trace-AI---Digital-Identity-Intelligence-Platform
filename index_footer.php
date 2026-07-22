@@ -45,6 +45,7 @@
                     <li><a href="signin.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Login</a></li>
                     <li><a href="signin.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Sign Up</a></li>
                     <li><a href="contact.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Contact Us</a></li>
+                    <li><a href="opt-out.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Opt-Out</a></li>
                 </ul>
             </div>
 
@@ -55,6 +56,8 @@
                     <li><a href="affiliate-portal.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Affiliates</a></li>
                     <li><a href="terms.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Terms of Service</a></li>
                     <li><a href="privacy.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Privacy Policy</a></li>
+                    <li><a href="fcra.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Understanding the FCRA</a></li>
+                    <li><a href="refund.php" class="text-sm text-gray-500 font-semibold hover:text-[#128c7e] transition-colors">Billing Cancellation & Refund Policy</a></li>
                 </ul>
             </div>
 
