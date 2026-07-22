@@ -11,6 +11,16 @@ if (!isset($_SESSION['admin_id'])) {
     exit;
 }
 
+$success_msg = "";
+if (isset($_SESSION['flash_success'])) {
+    $success_msg = $_SESSION['flash_success'];
+    unset($_SESSION['flash_success']);
+}
+if (isset($_SESSION['flash_error'])) {
+    $success_msg = $_SESSION['flash_error'];
+    unset($_SESSION['flash_error']);
+}
+
 $search = isset($_GET['q']) ? trim($_GET['q']) : '';
 $subFilter = isset($_GET['sub']) ? $_GET['sub'] : 'all';
 $page = max(1, (int)($_GET['page'] ?? 1));
@@ -96,6 +106,47 @@ try {
     die("Error: " . $e->getMessage());
 }
 
+// Handle new customer creation
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['form_action'] ?? '') === 'add_customer') {
+    $name = trim($_POST['name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+    $country = trim($_POST['country'] ?? '');
+    $affId = (int)($_POST['affiliate_id'] ?? 0);
+
+    if (empty($name) || empty($email) || empty($password)) {
+        $_SESSION['flash_error'] = "Name, email and password are required.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['flash_error'] = "Invalid email address.";
+    } elseif (strlen($password) < 6) {
+        $_SESSION['flash_error'] = "Password must be at least 6 characters.";
+    } else {
+        $checkStmt = $pdo->prepare("SELECT id FROM `users` WHERE `email` = ? LIMIT 1");
+        $checkStmt->execute([$email]);
+        if ($checkStmt->fetch()) {
+            $_SESSION['flash_error'] = "Email is already registered.";
+        } else {
+            $hashed = password_hash($password, PASSWORD_DEFAULT);
+            $pdo->prepare("INSERT INTO `users` (`name`, `email`, `password`, `country`, `status`, `credit`, `created_at`) VALUES (?, ?, ?, ?, 'active', 0, NOW())")
+                ->execute([$name, $email, $hashed, $country]);
+            $newUserId = $pdo->lastInsertId();
+
+            if ($affId) {
+                $affCheck = $pdo->prepare("SELECT id FROM `affiliates` WHERE `id` = ? LIMIT 1");
+                $affCheck->execute([$affId]);
+                if ($affCheck->fetch()) {
+                    $pdo->prepare("INSERT INTO `conversions` (`uid`, `affid`, `plan`, `price`, `payout`, `note`, `fire_postback`, `created_at`) VALUES (?, ?, 'admin_added', 0.00, 0.00, 'Added by admin', 0, NOW())")
+                        ->execute([$newUserId, $affId]);
+                }
+            }
+
+            $_SESSION['flash_success'] = "Customer '$name' created successfully. ID: #$newUserId";
+        }
+    }
+    header("Location: admin-clients.php?sub=" . urlencode($subFilter));
+    exit;
+}
+
 function buildClientQs($overrides) {
     $q = array_merge($_GET, $overrides);
     return http_build_query($q);
@@ -115,9 +166,14 @@ function buildClientQs($overrides) {
     <div id="sidebarContent" class="lg:ml-64 pt-16 min-h-screen">
         <main class="p-4 sm:p-6 space-y-6">
 
-            <div>
-                <h1 class="text-xl font-extrabold tracking-tight text-gray-900">Customer Management</h1>
-                <p class="text-xs text-gray-400">View all customers acquired through affiliates.</p>
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-xl font-extrabold tracking-tight text-gray-900">Customer Management</h1>
+                    <p class="text-xs text-gray-400">View all customers acquired through affiliates.</p>
+                </div>
+                <button onclick="document.getElementById('addCustModal').classList.remove('hidden')" class="inline-flex items-center gap-1.5 text-[11px] font-bold bg-indigo-600 text-white hover:bg-indigo-700 px-4 py-2 rounded-xl transition cursor-pointer">
+                    <i class="fa-solid fa-plus text-[10px]"></i> New Customer
+                </button>
             </div>
 
             <!-- Search + Status Filter Row -->
@@ -147,30 +203,29 @@ function buildClientQs($overrides) {
             <div class="text-[11px] font-bold text-gray-400">Showing <?= number_format($totalRows) ?> customers</div>
 
             <!-- Clients Table -->
-            <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+            <div class="bg-white border border-gray-200 rounded-2xl shadow-sm">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-sm">
                         <thead class="bg-gray-50 border-b border-gray-200">
                             <tr>
                                 <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">ID</th>
-                                <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Customer</th>
+                                <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Name</th>
+                                <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Email</th>
                                 <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Affiliate</th>
                                 <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Plan</th>
                                 <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Subscription</th>
                                 <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Joined</th>
-                                <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Action</th>
+                                <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-50">
                             <?php if (empty($clients)): ?>
-                                <tr><td colspan="7" class="text-xs text-gray-400 py-8 text-center font-semibold">No customers found.</td></tr>
+                                <tr><td colspan="8" class="text-xs text-gray-400 py-8 text-center font-semibold">No customers found.</td></tr>
                             <?php else: foreach ($clients as $c): ?>
                                 <tr class="hover:bg-gray-50/50">
-                                    <td class="px-5 py-3 text-xs font-mono text-gray-500">#<?= $c['id'] ?></td>
-                                    <td class="px-5 py-3">
-                                        <div class="text-xs font-bold text-gray-900"><?= htmlspecialchars($c['name'] ?? 'N/A') ?></div>
-                                        <div class="text-[10px] text-gray-400 font-mono"><?= htmlspecialchars($c['email']) ?></div>
-                                    </td>
+                                    <td class="px-5 py-3 text-xs font-mono text-gray-500">#<?= str_pad($c['id'], 3, '0', STR_PAD_LEFT) ?></td>
+                                    <td class="px-5 py-3 text-xs font-bold text-gray-900"><?= htmlspecialchars($c['name'] ?? 'N/A') ?></td>
+                                    <td class="px-5 py-3 text-[11px] font-semibold text-gray-600 font-mono"><?= htmlspecialchars($c['email']) ?></td>
                                     <td class="px-5 py-3">
                                         <?php if ($c['aff_name']): ?>
                                             <div class="text-xs font-semibold text-gray-700"><?= htmlspecialchars($c['aff_name']) ?></div>
@@ -193,9 +248,19 @@ function buildClientQs($overrides) {
                                     </td>
                                     <td class="px-5 py-3 text-[10px] text-gray-400 font-semibold"><?= date('M d, Y', strtotime($c['created_at'])) ?></td>
                                     <td class="px-5 py-3">
-                                        <a href="admin-client-detail.php?id=<?= $c['id'] ?>" class="text-[10px] font-bold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 px-2.5 py-1 rounded-md transition inline-flex items-center gap-1">
-                                            <i class="fa-solid fa-eye text-[9px]"></i> View
-                                        </a>
+                                        <div class="relative">
+                                            <button onclick="toggleDropdown(this)" class="inline-flex items-center gap-1 text-[10px] font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 px-2.5 py-1 rounded-md transition cursor-pointer">
+                                                <i class="fa-solid fa-ellipsis"></i> More
+                                            </button>
+                                            <div class="hidden absolute right-0 z-50 mt-1 w-40 bg-white border border-gray-200 rounded-xl shadow-lg py-1.5 origin-top-right dropdown-menu">
+                                                <a href="admin-client-detail.php?id=<?= $c['id'] ?>" class="flex items-center gap-2 px-3.5 py-2 text-[11px] font-semibold text-gray-700 hover:bg-gray-50 transition">
+                                                    <i class="fa-solid fa-eye text-[10px] text-blue-500"></i> View
+                                                </a>
+                                                <a href="admin-client-edit.php?id=<?= $c['id'] ?>" class="flex items-center gap-2 px-3.5 py-2 text-[11px] font-semibold text-gray-700 hover:bg-gray-50 transition">
+                                                    <i class="fa-solid fa-pen text-[10px] text-amber-500"></i> Edit
+                                                </a>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; endif; ?>
@@ -227,6 +292,94 @@ function buildClientQs($overrides) {
 
         </main>
     </div>
+
+    <?php
+    $alert_type = !empty($success_msg) ? (strpos($success_msg, 'success') !== false || strpos($success_msg, 'created') !== false ? 'success' : 'error') : '';
+    $alert_message = $success_msg;
+    ?>
+    <?php include 'alert-modal.php'; ?>
+
+    <!-- Add New Customer Modal -->
+    <div id="addCustModal" class="fixed inset-0 z-[9998] flex items-center justify-center bg-black/40 backdrop-blur-sm hidden">
+        <div class="bg-white rounded-2xl shadow-2xl p-6 max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between mb-5">
+                <h3 class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                    <i class="fa-solid fa-user-plus text-indigo-600"></i> Add New Customer
+                </h3>
+                <button onclick="document.getElementById('addCustModal').classList.add('hidden')" class="text-gray-400 hover:text-gray-700 transition cursor-pointer">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <form method="POST" class="space-y-4">
+                <input type="hidden" name="form_action" value="add_customer">
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Full Name *</label>
+                        <input type="text" name="name" required placeholder="John Doe"
+                            class="w-full text-sm px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 transition font-semibold text-gray-900">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Email Address *</label>
+                        <input type="email" name="email" required placeholder="user@domain.com"
+                            class="w-full text-sm px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 transition font-semibold text-gray-900">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Password *</label>
+                        <input type="password" name="password" required minlength="6" placeholder="Minimum 6 characters"
+                            class="w-full text-sm px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 transition font-semibold text-gray-900">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Country</label>
+                        <input type="text" name="country" placeholder="US, BD, IN..."
+                            class="w-full text-sm px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 transition font-semibold text-gray-900">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Assign to Affiliate (optional)</label>
+                    <select name="affiliate_id" class="w-full text-sm px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 transition font-semibold text-gray-900 cursor-pointer">
+                        <option value="0">— Direct (No Affiliate) —</option>
+                        <?php
+                        $affList = $pdo->query("SELECT id, name, aid, email FROM `affiliates` WHERE `status` = 'active' ORDER BY `name` ASC")->fetchAll();
+                        foreach ($affList as $af):
+                        ?>
+                        <option value="<?= $af['id'] ?>"><?= htmlspecialchars($af['name']) ?> (<?= htmlspecialchars($af['aid']) ?>) — <?= htmlspecialchars($af['email']) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="flex items-center gap-3 pt-2">
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
+                        Create Customer
+                    </button>
+                    <button type="button" onclick="document.getElementById('addCustModal').classList.add('hidden')" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    function toggleDropdown(btn) {
+        var menu = btn.nextElementSibling;
+        var wasOpen = !menu.classList.contains('hidden');
+        document.querySelectorAll('.dropdown-menu').forEach(function(m) { m.classList.add('hidden'); m.style.position = ''; m.style.left = ''; m.style.top = ''; });
+        if (!wasOpen) {
+            var rect = btn.getBoundingClientRect();
+            menu.classList.remove('hidden');
+            menu.style.position = 'fixed';
+            menu.style.left = (rect.right - menu.offsetWidth) + 'px';
+            menu.style.top = (rect.bottom + 4) + 'px';
+        }
+    }
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.relative')) {
+            document.querySelectorAll('.dropdown-menu').forEach(function(m) { m.classList.add('hidden'); m.style.position = ''; m.style.left = ''; m.style.top = ''; });
+        }
+    });
+    </script>
 
 </body>
 </html>
