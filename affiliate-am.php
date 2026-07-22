@@ -66,7 +66,7 @@ if (!isset($_SESSION['affiliate_id'])) {
             </div>
 
             <div class="space-y-4">
-                <a href="https://t.me/jasontold" target="_blank"
+                <a href="https://t.me/identitysearchai" target="_blank"
                    class="contact-link flex items-center justify-between p-5 rounded-2xl group">
                     <div class="flex items-center gap-4">
                         <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-[#128c7e]/10 text-[#128c7e] group-hover:bg-[#128c7e] group-hover:text-white transition-all">
@@ -74,13 +74,13 @@ if (!isset($_SESSION['affiliate_id'])) {
                         </div>
                         <div class="text-left">
                             <p class="text-xs font-bold text-slate-500 uppercase">Telegram</p>
-                            <p class="text-white font-semibold">@jasontold</p>
+                            <p class="text-white font-semibold">@identitysearchai</p>
                         </div>
                     </div>
                     <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-[#128c7e] transition-colors"></i>
                 </a>
 
-                <a href="mailto:jason@offerbluemedia.com"
+                <a href="mailto:smith@identitysearch.ai"
                    class="contact-link flex items-center justify-between p-5 rounded-2xl group">
                     <div class="flex items-center gap-4">
                         <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-500/10 text-slate-400 group-hover:bg-white group-hover:text-slate-900 transition-all">
@@ -88,7 +88,7 @@ if (!isset($_SESSION['affiliate_id'])) {
                         </div>
                         <div class="text-left">
                             <p class="text-xs font-bold text-slate-500 uppercase">Email</p>
-                            <p class="text-white font-semibold">jason@offerbluemedia.com</p>
+                            <p class="text-white font-semibold">smith@identitysearch.ai</p>
                         </div>
                     </div>
                     <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-white transition-colors"></i>
