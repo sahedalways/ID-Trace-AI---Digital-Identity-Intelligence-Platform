@@ -221,7 +221,7 @@ if (!empty($target['avatar'])) {
                     const vid = "<?= urlencode($vid); ?>";
                     const statusCheckInterval = setInterval(async () => {
                         try {
-                            const res = await fetch(`report_status.php?id=${vid}`);
+                            const res = await fetch(`report_status?id=${vid}`);
                             const data = await res.json();
                             if (data.success && (data.status.toLowerCase() === 'completed' || data.status.toLowerCase() === 'failed')) {
                                 clearInterval(statusCheckInterval);

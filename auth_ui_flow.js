@@ -31,10 +31,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function getCleanAuthUrl(action) {
         const searchParams = window.location.search;
         if (!searchParams) {
-            return `signin.php?action=${action}`;
+            return `signin?action=${action}`;
         }
         // Trim the leading '?' from window.location.search and bind it securely using '&'
-        return `signin.php?action=${action}&` + searchParams.substring(1);
+        return `signin?action=${action}&` + searchParams.substring(1);
     }
 
     function showFeedback(text, isError = true) {

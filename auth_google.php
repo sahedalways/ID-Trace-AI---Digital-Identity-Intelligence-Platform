@@ -19,11 +19,11 @@ if (isset($_GET['code'])) {
     $state_parts = explode('|', $incoming_state);
     
     $csrf_token  = $state_parts[0] ?? '';
-    $return_path = isset($state_parts[1]) ? urldecode($state_parts[1]) : '/index.php';
+    $return_path = isset($state_parts[1]) ? urldecode($state_parts[1]) : '/index';
 
     // Security Guard: Restrict formatting strictly to relative locations to eliminate open-redirect flaws
     if (empty($return_path) || strpos($return_path, '/') !== 0) {
-        $return_path = '/index.php';
+        $return_path = '/index';
     }
 
     // CSRF Protection: Validate that the cross-site state tokens match exactly
@@ -146,10 +146,10 @@ if (isset($_GET['code'])) {
 $_SESSION['oauth_state'] = bin2hex(random_bytes(16));
 
 // Retrieve our URL param return target route context safely
-$return_target = isset($_GET['return']) ? trim($_GET['return']) : '/index.php';
+$return_target = isset($_GET['return']) ? trim($_GET['return']) : '/index';
 
 if (empty($return_target) || strpos($return_target, '/') !== 0) {
-    $return_target = '/index.php';
+    $return_target = '/index';
 }
 
 // Bundle the CSRF validation token and our destination page together inside the state wrapper

@@ -29,7 +29,7 @@ if (empty($return_path) || strpos($return_path, '/') !== 0) {
 $prefilled_email = isset($_GET['email']) ? trim($_GET['email']) : '';
 
 // Dynamically reference the initialized authentication gateway routing script with the encoded path
-$google_auth_url = BASE_URL . "auth_google.php?return=" . urlencode($return_path); 
+$google_auth_url = BASE_URL . "auth_google?return=" . urlencode($return_path); 
 ?>
 <!DOCTYPE html>
 <html lang="en">

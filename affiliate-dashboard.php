@@ -30,7 +30,7 @@ try {
 
     // 3. Dynamically craft affiliate tracking link targeting go.php?id=[aid]
     $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "https://";
-    $referralLink = $protocol . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . "go.php?id=" . $user['aid'];
+    $referralLink = $protocol . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . "go?id=" . $user['aid'];
 
     // 4. AGGREGATE LIVE NETWORK PERFORMANCE METRICS FROM NEW MATRIX LAYOUT
     // Total Raw Clicks routing through this partner node
@@ -233,7 +233,7 @@ try {
                 el.style.opacity = '0.4';
             });
 
-            fetch(`affiliate-dashboard-stats.php?filter=${encodeURIComponent(filter)}`)
+            fetch(`affiliate-dashboard-stats?filter=${encodeURIComponent(filter)}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {

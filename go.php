@@ -154,10 +154,10 @@ $_SESSION['active_cid'] = $cid;
 
 // 8. Extract structural base deployment target matching your international site address layer
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
-$baseUrl = $protocol . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . "/index.php";
+$baseUrl = $protocol . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . "/index";
 
 // Clean out string directory formatting anomalies 
-$baseUrl = str_replace('//index.php', '/index.php', $baseUrl);
+$baseUrl = str_replace('//index', '/index', $baseUrl);
 
 // Append structured tracking transaction matrices parameters cleanly down to the redirect header routing channel
 $redirectDestination = $baseUrl . "?cid=" . urlencode($cid);

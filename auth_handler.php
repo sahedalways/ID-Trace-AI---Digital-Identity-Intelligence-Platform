@@ -14,11 +14,11 @@ if (isset($_GET['action'])) {
     header('Content-Type: application/json');
 
     // Extract the dynamic relative path parameter directly from the current active request context
-    $return_path = isset($_GET['return']) ? trim($_GET['return']) : '/index.php';
+    $return_path = isset($_GET['return']) ? trim($_GET['return']) : '/index';
 
     // Security Guard: Restrict path formatting strictly to relative locations to eliminate open-redirect flaws
     if (empty($return_path) || strpos($return_path, '/') !== 0) {
-        $return_path = '/index.php';
+        $return_path = '/index';
     }
 
     // Construct absolute local redirection engine string natively using BASE_URL

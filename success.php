@@ -300,7 +300,7 @@ try {
 }
 
 $hasTargetVid = !empty($vid);
-$redirect_url = $hasTargetVid ? BASE_URL . "view.php?id=" . urlencode($vid) : BASE_URL;
+$redirect_url = $hasTargetVid ? BASE_URL . "view?id=" . urlencode($vid) : BASE_URL;
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -102,7 +102,7 @@ window.executePlatformDataFetch = function(platform, query) {
     const conf = PLATFORM_CONFIGS[platform] || { label: platform, accent: "hover:border-[#128c7e] text-[#128c7e]", domain: "example.com" };
     const classes = conf.accent.split(' ');
 
-    fetch(`fetch_${platform}.php?action=ajax_scan&q=${encodeURIComponent(query)}`)
+    fetch(`fetch_${platform}?action=ajax_scan&q=${encodeURIComponent(query)}`)
         .then(res => res.json())
         .then(data => {
             if (data.status !== 'success' || !data.results?.length) {
@@ -136,7 +136,7 @@ window.executePlatformDataFetch = function(platform, query) {
                         <div class="flex items-start gap-4 w-full min-w-0">
                             <div class="relative flex-shrink-0 rounded-full overflow-hidden border bg-gray-100 flex items-center justify-center" style="width: 64px; height: 64px;">
                                 ${uiDisplayAvatar ? `
-                                    <img src="proxy.php?url=${btoa(uiDisplayAvatar).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')}" 
+                                    <img src="proxy?url=${btoa(uiDisplayAvatar).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')}" 
                                          class="result-avatar w-full h-full object-cover relative z-10" 
                                          onerror="
                                              this.style.display = 'none';
@@ -235,7 +235,7 @@ document.addEventListener('click', function (e) {
 
     const dbAvatarUrl = row.dataset.rawAvatar || row.dataset.avatar || '';
 
-    fetch('create-view-session.php', {
+    fetch('create-view-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({
@@ -248,7 +248,7 @@ document.addEventListener('click', function (e) {
     .then(res => res.json())
     .then(data => {
         if (data.success && data.vid) {
-            window.location.href = `view.php?id=${encodeURIComponent(data.vid)}`;
+            window.location.href = `view?id=${encodeURIComponent(data.vid)}`;
         } else {
             throw new Error();
         }

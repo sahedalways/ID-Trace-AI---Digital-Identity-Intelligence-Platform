@@ -731,7 +731,7 @@ try {
         infoBox.innerHTML = '<div class="text-xs text-gray-400 text-center py-4"><i class="fa-solid fa-spinner fa-spin"></i> Loading...</div>';
         document.getElementById('createInvoiceModal').classList.remove('hidden');
 
-        fetch('admin-fetch-affiliate-payments.php?affiliate_id=' + affId + '&amount=' + encodeURIComponent(pending) + '&paid=' + encodeURIComponent(paid))
+        fetch('admin-fetch-affiliate-payments?affiliate_id=' + affId + '&amount=' + encodeURIComponent(pending) + '&paid=' + encodeURIComponent(paid))
             .then(function(r) { return r.text(); })
             .then(function(html) { infoBox.innerHTML = html; })
             .catch(function() { infoBox.innerHTML = '<span class="text-red-500 text-xs">Failed to load affiliate info.</span>'; });
@@ -741,7 +741,7 @@ try {
         fd.append('action', 'change_invoice_status');
         fd.append('invoice_id', invId);
         fd.append('new_status', newStatus);
-        fetch('admin-affiliates.php', { method: 'POST', body: fd, credentials: 'same-origin' })
+        fetch('admin-affiliates', { method: 'POST', body: fd, credentials: 'same-origin' })
             .then(function() { location.reload(); })
             .catch(function() { alert('Error changing status.'); });
     }
@@ -752,7 +752,7 @@ try {
         var fd = new FormData();
         fd.append('action', 'approve_invoice');
         fd.append('invoice_db_id', invId);
-        fetch('admin-affiliates.php', { method: 'POST', body: fd, credentials: 'same-origin' })
+        fetch('admin-affiliates', { method: 'POST', body: fd, credentials: 'same-origin' })
             .then(function() { location.reload(); })
             .catch(function() { btn.disabled = false; btn.textContent = 'Approve'; alert('Error approving invoice.'); });
     }
@@ -791,7 +791,7 @@ try {
         body.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-indigo-500"></i>';
         document.getElementById('viewInvoicesModal').classList.remove('hidden');
         activeInvFilter = 'all';
-        fetch('admin-fetch-invoices.php?withdraw_id=' + paymentId)
+        fetch('admin-fetch-invoices?withdraw_id=' + paymentId)
             .then(function(r) { return r.text(); })
             .then(function(html) { body.innerHTML = html; })
             .catch(function() { body.innerHTML = '<span class="text-red-500">Failed to load invoices.</span>'; });

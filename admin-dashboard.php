@@ -304,7 +304,7 @@ if (isset($_SESSION['flash_error'])) {
 
         document.querySelectorAll('.stat-clicks, .stat-conversions, .stat-revenue, .stat-payout, .stat-chargebacks, .stat-chargeback-amount, .stat-withdrawn').forEach(el => el.style.opacity = '0.4');
 
-        fetch(`admin-dashboard-stats.php?filter=${encodeURIComponent(filter)}`)
+        fetch(`admin-dashboard-stats?filter=${encodeURIComponent(filter)}`)
             .then(res => res.json())
             .then(data => {
                 if (data.success) {

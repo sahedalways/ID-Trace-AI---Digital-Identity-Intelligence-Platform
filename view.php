@@ -26,9 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['guest_email'])) {
         
         unset($parsedParams['id']); 
         $parsedParams['email'] = $guestEmail;
-        $parsedParams['return'] = "/view.php?id=" . urlencode($vid);
+        $parsedParams['return'] = "/view?id=" . urlencode($vid);
         
-        $redirectUrl = "signin.php?" . http_build_query($parsedParams);
+        $redirectUrl = "signin?" . http_build_query($parsedParams);
         header("Location: " . $redirectUrl);
         exit;
     } else {
@@ -287,7 +287,7 @@ if (isset($all_reviews) && is_array($all_reviews)) {
 
                             // Optimized interface deployment loop interval down to 500ms bounds
                             setTimeout(() => {
-                                fetch('view_scanned.php', {
+                                fetch('view_scanned', {
                                     method: 'POST',
                                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                                     body: new URLSearchParams({ 'id': '<?php echo urlencode($vid); ?>' })
