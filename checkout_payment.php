@@ -222,8 +222,7 @@
             const street = document.getElementById('billing_street').value || ev.paymentMethod.billing_details.address.line1 || '—';
             const zip = document.getElementById('billing_zip').value || ev.paymentMethod.billing_details.address.postal_code || '—';
 
-            const successUrl = window.location.origin + window.location.pathname.replace('checkout.php', 'success.php') + 
-                               `?plan=<?php echo urlencode($plan_name); ?>&id=<?php echo urlencode($vid); ?>&c_name=${encodeURIComponent(cardName)}&c_country=${encodeURIComponent(country)}&c_street=${encodeURIComponent(street)}&c_zip=${encodeURIComponent(zip)}`;
+            const successBase = "<?php echo BASE_URL; ?>success";
 
             const { error, paymentIntent } = await stripe.confirmCardPayment(
                 "<?php echo trim($client_secret); ?>",
@@ -241,10 +240,10 @@
                     if (actError) {
                         errorConsole.textContent = actError.message;
                     } else if (actIntent.status === "succeeded") {
-                        window.location.href = successUrl + `&payment_intent=${actIntent.id}`;
+                        window.location.href = successBase + "?payment_intent=" + encodeURIComponent(actIntent.id) + "&plan=<?php echo urlencode($plan_name); ?>&id=<?php echo urlencode($vid); ?>&c_name=" + encodeURIComponent(cardName) + "&c_country=" + encodeURIComponent(country) + "&c_street=" + encodeURIComponent(street) + "&c_zip=" + encodeURIComponent(zip);
                     }
                 } else if (paymentIntent.status === "succeeded") {
-                    window.location.href = successUrl + `&payment_intent=${paymentIntent.id}`;
+                    window.location.href = successBase + "?payment_intent=" + encodeURIComponent(paymentIntent.id) + "&plan=<?php echo urlencode($plan_name); ?>&id=<?php echo urlencode($vid); ?>&c_name=" + encodeURIComponent(cardName) + "&c_country=" + encodeURIComponent(country) + "&c_street=" + encodeURIComponent(street) + "&c_zip=" + encodeURIComponent(zip);
                 }
             }
         });
@@ -262,8 +261,7 @@
             const street = document.getElementById('billing_street').value;
             const zip = document.getElementById('billing_zip').value;
 
-            const successUrl = window.location.origin + window.location.pathname.replace('checkout.php', 'success.php') + 
-                               `?plan=<?php echo urlencode($plan_name); ?>&id=<?php echo urlencode($vid); ?>&c_name=${encodeURIComponent(cardName)}&c_country=${encodeURIComponent(country)}&c_street=${encodeURIComponent(street)}&c_zip=${encodeURIComponent(zip)}`;
+            const successBase = "<?php echo BASE_URL; ?>success";
 
             const { error, paymentIntent } = await stripe.confirmCardPayment("<?php echo trim($client_secret); ?>", {
                 payment_method: {
@@ -287,7 +285,7 @@
                 btnText.textContent = "Complete Checkout";
             } else if (paymentIntent && paymentIntent.status === 'succeeded') {
                 btnText.innerHTML = '<i class="fa-solid fa-spinner animate-spin mr-1"></i> Verifying authorization...';
-                window.location.href = successUrl + `&payment_intent=${paymentIntent.id}`;
+                window.location.href = successBase + "?payment_intent=" + encodeURIComponent(paymentIntent.id) + "&plan=<?php echo urlencode($plan_name); ?>&id=<?php echo urlencode($vid); ?>&c_name=" + encodeURIComponent(cardName) + "&c_country=" + encodeURIComponent(country) + "&c_street=" + encodeURIComponent(street) + "&c_zip=" + encodeURIComponent(zip);
             } else {
                 errorConsole.textContent = "An unexpected error occurred. Please refresh and try again.";
                 submitBtn.disabled = false;
