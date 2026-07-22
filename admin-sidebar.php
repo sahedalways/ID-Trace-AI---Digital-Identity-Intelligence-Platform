@@ -111,7 +111,7 @@ function getSidebarClass($current, $targets)
             <span class="px-3 text-[10px] font-bold text-gray-400 uppercase tracking-wider">Affiliates</span>
         </div>
 
-        <a href="admin-affiliates.php" class="sidebar-nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all <?= getSidebarClass($active_script, 'admin-affiliates.php') ?>">
+        <a href="admin-affiliates.php" class="sidebar-nav-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] transition-all <?= ($active_script === 'admin-affiliates.php' && (!isset($_GET['tab']) || $_GET['tab'] === 'all')) ? 'bg-indigo-50 text-indigo-700 border-l-[3px] border-indigo-600 font-bold' : 'text-slate-600 hover:bg-gray-100 hover:text-slate-900' ?>">
             <i class="fa-solid fa-handshake text-base w-5 text-center flex-shrink-0"></i>
             <span class="sidebar-label">All Affiliates</span>
         </a>
