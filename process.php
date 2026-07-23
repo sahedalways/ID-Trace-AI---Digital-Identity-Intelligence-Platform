@@ -140,6 +140,16 @@ try {
     }
 
     // -------------------------------------------------------------------------
+    // STEP 3.5: SEARCHBUG BACKGROUND REPORT ENRICHMENT (NON-BLOCKING)
+    // Uses the target's full name to perform a 2-step SearchBug People Search
+    // and Background Report lookup. All errors are caught internally by the
+    // module — if SearchBug fails, the pipeline continues uninterrupted.
+    // -------------------------------------------------------------------------
+    if (!empty($targetName) && file_exists('searchbug.php')) {
+        include 'searchbug.php';
+    }
+
+    // -------------------------------------------------------------------------
     // STEP 4: COGNITIVE INTELLIGENCE MATRIX SYNTHESIS (GEMINI)
     // -------------------------------------------------------------------------
     // Initializing scope fallback data elements

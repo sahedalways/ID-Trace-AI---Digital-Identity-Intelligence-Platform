@@ -1,0 +1,3 @@
+[2026-07-23 16:56:59] START [VID: 0720355278892572] — searching for: John Smith
+[2026-07-23 16:57:01] STEP1 Response [VID: 0720355278892572] — {"Status":"NORESULTS","Data":null,"Error":null}
+[2026-07-23 16:57:01] NO MATCH [VID: 0720355278892572] — no reportToken found for: John Smith

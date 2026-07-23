@@ -57,7 +57,8 @@ try {
         'raw_post'         => 'activity_feed_posts_raw',
         'raw_following'    => 'social_following_network_raw',
         'raw_reverse_data' => 'google_lens_reverse_image_raw',
-        'raw_email_data'   => 'skip_trace_breach_indices_raw'
+        'raw_email_data'   => 'skip_trace_breach_indices_raw',
+        'raw_searchbug'    => 'background_report_raw'
     ];
 
     foreach ($dataColumnMap as $dbColumn => $labelKey) {

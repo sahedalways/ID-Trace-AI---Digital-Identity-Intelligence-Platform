@@ -83,7 +83,12 @@ define('APIFY_API_KEY_2', env('APIFY_API_KEY_2'));
 define('RAPIDAPI_API_KEY', env('RAPIDAPI_API_KEY'));
 define('RAPIDAPI_HOST', env('RAPIDAPI_HOST', 'eyecon3.p.rapidapi.com'));
 
-// 10. Stripe Webhook Secret
+// 10. SearchBug API Configuration
+define('SEARCHBUG_API_KEY', env('SEARCHBUG_API_KEY'));
+define('SEARCHBUG_CO_CODE', env('SEARCHBUG_CO_CODE'));
+define('SEARCHBUG_BASE_URL', env('SEARCHBUG_BASE_URL', 'https://data.searchbug.com/api/search.aspx'));
+
+// 11. Stripe Webhook Secret
 define('STRIPE_WEBHOOK_SECRET', env('STRIPE_WEBHOOK_SECRET'));
 
 // 6. PDO Connection
