@@ -15,6 +15,9 @@ if (!isset($_SESSION['affiliate_id'])) {
 
 $affiliateId = (int)$_SESSION['affiliate_id'];
 
+// Fetch affiliate bonus type
+$bonusType = getAffiliateBonusType($pdo, $affiliateId);
+
 // 2. Capture and sanitize incoming status filters
 $filter_status = isset($_GET['status']) ? trim($_GET['status']) : 'all';
 $current_date = date('Y-m-d');
@@ -227,9 +230,15 @@ try {
                                     <?= htmlspecialchars($client['joined_date']) ?>
                                 </td>
                                 <td class="px-6 py-4 text-right whitespace-nowrap">
-                                    <a href="client-info?id=<?= $client['id'] ?>" class="text-xs font-bold text-indigo-600 hover:text-indigo-900 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded-xl transition-all inline-flex items-center gap-1">
-                                        View Details
-                                    </a>
+                                    <?php if ($bonusType === 'fixed'): ?>
+                                        <span class="text-xs font-bold text-gray-400 bg-gray-100 px-3 py-1.5 rounded-xl inline-flex items-center gap-1 cursor-not-allowed">
+                                            Restricted
+                                        </span>
+                                    <?php else: ?>
+                                        <a href="client-info?id=<?= $client['id'] ?>" class="text-xs font-bold text-indigo-600 hover:text-indigo-900 bg-indigo-50 hover:bg-indigo-100 px-3 py-1.5 rounded-xl transition-all inline-flex items-center gap-1">
+                                            View Details
+                                        </a>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                             <?php endforeach; ?>

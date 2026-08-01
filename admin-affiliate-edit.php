@@ -223,7 +223,7 @@ $methodLabels = [
                         </div>
                         <div>
                             <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Status</label>
-                            <select name="status" class="w-full text-sm px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 transition font-semibold text-gray-900 cursor-pointer">
+                            <select name="status" class="w-full text-sm pl-4 pr-10 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 transition font-semibold text-gray-900 cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:right_0.75rem_center]">
                                 <option value="active" <?= $affiliate['status'] === 'active' ? 'selected' : '' ?>>Active</option>
                                 <option value="pending" <?= $affiliate['status'] === 'pending' ? 'selected' : '' ?>>Pending</option>
                                 <option value="banned" <?= $affiliate['status'] === 'banned' ? 'selected' : '' ?>>Banned</option>
@@ -231,7 +231,7 @@ $methodLabels = [
                         </div>
                         <div>
                             <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Experience Level</label>
-                            <select name="experience_level" class="w-full text-sm px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 transition font-semibold text-gray-900 cursor-pointer">
+                            <select name="experience_level" class="w-full text-sm pl-4 pr-10 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 transition font-semibold text-gray-900 cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:right_0.75rem_center]">
                                 <option value="New Affiliate" <?= ($affiliate['experience_level'] ?? '') === 'New Affiliate' ? 'selected' : '' ?>>New Affiliate</option>
                                 <option value="Have some experience" <?= ($affiliate['experience_level'] ?? '') === 'Have some experience' ? 'selected' : '' ?>>Have some experience</option>
                                 <option value="Expert" <?= ($affiliate['experience_level'] ?? '') === 'Expert' ? 'selected' : '' ?>>Expert</option>
@@ -331,7 +331,7 @@ $methodLabels = [
 
                     <div>
                         <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Payment Gateway</label>
-                        <select name="payment_method" id="paySelect" onchange="togglePayUI()" class="w-full text-sm px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 transition font-semibold text-gray-900 cursor-pointer">
+                        <select name="payment_method" id="paySelect" onchange="togglePayUI()" class="w-full text-sm pl-4 pr-10 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 transition font-semibold text-gray-900 cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:right_0.75rem_center]">
                             <option value="">— Select Method —</option>
                             <option value="payoneer" <?= ($payment['payment_method'] ?? '') === 'payoneer' ? 'selected' : '' ?>>Payoneer</option>
                             <option value="usdt_bep20" <?= ($payment['payment_method'] ?? '') === 'usdt_bep20' ? 'selected' : '' ?>>USDT (BEP-20)</option>

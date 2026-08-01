@@ -14,6 +14,14 @@ if (!isset($_SESSION['affiliate_id'])) {
 }
 
 $affiliateId = (int)$_SESSION['affiliate_id'];
+
+// Block fixed type affiliates from viewing client details
+$bonusType = getAffiliateBonusType($pdo, $affiliateId);
+if ($bonusType === 'fixed') {
+    header("Location: affiliate-clients");
+    exit;
+}
+
 $targetUserId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
 if ($targetUserId <= 0) {

@@ -109,6 +109,15 @@ if (isset($step1Data['result']['people']['person']['reportToken'])) {
     } elseif (isset($persons['reportToken'])) {
         $reportToken = $persons['reportToken'];
     }
+} elseif (isset($step1Data['people']['person']['reportToken'])) {
+    $reportToken = $step1Data['people']['person']['reportToken'];
+} elseif (isset($step1Data['people']['person']) && is_array($step1Data['people']['person'])) {
+    $persons = $step1Data['people']['person'];
+    if (isset($persons[0]['reportToken'])) {
+        $reportToken = $persons[0]['reportToken'];
+    } elseif (isset($persons['reportToken'])) {
+        $reportToken = $persons['reportToken'];
+    }
 } elseif (isset($step1Data['reportToken'])) {
     $reportToken = $step1Data['reportToken'];
 } elseif (isset($step1Data['RESULTS']['reportToken'])) {
