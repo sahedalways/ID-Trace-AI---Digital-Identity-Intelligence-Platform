@@ -218,7 +218,8 @@ try {
         if ($click_data) {
             $aff_id = (int)$click_data['affid'];
             $conversion_status = (int)$click_data['conversion'];
-            $payout_amount = $plan_price * 0.50;
+            $payout_amount = getAffiliateBonusAmount($pdo, $aff_id);
+            $bonus_type = getAffiliateBonusType($pdo, $aff_id);
 
             if ($conversion_status === 0) {
                 $pdo->prepare("UPDATE `affiliates` SET `balance` = `balance` + ? WHERE `id` = ?")->execute([$payout_amount, $aff_id]);
@@ -245,10 +246,12 @@ try {
                 $ins_conv_stmt->execute([$unique_tid, $affiliate_cid, $user_id, $aff_id, $plan_name, $plan_price, $payout_amount]);
                 $conversion_row_id = $pdo->lastInsertId();
             } else {
-                $pdo->prepare("UPDATE `affiliates` SET `balance` = `balance` + ? WHERE `id` = ?")->execute([$payout_amount, $aff_id]);
-                
-                $pdo->prepare("INSERT INTO `recurring` (`tid`, `cid`, `uid`, `affid`, `plan`, `price`, `payout`, `note`, `created_at`) VALUES (?, ?, ?, ?, ?, ?, ?, 'Recurring Verified', NOW())")
-                    ->execute([$unique_tid, $affiliate_cid, $user_id, $aff_id, $plan_name, $plan_price, $payout_amount]);
+                if ($bonus_type === 'recursion') {
+                    $pdo->prepare("UPDATE `affiliates` SET `balance` = `balance` + ? WHERE `id` = ?")->execute([$payout_amount, $aff_id]);
+                    
+                    $pdo->prepare("INSERT INTO `recurring` (`tid`, `cid`, `uid`, `affid`, `plan`, `price`, `payout`, `note`, `created_at`) VALUES (?, ?, ?, ?, ?, ?, ?, 'Recurring Verified', NOW())")
+                        ->execute([$unique_tid, $affiliate_cid, $user_id, $aff_id, $plan_name, $plan_price, $payout_amount]);
+                }
             }
         }
     }

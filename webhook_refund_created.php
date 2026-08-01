@@ -71,7 +71,7 @@ try {
 
             if ($click_data) {
                 $aff_id = (int)$click_data['affid'];
-                $rev_payout_deduction = $refund_amount * 0.50;
+                $rev_payout_deduction = getAffiliateBonusAmount($pdo, $aff_id);
 
                 if ($rev_payout_deduction > 0) {
                     $pdo->prepare("UPDATE `affiliates` SET `balance` = `balance` - ? WHERE `id` = ?")

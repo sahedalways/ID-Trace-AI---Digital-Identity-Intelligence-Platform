@@ -110,7 +110,44 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 
-// 7. Fire-and-Forget Asynchronous Background Spawner
+// 7. Affiliate Bonus Helper Functions
+function getAffiliateBonusAmount($pdo, $affiliateId) {
+    $stmt = $pdo->prepare("SELECT `referral_bonus`, `use_global_settings` FROM `affiliates` WHERE `id` = ? LIMIT 1");
+    $stmt->execute([$affiliateId]);
+    $data = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$data || $data['use_global_settings'] || $data['referral_bonus'] === null) {
+        $gStmt = $pdo->prepare("SELECT `setting_value` FROM `affiliate_settings` WHERE `setting_key` = 'global_bonus_amount' LIMIT 1");
+        $gStmt->execute();
+        return (float)$gStmt->fetchColumn();
+    }
+    return (float)$data['referral_bonus'];
+}
+
+function getAffiliateBonusType($pdo, $affiliateId) {
+    $stmt = $pdo->prepare("SELECT `bonus_type`, `use_global_settings` FROM `affiliates` WHERE `id` = ? LIMIT 1");
+    $stmt->execute([$affiliateId]);
+    $data = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$data || $data['use_global_settings'] || $data['bonus_type'] === null) {
+        $gStmt = $pdo->prepare("SELECT `setting_value` FROM `affiliate_settings` WHERE `setting_key` = 'global_bonus_type' LIMIT 1");
+        $gStmt->execute();
+        return $gStmt->fetchColumn();
+    }
+    return $data['bonus_type'];
+}
+
+function getGlobalBonusAmount($pdo) {
+    $stmt = $pdo->prepare("SELECT `setting_value` FROM `affiliate_settings` WHERE `setting_key` = 'global_bonus_amount' LIMIT 1");
+    $stmt->execute();
+    return (float)$stmt->fetchColumn();
+}
+
+function getGlobalBonusType($pdo) {
+    $stmt = $pdo->prepare("SELECT `setting_value` FROM `affiliate_settings` WHERE `setting_key` = 'global_bonus_type' LIMIT 1");
+    $stmt->execute();
+    return $stmt->fetchColumn();
+}
+
+// 8. Fire-and-Forget Asynchronous Background Spawner
 /**
  * Spawns an independent background CLI worker process to handle OSINT operations
  * without blocking or locking the Nginx/php-fpm web request channel.

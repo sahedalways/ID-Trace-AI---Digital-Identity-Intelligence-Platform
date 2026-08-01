@@ -6,7 +6,11 @@
  * Markets network value propositions and routes users to authentication vectors.
  * Verified layout synchronized directly with global system UI dimensions.
  */
+require_once 'config.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
+
+$portal_bonus_amount = getGlobalBonusAmount($pdo);
+$portal_bonus_type = getGlobalBonusType($pdo);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -238,7 +242,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                         <div class="pt-3 border-t border-gray-100">
                             <div class="flex items-center justify-between">
                                 <span class="text-xs text-gray-400 font-medium">Your Payout</span>
-                                <span class="text-lg font-black text-[#128c7e]">$18.00 <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">/mo</span></span>
+                                <span class="text-lg font-black text-[#128c7e]">$<?= number_format($portal_bonus_amount, 2) ?> <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">/ <?= $portal_bonus_type === 'recursion' ? 'mo' : 'one-time' ?></span></span>
                             </div>
                         </div>
                     </div>
@@ -273,7 +277,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                         <div class="pt-3 border-t border-gray-100">
                             <div class="flex items-center justify-between">
                                 <span class="text-xs text-gray-400 font-medium">Your Payout</span>
-                                <span class="text-lg font-black text-teal-600">$27.50 <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">/q</span></span>
+                                <span class="text-lg font-black text-teal-600">$<?= number_format($portal_bonus_amount, 2) ?> <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">/ <?= $portal_bonus_type === 'recursion' ? 'q' : 'one-time' ?></span></span>
                             </div>
                         </div>
                     </div>
@@ -309,7 +313,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                         <div class="pt-3 border-t border-gray-100">
                             <div class="flex items-center justify-between">
                                 <span class="text-xs text-gray-400 font-medium">Your Payout</span>
-                                <span class="text-lg font-black text-amber-700">$36.00 <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">/6mo</span></span>
+                                <span class="text-lg font-black text-amber-700">$<?= number_format($portal_bonus_amount, 2) ?> <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">/ <?= $portal_bonus_type === 'recursion' ? '6mo' : 'one-time' ?></span></span>
                             </div>
                         </div>
                     </div>
@@ -347,7 +351,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                         <div class="pt-3 border-t border-gray-100">
                             <div class="flex items-center justify-between">
                                 <span class="text-xs text-gray-400 font-medium">Your Payout</span>
-                                <span class="text-lg font-black text-[#128c7e]">$48.00 <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">/yr</span></span>
+                                <span class="text-lg font-black text-[#128c7e]">$<?= number_format($portal_bonus_amount, 2) ?> <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">/ <?= $portal_bonus_type === 'recursion' ? 'yr' : 'one-time' ?></span></span>
                             </div>
                         </div>
                     </div>
@@ -582,11 +586,8 @@ if (session_status() === PHP_SESSION_NONE) session_start();
             document.getElementById('val_y12_count').textContent = y12;
 
             // Compute monthly normalized split value weights:
-            // M1:  $18.00 monthly payout
-            // Q3:  $27.50 total payout over 3 months -> $9.17 monthly weight
-            // B6:  $36.00 total payout over 6 months -> $6.00 monthly weight
-            // Y12: $48.00 total payout over 12 months -> $4.00 monthly weight
-            const monthlySumForecast = (m1 * 18.00) + (q3 * 9.166) + (b6 * 6.00) + (y12 * 4.00);
+            const bonusAmount = <?= $portal_bonus_amount ?>;
+            const monthlySumForecast = (m1 * bonusAmount) + (q3 * bonusAmount / 3) + (b6 * bonusAmount / 6) + (y12 * bonusAmount / 12);
 
             // Display formatted sum parameters inside layout context
             document.getElementById('projected_sum').textContent = monthlySumForecast.toLocaleString('en-US', {

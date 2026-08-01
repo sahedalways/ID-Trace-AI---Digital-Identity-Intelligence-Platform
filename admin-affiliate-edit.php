@@ -89,6 +89,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
+    if ($act === 'update_bonus_settings') {
+        $use_global = isset($_POST['use_global_settings']) ? 1 : 0;
+        $custom_bonus = trim($_POST['custom_bonus_amount'] ?? '');
+        $custom_type = $_POST['custom_bonus_type'] ?? 'recursion';
+
+        if (!$use_global) {
+            if (!is_numeric($custom_bonus) || (float)$custom_bonus < 0) {
+                $error_msg = "Bonus amount must be a positive number.";
+            } else {
+                $pdo->prepare("UPDATE `affiliates` SET `use_global_settings` = 0, `referral_bonus` = ?, `bonus_type` = ? WHERE `id` = ?")
+                    ->execute([number_format((float)$custom_bonus, 2, '.', ''), $custom_type, $affId]);
+                $_SESSION['flash_success'] = "Affiliate bonus settings updated.";
+                header("Location: admin-affiliate-edit?id=$affId");
+                exit;
+            }
+        } else {
+            $pdo->prepare("UPDATE `affiliates` SET `use_global_settings` = 1, `referral_bonus` = NULL, `bonus_type` = NULL WHERE `id` = ?")
+                ->execute([$affId]);
+            $_SESSION['flash_success'] = "Affiliate now uses global bonus settings.";
+            header("Location: admin-affiliate-edit?id=$affId");
+            exit;
+        }
+    }
+
     if ($act === 'update_payment') {
         $method = $_POST['payment_method'] ?? '';
         $info = "";
@@ -238,6 +262,65 @@ $methodLabels = [
                 </form>
             </div>
 
+            <!-- Referral Bonus Settings -->
+            <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+                <h3 class="text-sm font-bold text-gray-900 mb-5 flex items-center gap-1.5">
+                    <i class="fa-solid fa-coins text-amber-600"></i> Referral Bonus Settings
+                </h3>
+                <?php
+                $globalAmount = getGlobalBonusAmount($pdo);
+                $globalType = getGlobalBonusType($pdo);
+                $useGlobal = $affiliate['use_global_settings'] ?? 1;
+                $customBonus = $affiliate['referral_bonus'] ?? $globalAmount;
+                $customType = $affiliate['bonus_type'] ?? $globalType;
+                ?>
+                <form method="POST" class="space-y-4">
+                    <input type="hidden" name="form_action" value="update_bonus_settings">
+
+                    <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                        <input type="checkbox" name="use_global_settings" id="useGlobalSettings" value="1" <?= $useGlobal ? 'checked' : '' ?>
+                            onchange="toggleCustomBonus()" class="w-4 h-4 text-indigo-600 rounded cursor-pointer">
+                        <label for="useGlobalSettings" class="text-xs font-bold text-gray-700 cursor-pointer">Use Global Settings (Current: $<?= number_format($globalAmount, 2) ?> / <?= ucfirst($globalType) ?>)</label>
+                    </div>
+
+                    <div id="customBonusSection" class="<?= $useGlobal ? 'hidden' : '' ?> space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Custom Bonus Amount (USD)</label>
+                                <div class="relative">
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-sm">$</span>
+                                    <input type="number" name="custom_bonus_amount" step="0.01" min="0" value="<?= htmlspecialchars(number_format((float)$customBonus, 2, '.', '')) ?>"
+                                        class="w-full text-sm pl-8 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 transition font-semibold text-gray-900">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1 block">Bonus Type</label>
+                                <div class="flex gap-3">
+                                    <label class="flex-1 cursor-pointer">
+                                        <input type="radio" name="custom_bonus_type" value="recursion" <?= $customType === 'recursion' ? 'checked' : '' ?> class="peer hidden">
+                                        <div class="border-2 border-gray-200 rounded-xl p-2.5 text-center peer-checked:border-indigo-500 peer-checked:bg-indigo-50 transition">
+                                            <i class="fa-solid fa-rotate text-indigo-600 text-sm mb-0.5"></i>
+                                            <div class="text-[11px] font-bold text-gray-900">Recursion</div>
+                                        </div>
+                                    </label>
+                                    <label class="flex-1 cursor-pointer">
+                                        <input type="radio" name="custom_bonus_type" value="fixed" <?= $customType === 'fixed' ? 'checked' : '' ?> class="peer hidden">
+                                        <div class="border-2 border-gray-200 rounded-xl p-2.5 text-center peer-checked:border-emerald-500 peer-checked:bg-emerald-50 transition">
+                                            <i class="fa-solid fa-lock text-emerald-600 text-sm mb-0.5"></i>
+                                            <div class="text-[11px] font-bold text-gray-900">Fixed</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
+                        Save Bonus Settings
+                    </button>
+                </form>
+            </div>
+
             <!-- Payment Profile -->
             <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
                 <h3 class="text-sm font-bold text-gray-900 mb-5 flex items-center gap-1.5">
@@ -357,6 +440,15 @@ $methodLabels = [
     <?php include 'alert-modal.php'; ?>
 
     <script>
+    function toggleCustomBonus() {
+        const cb = document.getElementById('useGlobalSettings');
+        const sec = document.getElementById('customBonusSection');
+        if (cb.checked) {
+            sec.classList.add('hidden');
+        } else {
+            sec.classList.remove('hidden');
+        }
+    }
     function togglePayUI() {
         const val = document.getElementById('paySelect').value;
         document.querySelectorAll('.pay-box').forEach(el => el.classList.add('hidden'));

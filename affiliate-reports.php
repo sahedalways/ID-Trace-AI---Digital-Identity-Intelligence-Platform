@@ -244,7 +244,7 @@ elseif ($filter_metric === 'chargebacks') {
     $stmt->execute();
     
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $reversed_commission = (float)($row['price'] * 0.50);
+        $reversed_commission = getAffiliateBonusAmount($pdo, $affiliateId);
         $report_data[] = [
             'created_at'     => $row['created_at'],
             'type'           => 'Chargeback',

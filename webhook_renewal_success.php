@@ -105,12 +105,16 @@ try {
 
             if ($click_data) {
                 $aff_id = (int)$click_data['affid'];
-                $payout_amount = $amount_paid * 0.50;
+                $bonus_type = getAffiliateBonusType($pdo, $aff_id);
 
-                $pdo->prepare("UPDATE `affiliates` SET `balance` = `balance` + ? WHERE `id` = ?")->execute([$payout_amount, $aff_id]);
+                if ($bonus_type === 'recursion') {
+                    $payout_amount = getAffiliateBonusAmount($pdo, $aff_id);
 
-                $pdo->prepare("INSERT INTO `recurring` (`tid`, `cid`, `uid`, `affid`, `plan`, `price`, `payout`, `note`, `created_at`) VALUES (?, ?, ?, ?, ?, ?, ?, 'Recurring Subscription Webhook Verified', NOW())")
-                    ->execute([$unique_tid, $affiliate_cid, $user_id, $aff_id, $plan_name, $amount_paid, $payout_amount]);
+                    $pdo->prepare("UPDATE `affiliates` SET `balance` = `balance` + ? WHERE `id` = ?")->execute([$payout_amount, $aff_id]);
+
+                    $pdo->prepare("INSERT INTO `recurring` (`tid`, `cid`, `uid`, `affid`, `plan`, `price`, `payout`, `note`, `created_at`) VALUES (?, ?, ?, ?, ?, ?, ?, 'Recurring Subscription Webhook Verified', NOW())")
+                        ->execute([$unique_tid, $affiliate_cid, $user_id, $aff_id, $plan_name, $amount_paid, $payout_amount]);
+                }
             }
         }
 
@@ -165,4 +169,3 @@ try {
     echo json_encode(['status' => 'error', 'message' => $dbEx->getMessage()]);
 }
 
-//hdkjsf
