@@ -190,7 +190,7 @@ $methodLabels = [
             <!-- Profile Edit -->
             <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
                 <h3 class="text-sm font-bold text-gray-900 mb-5 flex items-center gap-1.5">
-                    <i class="fa-solid fa-user-pen text-indigo-600"></i> Profile Information
+                    <i class="fa-solid fa-user-pen text-amber-600"></i> Profile Information
                 </h3>
                 <form method="POST" class="space-y-4">
                     <input type="hidden" name="form_action" value="update_profile">
@@ -256,7 +256,7 @@ $methodLabels = [
                             class="w-full text-sm px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 transition font-semibold text-gray-900"><?= htmlspecialchars($affiliate['past_experience'] ?? '') ?></textarea>
                     </div>
 
-                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
                         Save Changes
                     </button>
                 </form>
@@ -315,7 +315,7 @@ $methodLabels = [
                         </div>
                     </div>
 
-                    <button type="submit" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
                         Save Bonus Settings
                     </button>
                 </form>
@@ -324,7 +324,7 @@ $methodLabels = [
             <!-- Payment Profile -->
             <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
                 <h3 class="text-sm font-bold text-gray-900 mb-5 flex items-center gap-1.5">
-                    <i class="fa-solid fa-wallet text-emerald-600"></i> Payment Profile
+                    <i class="fa-solid fa-wallet text-amber-600"></i> Payment Profile
                 </h3>
                 <form method="POST" class="space-y-4" id="paymentForm">
                     <input type="hidden" name="form_action" value="update_payment">
@@ -424,7 +424,7 @@ $methodLabels = [
                         </div>
                     </div>
 
-                    <button type="submit" onclick="return confirm('Are you sure you want to reset this affiliate\'s password?')" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
+                    <button type="submit" onclick="return confirm('Are you sure you want to reset this affiliate\'s password?')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
                         Reset Password
                     </button>
                 </form>

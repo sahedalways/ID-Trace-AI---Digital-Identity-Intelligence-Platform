@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $settings['global_bonus_amount'] = number_format((float)$bonus_amount, 2, '.', '');
             $settings['global_bonus_type'] = $bonus_type;
 
-            $_SESSION['flash_success'] = "Global affiliate bonus settings updated successfully.";
+            $_SESSION['flash_success'] = "Affiliate bonus settings updated successfully.";
             header("Location: admin-affiliate-settings");
             exit;
         } catch (PDOException $e) {
@@ -80,7 +80,7 @@ if (isset($_SESSION['flash_success'])) {
 
             <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
                 <h3 class="text-sm font-bold text-gray-900 mb-5 flex items-center gap-1.5">
-                    <i class="fa-solid fa-globe text-indigo-600"></i> Global Default Settings
+                    <i class="fa-solid fa-globe text-amber-600"></i> Global Default Settings
                 </h3>
                 <form method="POST" class="space-y-5">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -116,36 +116,12 @@ if (isset($_SESSION['flash_success'])) {
                         </div>
                     </div>
 
-                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
-                        Save Global Settings
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
+                        Save Settings
                     </button>
                 </form>
             </div>
 
-            <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-5">
-                <div class="flex items-start gap-3">
-                    <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <i class="fa-solid fa-circle-info text-indigo-600 text-sm"></i>
-                    </div>
-                    <div class="space-y-2">
-                        <h4 class="text-xs font-bold text-indigo-900">How Bonus Settings Work</h4>
-                        <ul class="text-[11px] text-indigo-700 space-y-1.5 font-medium">
-                            <li class="flex items-start gap-2">
-                                <i class="fa-solid fa-check text-indigo-500 text-[8px] mt-1 flex-shrink-0"></i>
-                                <span><strong>Recursion:</strong> Affiliate gets the bonus on first registration AND every monthly renewal while the referred user stays subscribed.</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <i class="fa-solid fa-check text-indigo-500 text-[8px] mt-1 flex-shrink-0"></i>
-                                <span><strong>Fixed:</strong> Affiliate gets the bonus only once when a user registers using their referral URL. No recurring payments.</span>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <i class="fa-solid fa-check text-indigo-500 text-[8px] mt-1 flex-shrink-0"></i>
-                                <span>Individual affiliates can override these global settings from the <strong>Edit Affiliate</strong> page.</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
 
         </main>
     </div>
