@@ -6,6 +6,7 @@
 require_once 'config.php';
 require_once 'email_ban.php';
 require_once 'email_activate.php';
+require_once 'email_reject.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['admin_id'])) {
@@ -71,9 +72,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         if ($affRow) {
             @sendBanEmail($affRow['email'], $affRow['name']);
         }
+    } elseif ($act === 'reject' && $affId) {
+        $affRow = $pdo->prepare("SELECT `name`, `email` FROM `affiliates` WHERE `id` = ? LIMIT 1");
+        $affRow->execute([$affId]);
+        $affRow = $affRow->fetch(PDO::FETCH_ASSOC);
+        $pdo->prepare("UPDATE `affiliates` SET `status` = 'rejected' WHERE `id` = ?")->execute([$affId]);
+        $_SESSION['flash_success'] = "Affiliate application rejected.";
+        if ($affRow) {
+            @sendRejectionEmail($affRow['email'], $affRow['name']);
+        }
     } elseif ($act === 'change_status' && $affId) {
         $newStatus = $_POST['new_status'] ?? '';
-        if (in_array($newStatus, ['active', 'pending', 'banned'])) {
+        if (in_array($newStatus, ['active', 'pending', 'banned', 'rejected'])) {
             $affRow = $pdo->prepare("SELECT `name`, `email`, `status` FROM `affiliates` WHERE `id` = ? LIMIT 1");
             $affRow->execute([$affId]);
             $affRow = $affRow->fetch(PDO::FETCH_ASSOC);
@@ -83,6 +93,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 @sendActivationEmail($affRow['email'], $affRow['name']);
             } elseif ($affRow && $newStatus === 'banned' && $affRow['status'] !== 'banned') {
                 @sendBanEmail($affRow['email'], $affRow['name']);
+            } elseif ($affRow && $newStatus === 'rejected' && $affRow['status'] !== 'rejected') {
+                @sendRejectionEmail($affRow['email'], $affRow['name']);
             }
         }
     } elseif ($act === 'create_invoice' && $affId) {
@@ -420,9 +432,21 @@ try {
                                                 <input type="hidden" name="affiliate_id" value="<?= $a['id'] ?>">
                                                 <select name="new_status" onchange="this.form.submit()" class="text-[10px] font-bold px-2 py-1 rounded-md border cursor-pointer focus:outline-none
                                                     <?= $a['status'] === 'active' ? 'bg-emerald-50 border-emerald-100 text-emerald-700' : ($a['status'] === 'pending' ? 'bg-amber-50 border-amber-100 text-amber-700' : 'bg-red-50 border-red-100 text-red-700') ?>">
-                                                    <option value="active" <?= $a['status'] === 'active' ? 'selected' : '' ?>>Active</option>
-                                                    <option value="pending" <?= $a['status'] === 'pending' ? 'selected' : '' ?>>Pending</option>
-                                                    <option value="banned" <?= $a['status'] === 'banned' ? 'selected' : '' ?>>Banned</option>
+                                                    <?php if ($a['status'] === 'pending'): ?>
+                                                        <option value="active">Active</option>
+                                                        <option value="pending" selected>Pending</option>
+                                                        <option value="rejected">Rejected</option>
+                                                    <?php elseif ($a['status'] === 'active'): ?>
+                                                        <option value="active" selected>Active</option>
+                                                        <option value="pending">Pending</option>
+                                                        <option value="banned">Banned</option>
+                                                    <?php elseif ($a['status'] === 'banned'): ?>
+                                                        <option value="banned" selected>Banned</option>
+                                                        <option value="active">Active</option>
+                                                    <?php else: ?>
+                                                        <option value="rejected" selected>Rejected</option>
+                                                        <option value="active">Active</option>
+                                                    <?php endif; ?>
                                                 </select>
                                             </form>
                                         </td>

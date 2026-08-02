@@ -8,7 +8,7 @@ $charge_id = $object['charge'] ?? '';
 $dispute_reason = $object['reason'] ?? 'unrecognized';
 $dispute_amount = (float)($object['amount'] / 100);
 $dispute_status = $object['status'] ?? 'closed';
-$is_charge_won = ($object['result'] ?? '') === 'won';
+$is_charge_won = $dispute_status === 'won';
 
 if (empty($charge_id)) {
     echo json_encode(['status' => 'error', 'message' => 'Missing dispute charge reference for close tracking.']);
@@ -17,7 +17,7 @@ if (empty($charge_id)) {
 
 try {
     // 1. Resolve transaction by stored stripe_charge_id first, fallback to invoice lookup via Stripe API
-    $tx_stmt = $pdo->prepare("SELECT `uid`, `plan`, `cid`, `tid` FROM `transactions` WHERE `stripe_charge_id` = ? AND `status` != 'chargeback' LIMIT 1");
+    $tx_stmt = $pdo->prepare("SELECT `uid`, `plan`, `cid`, `tid` FROM `transactions` WHERE `stripe_charge_id` = ? LIMIT 1");
     $tx_stmt->execute([$charge_id]);
     $transaction_record = $tx_stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -30,7 +30,7 @@ try {
 
         $stripe_invoice_id = $charge_data['invoice'] ?? '';
         if (!empty($stripe_invoice_id)) {
-            $tx_stmt2 = $pdo->prepare("SELECT `uid`, `plan`, `cid`, `tid` FROM `transactions` WHERE `stripe_invoice_id` = ? AND `status` != 'chargeback' LIMIT 1");
+            $tx_stmt2 = $pdo->prepare("SELECT `uid`, `plan`, `cid`, `tid` FROM `transactions` WHERE `stripe_invoice_id` = ? LIMIT 1");
             $tx_stmt2->execute([$stripe_invoice_id]);
             $transaction_record = $tx_stmt2->fetch(PDO::FETCH_ASSOC);
         }
@@ -48,6 +48,8 @@ try {
             $pdo->prepare("
                 UPDATE `transactions` 
                 SET `status` = 'succeeded',
+                    `dispute_status` = 0,
+                    `dispute_amount` = NULL,
                     `dispute_reason` = ? 
                 WHERE (`stripe_charge_id` = ? OR (`stripe_invoice_id` = ? AND `stripe_charge_id` IS NULL)) AND `status` = 'chargeback'
             ")->execute([$dispute_reason, $charge_id, $stripe_invoice_id ?? '']);

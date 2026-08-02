@@ -47,6 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } elseif ($affiliate['status'] === 'banned') {
                     $message = "This affiliate account has been suspended or banned for violating network traffic rules policy metrics.";
                     $status_type = "error";
+                } elseif ($affiliate['status'] === 'rejected') {
+                    $message = "Your application has been rejected. This means you won't be able to use our platform.";
+                    $status_type = "error";
                 } elseif ($affiliate['status'] === 'active') {
                     // 4. Securely establish validation session state tokens
                     $_SESSION['affiliate_id'] = $affiliate['id'];

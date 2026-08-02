@@ -117,6 +117,8 @@ $methodLabels = [
                                 <span class="inline-flex items-center text-[10px] font-bold bg-emerald-50 border border-emerald-100 text-emerald-700 px-2 py-0.5 rounded-md"><i class="fa-solid fa-circle-check text-[8px] mr-0.5"></i> Active</span>
                             <?php elseif ($affiliate['status'] === 'pending'): ?>
                                 <span class="inline-flex items-center text-[10px] font-bold bg-amber-50 border border-amber-100 text-amber-700 px-2 py-0.5 rounded-md"><i class="fa-solid fa-clock text-[8px] mr-0.5"></i> Pending</span>
+                            <?php elseif ($affiliate['status'] === 'rejected'): ?>
+                                <span class="inline-flex items-center text-[10px] font-bold bg-red-50 border border-red-100 text-red-700 px-2 py-0.5 rounded-md"><i class="fa-solid fa-circle-xmark text-[8px] mr-0.5"></i> Rejected</span>
                             <?php else: ?>
                                 <span class="inline-flex items-center text-[10px] font-bold bg-red-50 border border-red-100 text-red-700 px-2 py-0.5 rounded-md"><i class="fa-solid fa-ban text-[8px] mr-0.5"></i> Banned</span>
                             <?php endif; ?>

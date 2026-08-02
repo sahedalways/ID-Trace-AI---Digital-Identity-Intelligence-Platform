@@ -7,9 +7,15 @@
 $charge_id = $object['id'] ?? '';
 $invoice_id = $object['invoice'] ?? '';
 $refund_amount = (float)($object['amount_refunded'] / 100);
+$charge_amount = (float)($object['amount'] / 100);
 
 if (empty($charge_id)) {
     echo json_encode(['status' => 'error', 'message' => 'Missing charge reference for refund tracking.']);
+    exit;
+}
+
+if ($refund_amount < $charge_amount) {
+    echo json_encode(['status' => 'ignored', 'message' => 'Partial refund detected — full chargeback enforcement skipped.']);
     exit;
 }
 
@@ -35,6 +41,7 @@ try {
 
         $fallback_invoice = $charge_data['invoice'] ?? '';
         if (!empty($fallback_invoice)) {
+            $invoice_id = $fallback_invoice;
             $tx_stmt3 = $pdo->prepare("SELECT `uid`, `plan`, `cid`, `tid` FROM `transactions` WHERE `stripe_invoice_id` = ? AND `status` != 'chargeback' LIMIT 1");
             $tx_stmt3->execute([$fallback_invoice]);
             $transaction_record = $tx_stmt3->fetch(PDO::FETCH_ASSOC);

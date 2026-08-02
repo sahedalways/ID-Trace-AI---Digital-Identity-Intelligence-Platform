@@ -29,9 +29,14 @@ try {
     }
 
     // 2. Locate the historical matching profile sequence inside transactions context mapping
-    $tx_stmt = $pdo->prepare("SELECT `uid`, `plan`, `cid` FROM `transactions` WHERE `stripe_invoice_id` = ? LIMIT 1");
+    $tx_stmt = $pdo->prepare("SELECT `uid`, `plan`, `cid`, `status` FROM `transactions` WHERE `stripe_invoice_id` = ? LIMIT 1");
     $tx_stmt->execute([$stripe_invoice_id]);
     $transaction_record = $tx_stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($transaction_record && $transaction_record['status'] === 'chargeback') {
+        echo json_encode(['status' => 'ignored', 'message' => 'Dispute already enforced for this transaction.']);
+        exit;
+    }
 
     if ($transaction_record) {
         $offender_uid = (int)$transaction_record['uid'];

@@ -188,6 +188,8 @@ function buildQueryString($overrides) {
                                             <span class="inline-flex items-center text-[10px] font-bold bg-emerald-50 border border-emerald-100 text-emerald-700 px-2 py-0.5 rounded-md">Active</span>
                                         <?php elseif ($a['status'] === 'pending'): ?>
                                             <span class="inline-flex items-center text-[10px] font-bold bg-amber-50 border border-amber-100 text-amber-700 px-2 py-0.5 rounded-md">Pending</span>
+                                        <?php elseif ($a['status'] === 'rejected'): ?>
+                                            <span class="inline-flex items-center text-[10px] font-bold bg-red-50 border border-red-100 text-red-700 px-2 py-0.5 rounded-md">Rejected</span>
                                         <?php else: ?>
                                             <span class="inline-flex items-center text-[10px] font-bold bg-red-50 border border-red-100 text-red-700 px-2 py-0.5 rounded-md">Banned</span>
                                         <?php endif; ?>

@@ -4,6 +4,7 @@
  * Admin page to edit affiliate profile details, reset password, and manage status.
  */
 require_once 'config.php';
+require_once 'email_reject.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['admin_id'])) {
@@ -65,6 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 $upStmt = $pdo->prepare("UPDATE `affiliates` SET `name` = ?, `email` = ?, `mobile` = ?, `country` = ?, `status` = ?, `contact` = ?, `experience_level` = ?, `traffic_source` = ?, `past_experience` = ? WHERE `id` = ?");
                 $upStmt->execute([$name, $email, $mobile, $country, $status, $contact, $experience_level, $traffic_source, $past_experience, $affId]);
+                if ($status === 'rejected' && $affiliate['status'] !== 'rejected') {
+                    @sendRejectionEmail($email, $name);
+                }
                 $_SESSION['flash_success'] = "Affiliate profile updated successfully.";
                 header("Location: admin-affiliate-edit?id=$affId");
                 exit;
@@ -227,6 +231,7 @@ $methodLabels = [
                                 <option value="active" <?= $affiliate['status'] === 'active' ? 'selected' : '' ?>>Active</option>
                                 <option value="pending" <?= $affiliate['status'] === 'pending' ? 'selected' : '' ?>>Pending</option>
                                 <option value="banned" <?= $affiliate['status'] === 'banned' ? 'selected' : '' ?>>Banned</option>
+                                <option value="rejected" <?= $affiliate['status'] === 'rejected' ? 'selected' : '' ?>>Rejected</option>
                             </select>
                         </div>
                         <div>
