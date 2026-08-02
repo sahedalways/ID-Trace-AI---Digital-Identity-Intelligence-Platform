@@ -44,13 +44,13 @@ switch ($subFilter) {
         $conditions[] = "u.stripe_subscription_id IS NOT NULL AND u.stripe_subscription_id != ''";
         break;
     case 'no_sub':
-        $conditions[] = "(u.plan IS NULL OR u.plan = '')";
+        $conditions[] = "(u.plan IS NULL OR u.plan = '' OR u.plan = 'FREE TIER') AND u.status != 'inactive'";
         break;
     case 'cancelled':
-        $conditions[] = "u.plan IS NOT NULL AND u.plan != '' AND (u.stripe_subscription_id IS NULL OR u.stripe_subscription_id = '')";
+        $conditions[] = "u.status = 'inactive' AND NOT EXISTS (SELECT 1 FROM `transactions` tx WHERE tx.uid = u.id AND tx.dispute_status = 1)";
         break;
     case 'chargeback':
-        $conditions[] = "t.dispute_status = 1";
+        $conditions[] = "EXISTS (SELECT 1 FROM `transactions` tx WHERE tx.uid = u.id AND tx.dispute_status = 1)";
         break;
 }
 
@@ -61,7 +61,7 @@ try {
     $countSql = "SELECT COUNT(DISTINCT u.id) FROM `users` u
         LEFT JOIN (SELECT uid, MAX(affid) as affid FROM `conversions` WHERE affid IS NOT NULL GROUP BY uid) c ON c.uid = u.id
         LEFT JOIN (SELECT id, aid, email FROM `affiliates`) a ON c.affid = a.id
-        LEFT JOIN `transactions` t ON t.uid = u.id $whereClause";
+        $whereClause";
     $countStmt = $pdo->prepare($countSql);
     $countStmt->execute($params);
     $totalRows = (int)$countStmt->fetchColumn();
@@ -96,8 +96,8 @@ try {
 
     // Summary counts
     $totalActive = (int)$pdo->query("SELECT COUNT(*) FROM `users` WHERE stripe_subscription_id IS NOT NULL AND stripe_subscription_id != ''")->fetchColumn();
-    $totalNoSub = (int)$pdo->query("SELECT COUNT(*) FROM `users` WHERE plan IS NULL OR plan = ''")->fetchColumn();
-    $totalCancelled = (int)$pdo->query("SELECT COUNT(*) FROM `users` WHERE plan IS NOT NULL AND plan != '' AND (stripe_subscription_id IS NULL OR stripe_subscription_id = '')")->fetchColumn();
+    $totalNoSub = (int)$pdo->query("SELECT COUNT(*) FROM `users` WHERE (plan IS NULL OR plan = '' OR plan = 'FREE TIER') AND status != 'inactive'")->fetchColumn();
+    $totalCancelled = (int)$pdo->query("SELECT COUNT(*) FROM `users` u WHERE u.status = 'inactive' AND NOT EXISTS (SELECT 1 FROM `transactions` tx WHERE tx.uid = u.id AND tx.dispute_status = 1)")->fetchColumn();
     $totalChargeback = (int)$pdo->query("SELECT COUNT(DISTINCT uid) FROM `transactions` WHERE dispute_status = 1")->fetchColumn();
     $totalUsers = (int)$pdo->query("SELECT COUNT(*) FROM `users`")->fetchColumn();
 
@@ -240,6 +240,8 @@ function buildClientQs($overrides) {
                                             <span class="inline-flex items-center text-[10px] font-bold bg-red-50 border border-red-100 text-red-700 px-2 py-0.5 rounded-md">Chargeback</span>
                                         <?php elseif (!empty($c['stripe_subscription_id'])): ?>
                                             <span class="inline-flex items-center text-[10px] font-bold bg-emerald-50 border border-emerald-100 text-emerald-700 px-2 py-0.5 rounded-md">Active</span>
+                                        <?php elseif (($c['status'] ?? '') === 'inactive'): ?>
+                                            <span class="inline-flex items-center text-[10px] font-bold bg-amber-50 border border-amber-100 text-amber-700 px-2 py-0.5 rounded-md">Cancelled</span>
                                         <?php elseif (!empty($c['plan'])): ?>
                                             <span class="inline-flex items-center text-[10px] font-bold bg-amber-50 border border-amber-100 text-amber-700 px-2 py-0.5 rounded-md">No Sub</span>
                                         <?php else: ?>
