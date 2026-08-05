@@ -84,32 +84,6 @@ function getActiveNavClass($current_page, $target_pages) {
                         <i class="fa-solid fa-user-tie text-sm"></i> AM
                     </a>
 
-                    <div class="relative dropdown-hover-zone py-2">
-                        <button type="button" class="px-3.5 py-2 flex items-center gap-1.5 transition-all outline-none cursor-pointer text-[13px] font-bold <?= getActiveNavClass($active_script, 'affiliate-support') ?>" title="Customer Support">
-                            <i class="fa-solid fa-headset text-sm"></i> Support
-                            <i class="fa-solid fa-chevron-down text-[11px] opacity-70"></i>
-                        </button>
-
-                        <div class="hidden dropdown-panel absolute right-0 mt-1 w-72 bg-white border border-gray-200 rounded-2xl shadow-xl py-2 z-50 text-left">
-                            <span class="px-4 py-1.5 text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Customer Support</span>
-                            <a href="https://t.me/identitysearchai" target="_blank" rel="noopener" class="flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-gray-700 hover:bg-slate-50 font-semibold transition">
-                                <i class="fa-brands fa-telegram text-base text-[#229ED9]"></i>
-                                <span class="flex flex-col">
-                                    <span>Telegram Support</span>
-                                    <span class="text-[11px] text-gray-400 font-normal">@identitysearchai</span>
-                                </span>
-                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-gray-300 ml-auto"></i>
-                            </a>
-                            <a href="mailto:support@identitysearch.ai" class="flex items-center gap-2.5 px-4 py-2.5 text-[13px] text-gray-700 hover:bg-slate-50 font-semibold transition">
-                                <i class="fa-solid fa-envelope text-base text-[#128c7e]"></i>
-                                <span class="flex flex-col">
-                                    <span>Email Support</span>
-                                    <span class="text-[11px] text-gray-400 font-normal">support@identitysearch.ai</span>
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-
                     <a href="affiliate-logout" class="text-[13px] font-bold text-rose-600 hover:text-rose-700 transition bg-rose-50 hover:bg-rose-100/70 px-3.5 py-2 rounded-xl flex items-center gap-1.5 ml-1">
                         <i class="fa-solid fa-right-from-bracket text-sm"></i> Logout
                     </a>
@@ -177,16 +151,6 @@ function getActiveNavClass($current_page, $target_pages) {
                             </a>
                             <a href="postback-log" class="flex items-center gap-2.5 pl-6 pr-4 py-2 text-gray-600 hover:bg-gray-50 transition">
                                 <i class="fa-solid fa-clock-rotate-left text-base text-gray-400"></i> Logs
-                            </a>
-
-                            <hr class="border-gray-100 my-1.5">
-                            <span class="px-4 py-1.5 text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Customer Support</span>
-
-                            <a href="https://t.me/identitysearchai" target="_blank" rel="noopener" class="flex items-center gap-2.5 px-4 py-2.5 text-gray-600 hover:bg-gray-50 transition">
-                                <i class="fa-brands fa-telegram text-base text-[#229ED9]"></i> Telegram Support
-                            </a>
-                            <a href="mailto:support@identitysearch.ai" class="flex items-center gap-2.5 px-4 py-2.5 text-gray-600 hover:bg-gray-50 transition">
-                                <i class="fa-solid fa-envelope text-base text-[#128c7e]"></i> Email Support
                             </a>
 
                             <hr class="border-gray-100 my-1.5">
