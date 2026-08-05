@@ -85,7 +85,7 @@ $active_page = pathinfo(basename($_SERVER['SCRIPT_FILENAME']), PATHINFO_FILENAME
                         <i class="fa-solid fa-ticket text-sm <?= $active_page === 'my-promo' ? 'text-[#128c7e]' : 'text-slate-400' ?>"></i> Promo Codes
                     </a>
 
-                    <div class="relative hidden sm:block">
+                    <div class="relative">
                         <button type="button" onclick="toggleSupportDropdown(event)" class="flex items-center gap-2 text-base text-black font-semibold hover:text-[#128c7e] hover:bg-gray-50 rounded-xl py-1.5 px-3 transition border border-transparent cursor-pointer outline-none">
                             <i class="fa-solid fa-headset text-sm text-slate-400"></i> Support
                             <i class="fa-solid fa-chevron-down text-xs text-gray-400 pointer-events-none"></i>
@@ -121,13 +121,6 @@ $active_page = pathinfo(basename($_SERVER['SCRIPT_FILENAME']), PATHINFO_FILENAME
                             </a>
                             <a href="<?php echo BASE_URL; ?>account" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
                                 <i class="fa-solid fa-user-gear text-slate-400 w-5"></i> My Profile
-                            </a>
-                            <hr class="border-gray-100 my-1.5">
-                            <a href="https://t.me/identitysearchai" target="_blank" rel="noopener" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
-                                <i class="fa-brands fa-telegram text-slate-400 text-sm w-5"></i> Telegram Support
-                            </a>
-                            <a href="mailto:support@identitysearch.ai" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
-                                <i class="fa-solid fa-envelope text-slate-400 text-sm w-5"></i> Email Support
                             </a>
                             <hr class="border-gray-100 my-1.5">
                             <a href="<?php echo htmlspecialchars($logout_url); ?>" class="flex items-center gap-2.5 px-4 py-2.5 text-red-600 hover:bg-red-50/50 font-bold transition">
