@@ -143,10 +143,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $paidStmt = $pdo->prepare("SELECT COALESCE(SUM(`amount`),0) FROM `payment_invoices` WHERE `withdraw_id` = ? AND `status` IN ('approved','completed')");
             $paidStmt->execute([$payId]);
             $alreadyPaid = (float)$paidStmt->fetchColumn();
-            $remaining   = (float)$wd['amount'] - $alreadyPaid;
+            $resvStmt = $pdo->prepare("SELECT COALESCE(SUM(`amount`),0) FROM `payment_invoices` WHERE `withdraw_id` = ? AND `status` IN ('pending','processing')");
+            $resvStmt->execute([$payId]);
+            $alreadyReserved = (float)$resvStmt->fetchColumn();
+            $remaining   = (float)$wd['amount'] - $alreadyPaid - $alreadyReserved;
 
             if ($invAmt <= 0) {
                 $_SESSION['flash_error'] = "Invoice amount must be greater than 0.";
+            } elseif ($remaining <= 0) {
+                $_SESSION['flash_error'] = "No pending balance left on this request — the full amount is already paid or reserved by an existing invoice.";
             } elseif ($invAmt > $remaining) {
                 $_SESSION['flash_error'] = "Invoice amount ($" . number_format($invAmt,2) . ") exceeds pending balance ($" . number_format($remaining,2) . ").";
             } else {
@@ -167,14 +172,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $_SESSION['flash_success'] = "Invoice approved.";
     } elseif ($act === 'reject_payment' && $affId) {
         $payId = (int)($_POST['payment_id'] ?? 0);
-        $wdRow = $pdo->prepare("SELECT `amount` FROM `withdraw` WHERE `id` = ? AND `status` = 'pending' LIMIT 1");
-        $wdRow->execute([$payId]);
-        $wdRow = $wdRow->fetch(PDO::FETCH_ASSOC);
-        if ($wdRow) {
-            $pdo->prepare("UPDATE `affiliates` SET `balance` = `balance` + ? WHERE `id` = ?")->execute([(float)$wdRow['amount'], $affId]);
+        $paidStmt = $pdo->prepare("SELECT COALESCE(SUM(`amount`),0) FROM `payment_invoices` WHERE `withdraw_id` = ? AND `status` IN ('approved','completed')");
+        $paidStmt->execute([$payId]);
+        $alreadyPaid = (float)$paidStmt->fetchColumn();
+        if ($alreadyPaid > 0) {
+            $_SESSION['flash_error'] = "Cannot reject: this request is already partially paid via invoice.";
+        } else {
+            $wdRow = $pdo->prepare("SELECT `amount` FROM `withdraw` WHERE `id` = ? AND `status` = 'pending' LIMIT 1");
+            $wdRow->execute([$payId]);
+            $wdRow = $wdRow->fetch(PDO::FETCH_ASSOC);
+            if ($wdRow) {
+                $pdo->prepare("UPDATE `affiliates` SET `balance` = `balance` + ? WHERE `id` = ?")->execute([(float)$wdRow['amount'], $affId]);
+            }
+            $pdo->prepare("UPDATE `withdraw` SET `status` = 'rejected' WHERE `id` = ? AND `status` = 'pending'")->execute([$payId]);
+            $pdo->prepare("UPDATE `payment_invoices` SET `status` = 'cancelled' WHERE `withdraw_id` = ? AND `status` IN ('pending','processing')")->execute([$payId]);
+            $_SESSION['flash_success'] = "Payment rejected. $" . number_format($wdRow['amount'] ?? 0, 2) . " returned to affiliate balance.";
         }
-        $pdo->prepare("UPDATE `withdraw` SET `status` = 'rejected' WHERE `id` = ?")->execute([$payId]);
-        $_SESSION['flash_success'] = "Payment rejected. $" . number_format($wdRow['amount'] ?? 0, 2) . " returned to affiliate balance.";
     } elseif ($act === 'add_affiliate') {
         $name = trim($_POST['name'] ?? '');
         $email = trim($_POST['email'] ?? '');
@@ -231,7 +244,6 @@ try {
             $where = "WHERE (a.name LIKE ? OR a.email LIKE ? OR a.aid LIKE ?)";
             $params = ["%$search%", "%$search%", "%$search%"];
         }
-        $totalRows = (int)$pdo->prepare("SELECT COUNT(*) FROM `withdraw` w LEFT JOIN `affiliates` a ON w.affid = a.id $where")->execute($params) ? 0 : $pdo->prepare("SELECT COUNT(*) FROM `withdraw` w LEFT JOIN `affiliates` a ON w.affid = a.id $where")->execute($params);
         $countStmt = $pdo->prepare("SELECT COUNT(*) FROM `withdraw` w LEFT JOIN `affiliates` a ON w.affid = a.id $where");
         $countStmt->execute($params);
         $totalRows = (int)$countStmt->fetchColumn();
@@ -240,6 +252,7 @@ try {
             SELECT w.*,
                    a.name as aff_name, a.email as aff_email, a.aid,
                    COALESCE(paid.total_paid, 0) as total_paid,
+                   COALESCE(resv.reserved_amount, 0) as reserved_amount,
                    (w.amount - COALESCE(paid.total_paid, 0)) as pending_amount
             FROM `withdraw` w 
             LEFT JOIN `affiliates` a ON w.affid = a.id 
@@ -248,6 +261,11 @@ try {
                 FROM `payment_invoices` WHERE status IN ('approved','completed')
                 GROUP BY withdraw_id
             ) paid ON paid.withdraw_id = w.id
+            LEFT JOIN (
+                SELECT withdraw_id, SUM(amount) as reserved_amount
+                FROM `payment_invoices` WHERE status IN ('pending','processing')
+                GROUP BY withdraw_id
+            ) resv ON resv.withdraw_id = w.id
             $where
             ORDER BY w.created_at DESC
             LIMIT $perPage OFFSET $offset
@@ -330,7 +348,7 @@ try {
             <div class="text-[11px] font-bold text-gray-400">Showing <?= number_format($totalRows) ?> results</div>
 
             <?php if ($tab === 'payments'):
-                $sumStmt = $pdo->query("SELECT (SELECT COALESCE(SUM(w.amount - COALESCE(p.total_paid,0)),0) FROM `withdraw` w LEFT JOIN (SELECT withdraw_id, SUM(amount) as total_paid FROM `payment_invoices` WHERE status IN ('approved','completed') GROUP BY withdraw_id) p ON p.withdraw_id = w.id WHERE w.status != 'rejected') as total_pending, (SELECT COALESCE(SUM(amount),0) FROM `payment_invoices` WHERE status IN ('approved','completed')) as total_paid, (SELECT COUNT(*) FROM `withdraw` w LEFT JOIN (SELECT withdraw_id, SUM(amount) as total_paid FROM `payment_invoices` WHERE status IN ('approved','completed') GROUP BY withdraw_id) p ON p.withdraw_id = w.id WHERE w.status != 'rejected' AND (w.amount - COALESCE(p.total_paid,0)) > 0) as pending_invoices, (SELECT COUNT(*) FROM `withdraw` w LEFT JOIN (SELECT withdraw_id, SUM(amount) as total_paid FROM `payment_invoices` WHERE status IN ('approved','completed') GROUP BY withdraw_id) p ON p.withdraw_id = w.id WHERE w.status != 'rejected' AND (w.amount - COALESCE(p.total_paid,0)) <= 0) as paid_invoices");
+                $sumStmt = $pdo->query("SELECT (SELECT COALESCE(SUM(GREATEST(w.amount - COALESCE(p.total_paid,0),0)),0) FROM `withdraw` w LEFT JOIN (SELECT withdraw_id, SUM(amount) as total_paid FROM `payment_invoices` WHERE status IN ('approved','completed') GROUP BY withdraw_id) p ON p.withdraw_id = w.id WHERE w.status != 'rejected') as total_pending, (SELECT COALESCE(SUM(pi.amount),0) FROM `payment_invoices` pi INNER JOIN `withdraw` w ON pi.withdraw_id = w.id WHERE pi.status IN ('approved','completed') AND w.status != 'rejected') as total_paid, (SELECT COUNT(*) FROM `withdraw` w LEFT JOIN (SELECT withdraw_id, SUM(amount) as total_paid FROM `payment_invoices` WHERE status IN ('approved','completed') GROUP BY withdraw_id) p ON p.withdraw_id = w.id WHERE w.status != 'rejected' AND (w.amount - COALESCE(p.total_paid,0)) > 0) as pending_invoices, (SELECT COUNT(*) FROM `withdraw` w LEFT JOIN (SELECT withdraw_id, SUM(amount) as total_paid FROM `payment_invoices` WHERE status IN ('approved','completed') GROUP BY withdraw_id) p ON p.withdraw_id = w.id WHERE w.status != 'rejected' AND (w.amount - COALESCE(p.total_paid,0)) <= 0) as paid_invoices");
                 $sumRow = $sumStmt->fetch(PDO::FETCH_ASSOC);
                 $totalPending = (float)($sumRow['total_pending'] ?? 0);
                 $totalPaid    = (float)($sumRow['total_paid'] ?? 0);
@@ -383,7 +401,9 @@ try {
                                     <tr><td colspan="9" class="text-xs text-gray-400 py-8 text-center font-semibold">No payment records found.</td></tr>
                                 <?php else: foreach ($payments as $p):
                                     $rowPaid   = (float)($p['total_paid'] ?? 0);
-                                    $rowPending = (float)($p['pending_amount'] ?? 0);
+                                    $rowPending = max((float)($p['pending_amount'] ?? 0), 0);
+                                    $rowReserved = (float)($p['reserved_amount'] ?? 0);
+                                    $rowAvailable = max($rowPending - $rowReserved, 0);
                                     $effStatus = ($p['status'] === 'rejected') ? 'rejected' : ($rowPending <= 0 ? 'approved' : $p['status']);
                                 ?>
                                     <tr class="hover:bg-gray-50/50 wd-row" data-status="<?= htmlspecialchars($effStatus) ?>">
@@ -408,11 +428,11 @@ try {
                                         <td class="px-5 py-3 text-[10px] text-gray-400 font-semibold"><?= date('M d, Y', strtotime($p['created_at'])) ?></td>
                                         <td class="px-5 py-3">
                                             <div class="flex items-center gap-1.5 flex-wrap">
-                                                <?php if ($p['status'] !== 'rejected' && $rowPending > 0): ?>
-                                                    <button onclick="openCreateInvoice(<?= $p['id'] ?>, <?= $p['affid'] ?>, <?= $rowPending ?>, <?= $rowPaid ?>, '<?= addslashes(htmlspecialchars($p['aff_name'] ?? 'N/A')) ?>', '<?= addslashes(htmlspecialchars($p['aid'] ?? '')) ?>')" class="text-[10px] font-bold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 px-2 py-1 rounded-md transition cursor-pointer">+ Invoice</button>
+                                                <?php if ($p['status'] !== 'rejected' && $rowAvailable > 0): ?>
+                                                    <button onclick="openCreateInvoice(<?= $p['id'] ?>, <?= $p['affid'] ?>, <?= $rowAvailable ?>, <?= $rowPaid ?>, '<?= addslashes(htmlspecialchars($p['aff_name'] ?? 'N/A')) ?>', '<?= addslashes(htmlspecialchars($p['aid'] ?? '')) ?>')" class="text-[10px] font-bold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 px-2 py-1 rounded-md transition cursor-pointer">+ Invoice</button>
                                                 <?php endif; ?>
                                                 <button onclick="openViewInvoices(<?= $p['id'] ?>)" class="text-[10px] font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 px-2 py-1 rounded-md transition cursor-pointer">View Invoices</button>
-                                                <?php if ($effStatus === 'pending'): ?>
+                                                <?php if ($effStatus === 'pending' && $rowPaid <= 0): ?>
                                                     <form method="POST" class="inline" onsubmit="return confirm('Are you sure you want to reject this payment?')"><input type="hidden" name="action" value="reject_payment"><input type="hidden" name="affiliate_id" value="<?= $p['affid'] ?>"><input type="hidden" name="payment_id" value="<?= $p['id'] ?>"><button type="submit" class="text-[10px] font-bold bg-red-50 text-red-700 hover:bg-red-100 px-2 py-1 rounded-md transition cursor-pointer">Reject</button></form>
                                                 <?php endif; ?>
                                             </div>
@@ -804,17 +824,6 @@ try {
         fetch('admin-affiliates', { method: 'POST', body: fd, credentials: 'same-origin' })
             .then(function() { location.reload(); })
             .catch(function() { alert('Error changing status.'); });
-    }
-    function approveInvoice(invId, btn) {
-        if (!confirm('Approve this invoice?')) return;
-        btn.disabled = true;
-        btn.textContent = '...';
-        var fd = new FormData();
-        fd.append('action', 'approve_invoice');
-        fd.append('invoice_db_id', invId);
-        fetch('admin-affiliates', { method: 'POST', body: fd, credentials: 'same-origin' })
-            .then(function() { location.reload(); })
-            .catch(function() { btn.disabled = false; btn.textContent = 'Approve'; alert('Error approving invoice.'); });
     }
     var activeInvFilter = 'all';
     function filterInvoices(status, btn) {
