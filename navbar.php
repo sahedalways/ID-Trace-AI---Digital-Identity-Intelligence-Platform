@@ -85,6 +85,24 @@ $active_page = pathinfo(basename($_SERVER['SCRIPT_FILENAME']), PATHINFO_FILENAME
                         <i class="fa-solid fa-ticket text-sm <?= $active_page === 'my-promo' ? 'text-[#128c7e]' : 'text-slate-400' ?>"></i> Promo Codes
                     </a>
 
+                    <div class="relative hidden sm:block">
+                        <button type="button" onclick="toggleSupportDropdown(event)" class="flex items-center gap-2 text-base text-black font-semibold hover:text-[#128c7e] hover:bg-gray-50 rounded-xl py-1.5 px-3 transition border border-transparent cursor-pointer outline-none">
+                            <i class="fa-solid fa-headset text-sm text-slate-400"></i> Support
+                            <i class="fa-solid fa-chevron-down text-xs text-gray-400 pointer-events-none"></i>
+                        </button>
+
+                        <div id="supportDropdownMenu" class="hidden absolute right-0 mt-2 w-72 bg-white border border-gray-200 rounded-2xl shadow-xl py-2 z-50 text-base text-black font-semibold">
+                            <span class="px-4 py-1.5 text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Customer Support</span>
+                            <a href="https://t.me/identitysearchai" target="_blank" rel="noopener" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
+                                <i class="fa-brands fa-telegram text-[#229ED9] w-5"></i> Telegram Support
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-gray-300 ml-auto"></i>
+                            </a>
+                            <a href="mailto:support@identitysearch.ai" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
+                                <i class="fa-solid fa-envelope text-[#128c7e] w-5"></i> Email Support
+                            </a>
+                        </div>
+                    </div>
+
                     <div class="relative">
                         <button type="button" onclick="toggleUserDropdown(event)" class="flex items-center gap-2 text-base text-black font-semibold hover:text-[#128c7e] focus:outline-none py-1.5 px-3 hover:bg-gray-50 rounded-xl transition border border-transparent cursor-pointer">
                             <span class="truncate-nav-text"><?php echo htmlspecialchars($userDisplayName); ?></span>
@@ -103,6 +121,13 @@ $active_page = pathinfo(basename($_SERVER['SCRIPT_FILENAME']), PATHINFO_FILENAME
                             </a>
                             <a href="<?php echo BASE_URL; ?>account" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
                                 <i class="fa-solid fa-user-gear text-slate-400 w-5"></i> My Profile
+                            </a>
+                            <hr class="border-gray-100 my-1.5">
+                            <a href="https://t.me/identitysearchai" target="_blank" rel="noopener" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
+                                <i class="fa-brands fa-telegram text-slate-400 text-sm w-5"></i> Telegram Support
+                            </a>
+                            <a href="mailto:support@identitysearch.ai" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
+                                <i class="fa-solid fa-envelope text-slate-400 text-sm w-5"></i> Email Support
                             </a>
                             <hr class="border-gray-100 my-1.5">
                             <a href="<?php echo htmlspecialchars($logout_url); ?>" class="flex items-center gap-2.5 px-4 py-2.5 text-red-600 hover:bg-red-50/50 font-bold transition">
@@ -146,6 +171,13 @@ $active_page = pathinfo(basename($_SERVER['SCRIPT_FILENAME']), PATHINFO_FILENAME
                             <a href="<?php echo BASE_URL; ?>buy-credit" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
                                 <i class="fa-solid fa-file-lines text-slate-400 text-xs w-5"></i> Get Report
                             </a>
+                            <hr class="border-gray-100 my-1.5">
+                            <a href="https://t.me/identitysearchai" target="_blank" rel="noopener" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
+                                <i class="fa-brands fa-telegram text-slate-400 text-sm w-5"></i> Telegram Support
+                            </a>
+                            <a href="mailto:support@identitysearch.ai" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
+                                <i class="fa-solid fa-envelope text-slate-400 text-sm w-5"></i> Email Support
+                            </a>
                         </div>
                     </div>
                 <?php endif; ?>
@@ -162,10 +194,20 @@ $active_page = pathinfo(basename($_SERVER['SCRIPT_FILENAME']), PATHINFO_FILENAME
         if (targetMenu) targetMenu.classList.toggle('hidden');
     }
 
+    function toggleSupportDropdown(event) {
+        event.stopPropagation();
+        const targetMenu = document.getElementById('supportDropdownMenu');
+        if (targetMenu) targetMenu.classList.toggle('hidden');
+    }
+
     window.addEventListener('click', function() {
         const dropdown = document.getElementById('userDropdownMenu');
         if (dropdown && !dropdown.classList.contains('hidden')) {
             dropdown.classList.add('hidden');
+        }
+        const supportMenu = document.getElementById('supportDropdownMenu');
+        if (supportMenu && !supportMenu.classList.contains('hidden')) {
+            supportMenu.classList.add('hidden');
         }
     });
 </script>
