@@ -185,7 +185,7 @@ function buildClientQs($overrides) {
 
             <!-- Search + Status Filter Row -->
             <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-                <form method="GET" class="flex items-center gap-2 flex-1 max-w-lg">
+                <form method="GET" class="flex items-center gap-2 flex-1 max-w-2xl">
                     <input type="hidden" name="sub" value="<?= htmlspecialchars($subFilter) ?>">
                     <div class="flex-1 relative">
                         <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
