@@ -85,6 +85,10 @@ $active_page = pathinfo(basename($_SERVER['SCRIPT_FILENAME']), PATHINFO_FILENAME
                         <i class="fa-solid fa-ticket text-sm <?= $active_page === 'my-promo' ? 'text-[#128c7e]' : 'text-slate-400' ?>"></i> Promo Codes
                     </a>
 
+                    <a href="<?php echo BASE_URL; ?>support" class="hidden sm:flex items-center gap-2 text-base font-semibold transition <?= $active_page === 'support' ? 'text-[#128c7e]' : 'text-black hover:text-[#128c7e]' ?>">
+                        <i class="fa-solid fa-headset text-sm <?= $active_page === 'support' ? 'text-[#128c7e]' : 'text-slate-400' ?>"></i> Customer Support
+                    </a>
+
                     <div class="relative">
                         <button type="button" onclick="toggleUserDropdown(event)" class="flex items-center gap-2 text-base text-black font-semibold hover:text-[#128c7e] focus:outline-none py-1.5 px-3 hover:bg-gray-50 rounded-xl transition border border-transparent cursor-pointer">
                             <span class="truncate-nav-text"><?php echo htmlspecialchars($userDisplayName); ?></span>
