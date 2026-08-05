@@ -20,6 +20,7 @@ $bonusType = getAffiliateBonusType($pdo, $affiliateId);
 
 // 2. Capture and sanitize incoming status filters
 $filter_status = isset($_GET['status']) ? trim($_GET['status']) : 'all';
+$search = isset($_GET['q']) ? trim($_GET['q']) : '';
 $current_date = date('Y-m-d');
 
 // 3. Pre-fetch Dynamic Row Counters for Dropdown Select Options (First Bracket)
@@ -74,6 +75,13 @@ switch ($filter_status) {
         break;
 }
 
+$search_condition = "";
+$search_params = [];
+if (!empty($search)) {
+    $search_condition = "AND (u.`name` LIKE ? OR u.`email` LIKE ? OR u.`id` = ? OR c.`s1` LIKE ? OR c.`s2` LIKE ?)";
+    $search_params = ["%$search%", "%$search%", $search, "%$search%", "%$search%"];
+}
+
 $client_data = [];
 
 try {
@@ -88,14 +96,16 @@ try {
                 u.`credit` AS usr_credit, 
                 u.`status` AS usr_status,
                 u.`created_at` AS usr_joined_date,
+                c.`s1` AS sub1,
+                c.`s2` AS sub2,
                 EXISTS(SELECT 1 FROM `transactions` t WHERE t.`uid` = u.`id` AND t.`dispute_status` = 1) AS has_chargeback
               FROM `users` u
               INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci
-              WHERE c.`affid` = ? $status_condition
+              WHERE c.`affid` = ? $status_condition $search_condition
               ORDER BY u.`created_at` DESC";
 
     $stmt = $pdo->prepare($query);
-    $stmt->execute([$affiliateId]);
+    $stmt->execute(array_merge([$affiliateId], $search_params));
     
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $has_active_plan = (!empty($row['usr_plan_name']) && strtoupper($row['usr_plan_name']) !== 'FREE TIER');
@@ -112,6 +122,8 @@ try {
             'email'       => $row['usr_email'],
             'country'     => !empty($row['usr_country']) ? strtoupper($row['usr_country']) : '—',
             'click_id'    => !empty($row['usr_click_id']) ? $row['usr_click_id'] : '—',
+            'sub1'        => !empty($row['sub1']) ? $row['sub1'] : '—',
+            'sub2'        => !empty($row['sub2']) ? $row['sub2'] : '—',
             'plan_name'   => $display_plan,
             'credit'      => (int)$row['usr_credit'],
             'joined_date' => !empty($row['usr_joined_date']) ? date('Y-m-d', strtotime($row['usr_joined_date'])) : '—',
@@ -141,6 +153,14 @@ try {
         <div class="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm">
             <form method="GET" action="affiliate-clients" class="flex flex-col sm:flex-row gap-4 items-end justify-between w-full">
                 <div class="space-y-1.5 w-full sm:max-w-sm text-left">
+                    <label class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Search Clients</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                        <input type="text" name="q" value="<?= htmlspecialchars($search) ?>" placeholder="Search by name, email, ID or SubID..."
+                            class="w-full bg-slate-50 border border-gray-200 text-sm rounded-xl pl-10 pr-4 py-2.5 font-semibold text-slate-700 outline-none focus:border-indigo-500 transition-all">
+                    </div>
+                </div>
+                <div class="space-y-1.5 w-full sm:max-w-sm text-left">
                     <label class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Subscription Status</label>
                     <select name="status" class="w-full bg-slate-50 border border-gray-200 text-sm rounded-xl px-3 py-2.5 font-semibold text-slate-700 outline-none focus:border-indigo-500 transition-all">
                         <option value="all" <?= $filter_status === 'all' ? 'selected' : '' ?>>All Clients (<?= $count_all ?>)</option>
@@ -152,7 +172,7 @@ try {
                 </div>
 
                 <button type="submit" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm px-6 py-2.5 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-sm">
-                    <i class="fa-solid fa-filter text-sm"></i> Filter Accounts
+                    <i class="fa-solid fa-filter text-sm"></i> Search &amp; Filter
                 </button>
             </form>
         </div>
@@ -172,6 +192,8 @@ try {
                             <th class="px-6 py-3.5 whitespace-nowrap">Email</th>
                             <th class="px-6 py-3.5 whitespace-nowrap">Country</th>
                             <th class="px-6 py-3.5 whitespace-nowrap">Click ID</th>
+                            <th class="px-6 py-3.5 whitespace-nowrap">SubID 1</th>
+                            <th class="px-6 py-3.5 whitespace-nowrap">SubID 2</th>
                             <th class="px-6 py-3.5 whitespace-nowrap">Plan Name</th>
                             <th class="px-6 py-3.5 whitespace-nowrap">Credit</th>
                             <th class="px-6 py-3.5 whitespace-nowrap">Joined Date</th>
@@ -181,7 +203,7 @@ try {
                     <tbody class="divide-y divide-gray-100 text-xs font-medium text-slate-700">
                         <?php if (empty($client_data)): ?>
                         <tr>
-                            <td colspan="9" class="px-6 py-12 text-center text-gray-400 font-semibold font-mono">
+                            <td colspan="11" class="px-6 py-12 text-center text-gray-400 font-semibold font-mono">
                                 <i class="fa-solid fa-users-slash text-2xl block mb-2 text-slate-300"></i>
                                 No customer accounts found matching selected criteria.
                             </td>
@@ -219,6 +241,12 @@ try {
                                 </td>
                                 <td class="px-6 py-4 font-mono text-gray-400 text-xs whitespace-nowrap select-all">
                                     <?= htmlspecialchars($client['click_id']) ?>
+                                </td>
+                                <td class="px-6 py-4 font-mono text-slate-500 text-xs whitespace-nowrap select-all">
+                                    <?= htmlspecialchars($client['sub1']) ?>
+                                </td>
+                                <td class="px-6 py-4 font-mono text-slate-500 text-xs whitespace-nowrap select-all">
+                                    <?= htmlspecialchars($client['sub2']) ?>
                                 </td>
                                 <td class="px-6 py-4 font-mono text-xs font-bold text-gray-700 whitespace-nowrap">
                                     <?= htmlspecialchars($client['plan_name']) ?>
