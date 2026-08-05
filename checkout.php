@@ -279,9 +279,18 @@ $billing_cycle_text = $billing_intervals[$plan['name']] ?? 'every ' . $plan['val
             </div>
 
             <div class="space-y-3">
+                <p class="text-center text-[11px] text-gray-500 font-medium leading-relaxed">
+                    By purchasing, you agree to our
+                    <a href="terms" class="underline text-[#128c7e] hover:text-[#0e6f64] transition">Terms and Conditions</a>
+                    and
+                    <a href="privacy" class="underline text-[#128c7e] hover:text-[#0e6f64] transition">Privacy Policy</a>.
+                </p>
                 <button type="submit" id="submitPaymentBtn" class="w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white py-4 px-4 rounded-xl text-[15px] font-bold transition shadow-sm flex items-center justify-center gap-2 cursor-pointer">
                     <span id="btnText">Complete Checkout</span>
                 </button>
+                <div class="flex items-center justify-center gap-1.5 text-xs font-semibold text-gray-500">
+                    <i class="fa-solid fa-shield-halved text-xs text-[#128c7e]"></i> 30-day money-back guarantee
+                </div>
             </div>
         </form>
     </main>
