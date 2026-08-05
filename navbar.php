@@ -153,10 +153,6 @@ $active_page = pathinfo(basename($_SERVER['SCRIPT_FILENAME']), PATHINFO_FILENAME
                             <a href="<?php echo BASE_URL; ?>buy-credit" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
                                 <i class="fa-solid fa-file-lines text-slate-400 text-xs w-5"></i> Get Report
                             </a>
-                            <hr class="border-gray-100 my-1.5">
-                            <a href="<?php echo BASE_URL; ?>support" class="flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition">
-                                <i class="fa-solid fa-headset text-slate-400 text-sm w-5"></i> Customer Support
-                            </a>
                         </div>
                     </div>
                 <?php endif; ?>
