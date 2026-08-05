@@ -5,6 +5,11 @@
  */
 require_once 'config.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
+
+if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true || !isset($_SESSION['user_id'])) {
+    header("Location: " . BASE_URL . "signin");
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
