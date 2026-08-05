@@ -31,10 +31,12 @@ $conditions = [];
 $params = [];
 
 if (!empty($search)) {
-    $conditions[] = "(u.email LIKE ? OR u.name LIKE ? OR u.id = ? OR a.aid LIKE ? OR a.email LIKE ?)";
+    $conditions[] = "(u.email LIKE ? OR u.name LIKE ? OR u.id = ? OR a.aid LIKE ? OR a.email LIKE ? OR cl.s1 LIKE ? OR cl.s2 LIKE ?)";
     $params[] = "%$search%";
     $params[] = "%$search%";
     $params[] = $search;
+    $params[] = "%$search%";
+    $params[] = "%$search%";
     $params[] = "%$search%";
     $params[] = "%$search%";
 }
@@ -61,6 +63,7 @@ try {
     $countSql = "SELECT COUNT(DISTINCT u.id) FROM `users` u
         LEFT JOIN (SELECT uid, MAX(affid) as affid FROM `conversions` WHERE affid IS NOT NULL GROUP BY uid) c ON c.uid = u.id
         LEFT JOIN (SELECT id, aid, email FROM `affiliates`) a ON c.affid = a.id
+        LEFT JOIN (SELECT cid, MAX(s1) as s1, MAX(s2) as s2 FROM `clicks` GROUP BY cid) cl ON CONVERT(u.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci = CONVERT(cl.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci
         $whereClause";
     $countStmt = $pdo->prepare($countSql);
     $countStmt->execute($params);
@@ -70,7 +73,8 @@ try {
     $sql = "
         SELECT u.*,
                a.name as aff_name, a.email as aff_email, a.aid,
-               t.dispute_status, t.dispute_amount
+               t.dispute_status, t.dispute_amount,
+               cl.s1 as sub1, cl.s2 as sub2
         FROM `users` u
         LEFT JOIN (
             SELECT uid, MAX(affid) as affid
@@ -86,6 +90,9 @@ try {
             FROM `transactions`
             GROUP BY uid
         ) t ON t.uid = u.id
+        LEFT JOIN (
+            SELECT cid, MAX(s1) as s1, MAX(s2) as s2 FROM `clicks` GROUP BY cid
+        ) cl ON CONVERT(u.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci = CONVERT(cl.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci
         $whereClause
         ORDER BY u.created_at DESC
         LIMIT $perPage OFFSET $offset
@@ -182,7 +189,7 @@ function buildClientQs($overrides) {
                     <input type="hidden" name="sub" value="<?= htmlspecialchars($subFilter) ?>">
                     <div class="flex-1 relative">
                         <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
-                        <input type="text" name="q" value="<?= htmlspecialchars($search) ?>" placeholder="Search by email, name, user ID, affiliate ID or affiliate email..."
+                        <input type="text" name="q" value="<?= htmlspecialchars($search) ?>" placeholder="Search by email, name, user ID, affiliate ID, affiliate email or SubID..."
                             class="w-full text-sm pl-10 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all font-semibold text-gray-900 placeholder-gray-400">
                     </div>
                     <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm py-3 px-5 rounded-xl transition-all cursor-pointer">Search</button>
@@ -212,6 +219,8 @@ function buildClientQs($overrides) {
                                 <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Name</th>
                                 <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Email</th>
                                 <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Affiliate</th>
+                                <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">SubID 1</th>
+                                <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">SubID 2</th>
                                 <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Plan</th>
                                 <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Subscription</th>
                                 <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Joined</th>
@@ -220,7 +229,7 @@ function buildClientQs($overrides) {
                         </thead>
                         <tbody class="divide-y divide-gray-50">
                             <?php if (empty($clients)): ?>
-                                <tr><td colspan="8" class="text-xs text-gray-400 py-8 text-center font-semibold">No customers found.</td></tr>
+                                <tr><td colspan="10" class="text-xs text-gray-400 py-8 text-center font-semibold">No customers found.</td></tr>
                             <?php else: foreach ($clients as $c): ?>
                                 <tr class="hover:bg-gray-50/50">
                                     <td class="px-5 py-3 text-xs font-mono text-gray-500">#<?= str_pad($c['id'], 3, '0', STR_PAD_LEFT) ?></td>
@@ -234,6 +243,8 @@ function buildClientQs($overrides) {
                                             <span class="text-[10px] text-gray-400 font-semibold">Direct</span>
                                         <?php endif; ?>
                                     </td>
+                                    <td class="px-5 py-3 text-[10px] font-mono text-gray-500 truncate max-w-[120px]" title="<?= htmlspecialchars($c['sub1'] ?? '') ?>"><?= !empty($c['sub1']) ? htmlspecialchars($c['sub1']) : '—' ?></td>
+                                    <td class="px-5 py-3 text-[10px] font-mono text-gray-500 truncate max-w-[120px]" title="<?= htmlspecialchars($c['sub2'] ?? '') ?>"><?= !empty($c['sub2']) ? htmlspecialchars($c['sub2']) : '—' ?></td>
                                     <td class="px-5 py-3 text-xs font-semibold text-gray-700"><?= htmlspecialchars($c['plan'] ?? '—') ?></td>
                                     <td class="px-5 py-3">
                                         <?php if ($c['dispute_status'] == 1): ?>
