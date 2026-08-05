@@ -33,6 +33,22 @@ if (isset($_SESSION['flash_error'])) {
     unset($_SESSION['flash_error']);
 }
 
+// Auto-set withdraw status to 'approved' once fully paid, else revert to 'pending'
+function syncWithdrawStatus($pdo, $withdrawId) {
+    if (!$withdrawId) return;
+    $wd = $pdo->prepare("SELECT `amount`, `status` FROM `withdraw` WHERE `id` = ? LIMIT 1");
+    $wd->execute([$withdrawId]);
+    $wdRow = $wd->fetch(PDO::FETCH_ASSOC);
+    if (!$wdRow || $wdRow['status'] === 'rejected' || (float)$wdRow['amount'] <= 0) return;
+    $paidStmt = $pdo->prepare("SELECT COALESCE(SUM(`amount`),0) FROM `payment_invoices` WHERE `withdraw_id` = ? AND `status` IN ('approved','completed')");
+    $paidStmt->execute([$withdrawId]);
+    $paid = (float)$paidStmt->fetchColumn();
+    $newStatus = $paid >= (float)$wdRow['amount'] ? 'approved' : 'pending';
+    if ($wdRow['status'] !== $newStatus) {
+        $pdo->prepare("UPDATE `withdraw` SET `status` = ?, `updated_at` = NOW() WHERE `id` = ?")->execute([$newStatus, $withdrawId]);
+    }
+}
+
 // Handle affiliate actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $act = $_POST['action'];
@@ -44,6 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $newStatus = trim($_POST['new_status'] ?? '');
         if ($invId && in_array($newStatus, ['pending','processing','completed','cancelled'])) {
             $pdo->prepare("UPDATE `payment_invoices` SET `status` = ? WHERE `id` = ?")->execute([$newStatus, $invId]);
+            $wstmt = $pdo->prepare("SELECT `withdraw_id` FROM `payment_invoices` WHERE `id` = ? LIMIT 1");
+            $wstmt->execute([$invId]);
+            $wrow = $wstmt->fetch(PDO::FETCH_ASSOC);
+            if ($wrow) syncWithdrawStatus($pdo, (int)$wrow['withdraw_id']);
             $_SESSION['flash_success'] = "Invoice status changed to " . ucfirst($newStatus) . ".";
             echo json_encode(['ok' => true, 'status' => $newStatus]);
         } else {
@@ -133,12 +153,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 $invoiceCode = 'INV' . strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 13));
                 $pdo->prepare("INSERT INTO `payment_invoices` (`withdraw_id`, `invoice_id`, `amount`, `status`, `transaction_id`, `remarks`, `frequency`, `invoice_type`, `note`, `created_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())")
                     ->execute([$payId, $invoiceCode, $invAmt, $invStatus, $txnId ?: null, $remarks ?: null, $frequency, $invType, $invNote ?: null]);
+                syncWithdrawStatus($pdo, $payId);
                 $_SESSION['flash_success'] = "Invoice $invoiceCode created for $" . number_format($invAmt, 2) . ".";
             }
         }
     } elseif ($act === 'approve_invoice') {
         $invId = (int)($_POST['invoice_db_id'] ?? 0);
         $pdo->prepare("UPDATE `payment_invoices` SET `status` = 'approved' WHERE `id` = ?")->execute([$invId]);
+        $wstmt = $pdo->prepare("SELECT `withdraw_id` FROM `payment_invoices` WHERE `id` = ? LIMIT 1");
+        $wstmt->execute([$invId]);
+        $wrow = $wstmt->fetch(PDO::FETCH_ASSOC);
+        if ($wrow) syncWithdrawStatus($pdo, (int)$wrow['withdraw_id']);
         $_SESSION['flash_success'] = "Invoice approved.";
     } elseif ($act === 'reject_payment' && $affId) {
         $payId = (int)($_POST['payment_id'] ?? 0);
@@ -234,14 +259,20 @@ try {
         $params = [];
         if (!empty($search)) {
             $sep = $where ? " AND" : " WHERE";
-            $where .= "$sep (a.id = ? OR a.email LIKE ? OR a.aid LIKE ? OR a.name LIKE ? OR a.contact LIKE ?)";
-            $params = array_merge($params, [$search, "%$search%", "%$search%", "%$search%", "%$search%"]);
+            $where .= "$sep (a.id = ? OR a.email LIKE ? OR a.aid LIKE ? OR a.name LIKE ? OR a.contact LIKE ? OR cl.s1 LIKE ? OR cl.s2 LIKE ?)";
+            $params = array_merge($params, [$search, "%$search%", "%$search%", "%$search%", "%$search%", "%$search%", "%$search%"]);
         }
-        $countStmt = $pdo->prepare("SELECT COUNT(*) FROM `affiliates` a $where");
+        $countStmt = $pdo->prepare("SELECT COUNT(*) FROM `affiliates` a
+            LEFT JOIN (SELECT affid, MAX(id) as max_id FROM `clicks` GROUP BY affid) m ON m.affid = a.id
+            LEFT JOIN `clicks` cl ON cl.id = m.max_id
+            $where");
         $countStmt->execute($params);
         $totalRows = (int)$countStmt->fetchColumn();
         $totalPages = max(1, ceil($totalRows / $perPage));
-        $affiliates = $pdo->prepare("SELECT a.* FROM `affiliates` a $where ORDER BY a.created_at DESC LIMIT $perPage OFFSET $offset");
+        $affiliates = $pdo->prepare("SELECT a.*, cl.s1 as sub1, cl.s2 as sub2 FROM `affiliates` a
+            LEFT JOIN (SELECT affid, MAX(id) as max_id FROM `clicks` GROUP BY affid) m ON m.affid = a.id
+            LEFT JOIN `clicks` cl ON cl.id = m.max_id
+            $where ORDER BY a.created_at DESC LIMIT $perPage OFFSET $offset");
         $affiliates->execute($params);
         $affiliates = $affiliates->fetchAll();
     }
@@ -286,7 +317,7 @@ try {
                     <input type="hidden" name="tab" value="<?= htmlspecialchars($tab) ?>">
                     <div class="relative w-full max-w-2xl">
                         <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
-                        <input type="text" name="q" value="<?= htmlspecialchars($search) ?>" placeholder="Search by ID, name, email, affiliate ID, telegram..."
+                        <input type="text" name="q" value="<?= htmlspecialchars($search) ?>" placeholder="Search by ID, name, email, affiliate ID, telegram or SubID..."
                             class="w-full text-sm pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all font-semibold text-gray-900 placeholder-gray-400">
                     </div>
                     <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs py-2.5 px-5 rounded-xl transition-all cursor-pointer">Search</button>
@@ -353,8 +384,9 @@ try {
                                 <?php else: foreach ($payments as $p):
                                     $rowPaid   = (float)($p['total_paid'] ?? 0);
                                     $rowPending = (float)($p['pending_amount'] ?? 0);
+                                    $effStatus = ($p['status'] === 'rejected') ? 'rejected' : ($rowPending <= 0 ? 'approved' : $p['status']);
                                 ?>
-                                    <tr class="hover:bg-gray-50/50 wd-row" data-status="<?= htmlspecialchars($p['status']) ?>">
+                                    <tr class="hover:bg-gray-50/50 wd-row" data-status="<?= htmlspecialchars($effStatus) ?>">
                                         <td class="px-5 py-3 text-xs font-mono text-gray-500">#<?= $p['id'] ?></td>
                                         <td class="px-5 py-3">
                                             <div class="text-xs font-bold text-gray-900"><?= htmlspecialchars($p['aff_name'] ?? 'N/A') ?></div>
@@ -365,9 +397,9 @@ try {
                                         <td class="px-5 py-3 text-xs font-bold text-amber-600 font-mono">$<?= number_format($rowPending, 2) ?></td>
                                         <td class="px-5 py-3"><span class="inline-flex items-center text-[10px] font-bold bg-purple-50 border border-purple-100 text-purple-700 px-2 py-0.5 rounded-md">Net15</span></td>
                                         <td class="px-5 py-3">
-                                            <?php if ($p['status'] === 'approved'): ?>
+                                            <?php if ($effStatus === 'approved'): ?>
                                                 <span class="inline-flex items-center text-[10px] font-bold bg-emerald-50 border border-emerald-100 text-emerald-700 px-2 py-0.5 rounded-md">Approved</span>
-                                            <?php elseif ($p['status'] === 'rejected'): ?>
+                                            <?php elseif ($effStatus === 'rejected'): ?>
                                                 <span class="inline-flex items-center text-[10px] font-bold bg-red-50 border border-red-100 text-red-700 px-2 py-0.5 rounded-md">Rejected</span>
                                             <?php else: ?>
                                                 <span class="inline-flex items-center text-[10px] font-bold bg-amber-50 border border-amber-100 text-amber-700 px-2 py-0.5 rounded-md">Pending</span>
@@ -380,7 +412,7 @@ try {
                                                     <button onclick="openCreateInvoice(<?= $p['id'] ?>, <?= $p['affid'] ?>, <?= $rowPending ?>, <?= $rowPaid ?>, '<?= addslashes(htmlspecialchars($p['aff_name'] ?? 'N/A')) ?>', '<?= addslashes(htmlspecialchars($p['aid'] ?? '')) ?>')" class="text-[10px] font-bold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 px-2 py-1 rounded-md transition cursor-pointer">+ Invoice</button>
                                                 <?php endif; ?>
                                                 <button onclick="openViewInvoices(<?= $p['id'] ?>)" class="text-[10px] font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 px-2 py-1 rounded-md transition cursor-pointer">View Invoices</button>
-                                                <?php if ($p['status'] === 'pending'): ?>
+                                                <?php if ($effStatus === 'pending'): ?>
                                                     <form method="POST" class="inline" onsubmit="return confirm('Are you sure you want to reject this payment?')"><input type="hidden" name="action" value="reject_payment"><input type="hidden" name="affiliate_id" value="<?= $p['affid'] ?>"><input type="hidden" name="payment_id" value="<?= $p['id'] ?>"><button type="submit" class="text-[10px] font-bold bg-red-50 text-red-700 hover:bg-red-100 px-2 py-1 rounded-md transition cursor-pointer">Reject</button></form>
                                                 <?php endif; ?>
                                             </div>
@@ -400,6 +432,8 @@ try {
                                     <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Name</th>
                                     <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Email</th>
                                     <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Telegram</th>
+                                    <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">SubID 1</th>
+                                    <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">SubID 2</th>
                                     <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Status</th>
                                     <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Balance</th>
                                     <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Withdrawn</th>
@@ -409,7 +443,7 @@ try {
                             </thead>
                             <tbody class="divide-y divide-gray-50">
                                 <?php if (empty($affiliates)): ?>
-                                    <tr><td colspan="9" class="text-xs text-gray-400 py-8 text-center font-semibold">No affiliates found.</td></tr>
+                                    <tr><td colspan="11" class="text-xs text-gray-400 py-8 text-center font-semibold">No affiliates found.</td></tr>
                                 <?php else: foreach ($affiliates as $a): ?>
                                     <tr class="hover:bg-gray-50/50">
                                         <td class="px-5 py-3 text-xs font-mono text-gray-500">#<?= $a['id'] ?></td>
@@ -426,6 +460,8 @@ try {
                                             </button>
                                             <?php endif; ?>
                                         </td>
+                                        <td class="px-5 py-3 text-[10px] font-mono text-gray-500 truncate max-w-[120px]" title="<?= htmlspecialchars($a['sub1'] ?? '') ?>"><?= !empty($a['sub1']) ? htmlspecialchars($a['sub1']) : '—' ?></td>
+                                        <td class="px-5 py-3 text-[10px] font-mono text-gray-500 truncate max-w-[120px]" title="<?= htmlspecialchars($a['sub2'] ?? '') ?>"><?= !empty($a['sub2']) ? htmlspecialchars($a['sub2']) : '—' ?></td>
                                         <td class="px-5 py-3">
                                             <form method="POST" onsubmit="return confirm('Change affiliate status?')">
                                                 <input type="hidden" name="action" value="change_status">
