@@ -277,20 +277,14 @@ try {
         $params = [];
         if (!empty($search)) {
             $sep = $where ? " AND" : " WHERE";
-            $where .= "$sep (a.id = ? OR a.email LIKE ? OR a.aid LIKE ? OR a.name LIKE ? OR a.contact LIKE ? OR cl.s1 LIKE ? OR cl.s2 LIKE ?)";
-            $params = array_merge($params, [$search, "%$search%", "%$search%", "%$search%", "%$search%", "%$search%", "%$search%"]);
+            $where .= "$sep (a.id = ? OR a.email LIKE ? OR a.aid LIKE ? OR a.name LIKE ? OR a.contact LIKE ?)";
+            $params = array_merge($params, [$search, "%$search%", "%$search%", "%$search%", "%$search%"]);
         }
-        $countStmt = $pdo->prepare("SELECT COUNT(*) FROM `affiliates` a
-            LEFT JOIN (SELECT affid, MAX(id) as max_id FROM `clicks` GROUP BY affid) m ON m.affid = a.id
-            LEFT JOIN `clicks` cl ON cl.id = m.max_id
-            $where");
+        $countStmt = $pdo->prepare("SELECT COUNT(*) FROM `affiliates` a $where");
         $countStmt->execute($params);
         $totalRows = (int)$countStmt->fetchColumn();
         $totalPages = max(1, ceil($totalRows / $perPage));
-        $affiliates = $pdo->prepare("SELECT a.*, cl.s1 as sub1, cl.s2 as sub2 FROM `affiliates` a
-            LEFT JOIN (SELECT affid, MAX(id) as max_id FROM `clicks` GROUP BY affid) m ON m.affid = a.id
-            LEFT JOIN `clicks` cl ON cl.id = m.max_id
-            $where ORDER BY a.created_at DESC LIMIT $perPage OFFSET $offset");
+        $affiliates = $pdo->prepare("SELECT a.* FROM `affiliates` a $where ORDER BY a.created_at DESC LIMIT $perPage OFFSET $offset");
         $affiliates->execute($params);
         $affiliates = $affiliates->fetchAll();
     }
@@ -335,7 +329,7 @@ try {
                     <input type="hidden" name="tab" value="<?= htmlspecialchars($tab) ?>">
                     <div class="relative w-full max-w-2xl">
                         <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
-                        <input type="text" name="q" value="<?= htmlspecialchars($search) ?>" placeholder="Search by ID, name, email, affiliate ID, telegram or SubID..."
+                        <input type="text" name="q" value="<?= htmlspecialchars($search) ?>" placeholder="Search by ID, name, email, affiliate ID, or telegram..."
                             class="w-full text-sm pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all font-semibold text-gray-900 placeholder-gray-400">
                     </div>
                     <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs py-2.5 px-5 rounded-xl transition-all cursor-pointer">Search</button>
@@ -452,8 +446,6 @@ try {
                                     <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Name</th>
                                     <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Email</th>
                                     <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Telegram</th>
-                                    <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">SubID 1</th>
-                                    <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">SubID 2</th>
                                     <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Status</th>
                                     <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Balance</th>
                                     <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Withdrawn</th>
@@ -463,7 +455,7 @@ try {
                             </thead>
                             <tbody class="divide-y divide-gray-50">
                                 <?php if (empty($affiliates)): ?>
-                                    <tr><td colspan="11" class="text-xs text-gray-400 py-8 text-center font-semibold">No affiliates found.</td></tr>
+                                    <tr><td colspan="9" class="text-xs text-gray-400 py-8 text-center font-semibold">No affiliates found.</td></tr>
                                 <?php else: foreach ($affiliates as $a): ?>
                                     <tr class="hover:bg-gray-50/50">
                                         <td class="px-5 py-3 text-xs font-mono text-gray-500">#<?= $a['id'] ?></td>
@@ -480,8 +472,6 @@ try {
                                             </button>
                                             <?php endif; ?>
                                         </td>
-                                        <td class="px-5 py-3 text-[10px] font-mono text-gray-500 truncate max-w-[120px]" title="<?= htmlspecialchars($a['sub1'] ?? '') ?>"><?= !empty($a['sub1']) ? htmlspecialchars($a['sub1']) : '—' ?></td>
-                                        <td class="px-5 py-3 text-[10px] font-mono text-gray-500 truncate max-w-[120px]" title="<?= htmlspecialchars($a['sub2'] ?? '') ?>"><?= !empty($a['sub2']) ? htmlspecialchars($a['sub2']) : '—' ?></td>
                                         <td class="px-5 py-3">
                                             <form method="POST" onsubmit="return confirm('Change affiliate status?')">
                                                 <input type="hidden" name="action" value="change_status">

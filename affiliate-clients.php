@@ -20,6 +20,7 @@ $bonusType = getAffiliateBonusType($pdo, $affiliateId);
 
 // 2. Capture and sanitize incoming status filters
 $filter_status = isset($_GET['status']) ? trim($_GET['status']) : 'all';
+$search = isset($_GET['q']) ? trim($_GET['q']) : '';
 $current_date = date('Y-m-d');
 
 // 3. Pre-fetch Dynamic Row Counters for Dropdown Select Options (First Bracket)
@@ -76,6 +77,12 @@ switch ($filter_status) {
 
 $client_data = [];
 
+// 4b. Build dynamic search clause (email, name, user ID, Click ID or SubID 1/2)
+$search_condition = "";
+if (!empty($search)) {
+    $search_condition = " AND (u.`email` LIKE ? OR u.`name` LIKE ? OR u.`id` = ? OR u.`cid` LIKE ? OR c.`s1` LIKE ? OR c.`s2` LIKE ?)";
+}
+
 try {
     // 5. DATA CORE PIPELINE — Fetch users matching conversion matrices
     $query = "SELECT 
@@ -84,6 +91,8 @@ try {
                 u.`email` AS usr_email, 
                 u.`country` AS usr_country, 
                 u.`cid` AS usr_click_id, 
+                c.`s1` AS usr_sub1,
+                c.`s2` AS usr_sub2,
                 u.`plan` AS usr_plan_name, 
                 u.`credit` AS usr_credit, 
                 u.`status` AS usr_status,
@@ -91,11 +100,16 @@ try {
                 EXISTS(SELECT 1 FROM `transactions` t WHERE t.`uid` = u.`id` AND t.`dispute_status` = 1) AS has_chargeback
               FROM `users` u
               INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci
-              WHERE c.`affid` = ? $status_condition
+              WHERE c.`affid` = ? $status_condition $search_condition
               ORDER BY u.`created_at` DESC";
 
+    $params = [$affiliateId];
+    if (!empty($search)) {
+        array_push($params, "%$search%", "%$search%", $search, "%$search%", "%$search%", "%$search%");
+    }
+
     $stmt = $pdo->prepare($query);
-    $stmt->execute([$affiliateId]);
+    $stmt->execute($params);
     
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $has_active_plan = (!empty($row['usr_plan_name']) && strtoupper($row['usr_plan_name']) !== 'FREE TIER');
@@ -112,6 +126,8 @@ try {
             'email'       => $row['usr_email'],
             'country'     => !empty($row['usr_country']) ? strtoupper($row['usr_country']) : '—',
             'click_id'    => !empty($row['usr_click_id']) ? $row['usr_click_id'] : '—',
+            'sub1'        => !empty($row['usr_sub1']) ? $row['usr_sub1'] : '—',
+            'sub2'        => !empty($row['usr_sub2']) ? $row['usr_sub2'] : '—',
             'plan_name'   => $display_plan,
             'credit'      => (int)$row['usr_credit'],
             'joined_date' => !empty($row['usr_joined_date']) ? date('Y-m-d', strtotime($row['usr_joined_date'])) : '—',
@@ -139,21 +155,37 @@ try {
     <main class="max-w-[1650px] w-full mx-auto px-4 sm:px-6 pt-8 pb-16 grow space-y-6">
         
         <div class="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm">
-            <form method="GET" action="affiliate-clients" class="flex flex-col sm:flex-row gap-4 items-end justify-between w-full">
-                <div class="space-y-1.5 w-full sm:max-w-sm text-left">
-                    <label class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Subscription Status</label>
-                    <select name="status" class="w-full bg-slate-50 border border-gray-200 text-sm rounded-xl px-3 py-2.5 font-semibold text-slate-700 outline-none focus:border-indigo-500 transition-all">
-                        <option value="all" <?= $filter_status === 'all' ? 'selected' : '' ?>>All Clients (<?= $count_all ?>)</option>
-                        <option value="active" <?= $filter_status === 'active' ? 'selected' : '' ?>>Active Subscription (<?= $count_active ?>)</option>
-                        <option value="no_sub" <?= $filter_status === 'no_sub' ? 'selected' : '' ?>>No Subscription (<?= $count_no_sub ?>)</option>
-                        <option value="cancelled" <?= $filter_status === 'cancelled' ? 'selected' : '' ?>>Cancelled Subscription (<?= $count_cancelled ?>)</option>
-                        <option value="chargeback" <?= $filter_status === 'chargeback' ? 'selected' : '' ?>>Chargeback Subscription (<?= $count_chargeback ?>)</option>
-                    </select>
+            <form method="GET" action="affiliate-clients" class="flex flex-col lg:flex-row gap-4 items-end justify-between w-full">
+                <div class="flex flex-col sm:flex-row gap-4 items-end w-full lg:max-w-3xl">
+                    <div class="space-y-1.5 w-full sm:max-w-[220px] text-left">
+                        <label class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Subscription Status</label>
+                        <select name="status" class="w-full bg-slate-50 border border-gray-200 text-sm rounded-xl px-3 py-2.5 font-semibold text-slate-700 outline-none focus:border-indigo-500 transition-all">
+                            <option value="all" <?= $filter_status === 'all' ? 'selected' : '' ?>>All Clients (<?= $count_all ?>)</option>
+                            <option value="active" <?= $filter_status === 'active' ? 'selected' : '' ?>>Active Subscription (<?= $count_active ?>)</option>
+                            <option value="no_sub" <?= $filter_status === 'no_sub' ? 'selected' : '' ?>>No Subscription (<?= $count_no_sub ?>)</option>
+                            <option value="cancelled" <?= $filter_status === 'cancelled' ? 'selected' : '' ?>>Cancelled Subscription (<?= $count_cancelled ?>)</option>
+                            <option value="chargeback" <?= $filter_status === 'chargeback' ? 'selected' : '' ?>>Chargeback Subscription (<?= $count_chargeback ?>)</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-1.5 w-full sm:max-w-sm text-left">
+                        <label class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Search Clients</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                            <input type="text" name="q" value="<?= htmlspecialchars($search) ?>" placeholder="Search by name, email, ID, Click ID or SubID..."
+                                class="w-full text-sm pl-10 pr-4 py-2.5 bg-slate-50 border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 transition-all font-semibold text-slate-700 placeholder-gray-400">
+                        </div>
+                    </div>
                 </div>
 
-                <button type="submit" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm px-6 py-2.5 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-sm">
-                    <i class="fa-solid fa-filter text-sm"></i> Filter Accounts
-                </button>
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <button type="submit" class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm px-6 py-2.5 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-sm">
+                        <i class="fa-solid fa-magnifying-glass text-sm"></i> Search Clients
+                    </button>
+                    <?php if (!empty($search)): ?>
+                        <a href="affiliate-clients?status=<?= urlencode($filter_status) ?>" class="text-xs font-bold text-gray-500 hover:text-gray-900 px-2 whitespace-nowrap">Clear</a>
+                    <?php endif; ?>
+                </div>
             </form>
         </div>
 
@@ -172,6 +204,8 @@ try {
                             <th class="px-6 py-3.5 whitespace-nowrap">Email</th>
                             <th class="px-6 py-3.5 whitespace-nowrap">Country</th>
                             <th class="px-6 py-3.5 whitespace-nowrap">Click ID</th>
+                            <th class="px-6 py-3.5 whitespace-nowrap">SubID 1</th>
+                            <th class="px-6 py-3.5 whitespace-nowrap">SubID 2</th>
                             <th class="px-6 py-3.5 whitespace-nowrap">Plan Name</th>
                             <th class="px-6 py-3.5 whitespace-nowrap">Credit</th>
                             <th class="px-6 py-3.5 whitespace-nowrap">Joined Date</th>
@@ -181,7 +215,7 @@ try {
                     <tbody class="divide-y divide-gray-100 text-xs font-medium text-slate-700">
                         <?php if (empty($client_data)): ?>
                         <tr>
-                            <td colspan="9" class="px-6 py-12 text-center text-gray-400 font-semibold font-mono">
+                            <td colspan="11" class="px-6 py-12 text-center text-gray-400 font-semibold font-mono">
                                 <i class="fa-solid fa-users-slash text-2xl block mb-2 text-slate-300"></i>
                                 No customer accounts found matching selected criteria.
                             </td>
@@ -219,6 +253,12 @@ try {
                                 </td>
                                 <td class="px-6 py-4 font-mono text-gray-400 text-xs whitespace-nowrap select-all">
                                     <?= htmlspecialchars($client['click_id']) ?>
+                                </td>
+                                <td class="px-6 py-4 font-mono text-gray-500 text-xs whitespace-nowrap select-all">
+                                    <?= htmlspecialchars($client['sub1']) ?>
+                                </td>
+                                <td class="px-6 py-4 font-mono text-gray-500 text-xs whitespace-nowrap select-all">
+                                    <?= htmlspecialchars($client['sub2']) ?>
                                 </td>
                                 <td class="px-6 py-4 font-mono text-xs font-bold text-gray-700 whitespace-nowrap">
                                     <?= htmlspecialchars($client['plan_name']) ?>
