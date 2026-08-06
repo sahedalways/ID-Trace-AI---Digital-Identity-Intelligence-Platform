@@ -154,6 +154,131 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['form_action'] ?? '') === '
     exit;
 }
 
+// Handle force chargeback (Cancelled tab -> Chargeback tab, local DB only — no Stripe API call)
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['form_action'] ?? '') === 'force_chargeback') {
+    $fuserId = (int)($_POST['user_id'] ?? 0);
+
+    if ($fuserId <= 0) {
+        $_SESSION['flash_error'] = "Invalid user ID for force chargeback.";
+        header("Location: admin-clients?sub=cancelled");
+        exit;
+    }
+
+    try {
+        $fuStmt = $pdo->prepare("SELECT `id`, `cid`, `status` FROM `users` WHERE `id` = ? LIMIT 1");
+        $fuStmt->execute([$fuserId]);
+        $fuser = $fuStmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$fuser) {
+            $_SESSION['flash_error'] = "User not found.";
+            header("Location: admin-clients?sub=cancelled");
+            exit;
+        }
+
+        $dupCheck = $pdo->prepare("SELECT COUNT(*) FROM `transactions` WHERE `uid` = ? AND `dispute_status` = 1");
+        $dupCheck->execute([$fuserId]);
+        if ((int)$dupCheck->fetchColumn() > 0) {
+            $_SESSION['flash_error'] = "Customer #$fuserId is already marked as chargeback. No action taken.";
+            header("Location: admin-clients?sub=cancelled");
+            exit;
+        }
+
+        $pdo->beginTransaction();
+
+        // 1. Resolve affiliate attribution + the actual registration bonus recorded at signup
+        $affId = null;
+        $affCid = null;
+        $bonusDeduction = 0.00;
+        $planName = null;
+        $convTid = null;
+        $txRow = null;
+
+        $convStmt = $pdo->prepare("SELECT `affid`, `payout`, `tid`, `plan`, `cid` FROM `conversions` WHERE `uid` = ? AND `affid` IS NOT NULL ORDER BY `created_at` ASC, `id` ASC LIMIT 1");
+        $convStmt->execute([$fuserId]);
+        $conv = $convStmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($conv) {
+            $affId = (int)$conv['affid'];
+            $affCid = !empty($conv['cid']) ? $conv['cid'] : (!empty($fuser['cid']) ? $fuser['cid'] : null);
+            $bonusDeduction = (float)$conv['payout'];
+            $planName = $conv['plan'];
+            $convTid = $conv['tid'];
+        } elseif (!empty($fuser['cid'])) {
+            $clickStmt = $pdo->prepare("SELECT `affid` FROM `clicks` WHERE `cid` = CONVERT(? USING utf8mb4) COLLATE utf8mb4_unicode_ci LIMIT 1");
+            $clickStmt->execute([$fuser['cid']]);
+            $clickRow = $clickStmt->fetch(PDO::FETCH_ASSOC);
+            if ($clickRow) {
+                $affId = (int)$clickRow['affid'];
+                $affCid = $fuser['cid'];
+            }
+        }
+
+        if ($affId && $bonusDeduction <= 0) {
+            $bonusDeduction = getAffiliateBonusAmount($pdo, $affId);
+        }
+
+        // 2. Resolve the initial purchase transaction (prefer the one tied to the registration conversion)
+        if (!empty($convTid)) {
+            $txStmt = $pdo->prepare("SELECT `id`, `tid`, `plan`, `cid`, `status` FROM `transactions` WHERE `uid` = ? AND `tid` = ? AND `dispute_status` != 1 LIMIT 1");
+            $txStmt->execute([$fuserId, $convTid]);
+            $txRow = $txStmt->fetch(PDO::FETCH_ASSOC);
+        }
+        if (!$txRow) {
+            $txStmt2 = $pdo->prepare("SELECT `id`, `tid`, `plan`, `cid`, `status` FROM `transactions` WHERE `uid` = ? AND `dispute_status` != 1 AND `status` = 'succeeded' ORDER BY `created_at` ASC, `id` ASC LIMIT 1");
+            $txStmt2->execute([$fuserId]);
+            $txRow = $txStmt2->fetch(PDO::FETCH_ASSOC);
+        }
+
+        if ($txRow) {
+            if (empty($planName)) $planName = $txRow['plan'];
+            if (empty($affCid)) $affCid = $txRow['cid'];
+
+            $disputeAmount = 0.00;
+            if (!empty($txRow['plan'])) {
+                $pStmt = $pdo->prepare("SELECT `price` FROM `plans` WHERE `name` = ? LIMIT 1");
+                $pStmt->execute([$txRow['plan']]);
+                $planPrice = $pStmt->fetchColumn();
+                if ($planPrice !== false && $planPrice !== null) {
+                    $disputeAmount = (float)$planPrice;
+                }
+            }
+
+            // Flag as chargeback while keeping status 'succeeded' so the client still sees a normal (cancelled) view
+            $pdo->prepare("UPDATE `transactions` SET `dispute_status` = 1, `dispute_reason` = 'force_chargeback', `dispute_amount` = ? WHERE `id` = ?")
+                ->execute([$disputeAmount, (int)$txRow['id']]);
+        }
+
+        // 3. Keep the account inactive (already cancelled)
+        $pdo->prepare("UPDATE `users` SET `status` = 'inactive' WHERE `id` = ?")->execute([$fuserId]);
+
+        // 4. Claw back the affiliate registration bonus locally (never touches Stripe)
+        if ($affId && $bonusDeduction > 0) {
+            $pdo->prepare("UPDATE `affiliates` SET `balance` = `balance` - ? WHERE `id` = ?")->execute([$bonusDeduction, $affId]);
+
+            $fcTid = 'FCB-' . strtoupper(bin2hex(random_bytes(6)));
+            $pdo->prepare("INSERT INTO `conversions` (`tid`, `cid`, `uid`, `affid`, `plan`, `price`, `payout`, `note`, `fire_postback`, `created_at`) VALUES (?, ?, ?, ?, ?, 0.00, ?, 'Force Chargeback — Commission Deducted', 0, NOW())")
+                ->execute([$fcTid, $affCid, $fuserId, $affId, $planName, -$bonusDeduction]);
+        }
+
+        $pdo->commit();
+
+        $fmsg = "Customer #$fuserId successfully moved to Chargeback.";
+        if ($affId && $bonusDeduction > 0) {
+            $fmsg .= " Affiliate bonus of $" . number_format($bonusDeduction, 2) . " deducted from their balance.";
+        } elseif (!$affId) {
+            $fmsg .= " No affiliate linked — no commission deducted.";
+        }
+        $_SESSION['flash_success'] = $fmsg;
+    } catch (Exception $e) {
+        if ($pdo->inTransaction()) $pdo->rollBack();
+        error_log("Force Chargeback Error: " . $e->getMessage());
+        $_SESSION['flash_error'] = "Force chargeback failed: " . $e->getMessage();
+    }
+
+    header("Location: admin-clients?sub=cancelled");
+    exit;
+}
+
 function buildClientQs($overrides) {
     $q = array_merge($_GET, $overrides);
     return http_build_query($q);
@@ -265,13 +390,22 @@ function buildClientQs($overrides) {
                                             <button onclick="toggleDropdown(this)" class="inline-flex items-center gap-1 text-[10px] font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 px-2.5 py-1 rounded-md transition cursor-pointer">
                                                 <i class="fa-solid fa-ellipsis"></i> More
                                             </button>
-                                            <div class="hidden absolute right-0 z-50 mt-1 w-40 bg-white border border-gray-200 rounded-xl shadow-lg py-1.5 origin-top-right dropdown-menu">
+                                            <div class="hidden absolute right-0 z-50 mt-1 w-48 bg-white border border-gray-200 rounded-xl shadow-lg py-1.5 origin-top-right dropdown-menu">
                                                 <a href="admin-client-detail?id=<?= $c['id'] ?>" class="flex items-center gap-2 px-3.5 py-2 text-[11px] font-semibold text-gray-700 hover:bg-gray-50 transition">
                                                     <i class="fa-solid fa-eye text-[10px] text-blue-500"></i> View
                                                 </a>
                                                 <a href="admin-client-edit?id=<?= $c['id'] ?>" class="flex items-center gap-2 px-3.5 py-2 text-[11px] font-semibold text-gray-700 hover:bg-gray-50 transition">
                                                     <i class="fa-solid fa-pen text-[10px] text-amber-500"></i> Edit
                                                 </a>
+                                                <?php if ($subFilter === 'cancelled'): ?>
+                                                <form method="POST" onsubmit="return confirm('Force chargeback for customer #<?= (int)$c['id'] ?>? The affiliate bonus will be deducted from the affiliate\'s balance. This cannot be undone.');">
+                                                    <input type="hidden" name="form_action" value="force_chargeback">
+                                                    <input type="hidden" name="user_id" value="<?= (int)$c['id'] ?>">
+                                                    <button type="submit" class="w-full flex items-center gap-2 px-3.5 py-2 text-[11px] font-semibold text-red-600 hover:bg-red-50 transition cursor-pointer">
+                                                        <i class="fa-solid fa-ban text-[10px] text-red-500"></i> Force to Chargeback
+                                                    </button>
+                                                </form>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                     </td>
