@@ -101,11 +101,12 @@ try {
                 pt.`browser` AS pay_browser,
                 pt.`ip_address` AS pay_ip,
                 pt.`country` AS pay_country,
-                pt.`device` AS pay_device
+                pt.`device` AS pay_device,
+                pt.`user_agent` AS pay_ua
               FROM `users` u
               INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci
               LEFT JOIN (
-                  SELECT t1.uid, t1.browser, t1.ip_address, t1.country, t1.device
+                  SELECT t1.uid, t1.browser, t1.ip_address, t1.country, t1.device, t1.user_agent
                   FROM `transactions` t1
                   INNER JOIN (
                       SELECT uid, MAX(id) AS max_id FROM `transactions` GROUP BY uid
@@ -148,7 +149,8 @@ try {
             'pay_browser' => !empty($row['pay_browser']) ? $row['pay_browser'] : '—',
             'pay_ip'      => !empty($row['pay_ip']) ? $row['pay_ip'] : '—',
             'pay_country' => !empty($row['pay_country']) ? strtoupper($row['pay_country']) : '—',
-            'pay_device'  => !empty($row['pay_device']) ? $row['pay_device'] : '—'
+            'pay_device'  => !empty($row['pay_device']) ? $row['pay_device'] : '—',
+            'pay_ua'      => !empty($row['pay_ua']) ? $row['pay_ua'] : '—'
         ];
     }
 
@@ -226,6 +228,7 @@ try {
                             <th class="px-6 py-3.5 whitespace-nowrap">Pay IP</th>
                             <th class="px-6 py-3.5 whitespace-nowrap">Pay Country</th>
                             <th class="px-6 py-3.5 whitespace-nowrap">Pay Device</th>
+                            <th class="px-6 py-3.5 whitespace-nowrap">Pay UA</th>
                             <th class="px-6 py-3.5 whitespace-nowrap">Credit</th>
                             <th class="px-6 py-3.5 whitespace-nowrap">Joined Date</th>
                             <th class="px-6 py-3.5 text-right whitespace-nowrap">Action</th>
@@ -234,7 +237,7 @@ try {
                     <tbody class="divide-y divide-gray-100 text-xs font-medium text-slate-700">
                         <?php if (empty($client_data)): ?>
                         <tr>
-                            <td colspan="15" class="px-6 py-12 text-center text-gray-400 font-semibold font-mono">
+                            <td colspan="16" class="px-6 py-12 text-center text-gray-400 font-semibold font-mono">
                                 <i class="fa-solid fa-users-slash text-2xl block mb-2 text-slate-300"></i>
                                 No customer accounts found matching selected criteria.
                             </td>
@@ -299,6 +302,9 @@ try {
                                     <?php else: ?>
                                         <span class="text-xs text-gray-400">—</span>
                                     <?php endif; ?>
+                                </td>
+                                <td class="px-6 py-4 font-mono text-xs text-slate-500 max-w-[220px] truncate select-all" title="<?= htmlspecialchars($client['pay_ua']) ?>">
+                                    <?= htmlspecialchars($client['pay_ua']) ?>
                                 </td>
                                 <td class="px-6 py-4 font-mono font-bold text-slate-900 whitespace-nowrap">
                                     <?= number_format($client['credit']) ?>

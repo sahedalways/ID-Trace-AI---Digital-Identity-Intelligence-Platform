@@ -75,7 +75,7 @@ try {
                a.name as aff_name, a.email as aff_email, a.aid,
                t.dispute_status, t.dispute_amount,
                cl.s1 as sub1, cl.s2 as sub2,
-               pt.ip_address, pt.device, pt.browser, pt.pay_country
+               pt.ip_address, pt.device, pt.browser, pt.pay_country, pt.user_agent
         FROM `users` u
         LEFT JOIN (
             SELECT uid, MAX(affid) as affid
@@ -92,7 +92,7 @@ try {
             GROUP BY uid
         ) t ON t.uid = u.id
         LEFT JOIN (
-            SELECT t1.uid, t1.ip_address, t1.device, t1.browser, t1.country AS pay_country
+            SELECT t1.uid, t1.ip_address, t1.device, t1.browser, t1.country AS pay_country, t1.user_agent
             FROM `transactions` t1
             INNER JOIN (
                 SELECT uid, MAX(id) AS max_id FROM `transactions` GROUP BY uid
@@ -359,6 +359,7 @@ function buildClientQs($overrides) {
                                 <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Pay IP</th>
                                 <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Pay Country</th>
                                 <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Pay Device</th>
+                                <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Pay UA</th>
                                 <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Subscription</th>
                                 <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Joined</th>
                                 <th class="text-[10px] font-bold text-gray-400 uppercase tracking-wider px-5 py-3">Actions</th>
@@ -366,7 +367,7 @@ function buildClientQs($overrides) {
                         </thead>
                         <tbody class="divide-y divide-gray-50">
                             <?php if (empty($clients)): ?>
-                                <tr><td colspan="14" class="text-xs text-gray-400 py-8 text-center font-semibold">No customers found.</td></tr>
+                                <tr><td colspan="15" class="text-xs text-gray-400 py-8 text-center font-semibold">No customers found.</td></tr>
                             <?php else: foreach ($clients as $c): ?>
                                 <tr class="hover:bg-gray-50/50">
                                     <td class="px-5 py-3 text-xs font-mono text-gray-500">#<?= str_pad($c['id'], 3, '0', STR_PAD_LEFT) ?></td>
@@ -395,6 +396,7 @@ function buildClientQs($overrides) {
                                             <span class="text-[11px] text-gray-400">—</span>
                                         <?php endif; ?>
                                     </td>
+                                    <td class="px-5 py-3 text-[11px] font-mono text-gray-500 max-w-[220px] truncate select-all" title="<?= htmlspecialchars($c['user_agent'] ?? '') ?>"><?= !empty($c['user_agent']) ? htmlspecialchars($c['user_agent']) : '—' ?></td>
                                     <td class="px-5 py-3">
                                         <?php if ($c['dispute_status'] == 1): ?>
                                             <span class="inline-flex items-center text-[10px] font-bold bg-red-50 border border-red-100 text-red-700 px-2 py-0.5 rounded-md">Chargeback</span>
