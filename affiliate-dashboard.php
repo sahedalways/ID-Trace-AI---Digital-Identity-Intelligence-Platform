@@ -167,6 +167,7 @@ try {
 
         </div>
 
+        <?php if (!empty($user['referral_enabled'])): ?>
         <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm text-left space-y-4">
             <div class="space-y-1">
                 <h3 class="text-sm font-bold text-gray-900 flex items-center gap-1.5"><i class="fa-solid fa-link text-indigo-600 text-base"></i> Your Unique Promotional Link Anchor</h3>
@@ -188,10 +189,12 @@ try {
                     class="flex-1 bg-slate-50 border border-gray-200 rounded-lg px-3 py-2 font-mono text-xs text-slate-700 outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 transition-all">
             </div>
         </div>
+        <?php endif; ?>
 
     </main>
 
     <script>
+        <?php if (!empty($user['referral_enabled'])): ?>
         const baseRefLink = "<?= htmlspecialchars($referralLink) ?>";
         const refLinkInput = document.getElementById("refLinkInput");
         const s1Input = document.getElementById("s1Input");
@@ -216,6 +219,7 @@ try {
                 copyBtn.style.background = "#111827";
             }, 2500);
         }
+        <?php endif; ?>
 
         // Dashboard Stats Filter
         function filterStats(filter) {

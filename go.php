@@ -21,15 +21,26 @@ $affiliateId = 0;
 
 try {
     // 2. Look up real system affiliate configuration matching structural alphanumeric values
-    $stmt = $pdo->prepare("SELECT `id` FROM `affiliates` WHERE `aid` = ? AND `status` = 'active' LIMIT 1");
+    $stmt = $pdo->prepare("SELECT `id`, `referral_enabled` FROM `affiliates` WHERE `aid` = ? AND `status` = 'active' LIMIT 1");
     $stmt->execute([$raw_aid]);
-    $affiliateId = (int)$stmt->fetchColumn();
+    $affRow = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($affRow) {
+        $affiliateId = (int)$affRow['id'];
+        $referralEnabled = (int)($affRow['referral_enabled'] ?? 1) === 1;
+    }
 } catch (PDOException $e) {
     error_log("Affiliate Verification Node Intercept Error: " . $e->getMessage());
 }
 
 // Fallback protection: Reject traffic routing loops if token entry is unauthorized or missing
 if ($affiliateId <= 0) {
+    header("Location: index");
+    exit;
+}
+
+// Referral deactivation guard: If admin disabled referrals for this affiliate,
+// skip click tracking entirely and send visitors straight to the index page.
+if (!$referralEnabled) {
     header("Location: index");
     exit;
 }

@@ -53,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $experience_level = trim($_POST['experience_level'] ?? '');
         $traffic_source = trim($_POST['traffic_source'] ?? '');
         $past_experience = trim($_POST['past_experience'] ?? '');
+        $referral_enabled = isset($_POST['referral_enabled']) ? 1 : 0;
 
         if (empty($name) || empty($email)) {
             $error_msg = "Name and email are required.";
@@ -64,8 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($checkStmt->fetch()) {
                 $error_msg = "Email address is already in use by another affiliate.";
             } else {
-                $upStmt = $pdo->prepare("UPDATE `affiliates` SET `name` = ?, `email` = ?, `mobile` = ?, `country` = ?, `status` = ?, `contact` = ?, `experience_level` = ?, `traffic_source` = ?, `past_experience` = ? WHERE `id` = ?");
-                $upStmt->execute([$name, $email, $mobile, $country, $status, $contact, $experience_level, $traffic_source, $past_experience, $affId]);
+                $upStmt = $pdo->prepare("UPDATE `affiliates` SET `name` = ?, `email` = ?, `mobile` = ?, `country` = ?, `status` = ?, `contact` = ?, `experience_level` = ?, `traffic_source` = ?, `past_experience` = ?, `referral_enabled` = ? WHERE `id` = ?");
+                $upStmt->execute([$name, $email, $mobile, $country, $status, $contact, $experience_level, $traffic_source, $past_experience, $referral_enabled, $affId]);
                 if ($status === 'rejected' && $affiliate['status'] !== 'rejected') {
                     @sendRejectionEmail($email, $name);
                 }
@@ -247,6 +248,19 @@ $methodLabels = [
                             <input type="text" value="<?= htmlspecialchars($affiliate['aid']) ?>" readonly
                                 class="w-full text-sm px-4 py-2.5 bg-gray-100 border border-gray-200 rounded-xl font-mono font-bold text-gray-500 cursor-not-allowed">
                         </div>
+                    </div>
+
+                    <div class="flex items-center justify-between gap-4 p-4 bg-slate-50 border border-gray-200 rounded-xl">
+                        <div>
+                            <p class="text-xs font-bold text-gray-900 flex items-center gap-1.5">
+                                <i class="fa-solid fa-share-nodes text-indigo-600 text-sm"></i> Referral Enabled
+                            </p>
+                            <p class="text-[11px] text-gray-400 font-medium mt-0.5">When enabled, the affiliate sees their unique promotional link in the dashboard and go.php tracking links record clicks. When disabled, the link section is hidden and tracking links are deactivated.</p>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                            <input type="checkbox" name="referral_enabled" value="1" <?= ($affiliate['referral_enabled'] ?? 1) ? 'checked' : '' ?> class="sr-only peer">
+                            <div class="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-indigo-600"></div>
+                        </label>
                     </div>
 
                     <div>
