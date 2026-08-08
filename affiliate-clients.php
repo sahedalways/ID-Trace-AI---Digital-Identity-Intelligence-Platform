@@ -97,9 +97,20 @@ try {
                 u.`credit` AS usr_credit, 
                 u.`status` AS usr_status,
                 u.`created_at` AS usr_joined_date,
-                EXISTS(SELECT 1 FROM `transactions` t WHERE t.`uid` = u.`id` AND t.`dispute_status` = 1) AS has_chargeback
+                EXISTS(SELECT 1 FROM `transactions` t WHERE t.`uid` = u.`id` AND t.`dispute_status` = 1) AS has_chargeback,
+                pt.`browser` AS pay_browser,
+                pt.`ip_address` AS pay_ip,
+                pt.`country` AS pay_country,
+                pt.`device` AS pay_device
               FROM `users` u
               INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci
+              LEFT JOIN (
+                  SELECT t1.uid, t1.browser, t1.ip_address, t1.country, t1.device
+                  FROM `transactions` t1
+                  INNER JOIN (
+                      SELECT uid, MAX(id) AS max_id FROM `transactions` GROUP BY uid
+                  ) t2 ON t1.id = t2.max_id
+              ) pt ON pt.uid = u.`id`
               WHERE c.`affid` = ? $status_condition $search_condition
               ORDER BY u.`created_at` DESC";
 
@@ -133,7 +144,11 @@ try {
             'joined_date' => !empty($row['usr_joined_date']) ? date('Y-m-d', strtotime($row['usr_joined_date'])) : '—',
             'is_active'   => $has_active_plan,
             'is_chargeback' => (int)$row['has_chargeback'] === 1,
-            'is_cancelled'  => (!$has_active_plan && (int)$row['has_chargeback'] === 0 && ($row['usr_status'] ?? '') === 'inactive')
+            'is_cancelled'  => (!$has_active_plan && (int)$row['has_chargeback'] === 0 && ($row['usr_status'] ?? '') === 'inactive'),
+            'pay_browser' => !empty($row['pay_browser']) ? $row['pay_browser'] : '—',
+            'pay_ip'      => !empty($row['pay_ip']) ? $row['pay_ip'] : '—',
+            'pay_country' => !empty($row['pay_country']) ? strtoupper($row['pay_country']) : '—',
+            'pay_device'  => !empty($row['pay_device']) ? $row['pay_device'] : '—'
         ];
     }
 
@@ -207,6 +222,10 @@ try {
                             <th class="px-6 py-3.5 whitespace-nowrap">SubID 1</th>
                             <th class="px-6 py-3.5 whitespace-nowrap">SubID 2</th>
                             <th class="px-6 py-3.5 whitespace-nowrap">Plan Name</th>
+                            <th class="px-6 py-3.5 whitespace-nowrap">Pay Browser</th>
+                            <th class="px-6 py-3.5 whitespace-nowrap">Pay IP</th>
+                            <th class="px-6 py-3.5 whitespace-nowrap">Pay Country</th>
+                            <th class="px-6 py-3.5 whitespace-nowrap">Pay Device</th>
                             <th class="px-6 py-3.5 whitespace-nowrap">Credit</th>
                             <th class="px-6 py-3.5 whitespace-nowrap">Joined Date</th>
                             <th class="px-6 py-3.5 text-right whitespace-nowrap">Action</th>
@@ -215,7 +234,7 @@ try {
                     <tbody class="divide-y divide-gray-100 text-xs font-medium text-slate-700">
                         <?php if (empty($client_data)): ?>
                         <tr>
-                            <td colspan="11" class="px-6 py-12 text-center text-gray-400 font-semibold font-mono">
+                            <td colspan="15" class="px-6 py-12 text-center text-gray-400 font-semibold font-mono">
                                 <i class="fa-solid fa-users-slash text-2xl block mb-2 text-slate-300"></i>
                                 No customer accounts found matching selected criteria.
                             </td>
@@ -262,6 +281,24 @@ try {
                                 </td>
                                 <td class="px-6 py-4 font-mono text-xs font-bold text-gray-700 whitespace-nowrap">
                                     <?= htmlspecialchars($client['plan_name']) ?>
+                                </td>
+                                <td class="px-6 py-4 text-xs font-semibold text-slate-600 whitespace-nowrap">
+                                    <?= htmlspecialchars($client['pay_browser']) ?>
+                                </td>
+                                <td class="px-6 py-4 font-mono text-xs text-slate-500 whitespace-nowrap select-all">
+                                    <?= htmlspecialchars($client['pay_ip']) ?>
+                                </td>
+                                <td class="px-6 py-4 font-bold uppercase text-gray-500 whitespace-nowrap">
+                                    <?= htmlspecialchars($client['pay_country']) ?>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <?php if ($client['pay_device'] !== '—'): ?>
+                                        <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded <?= $client['pay_device'] === 'Mobile' ? 'bg-amber-50 text-amber-700 border border-amber-100' : ($client['pay_device'] === 'Tablet' ? 'bg-sky-50 text-sky-700 border border-sky-100' : 'bg-slate-100 text-slate-600 border border-slate-200') ?>">
+                                            <?= htmlspecialchars($client['pay_device']) ?>
+                                        </span>
+                                    <?php else: ?>
+                                        <span class="text-xs text-gray-400">—</span>
+                                    <?php endif; ?>
                                 </td>
                                 <td class="px-6 py-4 font-mono font-bold text-slate-900 whitespace-nowrap">
                                     <?= number_format($client['credit']) ?>

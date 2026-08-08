@@ -26,6 +26,12 @@ $country         = $_GET['c_country'] ?? '';
 $street_address  = $_GET['c_street'] ?? '';
 $zip_code        = $_GET['c_zip'] ?? '';
 
+// Capture payment fingerprint (browser, IP, device, user agent) at checkout time
+$pay_ua      = $_SERVER['HTTP_USER_AGENT'] ?? '';
+$pay_ip      = getClientIp();
+list($pay_os, $pay_browser) = parseUserAgentPlatform($pay_ua);
+$pay_device  = detectDeviceType($pay_ua);
+
 $api_key = STRIPE_TEST_SECRET_KEY;
 $error_message = null;
 
@@ -189,7 +195,7 @@ try {
     }
 
     // Insert transaction row parameters allocation matrix (with charge_id for refund/dispute webhook tracking)
-    $tx_query = "INSERT INTO `transactions` (`tid`, `cid`, `stripe_invoice_id`, `stripe_charge_id`, `uid`, `plan`, `cardholder_name`, `country`, `street`, `zip`, `status`, `created_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'succeeded', NOW())";
+    $tx_query = "INSERT INTO `transactions` (`tid`, `cid`, `stripe_invoice_id`, `stripe_charge_id`, `uid`, `plan`, `cardholder_name`, `country`, `street`, `zip`, `ip_address`, `device`, `browser`, `user_agent`, `status`, `created_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'succeeded', NOW())";
     $pdo->prepare($tx_query)->execute([
         $unique_tid, 
         $affiliate_cid, 
@@ -200,7 +206,11 @@ try {
         $cardholder_name, 
         $country, 
         $street_address, 
-        $zip_code
+        $zip_code,
+        $pay_ip,
+        $pay_device,
+        $pay_browser,
+        $pay_ua
     ]);
     $transaction_id = $pdo->lastInsertId();
 
