@@ -139,6 +139,9 @@ if (isset($_GET['action'])) {
                     $_SESSION['user_avatar']    = $user['avatar'];
                     $_SESSION['user_country']   = $user['country'];
 
+                    // Record login fingerprint (IP, device, browser, user agent)
+                    recordLoginSession($pdo, $user['id']);
+
                     unset($_SESSION['auth_pending_email']);
                     echo json_encode(['status' => 'success', 'redirect' => $final_redirect_target]);
                 }
@@ -200,6 +203,9 @@ if (isset($_GET['action'])) {
             $_SESSION['user_name']      = $name;
             $_SESSION['user_avatar']    = null;
             $_SESSION['user_country']   = $country;
+
+            // Record login fingerprint (IP, device, browser, user agent)
+            recordLoginSession($pdo, $user_id);
 
             // Cleanup all auth registration and affiliate remnants out of server-side state memory
             unset($_SESSION['auth_signup_verified_email'], $_SESSION['auth_pending_email'], $_SESSION['active_cid']);

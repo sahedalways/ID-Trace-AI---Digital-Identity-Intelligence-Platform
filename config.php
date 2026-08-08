@@ -166,3 +166,90 @@ function fireBackgroundWorker($vid)
         exec($cmd . " > /dev/null 2>&1 &");
     }
 }
+
+// 9. Client Device / Session Fingerprint Helpers
+/**
+ * Resolve the real client IP address, trusting Cloudflare and reverse proxy headers.
+ */
+function getClientIp() {
+    if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+        return trim($_SERVER['HTTP_CF_CONNECTING_IP']);
+    }
+    if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ipList = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        return trim($ipList[0]);
+    }
+    return $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+}
+
+/**
+ * Parse a User-Agent string into [Operating System, Browser].
+ */
+function parseUserAgentPlatform($ua) {
+    $os = 'Unknown OS';
+    $browser = 'Unknown Browser';
+
+    // A. Detect Operating System Profile
+    $osMatrix = [
+        '/windows nt 10/i'      => 'Windows 10/11',
+        '/windows nt 6.3/i'     => 'Windows 8.1',
+        '/windows nt 6.2/i'     => 'Windows 8',
+        '/windows nt 6.1/i'     => 'Windows 7',
+        '/macintosh|mac os x/i' => 'Mac OS X',
+        '/iphone|ipad|ipod/i'   => 'iOS',
+        '/android/i'            => 'Android',
+        '/linux/i'              => 'Linux',
+        '/ubuntu/i'             => 'Ubuntu'
+    ];
+    foreach ($osMatrix as $regex => $title) {
+        if (preg_match($regex, $ua)) {
+            $os = $title;
+            break;
+        }
+    }
+
+    // B. Detect Browser Application Identity
+    // Reordered execution order since Chrome includes Safari signatures inside its signature format
+    if (preg_match('/edge|edg/i', $ua)) {
+        $browser = 'Edge';
+    } elseif (preg_match('/opr/i', $ua)) {
+        $browser = 'Opera';
+    } elseif (preg_match('/chrome/i', $ua)) {
+        $browser = 'Chrome';
+    } elseif (preg_match('/firefox/i', $ua)) {
+        $browser = 'Firefox';
+    } elseif (preg_match('/safari/i', $ua)) {
+        $browser = 'Safari';
+    } elseif (preg_match('/msie|trident/i', $ua)) {
+        $browser = 'Internet Explorer';
+    }
+
+    return [$os, $browser];
+}
+
+/**
+ * Classify the device form factor from a User-Agent string.
+ */
+function detectDeviceType($ua) {
+    if (preg_match('/ipad|tablet|playbook|silk/i', $ua)) return 'Tablet';
+    if (preg_match('/iphone|ipod|android.*mobile|mobile|opera mini|windows phone/i', $ua)) return 'Mobile';
+    return 'Desktop';
+}
+
+/**
+ * Persist a login fingerprint row (IP, device, browser, user agent) for a client.
+ * Failures are logged silently so the authentication flow is never blocked.
+ */
+function recordLoginSession($pdo, $userId) {
+    try {
+        $ua      = $_SERVER['HTTP_USER_AGENT'] ?? '';
+        $ip      = getClientIp();
+        list($os, $browser) = parseUserAgentPlatform($ua);
+        $device  = detectDeviceType($ua);
+
+        $stmt = $pdo->prepare("INSERT INTO `login_sessions` (`uid`, `ip_address`, `device`, `browser`, `user_agent`, `created_at`) VALUES (?, ?, ?, ?, ?, NOW())");
+        $stmt->execute([(int)$userId, $ip, $device, $browser, $ua]);
+    } catch (\PDOException $e) {
+        error_log("Login Session Recording Error: " . $e->getMessage());
+    }
+}

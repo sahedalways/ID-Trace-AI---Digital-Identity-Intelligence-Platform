@@ -17,6 +17,20 @@ if (!$clientId) {
     exit;
 }
 
+// Delete a single login session fingerprint row for this customer
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete_login_session') {
+    $sessionId = (int)($_POST['session_id'] ?? 0);
+    if ($sessionId) {
+        try {
+            $pdo->prepare("DELETE FROM `login_sessions` WHERE `id` = ? AND `uid` = ?")->execute([$sessionId, $clientId]);
+        } catch (PDOException $e) {
+            error_log("Delete Login Session Error: " . $e->getMessage());
+        }
+    }
+    header("Location: admin-client-detail?id=" . $clientId . "&deleted=1");
+    exit;
+}
+
 try {
     // 1. FETCH GENERAL CORE INFO (Users + clicks mapping for SubIDs)
     $u_query = "SELECT 
@@ -123,6 +137,21 @@ try {
 } catch (PDOException $e) {
     error_log("Admin Client Detail Error: " . $e->getMessage());
     die("Error loading customer details.");
+}
+
+// 4. FETCH LOGIN SESSION FINGERPRINTS (IP, device, browser, user agent)
+$loginSessions = [];
+try {
+    $ls_query = "SELECT `id`, `ip_address`, `device`, `browser`, `user_agent`, `created_at`
+                 FROM `login_sessions`
+                 WHERE `uid` = ?
+                 ORDER BY `created_at` DESC, `id` DESC";
+    $ls_stmt = $pdo->prepare($ls_query);
+    $ls_stmt->execute([$clientId]);
+    $loginSessions = $ls_stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    error_log("Fetch Login Sessions Error: " . $e->getMessage());
+    $loginSessions = [];
 }
 
 // Clean fallback indicators for missing parameters
@@ -348,6 +377,64 @@ $sub2_display = !empty($client['sub2']) ? htmlspecialchars($client['sub2']) : '�
                             </a>
                         </div>
                         <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm text-left space-y-5">
+                <h2 class="text-sm font-black text-gray-900 uppercase tracking-wider border-b border-gray-100 pb-3">
+                    Sign-in Activity
+                    <span class="ml-2 text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-50 border border-indigo-100 text-indigo-600">IP · Device · Browser · UA</span>
+                </h2>
+
+                <?php if (isset($_GET['deleted'])): ?>
+                    <div class="flex items-center gap-2 text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-xl px-4 py-3">
+                        <i class="fa-solid fa-check text-[10px]"></i> Login session record deleted.
+                    </div>
+                <?php endif; ?>
+
+                <?php if (empty($loginSessions)): ?>
+                    <div class="text-center py-12 text-gray-400 font-semibold font-mono text-xs">
+                        No sign-in fingerprints captured for this customer yet. Records are generated automatically on each successful login.
+                    </div>
+                <?php else: ?>
+                    <div class="overflow-x-auto w-full">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-gray-100 text-[10px] font-bold uppercase tracking-wider text-gray-400 bg-slate-50/20">
+                                    <th class="px-4 py-3">Login Time</th>
+                                    <th class="px-4 py-3">IP Address</th>
+                                    <th class="px-4 py-3">Device</th>
+                                    <th class="px-4 py-3">Browser</th>
+                                    <th class="px-4 py-3">User Agent</th>
+                                    <th class="px-4 py-3 text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100 text-xs font-medium text-slate-700">
+                                <?php foreach ($loginSessions as $ls): ?>
+                                <tr class="hover:bg-slate-50/50 transition-colors">
+                                    <td class="px-4 py-3.5 font-mono text-slate-500 whitespace-nowrap"><?= date('Y-m-d H:i:s', strtotime($ls['created_at'])) ?></td>
+                                    <td class="px-4 py-3.5 font-mono font-bold text-slate-800 whitespace-nowrap"><?= htmlspecialchars($ls['ip_address'] ?: '—') ?></td>
+                                    <td class="px-4 py-3.5 whitespace-nowrap">
+                                        <span class="inline-block font-mono text-[10px] font-bold px-2 py-0.5 rounded <?= $ls['device'] === 'Mobile' ? 'bg-amber-50 border border-amber-100 text-amber-700' : ($ls['device'] === 'Tablet' ? 'bg-sky-50 border border-sky-100 text-sky-700' : 'bg-slate-100 border border-slate-200 text-slate-600') ?>">
+                                            <?= htmlspecialchars($ls['device'] ?: '—') ?>
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3.5 font-bold text-gray-600 whitespace-nowrap"><?= htmlspecialchars($ls['browser'] ?: '—') ?></td>
+                                    <td class="px-4 py-3.5 font-mono text-slate-500 max-w-[260px] truncate" title="<?= htmlspecialchars($ls['user_agent']) ?>"><?= htmlspecialchars($ls['user_agent'] ?: '—') ?></td>
+                                    <td class="px-4 py-3.5 text-right whitespace-nowrap">
+                                        <form method="post" action="admin-client-detail?id=<?= (int)$client['usr_id'] ?>" onsubmit="return confirm('Delete this login session record permanently?');">
+                                            <input type="hidden" name="action" value="delete_login_session">
+                                            <input type="hidden" name="session_id" value="<?= (int)$ls['id'] ?>">
+                                            <button type="submit" class="px-2.5 py-1.5 rounded-lg border border-red-200 text-red-500 hover:bg-red-50 hover:text-red-600 transition-all shadow-2xs cursor-pointer" title="Delete this login session">
+                                                <i class="fa-solid fa-trash-can text-[11px]"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
                     </div>
                 <?php endif; ?>
             </div>

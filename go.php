@@ -53,55 +53,7 @@ $referrer = $_SERVER['HTTP_REFERER'] ?? null;
 $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
 
 // 4. Programmatic User Agent Parser Matrix (OS & Browser Detection Logic)
-function parseUserAgentPlatform($ua) {
-    $os = 'Unknown OS';
-    $browser = 'Unknown Browser';
-
-    // A. Detect Operating System Profile
-    $osMatrix = [
-        '/windows nt 10/i'      => 'Windows 10/11',
-        '/windows nt 6.3/i'     => 'Windows 8.1',
-        '/windows nt 6.2/i'     => 'Windows 8',
-        '/windows nt 6.1/i'     => 'Windows 7',
-        '/macintosh|mac os x/i' => 'Mac OS X',
-        '/iphone|ipad|ipod/i'   => 'iOS',
-        '/android/i'            => 'Android',
-        '/linux/i'              => 'Linux',
-        '/ubuntu/i'             => 'Ubuntu'
-    ];
-    foreach ($osMatrix as $regex => $title) {
-        if (preg_match($regex, $ua)) {
-            $os = $title;
-            break;
-        }
-    }
-
-    // B. Detect Browser Application Identity
-    $browserMatrix = [
-        '/chrome/i'    => 'Chrome',
-        '/firefox/i'   => 'Firefox',
-        '/safari/i'    => 'Safari',
-        '/edge|edg/i'  => 'Edge',
-        '/opera|opr/i' => 'Opera',
-        '/msie|trident/i' => 'Internet Explorer'
-    ];
-    
-    // Reordered execution order since Chrome includes Safari signatures inside its signature format
-    if (preg_match('/edge|edg/i', $ua)) {
-        $browser = 'Edge';
-    } elseif (preg_match('/opr/i', $ua)) {
-        $browser = 'Opera';
-    } elseif (preg_match('/chrome/i', $ua)) {
-        $browser = 'Chrome';
-    } elseif (preg_match('/firefox/i', $ua)) {
-        $browser = 'Firefox';
-    } elseif (preg_match('/safari/i', $ua)) {
-        $browser = 'Safari';
-    }
-
-    return [$os, $browser];
-}
-
+// NOTE: parseUserAgentPlatform() lives in config.php
 list($detectedOs, $detectedBrowser) = parseUserAgentPlatform($userAgent);
 
 // 5. Generate Unique 16-Digit Alphanumeric Click Transaction ID Matrix Token (cid)

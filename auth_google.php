@@ -130,6 +130,9 @@ if (isset($_GET['code'])) {
         $_SESSION['user_avatar']    = $avatar;
         $_SESSION['user_country']   = $country;
 
+        // Record login fingerprint (IP, device, browser, user agent)
+        recordLoginSession($pdo, $user_id);
+
         // Redirect the user straight into the dynamic absolute landing location safely
         header('Location: ' . BASE_URL . ltrim($return_path, '/'));
         exit;
