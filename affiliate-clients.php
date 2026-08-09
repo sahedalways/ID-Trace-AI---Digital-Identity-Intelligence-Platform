@@ -207,6 +207,7 @@ try {
         
         <div class="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm">
             <form method="GET" action="affiliate-clients" class="flex flex-col lg:flex-row gap-4 items-end justify-between w-full">
+                <input type="hidden" name="date_range" value="<?= htmlspecialchars($filter_date) ?>">
                 <div class="flex flex-col sm:flex-row gap-4 items-end w-full lg:max-w-3xl">
                     <div class="space-y-1.5 w-full sm:max-w-[220px] text-left">
                         <label class="text-xs font-extrabold text-gray-400 uppercase tracking-wider">Subscription Status</label>
