@@ -147,7 +147,7 @@ try {
     $totalNoSub = (int)$pdo->query("SELECT COUNT(*) FROM `users` u WHERE (u.plan IS NULL OR u.plan = '' OR u.plan = 'FREE TIER') AND u.status != 'inactive'" . $dateCondAgg)->fetchColumn();
     $totalCancelled = (int)$pdo->query("SELECT COUNT(*) FROM `users` u WHERE u.status = 'inactive' AND NOT EXISTS (SELECT 1 FROM `transactions` tx WHERE tx.uid = u.id AND tx.dispute_status = 1)" . $dateCondAgg)->fetchColumn();
     $totalChargeback = (int)$pdo->query("SELECT COUNT(DISTINCT u.id) FROM `users` u INNER JOIN `transactions` tx ON tx.uid = u.id WHERE tx.dispute_status = 1" . $dateCondAgg)->fetchColumn();
-    $totalUsers = (int)$pdo->query("SELECT COUNT(*) FROM `users` u" . $dateCondAgg)->fetchColumn();
+    $totalUsers = (int)$pdo->query("SELECT COUNT(*) FROM `users` u WHERE 1=1" . $dateCondAgg)->fetchColumn();
 
 } catch (PDOException $e) {
     error_log("Admin Clients Error: " . $e->getMessage());
