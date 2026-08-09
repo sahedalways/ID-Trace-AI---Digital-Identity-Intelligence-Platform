@@ -37,8 +37,23 @@ $out['users_today'] = q($pdo, "SELECT COUNT(*) AS c FROM `users` WHERE DATE(crea
 $out['users_yesterday'] = q($pdo, "SELECT COUNT(*) AS c FROM `users` WHERE DATE(created_at) = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)");
 $out['users_last7'] = q($pdo, "SELECT DATE(created_at) AS d, COUNT(*) AS c FROM `users` WHERE created_at >= DATE_SUB(CURRENT_DATE(), INTERVAL 7 DAY) GROUP BY DATE(created_at) ORDER BY d");
 $out['affiliates'] = q($pdo, "SELECT id, aid, name, email, status FROM `affiliates` ORDER BY id");
-$out['conv_per_aff'] = q($pdo, "SELECT affid, COUNT(DISTINCT uid) AS uids, COUNT(*) AS rows FROM `conversions` WHERE affid IS NOT NULL GROUP BY affid ORDER BY affid");
-$out['click_per_aff'] = q($pdo, "SELECT affid, COUNT(*) AS rows FROM `clicks` WHERE affid IS NOT NULL GROUP BY affid ORDER BY affid");
+$out['conv_per_aff'] = q($pdo, "SELECT affid, COUNT(DISTINCT uid) AS uids, COUNT(*) AS cnt FROM `conversions` WHERE affid IS NOT NULL GROUP BY affid ORDER BY affid");
+$out['click_per_aff'] = q($pdo, "SELECT affid, COUNT(*) AS cnt FROM `clicks` WHERE affid IS NOT NULL GROUP BY affid ORDER BY affid");
+
+$attribution = "(EXISTS (SELECT 1 FROM `conversions` cv WHERE cv.`uid` = u.`id` AND cv.`affid` = ?)
+        OR EXISTS (SELECT 1 FROM `clicks` cl WHERE cl.`affid` = ? AND CONVERT(u.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci = CONVERT(cl.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci))";
+foreach ([6,10,11,12,14,15,17,19,20,21,22,24,25,26,28] as $aid) {
+    $s = $pdo->prepare("SELECT COUNT(DISTINCT u.`id`) AS cnt FROM `users` u WHERE $attribution");
+    $s->execute([$aid, $aid]);
+    $cnt = (int)$s->fetchColumn();
+    $names = [];
+    if ($cnt > 0 && $cnt <= 20) {
+        $s2 = $pdo->prepare("SELECT u.`id`, u.`email`, u.`plan` FROM `users` u WHERE $attribution ORDER BY u.`id` DESC");
+        $s2->execute([$aid, $aid]);
+        $names = $s2->fetchAll(PDO::FETCH_ASSOC);
+    }
+    $out['aff_clients']['id_' . $aid] = ['cnt' => $cnt, 'clients' => $names];
+}
 $out['target_convs'] = qp($pdo, "SELECT c.uid, c.affid, c.plan, c.tid, u.cid, u.email, u.created_at FROM `conversions` c LEFT JOIN `users` u ON u.id = c.uid WHERE c.uid IN (1336,1337,1338,1341,1348) ORDER BY c.uid", []);
 $out['target_clicks'] = q($pdo, "SELECT cid, affid, s1, s2, created_at FROM `clicks` WHERE cid IN (SELECT cid FROM `users` WHERE id IN (1336,1337,1338,1341,1348) AND cid IS NOT NULL) ORDER BY created_at DESC");
 $out['target_users'] = qp($pdo, "SELECT id, email, cid, created_at FROM `users` WHERE id IN (1336,1337,1338,1341,1348)", []);
