@@ -52,30 +52,34 @@ switch ($filter_date) {
 }
 
 // 3. Pre-fetch Dynamic Row Counters for Dropdown Select Options (First Bracket)
+// Attribution: a client belongs to an affiliate when they have a conversion linked to
+// that affiliate, OR when their tracking click id matches a click owned by that affiliate.
+$attribution = "(EXISTS (SELECT 1 FROM `conversions` cv WHERE cv.`uid` = u.`id` AND cv.`affid` = ?)
+        OR EXISTS (SELECT 1 FROM `clicks` cl WHERE cl.`affid` = ? AND CONVERT(u.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci = CONVERT(cl.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci))";
 try {
     // Total referred accounts count
-    $c_all = $pdo->prepare("SELECT COUNT(*) FROM `users` u INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci WHERE c.`affid` = ? $date_condition");
-    $c_all->execute([$affiliateId]);
+    $c_all = $pdo->prepare("SELECT COUNT(DISTINCT u.`id`) FROM `users` u WHERE $attribution $date_condition");
+    $c_all->execute([$affiliateId, $affiliateId]);
     $count_all = (int)$c_all->fetchColumn();
 
     // Active subscription count
-    $c_act = $pdo->prepare("SELECT COUNT(*) FROM `users` u INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci WHERE c.`affid` = ? AND u.`plan` IS NOT NULL AND u.`plan` != '' AND u.`plan` != 'FREE TIER' $date_condition");
-    $c_act->execute([$affiliateId]);
+    $c_act = $pdo->prepare("SELECT COUNT(DISTINCT u.`id`) FROM `users` u WHERE $attribution AND u.`plan` IS NOT NULL AND u.`plan` != '' AND u.`plan` != 'FREE TIER' $date_condition");
+    $c_act->execute([$affiliateId, $affiliateId]);
     $count_active = (int)$c_act->fetchColumn();
 
     // No subscription count
-    $c_nos = $pdo->prepare("SELECT COUNT(*) FROM `users` u INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci WHERE c.`affid` = ? AND (u.`plan` IS NULL OR u.`plan` = '' OR u.`plan` = 'FREE TIER') AND u.`status` != 'inactive' $date_condition");
-    $c_nos->execute([$affiliateId]);
+    $c_nos = $pdo->prepare("SELECT COUNT(DISTINCT u.`id`) FROM `users` u WHERE $attribution AND (u.`plan` IS NULL OR u.`plan` = '' OR u.`plan` = 'FREE TIER') AND u.`status` != 'inactive' $date_condition");
+    $c_nos->execute([$affiliateId, $affiliateId]);
     $count_no_sub = (int)$c_nos->fetchColumn();
 
     // Cancelled subscription count (inactive status, no chargeback)
-    $c_cancel = $pdo->prepare("SELECT COUNT(*) FROM `users` u INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci WHERE c.`affid` = ? AND u.`status` = 'inactive' AND NOT EXISTS (SELECT 1 FROM `transactions` t WHERE t.`uid` = u.`id` AND t.`dispute_status` = 1) $date_condition");
-    $c_cancel->execute([$affiliateId]);
+    $c_cancel = $pdo->prepare("SELECT COUNT(DISTINCT u.`id`) FROM `users` u WHERE $attribution AND u.`status` = 'inactive' AND NOT EXISTS (SELECT 1 FROM `transactions` t WHERE t.`uid` = u.`id` AND t.`dispute_status` = 1) $date_condition");
+    $c_cancel->execute([$affiliateId, $affiliateId]);
     $count_cancelled = (int)$c_cancel->fetchColumn();
 
     // Chargeback subscription count (users with at least one chargeback transaction)
-    $c_cb = $pdo->prepare("SELECT COUNT(DISTINCT u.`id`) FROM `users` u INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci INNER JOIN `transactions` t ON t.`uid` = u.`id` WHERE c.`affid` = ? AND t.`dispute_status` = 1 $date_condition");
-    $c_cb->execute([$affiliateId]);
+    $c_cb = $pdo->prepare("SELECT COUNT(DISTINCT u.`id`) FROM `users` u WHERE $attribution AND EXISTS (SELECT 1 FROM `transactions` t WHERE t.`uid` = u.`id` AND t.`dispute_status` = 1) $date_condition");
+    $c_cb->execute([$affiliateId, $affiliateId]);
     $count_chargeback = (int)$c_cb->fetchColumn();
 } catch (PDOException $e) {
     error_log("Affiliate Counter Fault: " . $e->getMessage());
@@ -108,7 +112,7 @@ $client_data = [];
 // 4b. Build dynamic search clause (email, name, user ID, Click ID or SubID 1/2)
 $search_condition = "";
 if (!empty($search)) {
-    $search_condition = " AND (u.`email` LIKE ? OR u.`name` LIKE ? OR u.`id` = ? OR u.`cid` LIKE ? OR c.`s1` LIKE ? OR c.`s2` LIKE ?)";
+    $search_condition = " AND (u.`email` LIKE ? OR u.`name` LIKE ? OR u.`id` = ? OR u.`cid` LIKE ? OR cl.`s1` LIKE ? OR cl.`s2` LIKE ?)";
 }
 
 try {
@@ -119,8 +123,8 @@ try {
                 u.`email` AS usr_email, 
                 u.`country` AS usr_country, 
                 u.`cid` AS usr_click_id, 
-                c.`s1` AS usr_sub1,
-                c.`s2` AS usr_sub2,
+                cl.`s1` AS usr_sub1,
+                cl.`s2` AS usr_sub2,
                 u.`plan` AS usr_plan_name, 
                 u.`credit` AS usr_credit, 
                 u.`status` AS usr_status,
@@ -132,7 +136,9 @@ try {
                 pt.`device` AS pay_device,
                 pt.`user_agent` AS pay_ua
               FROM `users` u
-              INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci
+              LEFT JOIN (
+                  SELECT cid, MAX(s1) AS s1, MAX(s2) AS s2 FROM `clicks` GROUP BY cid
+              ) cl ON CONVERT(u.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci = CONVERT(cl.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci
               LEFT JOIN (
                   SELECT t1.uid, t1.browser, t1.ip_address, t1.country, t1.device, t1.user_agent
                   FROM `transactions` t1
@@ -140,10 +146,10 @@ try {
                       SELECT uid, MAX(id) AS max_id FROM `transactions` GROUP BY uid
                   ) t2 ON t1.id = t2.max_id
               ) pt ON pt.uid = u.`id`
-              WHERE c.`affid` = ? $status_condition $search_condition $date_condition
+              WHERE $attribution $status_condition $search_condition $date_condition
               ORDER BY u.`created_at` DESC";
 
-    $params = [$affiliateId];
+    $params = [$affiliateId, $affiliateId];
     if (!empty($search)) {
         array_push($params, "%$search%", "%$search%", $search, "%$search%", "%$search%", "%$search%");
     }

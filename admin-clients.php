@@ -28,7 +28,7 @@ $perPage = 20;
 $offset = ($page - 1) * $perPage;
 $filter_date = isset($_GET['date_range']) ? trim($_GET['date_range']) : 'lifetime';
 
-// Resolve dynamic date interval boundaries (applied to transaction/payment date)
+// Resolve dynamic date interval boundaries (applied to u.created_at)
 $date_condition = "";
 switch ($filter_date) {
     case 'today':
@@ -85,7 +85,7 @@ switch ($subFilter) {
 }
 
 if ($date_condition !== '') {
-    $conditions[] = 'EXISTS (SELECT 1 FROM `transactions` txd WHERE txd.uid = u.id AND ' . str_replace('created_at', 'txd.`created_at`', $date_condition) . ')';
+    $conditions[] = str_replace('created_at', 'u.`created_at`', $date_condition);
 }
 
 $whereClause = !empty($conditions) ? 'WHERE ' . implode(' AND ', $conditions) : '';
@@ -142,7 +142,7 @@ try {
     $clients = $stmt->fetchAll();
 
     // Summary counts
-    $dateCondAgg = $date_condition !== '' ? ' AND EXISTS (SELECT 1 FROM `transactions` txd WHERE txd.uid = u.id AND ' . str_replace('created_at', 'txd.`created_at`', $date_condition) . ')' : '';
+    $dateCondAgg = $date_condition !== '' ? ' AND ' . str_replace('created_at', 'u.`created_at`', $date_condition) : '';
     $totalActive = (int)$pdo->query("SELECT COUNT(*) FROM `users` u WHERE u.stripe_subscription_id IS NOT NULL AND u.stripe_subscription_id != ''" . $dateCondAgg)->fetchColumn();
     $totalNoSub = (int)$pdo->query("SELECT COUNT(*) FROM `users` u WHERE (u.plan IS NULL OR u.plan = '' OR u.plan = 'FREE TIER') AND u.status != 'inactive'" . $dateCondAgg)->fetchColumn();
     $totalCancelled = (int)$pdo->query("SELECT COUNT(*) FROM `users` u WHERE u.status = 'inactive' AND NOT EXISTS (SELECT 1 FROM `transactions` tx WHERE tx.uid = u.id AND tx.dispute_status = 1)" . $dateCondAgg)->fetchColumn();
