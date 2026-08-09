@@ -19,6 +19,34 @@ $page = max(1, (int)($_GET['page'] ?? 1));
 $perPage = 20;
 $offset = ($page - 1) * $perPage;
 $search = isset($_GET['q']) ? trim($_GET['q']) : '';
+$filter_date = isset($_GET['date_range']) ? trim($_GET['date_range']) : 'lifetime';
+
+// Resolve dynamic date interval boundaries (applied per tab to created_at)
+$date_condition = "";
+switch ($filter_date) {
+    case 'today':
+        $date_condition = "AND DATE(created_at) = CURRENT_DATE()";
+        break;
+    case 'yesterday':
+        $date_condition = "AND DATE(created_at) = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)";
+        break;
+    case 'this_week':
+        $date_condition = "AND YEARWEEK(created_at, 1) = YEARWEEK(CURRENT_DATE(), 1)";
+        break;
+    case 'this_month':
+        $date_condition = "AND MONTH(created_at) = MONTH(CURRENT_DATE()) AND YEAR(created_at) = YEAR(CURRENT_DATE())";
+        break;
+    case 'last_month':
+        $date_condition = "AND MONTH(created_at) = MONTH(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH)) AND YEAR(created_at) = YEAR(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))";
+        break;
+    case 'this_year':
+        $date_condition = "AND YEAR(created_at) = YEAR(CURRENT_DATE())";
+        break;
+    case 'lifetime':
+    default:
+        $date_condition = "";
+        break;
+}
 
 $action_msg = '';
 $action_type = '';
@@ -224,10 +252,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 $_SESSION['flash_success'] = "Affiliate '$name' created successfully. ID: $uniqueAid";
             }
         }
-        header("Location: admin-affiliates?tab=" . urlencode($tab));
+        header("Location: admin-affiliates?tab=" . urlencode($tab) . "&date_range=" . urlencode($filter_date));
         exit;
     }
-    header("Location: admin-affiliates?tab=" . urlencode($tab));
+    header("Location: admin-affiliates?tab=" . urlencode($tab) . "&date_range=" . urlencode($filter_date));
     exit;
 }
 
@@ -243,6 +271,10 @@ try {
         if (!empty($search)) {
             $where = "WHERE (a.name LIKE ? OR a.email LIKE ? OR a.aid LIKE ?)";
             $params = ["%$search%", "%$search%", "%$search%"];
+        }
+        $payDateCond = str_replace('created_at', 'w.`created_at`', $date_condition);
+        if ($payDateCond !== '') {
+            $where .= $where !== '' ? " $payDateCond" : " WHERE" . substr($payDateCond, 4);
         }
         $countStmt = $pdo->prepare("SELECT COUNT(*) FROM `withdraw` w LEFT JOIN `affiliates` a ON w.affid = a.id $where");
         $countStmt->execute($params);
@@ -279,6 +311,10 @@ try {
             $sep = $where ? " AND" : " WHERE";
             $where .= "$sep (a.id = ? OR a.email LIKE ? OR a.aid LIKE ? OR a.name LIKE ? OR a.contact LIKE ?)";
             $params = array_merge($params, [$search, "%$search%", "%$search%", "%$search%", "%$search%"]);
+        }
+        $affDateCond = str_replace('created_at', 'a.`created_at`', $date_condition);
+        if ($affDateCond !== '') {
+            $where .= $where !== '' ? " $affDateCond" : " WHERE" . substr($affDateCond, 4);
         }
         $countStmt = $pdo->prepare("SELECT COUNT(*) FROM `affiliates` a $where");
         $countStmt->execute($params);
@@ -320,13 +356,14 @@ try {
             <!-- Tabs + Search Row -->
             <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
                 <div class="flex items-center gap-2 border-b border-gray-200 pb-0">
-                    <a href="admin-affiliates?tab=all" class="px-4 py-2.5 text-[13px] font-bold transition-all border-b-2 <?= $tab === 'all' ? 'border-indigo-600 text-indigo-700' : 'border-transparent text-gray-500 hover:text-gray-900' ?>">All</a>
-                    <a href="admin-affiliates?tab=pending" class="px-4 py-2.5 text-[13px] font-bold transition-all border-b-2 <?= $tab === 'pending' ? 'border-amber-500 text-amber-700' : 'border-transparent text-gray-500 hover:text-gray-900' ?>">Pending</a>
-                    <a href="admin-affiliates?tab=payments" class="px-4 py-2.5 text-[13px] font-bold transition-all border-b-2 <?= $tab === 'payments' ? 'border-indigo-600 text-indigo-700' : 'border-transparent text-gray-500 hover:text-gray-900' ?>">Payments</a>
+                    <a href="?<?= buildAffQs(['tab' => 'all', 'page' => 1]) ?>" class="px-4 py-2.5 text-[13px] font-bold transition-all border-b-2 <?= $tab === 'all' ? 'border-indigo-600 text-indigo-700' : 'border-transparent text-gray-500 hover:text-gray-900' ?>">All</a>
+                    <a href="?<?= buildAffQs(['tab' => 'pending', 'page' => 1]) ?>" class="px-4 py-2.5 text-[13px] font-bold transition-all border-b-2 <?= $tab === 'pending' ? 'border-amber-500 text-amber-700' : 'border-transparent text-gray-500 hover:text-gray-900' ?>">Pending</a>
+                    <a href="?<?= buildAffQs(['tab' => 'payments', 'page' => 1]) ?>" class="px-4 py-2.5 text-[13px] font-bold transition-all border-b-2 <?= $tab === 'payments' ? 'border-indigo-600 text-indigo-700' : 'border-transparent text-gray-500 hover:text-gray-900' ?>">Payments</a>
                 </div>
 
                 <form method="GET" class="flex items-center gap-2 flex-1 justify-end">
                     <input type="hidden" name="tab" value="<?= htmlspecialchars($tab) ?>">
+                    <input type="hidden" name="date_range" value="<?= htmlspecialchars($filter_date) ?>">
                     <div class="relative w-full max-w-2xl">
                         <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
                         <input type="text" name="q" value="<?= htmlspecialchars($search) ?>" placeholder="Search by ID, name, email, affiliate ID, or telegram..."
@@ -334,15 +371,24 @@ try {
                     </div>
                     <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs py-2.5 px-5 rounded-xl transition-all cursor-pointer">Search</button>
                     <?php if (!empty($search)): ?>
-                        <a href="admin-affiliates?tab=<?= $tab ?>" class="text-[10px] font-bold text-gray-500 hover:text-gray-900 px-2">Clear</a>
+                        <a href="admin-affiliates?tab=<?= $tab ?>&date_range=<?= urlencode($filter_date) ?>" class="text-[10px] font-bold text-gray-500 hover:text-gray-900 px-2">Clear</a>
                     <?php endif; ?>
                 </form>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2">
+                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mr-1">Date:</span>
+                <?php $dateLabels = ['lifetime' => 'Lifetime', 'today' => 'Today', 'yesterday' => 'Yesterday', 'this_week' => 'This Week', 'this_month' => 'This Month', 'last_month' => 'Last Month', 'this_year' => 'This Year']; ?>
+                <?php foreach ($dateLabels as $dk => $dl): ?>
+                    <a href="?<?= buildAffQs(['date_range' => $dk, 'page' => 1]) ?>" class="text-[11px] font-bold px-3.5 py-1.5 rounded-lg transition-all cursor-pointer <?= $filter_date === $dk ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' ?>"><?= $dl ?></a>
+                <?php endforeach; ?>
             </div>
 
             <div class="text-[11px] font-bold text-gray-400">Showing <?= number_format($totalRows) ?> results</div>
 
             <?php if ($tab === 'payments'):
-                $sumStmt = $pdo->query("SELECT (SELECT COALESCE(SUM(GREATEST(w.amount - COALESCE(p.total_paid,0),0)),0) FROM `withdraw` w LEFT JOIN (SELECT withdraw_id, SUM(amount) as total_paid FROM `payment_invoices` WHERE status IN ('approved','completed') GROUP BY withdraw_id) p ON p.withdraw_id = w.id WHERE w.status != 'rejected') as total_pending, (SELECT COALESCE(SUM(pi.amount),0) FROM `payment_invoices` pi INNER JOIN `withdraw` w ON pi.withdraw_id = w.id WHERE pi.status IN ('approved','completed') AND w.status != 'rejected') as total_paid, (SELECT COUNT(*) FROM `withdraw` w LEFT JOIN (SELECT withdraw_id, SUM(amount) as total_paid FROM `payment_invoices` WHERE status IN ('approved','completed') GROUP BY withdraw_id) p ON p.withdraw_id = w.id WHERE w.status != 'rejected' AND (w.amount - COALESCE(p.total_paid,0)) > 0) as pending_invoices, (SELECT COUNT(*) FROM `withdraw` w LEFT JOIN (SELECT withdraw_id, SUM(amount) as total_paid FROM `payment_invoices` WHERE status IN ('approved','completed') GROUP BY withdraw_id) p ON p.withdraw_id = w.id WHERE w.status != 'rejected' AND (w.amount - COALESCE(p.total_paid,0)) <= 0) as paid_invoices");
+                $payDateCond = str_replace('created_at', 'w.`created_at`', $date_condition);
+                $sumStmt = $pdo->query(str_replace('[DATE_COND]', $payDateCond, "SELECT (SELECT COALESCE(SUM(GREATEST(w.amount - COALESCE(p.total_paid,0),0)),0) FROM `withdraw` w LEFT JOIN (SELECT withdraw_id, SUM(amount) as total_paid FROM `payment_invoices` WHERE status IN ('approved','completed') GROUP BY withdraw_id) p ON p.withdraw_id = w.id WHERE w.status != 'rejected' [DATE_COND]) as total_pending, (SELECT COALESCE(SUM(pi.amount),0) FROM `payment_invoices` pi INNER JOIN `withdraw` w ON pi.withdraw_id = w.id WHERE pi.status IN ('approved','completed') AND w.status != 'rejected' [DATE_COND]) as total_paid, (SELECT COUNT(*) FROM `withdraw` w LEFT JOIN (SELECT withdraw_id, SUM(amount) as total_paid FROM `payment_invoices` WHERE status IN ('approved','completed') GROUP BY withdraw_id) p ON p.withdraw_id = w.id WHERE w.status != 'rejected' AND (w.amount - COALESCE(p.total_paid,0)) > 0 [DATE_COND]) as pending_invoices, (SELECT COUNT(*) FROM `withdraw` w LEFT JOIN (SELECT withdraw_id, SUM(amount) as total_paid FROM `payment_invoices` WHERE status IN ('approved','completed') GROUP BY withdraw_id) p ON p.withdraw_id = w.id WHERE w.status != 'rejected' AND (w.amount - COALESCE(p.total_paid,0)) <= 0 [DATE_COND]) as paid_invoices"));
                 $sumRow = $sumStmt->fetch(PDO::FETCH_ASSOC);
                 $totalPending = (float)($sumRow['total_pending'] ?? 0);
                 $totalPaid    = (float)($sumRow['total_paid'] ?? 0);

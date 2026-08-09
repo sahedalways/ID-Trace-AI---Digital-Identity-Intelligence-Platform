@@ -20,33 +20,61 @@ $bonusType = getAffiliateBonusType($pdo, $affiliateId);
 
 // 2. Capture and sanitize incoming status filters
 $filter_status = isset($_GET['status']) ? trim($_GET['status']) : 'all';
+$filter_date   = isset($_GET['date_range']) ? trim($_GET['date_range']) : 'lifetime';
 $search = isset($_GET['q']) ? trim($_GET['q']) : '';
 $current_date = date('Y-m-d');
+
+// Resolve dynamic date interval boundaries applied to user join date
+$date_condition = "";
+switch ($filter_date) {
+    case 'today':
+        $date_condition = "AND DATE(u.`created_at`) = CURRENT_DATE()";
+        break;
+    case 'yesterday':
+        $date_condition = "AND DATE(u.`created_at`) = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)";
+        break;
+    case 'this_week':
+        $date_condition = "AND YEARWEEK(u.`created_at`, 1) = YEARWEEK(CURRENT_DATE(), 1)";
+        break;
+    case 'this_month':
+        $date_condition = "AND MONTH(u.`created_at`) = MONTH(CURRENT_DATE()) AND YEAR(u.`created_at`) = YEAR(CURRENT_DATE())";
+        break;
+    case 'last_month':
+        $date_condition = "AND MONTH(u.`created_at`) = MONTH(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH)) AND YEAR(u.`created_at`) = YEAR(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))";
+        break;
+    case 'this_year':
+        $date_condition = "AND YEAR(u.`created_at`) = YEAR(CURRENT_DATE())";
+        break;
+    case 'lifetime':
+    default:
+        $date_condition = "";
+        break;
+}
 
 // 3. Pre-fetch Dynamic Row Counters for Dropdown Select Options (First Bracket)
 try {
     // Total referred accounts count
-    $c_all = $pdo->prepare("SELECT COUNT(*) FROM `users` u INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci WHERE c.`affid` = ?");
+    $c_all = $pdo->prepare("SELECT COUNT(*) FROM `users` u INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci WHERE c.`affid` = ? $date_condition");
     $c_all->execute([$affiliateId]);
     $count_all = (int)$c_all->fetchColumn();
 
     // Active subscription count
-    $c_act = $pdo->prepare("SELECT COUNT(*) FROM `users` u INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci WHERE c.`affid` = ? AND u.`plan` IS NOT NULL AND u.`plan` != '' AND u.`plan` != 'FREE TIER'");
+    $c_act = $pdo->prepare("SELECT COUNT(*) FROM `users` u INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci WHERE c.`affid` = ? AND u.`plan` IS NOT NULL AND u.`plan` != '' AND u.`plan` != 'FREE TIER' $date_condition");
     $c_act->execute([$affiliateId]);
     $count_active = (int)$c_act->fetchColumn();
 
     // No subscription count
-    $c_nos = $pdo->prepare("SELECT COUNT(*) FROM `users` u INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci WHERE c.`affid` = ? AND (u.`plan` IS NULL OR u.`plan` = '' OR u.`plan` = 'FREE TIER') AND u.`status` != 'inactive'");
+    $c_nos = $pdo->prepare("SELECT COUNT(*) FROM `users` u INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci WHERE c.`affid` = ? AND (u.`plan` IS NULL OR u.`plan` = '' OR u.`plan` = 'FREE TIER') AND u.`status` != 'inactive' $date_condition");
     $c_nos->execute([$affiliateId]);
     $count_no_sub = (int)$c_nos->fetchColumn();
 
     // Cancelled subscription count (inactive status, no chargeback)
-    $c_cancel = $pdo->prepare("SELECT COUNT(*) FROM `users` u INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci WHERE c.`affid` = ? AND u.`status` = 'inactive' AND NOT EXISTS (SELECT 1 FROM `transactions` t WHERE t.`uid` = u.`id` AND t.`dispute_status` = 1)");
+    $c_cancel = $pdo->prepare("SELECT COUNT(*) FROM `users` u INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci WHERE c.`affid` = ? AND u.`status` = 'inactive' AND NOT EXISTS (SELECT 1 FROM `transactions` t WHERE t.`uid` = u.`id` AND t.`dispute_status` = 1) $date_condition");
     $c_cancel->execute([$affiliateId]);
     $count_cancelled = (int)$c_cancel->fetchColumn();
 
     // Chargeback subscription count (users with at least one chargeback transaction)
-    $c_cb = $pdo->prepare("SELECT COUNT(DISTINCT u.`id`) FROM `users` u INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci INNER JOIN `transactions` t ON t.`uid` = u.`id` WHERE c.`affid` = ? AND t.`dispute_status` = 1");
+    $c_cb = $pdo->prepare("SELECT COUNT(DISTINCT u.`id`) FROM `users` u INNER JOIN `clicks` c ON u.`cid` = CONVERT(c.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci INNER JOIN `transactions` t ON t.`uid` = u.`id` WHERE c.`affid` = ? AND t.`dispute_status` = 1 $date_condition");
     $c_cb->execute([$affiliateId]);
     $count_chargeback = (int)$c_cb->fetchColumn();
 } catch (PDOException $e) {
@@ -112,7 +140,7 @@ try {
                       SELECT uid, MAX(id) AS max_id FROM `transactions` GROUP BY uid
                   ) t2 ON t1.id = t2.max_id
               ) pt ON pt.uid = u.`id`
-              WHERE c.`affid` = ? $status_condition $search_condition
+              WHERE c.`affid` = ? $status_condition $search_condition $date_condition
               ORDER BY u.`created_at` DESC";
 
     $params = [$affiliateId];
@@ -200,10 +228,21 @@ try {
                         <i class="fa-solid fa-magnifying-glass text-sm"></i> Search Clients
                     </button>
                     <?php if (!empty($search)): ?>
-                        <a href="affiliate-clients?status=<?= urlencode($filter_status) ?>" class="text-xs font-bold text-gray-500 hover:text-gray-900 px-2 whitespace-nowrap">Clear</a>
+                        <a href="affiliate-clients?status=<?= urlencode($filter_status) ?>&date_range=<?= urlencode($filter_date) ?>" class="text-xs font-bold text-gray-500 hover:text-gray-900 px-2 whitespace-nowrap">Clear</a>
                     <?php endif; ?>
                 </div>
             </form>
+
+            <div class="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t border-gray-100">
+                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mr-1">Date Filter:</span>
+                <?php $dateLabels = ['lifetime' => 'Lifetime', 'today' => 'Today', 'yesterday' => 'Yesterday', 'this_week' => 'This Week', 'this_month' => 'This Month', 'last_month' => 'Last Month', 'this_year' => 'This Year']; ?>
+                <?php foreach ($dateLabels as $dk => $dl):
+                    $dateQs = http_build_query(array_merge($_GET, ['date_range' => $dk]));
+                    $isActive = $filter_date === $dk;
+                ?>
+                <a href="affiliate-clients?<?= $dateQs ?>" class="text-[11px] font-bold px-3.5 py-1.5 rounded-lg transition-all cursor-pointer <?= $isActive ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' ?>"><?= $dl ?></a>
+                <?php endforeach; ?>
+            </div>
         </div>
 
         <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
