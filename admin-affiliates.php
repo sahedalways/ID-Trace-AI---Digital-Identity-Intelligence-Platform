@@ -274,7 +274,7 @@ try {
         }
         $payDateCond = str_replace('created_at', 'w.`created_at`', $date_condition);
         if ($payDateCond !== '') {
-            $where .= $where !== '' ? " $payDateCond" : " WHERE" . substr($payDateCond, 4);
+            $where .= $where !== '' ? " $payDateCond" : " WHERE " . preg_replace('/^\s*AND\s+/i', '', $payDateCond);
         }
         $countStmt = $pdo->prepare("SELECT COUNT(*) FROM `withdraw` w LEFT JOIN `affiliates` a ON w.affid = a.id $where");
         $countStmt->execute($params);
@@ -314,7 +314,7 @@ try {
         }
         $affDateCond = str_replace('created_at', 'a.`created_at`', $date_condition);
         if ($affDateCond !== '') {
-            $where .= $where !== '' ? " $affDateCond" : " WHERE" . substr($affDateCond, 4);
+            $where .= $where !== '' ? " $affDateCond" : " WHERE " . preg_replace('/^\s*AND\s+/i', '', $affDateCond);
         }
         $countStmt = $pdo->prepare("SELECT COUNT(*) FROM `affiliates` a $where");
         $countStmt->execute($params);
