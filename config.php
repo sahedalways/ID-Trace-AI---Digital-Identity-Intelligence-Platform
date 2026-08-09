@@ -91,6 +91,9 @@ define('SEARCHBUG_BASE_URL', env('SEARCHBUG_BASE_URL', 'https://data.searchbug.c
 // 11. Stripe Webhook Secret
 define('STRIPE_WEBHOOK_SECRET', env('STRIPE_WEBHOOK_SECRET'));
 
+// 12. External Integration API Key
+define('INTEGRATION_API_KEY', env('INTEGRATION_API_KEY', ''));
+
 // 6. PDO Connection
 try {
     $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
