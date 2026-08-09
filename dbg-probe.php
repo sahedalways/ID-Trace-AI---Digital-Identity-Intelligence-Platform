@@ -42,6 +42,21 @@ $out['click_per_aff'] = q($pdo, "SELECT affid, COUNT(*) AS cnt FROM `clicks` WHE
 
 $attribution = "(EXISTS (SELECT 1 FROM `conversions` cv WHERE cv.`uid` = u.`id` AND cv.`affid` = ?)
         OR EXISTS (SELECT 1 FROM `clicks` cl WHERE cl.`affid` = ? AND CONVERT(u.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci = CONVERT(cl.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci))";
+$dateConds = [
+    'today' => "DATE(u.`created_at`) = CURRENT_DATE()",
+    'yesterday' => "DATE(u.`created_at`) = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)",
+    'this_week' => "YEARWEEK(u.`created_at`, 1) = YEARWEEK(CURRENT_DATE(), 1)",
+    'this_month' => "MONTH(u.`created_at`) = MONTH(CURRENT_DATE()) AND YEAR(u.`created_at`) = YEAR(CURRENT_DATE())",
+    'last_month' => "MONTH(u.`created_at`) = MONTH(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH)) AND YEAR(u.`created_at`) = YEAR(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))",
+    'this_year' => "YEAR(u.`created_at`) = YEAR(CURRENT_DATE())",
+];
+foreach ($dateConds as $dk => $dc) {
+    $out['admin_date_filter'][$dk] = q($pdo, "SELECT COUNT(DISTINCT u.`id`) AS cnt FROM `users` u WHERE " . $dc);
+    $s = $pdo->prepare("SELECT COUNT(DISTINCT u.`id`) AS cnt FROM `users` u WHERE $attribution AND " . $dc);
+    $s->execute([22, 22]);
+    $out['aff22_date_filter'][$dk] = ['ok' => true, 'data' => [['cnt' => (int)$s->fetchColumn()]]];
+}
+
 foreach ([6,10,11,12,14,15,17,19,20,21,22,24,25,26,28] as $aid) {
     $s = $pdo->prepare("SELECT COUNT(DISTINCT u.`id`) AS cnt FROM `users` u WHERE $attribution");
     $s->execute([$aid, $aid]);
