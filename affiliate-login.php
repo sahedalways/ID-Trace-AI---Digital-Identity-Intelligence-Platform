@@ -56,8 +56,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['affiliate_email'] = $affiliate['email'];
                     $_SESSION['affiliate_name'] = $affiliate['name'];
 
-                    // 5. Execute secure directional redirect path to dashboard matrix index
-                    header("Location: affiliate-dashboard");
+                    // 5. Return to the originally requested page/filter if one was saved, else the dashboard
+                    $intended = $_SESSION['aff_intended'] ?? '';
+                    unset($_SESSION['aff_intended']);
+                    if (is_string($intended) && strpos($intended, '/') === 0 && strpos($intended, '//') !== 0) {
+                        header("Location: " . $intended);
+                    } else {
+                        header("Location: affiliate-dashboard");
+                    }
                     exit;
                 }
             } else {

@@ -46,7 +46,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['admin_name'] = $admin['name'];
                     $_SESSION['admin_role'] = $admin['role'];
 
-                    header("Location: admin-dashboard");
+                    $intended = $_SESSION['admin_intended'] ?? '';
+                    unset($_SESSION['admin_intended']);
+                    if (is_string($intended) && strpos($intended, '/') === 0 && strpos($intended, '//') !== 0) {
+                        header("Location: " . $intended);
+                    } else {
+                        header("Location: admin-dashboard");
+                    }
                     exit;
                 }
             } else {

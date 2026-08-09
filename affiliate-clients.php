@@ -9,6 +9,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
 // 1. Enforce strict authentication limits
 if (!isset($_SESSION['affiliate_id'])) {
+    $_SESSION['aff_intended'] = $_SERVER['REQUEST_URI'];
     header("Location: affiliate-login");
     exit;
 }

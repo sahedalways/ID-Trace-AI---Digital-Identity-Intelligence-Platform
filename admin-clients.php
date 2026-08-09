@@ -7,6 +7,7 @@ require_once 'config.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 if (!isset($_SESSION['admin_id'])) {
+    $_SESSION['admin_intended'] = $_SERVER['REQUEST_URI'];
     header("Location: admin-login");
     exit;
 }
