@@ -24,6 +24,11 @@ $filter_date   = isset($_GET['date_range']) ? trim($_GET['date_range']) : 'lifet
 $search = isset($_GET['q']) ? trim($_GET['q']) : '';
 $current_date = date('Y-m-d');
 
+// Pagination
+$page = max(1, (int)($_GET['page'] ?? 1));
+$perPage = 20;
+$offset = ($page - 1) * $perPage;
+
 // Resolve dynamic date interval boundaries applied to user join date
 $date_condition = "";
 switch ($filter_date) {
@@ -112,42 +117,48 @@ $client_data = [];
 // 4b. Build dynamic search clause (email, name, user ID, Click ID or SubID 1/2)
 $search_condition = "";
 if (!empty($search)) {
-    $search_condition = " AND (u.`email` LIKE ? OR u.`name` LIKE ? OR u.`id` = ? OR u.`cid` LIKE ? OR cl.`s1` LIKE ? OR cl.`s2` LIKE ?)";
+    $search_condition = " AND (u.`email` LIKE ? OR u.`name` LIKE ? OR u.`id` = ? OR u.`cid` LIKE ?
+        OR EXISTS (SELECT 1 FROM `clicks` cs WHERE CONVERT(cs.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci = CONVERT(u.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci AND (cs.`s1` LIKE ? OR cs.`s2` LIKE ?)))";
 }
 
 try {
-    // 5. DATA CORE PIPELINE — Fetch users matching conversion matrices
+    // 4c. Total rows matching the active status + search + date filters (for pagination)
+    $totalParams = [$affiliateId, $affiliateId];
+    if (!empty($search)) {
+        array_push($totalParams, "%$search%", "%$search%", $search, "%$search%", "%$search%", "%$search%");
+    }
+    $c_total = $pdo->prepare("SELECT COUNT(DISTINCT u.`id`) FROM `users` u WHERE $attribution $status_condition $search_condition $date_condition");
+    $c_total->execute($totalParams);
+    $totalRows = (int)$c_total->fetchColumn();
+    $totalPages = max(1, ceil($totalRows / $perPage));
+    if ($page > $totalPages) {
+        $page = $totalPages;
+        $offset = ($page - 1) * $perPage;
+    }
+
+    // 5. DATA CORE PIPELINE — Fetch the page of users matching conversion matrices
     $query = "SELECT 
                 u.`id` AS usr_id,
                 u.`name` AS usr_name, 
                 u.`email` AS usr_email, 
                 u.`country` AS usr_country, 
                 u.`cid` AS usr_click_id, 
-                cl.`s1` AS usr_sub1,
-                cl.`s2` AS usr_sub2,
+                (SELECT MAX(c2.`s1`) FROM `clicks` c2 WHERE CONVERT(c2.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci = CONVERT(u.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci) AS usr_sub1,
+                (SELECT MAX(c2.`s2`) FROM `clicks` c2 WHERE CONVERT(c2.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci = CONVERT(u.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci) AS usr_sub2,
                 u.`plan` AS usr_plan_name, 
                 u.`credit` AS usr_credit, 
                 u.`status` AS usr_status,
                 u.`created_at` AS usr_joined_date,
                 EXISTS(SELECT 1 FROM `transactions` t WHERE t.`uid` = u.`id` AND t.`dispute_status` = 1) AS has_chargeback,
-                pt.`browser` AS pay_browser,
-                pt.`ip_address` AS pay_ip,
-                pt.`country` AS pay_country,
-                pt.`device` AS pay_device,
-                pt.`user_agent` AS pay_ua
+                (SELECT t1.`browser` FROM `transactions` t1 WHERE t1.`uid` = u.`id` ORDER BY t1.`id` DESC LIMIT 1) AS pay_browser,
+                (SELECT t1.`ip_address` FROM `transactions` t1 WHERE t1.`uid` = u.`id` ORDER BY t1.`id` DESC LIMIT 1) AS pay_ip,
+                (SELECT t1.`country` FROM `transactions` t1 WHERE t1.`uid` = u.`id` ORDER BY t1.`id` DESC LIMIT 1) AS pay_country,
+                (SELECT t1.`device` FROM `transactions` t1 WHERE t1.`uid` = u.`id` ORDER BY t1.`id` DESC LIMIT 1) AS pay_device,
+                (SELECT t1.`user_agent` FROM `transactions` t1 WHERE t1.`uid` = u.`id` ORDER BY t1.`id` DESC LIMIT 1) AS pay_ua
               FROM `users` u
-              LEFT JOIN (
-                  SELECT cid, MAX(s1) AS s1, MAX(s2) AS s2 FROM `clicks` GROUP BY cid
-              ) cl ON CONVERT(u.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci = CONVERT(cl.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci
-              LEFT JOIN (
-                  SELECT t1.uid, t1.browser, t1.ip_address, t1.country, t1.device, t1.user_agent
-                  FROM `transactions` t1
-                  INNER JOIN (
-                      SELECT uid, MAX(id) AS max_id FROM `transactions` GROUP BY uid
-                  ) t2 ON t1.id = t2.max_id
-              ) pt ON pt.uid = u.`id`
               WHERE $attribution $status_condition $search_condition $date_condition
-              ORDER BY u.`created_at` DESC";
+              ORDER BY u.`created_at` DESC
+              LIMIT $perPage OFFSET $offset";
 
     $params = [$affiliateId, $affiliateId];
     if (!empty($search)) {
@@ -244,7 +255,7 @@ try {
                 <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mr-1">Date Filter:</span>
                 <?php $dateLabels = ['lifetime' => 'Lifetime', 'today' => 'Today', 'yesterday' => 'Yesterday', 'this_week' => 'This Week', 'this_month' => 'This Month', 'last_month' => 'Last Month', 'this_year' => 'This Year']; ?>
                 <?php foreach ($dateLabels as $dk => $dl):
-                    $dateQs = http_build_query(array_merge($_GET, ['date_range' => $dk]));
+                    $dateQs = http_build_query(array_merge($_GET, ['date_range' => $dk, 'page' => 1]));
                     $isActive = $filter_date === $dk;
                 ?>
                 <a href="affiliate-clients?<?= $dateQs ?>" class="text-[11px] font-bold px-3.5 py-1.5 rounded-lg transition-all cursor-pointer <?= $isActive ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' ?>"><?= $dl ?></a>
@@ -255,7 +266,7 @@ try {
         <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
             <div class="px-6 py-4 border-b border-gray-100 bg-slate-50/40 flex justify-between items-center">
                 <h3 class="text-sm font-black text-gray-900 uppercase tracking-wider">Client Registry</h3>
-                <span class="text-xs font-mono text-slate-400">Total Records: <?= count($client_data) ?> profiles</span>
+                <span class="text-xs font-mono text-slate-400">Showing <?= $totalRows ? number_format($offset + 1) . '–' . number_format(min($totalRows, $offset + $perPage)) : 0 ?> of <?= number_format($totalRows) ?> profiles</span>
             </div>
 
             <div class="overflow-x-auto w-full">
@@ -375,6 +386,25 @@ try {
                     </tbody>
                 </table>
             </div>
+
+            <?php if ($totalPages > 1): ?>
+            <div class="flex items-center justify-between px-6 py-4 border-t border-gray-100">
+                <div class="text-[11px] font-semibold text-slate-400">Page <?= $page ?> of <?= number_format($totalPages) ?></div>
+                <div class="flex items-center gap-1.5">
+                    <?php if ($page > 1): ?>
+                        <a href="affiliate-clients?<?= http_build_query(array_merge($_GET, ['page' => 1])) ?>" class="text-[11px] font-bold px-3 py-1.5 rounded-lg bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 transition">First</a>
+                        <a href="affiliate-clients?<?= http_build_query(array_merge($_GET, ['page' => $page - 1])) ?>" class="text-[11px] font-bold px-3 py-1.5 rounded-lg bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 transition">Prev</a>
+                    <?php endif; ?>
+                    <?php for ($i = max(1, $page - 2); $i <= min($totalPages, $page + 2); $i++): ?>
+                        <a href="affiliate-clients?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>" class="text-[11px] font-bold px-3 py-1.5 rounded-lg transition <?= $i === $page ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' ?>"><?= $i ?></a>
+                    <?php endfor; ?>
+                    <?php if ($page < $totalPages): ?>
+                        <a href="affiliate-clients?<?= http_build_query(array_merge($_GET, ['page' => $page + 1])) ?>" class="text-[11px] font-bold px-3 py-1.5 rounded-lg bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 transition">Next</a>
+                        <a href="affiliate-clients?<?= http_build_query(array_merge($_GET, ['page' => $totalPages])) ?>" class="text-[11px] font-bold px-3 py-1.5 rounded-lg bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 transition">Last</a>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <?php endif; ?>
         </div>
 
     </main>

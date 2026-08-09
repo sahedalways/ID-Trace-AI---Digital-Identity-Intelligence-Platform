@@ -59,7 +59,9 @@ $conditions = [];
 $params = [];
 
 if (!empty($search)) {
-    $conditions[] = "(u.email LIKE ? OR u.name LIKE ? OR u.id = ? OR a.aid LIKE ? OR a.email LIKE ? OR cl.s1 LIKE ? OR cl.s2 LIKE ?)";
+    $conditions[] = "(u.email LIKE ? OR u.name LIKE ? OR u.id = ?
+        OR EXISTS (SELECT 1 FROM `conversions` cv INNER JOIN `affiliates` a2 ON a2.id = cv.affid WHERE cv.uid = u.id AND cv.affid IS NOT NULL AND (a2.aid LIKE ? OR a2.email LIKE ?))
+        OR EXISTS (SELECT 1 FROM `clicks` cl2 WHERE CONVERT(cl2.cid USING utf8mb4) COLLATE utf8mb4_unicode_ci = CONVERT(u.cid USING utf8mb4) COLLATE utf8mb4_unicode_ci AND (cl2.s1 LIKE ? OR cl2.s2 LIKE ?)))";
     $params[] = "%$search%";
     $params[] = "%$search%";
     $params[] = $search;
@@ -91,48 +93,30 @@ if ($date_condition !== '') {
 $whereClause = !empty($conditions) ? 'WHERE ' . implode(' AND ', $conditions) : '';
 
 try {
-    // Count
-    $countSql = "SELECT COUNT(DISTINCT u.id) FROM `users` u
-        LEFT JOIN (SELECT uid, MAX(affid) as affid FROM `conversions` WHERE affid IS NOT NULL GROUP BY uid) c ON c.uid = u.id
-        LEFT JOIN (SELECT id, aid, email FROM `affiliates`) a ON c.affid = a.id
-        LEFT JOIN (SELECT cid, MAX(s1) as s1, MAX(s2) as s2 FROM `clicks` GROUP BY cid) cl ON CONVERT(u.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci = CONVERT(cl.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci
-        $whereClause";
+    // Count (no heavy aggregates — conditions reference only users or EXISTS subqueries)
+    $countSql = "SELECT COUNT(DISTINCT u.id) FROM `users` u $whereClause";
     $countStmt = $pdo->prepare($countSql);
     $countStmt->execute($params);
     $totalRows = (int)$countStmt->fetchColumn();
     $totalPages = max(1, ceil($totalRows / $perPage));
 
+    // Main query: resolve display aggregates via per-row scalar subqueries instead of
+    // materialising full-table GROUP BY derived tables (clicks / transactions / conversions).
     $sql = "
         SELECT u.*,
-               a.name as aff_name, a.email as aff_email, a.aid,
-               t.dispute_status, t.dispute_amount,
-               cl.s1 as sub1, cl.s2 as sub2,
-               pt.ip_address, pt.device, pt.browser, pt.pay_country, pt.user_agent
+               (SELECT a2.name FROM `conversions` cv INNER JOIN `affiliates` a2 ON a2.id = cv.affid WHERE cv.uid = u.id AND cv.affid IS NOT NULL ORDER BY cv.affid DESC LIMIT 1) AS aff_name,
+               (SELECT a2.email FROM `conversions` cv INNER JOIN `affiliates` a2 ON a2.id = cv.affid WHERE cv.uid = u.id AND cv.affid IS NOT NULL ORDER BY cv.affid DESC LIMIT 1) AS aff_email,
+               (SELECT a2.aid FROM `conversions` cv INNER JOIN `affiliates` a2 ON a2.id = cv.affid WHERE cv.uid = u.id AND cv.affid IS NOT NULL ORDER BY cv.affid DESC LIMIT 1) AS aid,
+               (SELECT MAX(CASE WHEN tx.dispute_status = 1 THEN 1 ELSE 0 END) FROM `transactions` tx WHERE tx.uid = u.id) AS dispute_status,
+               (SELECT MAX(COALESCE(tx.dispute_amount, 0)) FROM `transactions` tx WHERE tx.uid = u.id) AS dispute_amount,
+               (SELECT MAX(c2.s1) FROM `clicks` c2 WHERE CONVERT(c2.cid USING utf8mb4) COLLATE utf8mb4_unicode_ci = CONVERT(u.cid USING utf8mb4) COLLATE utf8mb4_unicode_ci) AS sub1,
+               (SELECT MAX(c2.s2) FROM `clicks` c2 WHERE CONVERT(c2.cid USING utf8mb4) COLLATE utf8mb4_unicode_ci = CONVERT(u.cid USING utf8mb4) COLLATE utf8mb4_unicode_ci) AS sub2,
+               (SELECT t1.ip_address FROM `transactions` t1 WHERE t1.uid = u.id ORDER BY t1.id DESC LIMIT 1) AS ip_address,
+               (SELECT t1.device FROM `transactions` t1 WHERE t1.uid = u.id ORDER BY t1.id DESC LIMIT 1) AS device,
+               (SELECT t1.browser FROM `transactions` t1 WHERE t1.uid = u.id ORDER BY t1.id DESC LIMIT 1) AS browser,
+               (SELECT t1.country FROM `transactions` t1 WHERE t1.uid = u.id ORDER BY t1.id DESC LIMIT 1) AS pay_country,
+               (SELECT t1.user_agent FROM `transactions` t1 WHERE t1.uid = u.id ORDER BY t1.id DESC LIMIT 1) AS user_agent
         FROM `users` u
-        LEFT JOIN (
-            SELECT uid, MAX(affid) as affid
-            FROM `conversions` WHERE affid IS NOT NULL
-            GROUP BY uid
-        ) c ON c.uid = u.id
-        LEFT JOIN (
-            SELECT id, name, email, aid FROM `affiliates`
-        ) a ON c.affid = a.id
-        LEFT JOIN (
-            SELECT uid, MAX(CASE WHEN dispute_status = 1 THEN 1 ELSE 0 END) as dispute_status,
-                   MAX(COALESCE(dispute_amount, 0)) as dispute_amount
-            FROM `transactions`
-            GROUP BY uid
-        ) t ON t.uid = u.id
-        LEFT JOIN (
-            SELECT t1.uid, t1.ip_address, t1.device, t1.browser, t1.country AS pay_country, t1.user_agent
-            FROM `transactions` t1
-            INNER JOIN (
-                SELECT uid, MAX(id) AS max_id FROM `transactions` GROUP BY uid
-            ) t2 ON t1.id = t2.max_id
-        ) pt ON pt.uid = u.id
-        LEFT JOIN (
-            SELECT cid, MAX(s1) as s1, MAX(s2) as s2 FROM `clicks` GROUP BY cid
-        ) cl ON CONVERT(u.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci = CONVERT(cl.`cid` USING utf8mb4) COLLATE utf8mb4_unicode_ci
         $whereClause
         ORDER BY u.created_at DESC
         LIMIT $perPage OFFSET $offset
