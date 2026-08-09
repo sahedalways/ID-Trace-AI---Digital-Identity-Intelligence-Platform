@@ -279,12 +279,14 @@ $billing_cycle_text = $billing_intervals[$plan['name']] ?? 'every ' . $plan['val
             </div>
 
             <div class="space-y-3">
-                <p class="text-center text-[11px] text-gray-500 font-medium leading-relaxed">
-                    By purchasing, you agree to our
-                    <a href="terms" class="underline text-[#128c7e] hover:text-[#0e6f64] transition">Terms and Conditions</a>
-                    and
-                    <a href="privacy" class="underline text-[#128c7e] hover:text-[#0e6f64] transition">Privacy Policy</a>.
-                </p>
+                <label for="accept_terms" class="flex items-start justify-center gap-2.5 text-[11px] text-gray-500 font-medium leading-relaxed cursor-pointer">
+                    <input type="checkbox" id="accept_terms" name="accept_terms" required class="mt-0.5 h-4 w-4 accent-[#128c7e] cursor-pointer">
+                    <span class="text-left">By purchasing, you agree to our
+                        <a href="terms" class="underline text-[#128c7e] hover:text-[#0e6f64] transition">Terms and Conditions</a>
+                        and
+                        <a href="privacy" class="underline text-[#128c7e] hover:text-[#0e6f64] transition">Privacy Policy</a>.
+                    </span>
+                </label>
                 <button type="submit" id="submitPaymentBtn" class="w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white py-4 px-4 rounded-xl text-[15px] font-bold transition shadow-sm flex items-center justify-center gap-2 cursor-pointer">
                     <span id="btnText">Complete Checkout</span>
                 </button>

@@ -217,6 +217,11 @@
         });
 
         requestInstance.on('paymentmethod', async (ev) => {
+            if (!acceptTermsValidation()) {
+                ev.complete('fail');
+                return;
+            }
+
             const cardName = ev.payerName || document.getElementById('cardholder_name').value;
             const country = document.getElementById('billing_country').value || ev.paymentMethod.billing_details.address.country || 'US';
             const street = document.getElementById('billing_street').value || ev.paymentMethod.billing_details.address.line1 || '—';
@@ -248,9 +253,22 @@
             }
         });
 
+        function acceptTermsValidation() {
+            const termsCheckbox = document.getElementById('accept_terms');
+            if (!termsCheckbox) return true;
+            if (!termsCheckbox.checked) {
+                errorConsole.textContent = "Please accept the Terms and Conditions and Privacy Policy to continue.";
+                termsCheckbox.focus();
+                return false;
+            }
+            return true;
+        }
+
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             if (currentPaymentMethodMode !== 'card') return;
+
+            if (!acceptTermsValidation()) return;
 
             submitBtn.disabled = true;
             submitBtn.classList.add('opacity-70', 'cursor-not-allowed');

@@ -26,6 +26,34 @@ $subFilter = isset($_GET['sub']) ? $_GET['sub'] : 'all';
 $page = max(1, (int)($_GET['page'] ?? 1));
 $perPage = 20;
 $offset = ($page - 1) * $perPage;
+$filter_date = isset($_GET['date_range']) ? trim($_GET['date_range']) : 'lifetime';
+
+// Resolve dynamic date interval boundaries (applied to u.created_at)
+$date_condition = "";
+switch ($filter_date) {
+    case 'today':
+        $date_condition = "DATE(created_at) = CURRENT_DATE()";
+        break;
+    case 'yesterday':
+        $date_condition = "DATE(created_at) = DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)";
+        break;
+    case 'this_week':
+        $date_condition = "YEARWEEK(created_at, 1) = YEARWEEK(CURRENT_DATE(), 1)";
+        break;
+    case 'this_month':
+        $date_condition = "MONTH(created_at) = MONTH(CURRENT_DATE()) AND YEAR(created_at) = YEAR(CURRENT_DATE())";
+        break;
+    case 'last_month':
+        $date_condition = "MONTH(created_at) = MONTH(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH)) AND YEAR(created_at) = YEAR(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))";
+        break;
+    case 'this_year':
+        $date_condition = "YEAR(created_at) = YEAR(CURRENT_DATE())";
+        break;
+    case 'lifetime':
+    default:
+        $date_condition = "";
+        break;
+}
 
 $conditions = [];
 $params = [];
@@ -54,6 +82,10 @@ switch ($subFilter) {
     case 'chargeback':
         $conditions[] = "EXISTS (SELECT 1 FROM `transactions` tx WHERE tx.uid = u.id AND tx.dispute_status = 1)";
         break;
+}
+
+if ($date_condition !== '') {
+    $conditions[] = str_replace('created_at', 'u.`created_at`', $date_condition);
 }
 
 $whereClause = !empty($conditions) ? 'WHERE ' . implode(' AND ', $conditions) : '';
@@ -110,11 +142,12 @@ try {
     $clients = $stmt->fetchAll();
 
     // Summary counts
-    $totalActive = (int)$pdo->query("SELECT COUNT(*) FROM `users` WHERE stripe_subscription_id IS NOT NULL AND stripe_subscription_id != ''")->fetchColumn();
-    $totalNoSub = (int)$pdo->query("SELECT COUNT(*) FROM `users` WHERE (plan IS NULL OR plan = '' OR plan = 'FREE TIER') AND status != 'inactive'")->fetchColumn();
-    $totalCancelled = (int)$pdo->query("SELECT COUNT(*) FROM `users` u WHERE u.status = 'inactive' AND NOT EXISTS (SELECT 1 FROM `transactions` tx WHERE tx.uid = u.id AND tx.dispute_status = 1)")->fetchColumn();
-    $totalChargeback = (int)$pdo->query("SELECT COUNT(DISTINCT uid) FROM `transactions` WHERE dispute_status = 1")->fetchColumn();
-    $totalUsers = (int)$pdo->query("SELECT COUNT(*) FROM `users`")->fetchColumn();
+    $dateCondAgg = $date_condition !== '' ? ' AND ' . str_replace('created_at', 'u.`created_at`', $date_condition) : '';
+    $totalActive = (int)$pdo->query("SELECT COUNT(*) FROM `users` u WHERE u.stripe_subscription_id IS NOT NULL AND u.stripe_subscription_id != ''" . $dateCondAgg)->fetchColumn();
+    $totalNoSub = (int)$pdo->query("SELECT COUNT(*) FROM `users` u WHERE (u.plan IS NULL OR u.plan = '' OR u.plan = 'FREE TIER') AND u.status != 'inactive'" . $dateCondAgg)->fetchColumn();
+    $totalCancelled = (int)$pdo->query("SELECT COUNT(*) FROM `users` u WHERE u.status = 'inactive' AND NOT EXISTS (SELECT 1 FROM `transactions` tx WHERE tx.uid = u.id AND tx.dispute_status = 1)" . $dateCondAgg)->fetchColumn();
+    $totalChargeback = (int)$pdo->query("SELECT COUNT(DISTINCT u.id) FROM `users` u INNER JOIN `transactions` tx ON tx.uid = u.id WHERE tx.dispute_status = 1" . $dateCondAgg)->fetchColumn();
+    $totalUsers = (int)$pdo->query("SELECT COUNT(*) FROM `users` u" . $dateCondAgg)->fetchColumn();
 
 } catch (PDOException $e) {
     error_log("Admin Clients Error: " . $e->getMessage());
@@ -158,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['form_action'] ?? '') === '
             $_SESSION['flash_success'] = "Customer '$name' created successfully. ID: #$newUserId";
         }
     }
-    header("Location: admin-clients?sub=" . urlencode($subFilter));
+    header("Location: admin-clients?sub=" . urlencode($subFilter) . "&date_range=" . urlencode($filter_date));
     exit;
 }
 
@@ -168,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['form_action'] ?? '') === '
 
     if ($fuserId <= 0) {
         $_SESSION['flash_error'] = "Invalid user ID for force chargeback.";
-        header("Location: admin-clients?sub=cancelled");
+        header("Location: admin-clients?sub=cancelled&date_range=" . urlencode($filter_date));
         exit;
     }
 
@@ -179,7 +212,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['form_action'] ?? '') === '
 
         if (!$fuser) {
             $_SESSION['flash_error'] = "User not found.";
-            header("Location: admin-clients?sub=cancelled");
+            header("Location: admin-clients?sub=cancelled&date_range=" . urlencode($filter_date));
             exit;
         }
 
@@ -187,7 +220,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['form_action'] ?? '') === '
         $dupCheck->execute([$fuserId]);
         if ((int)$dupCheck->fetchColumn() > 0) {
             $_SESSION['flash_error'] = "Customer #$fuserId is already marked as chargeback. No action taken.";
-            header("Location: admin-clients?sub=cancelled");
+            header("Location: admin-clients?sub=cancelled&date_range=" . urlencode($filter_date));
             exit;
         }
 
@@ -283,7 +316,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['form_action'] ?? '') === '
         $_SESSION['flash_error'] = "Force chargeback failed: " . $e->getMessage();
     }
 
-    header("Location: admin-clients?sub=cancelled");
+    header("Location: admin-clients?sub=cancelled&date_range=" . urlencode($filter_date));
     exit;
 }
 
@@ -320,6 +353,7 @@ function buildClientQs($overrides) {
             <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
                 <form method="GET" class="flex items-center gap-2 flex-1 max-w-2xl">
                     <input type="hidden" name="sub" value="<?= htmlspecialchars($subFilter) ?>">
+                    <input type="hidden" name="date_range" value="<?= htmlspecialchars($filter_date) ?>">
                     <div class="flex-1 relative">
                         <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
                         <input type="text" name="q" value="<?= htmlspecialchars($search) ?>" placeholder="Search by email, name, user ID, affiliate ID, affiliate email or SubID..."
@@ -327,7 +361,7 @@ function buildClientQs($overrides) {
                     </div>
                     <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm py-3 px-5 rounded-xl transition-all cursor-pointer">Search</button>
                     <?php if (!empty($search)): ?>
-                        <a href="admin-clients?sub=<?= $subFilter ?>" class="text-xs font-bold text-gray-500 hover:text-gray-900 px-2">Clear</a>
+                        <a href="admin-clients?sub=<?= $subFilter ?>&date_range=<?= urlencode($filter_date) ?>" class="text-xs font-bold text-gray-500 hover:text-gray-900 px-2">Clear</a>
                     <?php endif; ?>
                 </form>
 
@@ -335,9 +369,17 @@ function buildClientQs($overrides) {
                     <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mr-1">Status:</span>
                     <?php foreach (['all'=>'All','active_sub'=>'Active Sub','no_sub'=>'No Sub','cancelled'=>'Cancelled','chargeback'=>'Chargeback'] as $key => $label): ?>
                         <?php $cnt = ($key === 'all') ? $totalUsers : (($key === 'active_sub') ? $totalActive : (($key === 'no_sub') ? $totalNoSub : (($key === 'cancelled') ? $totalCancelled : $totalChargeback))); ?>
-                        <a href="?q=<?= urlencode($search) ?>&sub=<?= $key ?>" class="text-[11px] font-bold px-3 py-1.5 rounded-lg transition-all <?= $subFilter === $key ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' ?>"><?= $label ?> (<?= number_format($cnt) ?>)</a>
+                        <a href="?<?= buildClientQs(['sub' => $key, 'page' => 1]) ?>" class="text-[11px] font-bold px-3 py-1.5 rounded-lg transition-all <?= $subFilter === $key ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' ?>"><?= $label ?> (<?= number_format($cnt) ?>)</a>
                     <?php endforeach; ?>
                 </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2">
+                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mr-1">Date:</span>
+                <?php $dateLabels = ['lifetime' => 'Lifetime', 'today' => 'Today', 'yesterday' => 'Yesterday', 'this_week' => 'This Week', 'this_month' => 'This Month', 'last_month' => 'Last Month', 'this_year' => 'This Year']; ?>
+                <?php foreach ($dateLabels as $dk => $dl): ?>
+                    <a href="?<?= buildClientQs(['date_range' => $dk, 'page' => 1]) ?>" class="text-[11px] font-bold px-3.5 py-1.5 rounded-lg transition-all cursor-pointer <?= $filter_date === $dk ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50' ?>"><?= $dl ?></a>
+                <?php endforeach; ?>
             </div>
 
             <div class="text-[11px] font-bold text-gray-400">Showing <?= number_format($totalRows) ?> customers</div>
