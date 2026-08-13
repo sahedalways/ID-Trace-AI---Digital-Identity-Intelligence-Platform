@@ -7,17 +7,30 @@
 ?>
 <style>
     #faqAccordionContainer .active {
-        background-color: #eff8ff;
-        border-color: #93c5fd;
+        background-color: #ffffff;
+        border-color: #bfdbfe;
+        box-shadow: 0 20px 40px -10px rgba(0, 114, 188, 0.08);
     }
     #faqAccordionContainer .active .faq-toggle-trigger span {
         color: #0072bc;
     }
+    #faqAccordionContainer .active .faq-toggle-trigger .icon-box {
+        background-color: #0072bc;
+        color: #ffffff;
+        border-color: #0072bc;
+    }
+    #faqAccordionContainer .active .faq-toggle-trigger .chevron-box {
+        background-color: #eff6ff;
+        border-color: #bfdbfe;
+    }
+    #faqAccordionContainer .active .faq-toggle-trigger .chevron-box i {
+        color: #0072bc;
+    }
     #faqAccordionContainer .active .faq-toggle-trigger {
-        padding-bottom: 0.75rem;
+        padding-bottom: 0.5rem;
     }
     #faqAccordionContainer .active .faq-content-slider {
-        padding-bottom: 0.25rem;
+        padding-bottom: 0.5rem;
     }
 </style>
 <section class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 py-10 md:py-12 mb-8 border-t border-gray-200/60">
@@ -45,7 +58,7 @@
             <div class="group bg-white border border-gray-200/80 rounded-3xl overflow-hidden shadow-sm hover:shadow-[0_18px_50px_rgba(0,0,0,0.07)] hover:border-blue-100 transition-all duration-300">
                 <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none faq-toggle-trigger group">
                     <div class="flex items-center gap-4 min-w-0">
-                        <div class="w-10 h-10 rounded-2xl bg-blue-50 text-[#0072bc] border border-blue-100 flex items-center justify-center shrink-0">
+                        <div class="icon-box w-10 h-10 rounded-2xl bg-blue-50 text-[#0072bc] border border-blue-100 flex items-center justify-center shrink-0 transition-colors">
                             <i class="fa-solid fa-fingerprint text-sm"></i>
                         </div>
 
@@ -54,12 +67,12 @@
                         </span>
                     </div>
 
-                    <div class="w-9 h-9 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center shrink-0 group-hover:bg-blue-50 group-hover:border-blue-100 transition-all">
+                    <div class="chevron-box w-9 h-9 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center shrink-0 group-hover:bg-blue-50 group-hover:border-blue-100 transition-all">
                         <i class="fa-solid fa-chevron-down text-gray-400 group-hover:text-[#0072bc] text-xs transition-transform duration-300 transform rotate-0"></i>
                     </div>
                 </button>
 
-                <div class="faq-content-slider transition-all duration-300 ease-in-out bg-white" style="max-height: 0; opacity: 0;">
+                <div class="faq-content-slider transition-all duration-300 ease-in-out" style="max-height: 0; opacity: 0;">
                     <div class="px-5 sm:px-6 pb-6">
                         <div class="pl-0 sm:pl-14">
                             <p class="text-sm text-gray-600 font-semibold leading-relaxed">
@@ -74,7 +87,7 @@
             <div class="group bg-white border border-gray-200/80 rounded-3xl overflow-hidden shadow-sm hover:shadow-[0_18px_50px_rgba(0,0,0,0.07)] hover:border-blue-100 transition-all duration-300">
                 <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none faq-toggle-trigger group">
                     <div class="flex items-center gap-4 min-w-0">
-                        <div class="w-10 h-10 rounded-2xl bg-blue-50 text-[#0072bc] border border-blue-100 flex items-center justify-center shrink-0">
+                        <div class="icon-box w-10 h-10 rounded-2xl bg-blue-50 text-[#0072bc] border border-blue-100 flex items-center justify-center shrink-0 transition-colors">
                             <i class="fa-solid fa-magnifying-glass-chart text-sm"></i>
                         </div>
 
@@ -83,12 +96,12 @@
                         </span>
                     </div>
 
-                    <div class="w-9 h-9 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center shrink-0 group-hover:bg-blue-50 group-hover:border-blue-100 transition-all">
+                    <div class="chevron-box w-9 h-9 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center shrink-0 group-hover:bg-blue-50 group-hover:border-blue-100 transition-all">
                         <i class="fa-solid fa-chevron-down text-gray-400 group-hover:text-[#0072bc] text-xs transition-transform duration-300 transform rotate-0"></i>
                     </div>
                 </button>
 
-                <div class="faq-content-slider transition-all duration-300 ease-in-out bg-white" style="max-height: 0; opacity: 0;">
+                <div class="faq-content-slider transition-all duration-300 ease-in-out" style="max-height: 0; opacity: 0;">
                     <div class="px-5 sm:px-6 pb-6">
                         <div class="pl-0 sm:pl-14">
                             <p class="text-sm text-gray-600 font-semibold leading-relaxed">
@@ -103,7 +116,7 @@
             <div class="group bg-white border border-gray-200/80 rounded-3xl overflow-hidden shadow-sm hover:shadow-[0_18px_50px_rgba(0,0,0,0.07)] hover:border-blue-100 transition-all duration-300">
                 <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none faq-toggle-trigger group">
                     <div class="flex items-center gap-4 min-w-0">
-                        <div class="w-10 h-10 rounded-2xl bg-blue-50 text-[#0072bc] border border-blue-100 flex items-center justify-center shrink-0">
+                        <div class="icon-box w-10 h-10 rounded-2xl bg-blue-50 text-[#0072bc] border border-blue-100 flex items-center justify-center shrink-0 transition-colors">
                             <i class="fa-solid fa-layer-group text-sm"></i>
                         </div>
 
@@ -112,12 +125,12 @@
                         </span>
                     </div>
 
-                    <div class="w-9 h-9 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center shrink-0 group-hover:bg-blue-50 group-hover:border-blue-100 transition-all">
+                    <div class="chevron-box w-9 h-9 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center shrink-0 group-hover:bg-blue-50 group-hover:border-blue-100 transition-all">
                         <i class="fa-solid fa-chevron-down text-gray-400 group-hover:text-[#0072bc] text-xs transition-transform duration-300 transform rotate-0"></i>
                     </div>
                 </button>
 
-                <div class="faq-content-slider transition-all duration-300 ease-in-out bg-white" style="max-height: 0; opacity: 0;">
+                <div class="faq-content-slider transition-all duration-300 ease-in-out" style="max-height: 0; opacity: 0;">
                     <div class="px-5 sm:px-6 pb-6">
                         <div class="pl-0 sm:pl-14 text-sm sm:text-base text-gray-700 font-semibold leading-relaxed space-y-3">
                             <p>
@@ -166,7 +179,7 @@
             <div class="group bg-white border border-gray-200/80 rounded-3xl overflow-hidden shadow-sm hover:shadow-[0_18px_50px_rgba(0,0,0,0.07)] hover:border-blue-100 transition-all duration-300">
                 <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none faq-toggle-trigger group">
                     <div class="flex items-center gap-4 min-w-0">
-                        <div class="w-10 h-10 rounded-2xl bg-blue-50 text-[#0072bc] border border-blue-100 flex items-center justify-center shrink-0">
+                        <div class="icon-box w-10 h-10 rounded-2xl bg-blue-50 text-[#0072bc] border border-blue-100 flex items-center justify-center shrink-0 transition-colors">
                             <i class="fa-solid fa-file-lines text-sm"></i>
                         </div>
 
@@ -175,12 +188,12 @@
                         </span>
                     </div>
 
-                    <div class="w-9 h-9 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center shrink-0 group-hover:bg-blue-50 group-hover:border-blue-100 transition-all">
+                    <div class="chevron-box w-9 h-9 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center shrink-0 group-hover:bg-blue-50 group-hover:border-blue-100 transition-all">
                         <i class="fa-solid fa-chevron-down text-gray-400 group-hover:text-[#0072bc] text-xs transition-transform duration-300 transform rotate-0"></i>
                     </div>
                 </button>
 
-                <div class="faq-content-slider transition-all duration-300 ease-in-out bg-white" style="max-height: 0; opacity: 0;">
+                <div class="faq-content-slider transition-all duration-300 ease-in-out" style="max-height: 0; opacity: 0;">
                     <div class="px-5 sm:px-6 pb-6">
                         <div class="pl-0 sm:pl-14">
                             <p class="text-sm text-gray-600 font-semibold leading-relaxed">
@@ -195,7 +208,7 @@
             <div class="group bg-white border border-gray-200/80 rounded-3xl overflow-hidden shadow-sm hover:shadow-[0_18px_50px_rgba(0,0,0,0.07)] hover:border-blue-100 transition-all duration-300">
                 <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none faq-toggle-trigger group">
                     <div class="flex items-center gap-4 min-w-0">
-                        <div class="w-10 h-10 rounded-2xl bg-blue-50 text-[#0072bc] border border-blue-100 flex items-center justify-center shrink-0">
+                        <div class="icon-box w-10 h-10 rounded-2xl bg-blue-50 text-[#0072bc] border border-blue-100 flex items-center justify-center shrink-0 transition-colors">
                             <i class="fa-solid fa-database text-sm"></i>
                         </div>
 
@@ -204,12 +217,12 @@
                         </span>
                     </div>
 
-                    <div class="w-9 h-9 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center shrink-0 group-hover:bg-blue-50 group-hover:border-blue-100 transition-all">
+                    <div class="chevron-box w-9 h-9 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center shrink-0 group-hover:bg-blue-50 group-hover:border-blue-100 transition-all">
                         <i class="fa-solid fa-chevron-down text-gray-400 group-hover:text-[#0072bc] text-xs transition-transform duration-300 transform rotate-0"></i>
                     </div>
                 </button>
 
-                <div class="faq-content-slider transition-all duration-300 ease-in-out bg-white" style="max-height: 0; opacity: 0;">
+                <div class="faq-content-slider transition-all duration-300 ease-in-out" style="max-height: 0; opacity: 0;">
                     <div class="px-5 sm:px-6 pb-6">
                         <div class="pl-0 sm:pl-14">
                             <p class="text-sm text-gray-600 font-semibold leading-relaxed">
@@ -224,7 +237,7 @@
             <div class="group bg-white border border-gray-200/80 rounded-3xl overflow-hidden shadow-sm hover:shadow-[0_18px_50px_rgba(0,0,0,0.07)] hover:border-blue-100 transition-all duration-300">
                 <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none faq-toggle-trigger group">
                     <div class="flex items-center gap-4 min-w-0">
-                        <div class="w-10 h-10 rounded-2xl bg-blue-50 text-[#0072bc] border border-blue-100 flex items-center justify-center shrink-0">
+                        <div class="icon-box w-10 h-10 rounded-2xl bg-blue-50 text-[#0072bc] border border-blue-100 flex items-center justify-center shrink-0 transition-colors">
                             <i class="fa-solid fa-credit-card text-sm"></i>
                         </div>
 
@@ -233,12 +246,12 @@
                         </span>
                     </div>
 
-                    <div class="w-9 h-9 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center shrink-0 group-hover:bg-blue-50 group-hover:border-blue-100 transition-all">
+                    <div class="chevron-box w-9 h-9 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center shrink-0 group-hover:bg-blue-50 group-hover:border-blue-100 transition-all">
                         <i class="fa-solid fa-chevron-down text-gray-400 group-hover:text-[#0072bc] text-xs transition-transform duration-300 transform rotate-0"></i>
                     </div>
                 </button>
 
-                <div class="faq-content-slider transition-all duration-300 ease-in-out bg-white" style="max-height: 0; opacity: 0;">
+                <div class="faq-content-slider transition-all duration-300 ease-in-out" style="max-height: 0; opacity: 0;">
                     <div class="px-5 sm:px-6 pb-6">
                         <div class="pl-0 sm:pl-14">
                             <p class="text-sm text-gray-600 font-semibold leading-relaxed">

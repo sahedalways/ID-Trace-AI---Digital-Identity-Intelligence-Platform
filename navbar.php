@@ -120,8 +120,11 @@ $is_home_page = ($active_page === 'index') || ($request_path === '/' || $request
                         <a href="<?php echo htmlspecialchars($signin_url); ?>" class="text-base font-semibold transition <?= $active_page === 'signin' ? 'text-[#0072bc]' : 'text-black hover:text-[#0072bc]' ?>">
                             Register
                         </a>
-                        <a href="<?php echo BASE_URL; ?>buy-credit" class="text-base font-semibold <?= $active_page === 'buy-credit' ? 'text-[#0072bc] bg-blue-50' : 'text-black hover:text-[#0072bc] bg-gray-100 hover:bg-gray-200' ?> px-5 py-2.5 rounded-xl transition">
-                            Get Report
+                        <a href="<?php echo BASE_URL; ?>buy-credit" class="group flex items-center gap-2 text-base font-bold text-white bg-gradient-to-r from-[#0072bc] to-blue-600 hover:from-blue-600 hover:to-blue-700 px-5 py-2.5 rounded-xl shadow-md shadow-blue-200 hover:shadow-lg hover:shadow-blue-300 hover:-translate-y-0.5 transition-all duration-300">
+                            <span>Get Report</span>
+                            <span class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                                <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </span>
                         </a>
                     </div>
 
