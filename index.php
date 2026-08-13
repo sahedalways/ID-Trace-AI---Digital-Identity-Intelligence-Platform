@@ -63,12 +63,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         /* ====== Navbar Dark Mode Override (home page only) ====== */
+        /* Transparent at top; scroll handler applies the dark background */
         #mainNavbar {
-            background-color: rgba(2, 6, 23, 0.85) !important;
-            backdrop-filter: blur(20px) !important;
-            -webkit-backdrop-filter: blur(20px) !important;
-            border-color: rgba(51, 65, 85, 0.5) !important;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3) !important;
+            background-color: transparent !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border-color: transparent !important;
+            box-shadow: none !important;
         }
 
         /* Nav links: make text white on dark nav */
@@ -79,12 +80,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         #mainNavbar a:hover,
         #mainNavbar button:hover {
-            color: #22d3ee !important;
+            color: #4fb3c9 !important;
         }
-        /* Active page link stays cyan */
+        /* Active page link stays brand teal */
         #mainNavbar a[style*="color: #128c7e"],
         #mainNavbar a.text-\\[\\#128c7e\\] {
-            color: #22d3ee !important;
+            color: #4fb3c9 !important;
         }
         /* Icon colors */
         #mainNavbar i {
@@ -92,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         #mainNavbar a:hover i,
         #mainNavbar button:hover i {
-            color: #22d3ee !important;
+            color: #4fb3c9 !important;
         }
 
         /* "Get Report" button override */
@@ -103,8 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             border: 1px solid rgba(51, 65, 85, 0.6) !important;
         }
         #mainNavbar .bg-gray-100:hover {
-            background-color: rgba(6, 182, 212, 0.15) !important;
-            border-color: rgba(6, 182, 212, 0.4) !important;
+            background-color: rgba(79, 179, 201, 0.15) !important;
+            border-color: rgba(79, 179, 201, 0.4) !important;
         }
 
         /* Dropdown menu dark override */
@@ -118,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         #userDropdownMenu a:hover {
             background-color: rgba(30, 41, 59, 0.8) !important;
-            color: #22d3ee !important;
+            color: #4fb3c9 !important;
         }
         #userDropdownMenu hr {
             border-color: #1e293b !important;
@@ -133,15 +134,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         #mainNavbar img[alt="Identity Search AI Logo"] {
             border-radius: 8px;
             filter: brightness(1.1);
+            height: 100px !important;
+            width: auto;
         }
 
         /* Dark scrollbar override */
         ::-webkit-scrollbar-track { background: #0f172a !important; }
-        ::-webkit-scrollbar-thumb { background: #0891b2 !important; }
-        ::-webkit-scrollbar-thumb:hover { background: #22d3ee !important; }
+        ::-webkit-scrollbar-thumb { background: #3a93a8 !important; }
+        ::-webkit-scrollbar-thumb:hover { background: #4fb3c9 !important; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-white bg-slate-950 text-white relative font-sans overflow-x-hidden">
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#4FB3C9] selection:text-white bg-slate-950 text-white relative font-sans overflow-x-hidden">
 
     <?php include 'navbar.php'; ?>
 
@@ -165,13 +168,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const allLinks = nav.querySelectorAll('a');
             allLinks.forEach(function(link) {
                 if (link.textContent.trim() === 'Get Report') {
-                    link.style.cssText = 'background: linear-gradient(135deg, #06b6d4, #8b5cf6) !important; color: #ffffff !important; border: none !important; padding: 10px 20px !important; border-radius: 12px !important; font-weight: 700 !important; box-shadow: 0 0 20px rgba(6, 182, 212, 0.3) !important; transition: all 0.3s !important;';
+                    link.style.cssText = 'background: linear-gradient(135deg, #4fb3c9, #2f7e8f) !important; color: #ffffff !important; border: none !important; padding: 10px 20px !important; border-radius: 12px !important; font-weight: 700 !important; box-shadow: 0 0 20px rgba(79, 179, 201, 0.3) !important; transition: all 0.3s !important;';
                     link.addEventListener('mouseenter', function() {
-                        this.style.boxShadow = '0 0 30px rgba(6, 182, 212, 0.5)';
+                        this.style.boxShadow = '0 0 30px rgba(79, 179, 201, 0.5)';
                         this.style.transform = 'translateY(-1px)';
                     });
                     link.addEventListener('mouseleave', function() {
-                        this.style.boxShadow = '0 0 20px rgba(6, 182, 212, 0.3)';
+                        this.style.boxShadow = '0 0 20px rgba(79, 179, 201, 0.3)';
                         this.style.transform = 'translateY(0)';
                     });
                 }
@@ -181,28 +184,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             window.onscroll = null;
             window.addEventListener('scroll', function() {
                 if (window.scrollY > 20) {
-                    nav.style.backgroundColor = 'rgba(2, 6, 23, 0.95)';
-                    nav.style.borderColor = 'rgba(6, 182, 212, 0.15)';
-                    nav.style.boxShadow = '0 8px 32px rgba(6, 182, 212, 0.08)';
+                    nav.style.setProperty('background-color', 'rgba(2, 6, 23, 0.92)', 'important');
+                    nav.style.setProperty('border-color', 'rgba(79, 179, 201, 0.15)', 'important');
+                    nav.style.setProperty('box-shadow', '0 8px 32px rgba(79, 179, 201, 0.08)', 'important');
+                    nav.style.setProperty('backdrop-filter', 'blur(20px)', 'important');
+                    nav.style.setProperty('-webkit-backdrop-filter', 'blur(20px)', 'important');
                 } else {
-                    nav.style.backgroundColor = 'rgba(2, 6, 23, 0.7)';
-                    nav.style.borderColor = 'rgba(51, 65, 85, 0.5)';
-                    nav.style.boxShadow = 'none';
+                    nav.style.setProperty('background-color', 'transparent', 'important');
+                    nav.style.setProperty('border-color', 'transparent', 'important');
+                    nav.style.setProperty('box-shadow', 'none', 'important');
+                    nav.style.setProperty('backdrop-filter', 'none', 'important');
+                    nav.style.setProperty('-webkit-backdrop-filter', 'none', 'important');
                 }
             });
-            // Set initial state
-            nav.style.backgroundColor = 'rgba(2, 6, 23, 0.7)';
-            nav.style.borderColor = 'rgba(51, 65, 85, 0.5)';
-            nav.style.backdropFilter = 'blur(20px)';
-            nav.style.webkitBackdropFilter = 'blur(20px)';
+            // Set initial state (transparent at top)
+            nav.style.setProperty('background-color', 'transparent', 'important');
+            nav.style.setProperty('border-color', 'transparent', 'important');
+            nav.style.setProperty('box-shadow', 'none', 'important');
+            nav.style.setProperty('backdrop-filter', 'none', 'important');
+            nav.style.setProperty('-webkit-backdrop-filter', 'none', 'important');
         })();
     </script>
 
     <!-- Deep Space glowing background -->
     <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/20 rounded-full blur-[120px] mix-blend-screen animate-blob"></div>
-        <div class="absolute top-[20%] right-[-10%] w-[40%] h-[40%] bg-cyan-600/20 rounded-full blur-[120px] mix-blend-screen animate-blob animation-delay-2000"></div>
-        <div class="absolute bottom-[-20%] left-[20%] w-[50%] h-[50%] bg-blue-600/20 rounded-full blur-[120px] mix-blend-screen animate-blob animation-delay-4000"></div>
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#0B1F40]/50 rounded-full blur-[120px] mix-blend-screen animate-blob"></div>
+        <div class="absolute top-[20%] right-[-10%] w-[40%] h-[40%] bg-[#4FB3C9]/15 rounded-full blur-[120px] mix-blend-screen animate-blob animation-delay-2000"></div>
+        <div class="absolute bottom-[-20%] left-[20%] w-[50%] h-[50%] bg-[#1E3A8A]/40 rounded-full blur-[120px] mix-blend-screen animate-blob animation-delay-4000"></div>
         <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] opacity-10"></div>
     </div>
 
@@ -230,8 +238,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             to { opacity: 1; transform: scale(1); }
         }
         @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(6,182,212,0.2), 0 0 60px rgba(6,182,212,0.05); }
-            50% { box-shadow: 0 0 30px rgba(6,182,212,0.4), 0 0 80px rgba(6,182,212,0.1); }
+            0%, 100% { box-shadow: 0 0 20px rgba(79,179,201,0.2), 0 0 60px rgba(79,179,201,0.05); }
+            50% { box-shadow: 0 0 30px rgba(79,179,201,0.4), 0 0 80px rgba(79,179,201,0.1); }
         }
         @keyframes shimmer {
             0% { background-position: -200% 0; }
@@ -250,8 +258,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes borderGlow {
-            0%, 100% { border-color: rgba(6,182,212,0.3); }
-            50% { border-color: rgba(139,92,246,0.5); }
+            0%, 100% { border-color: rgba(79,179,201,0.3); }
+            50% { border-color: rgba(79,179,201,0.5); }
         }
 
         /* ====== Animation Classes ====== */
@@ -279,7 +287,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .search-glow { animation: pulseGlow 3s ease-in-out infinite; }
 
         .shimmer-text {
-            background: linear-gradient(90deg, #e2e8f0 25%, #22d3ee 50%, #e2e8f0 75%);
+            background: linear-gradient(90deg, #e2e8f0 25%, #4fb3c9 50%, #e2e8f0 75%);
             background-size: 200% 100%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -303,7 +311,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             inset: 0;
             border-radius: 1.5rem;
             padding: 2px;
-            background: conic-gradient(from var(--border-angle, 0deg), #06b6d4, #8b5cf6, #3b82f6, #06b6d4);
+            background: conic-gradient(from var(--border-angle, 0deg), #4fb3c9, #2f7e8f, #0b1f40, #4fb3c9);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
@@ -326,7 +334,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             inset: 0;
             border-radius: inherit;
             padding: 1px;
-            background: linear-gradient(135deg, transparent 40%, rgba(6,182,212,0.3) 50%, transparent 60%);
+            background: linear-gradient(135deg, transparent 40%, rgba(79,179,201,0.3) 50%, transparent 60%);
             background-size: 300% 300%;
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
@@ -349,18 +357,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         <div class="text-center w-full max-w-4xl mx-auto z-10 mt-10">
             <!-- Badge -->
-            <div class="anim-fade-up anim-delay-1 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900/60 border border-slate-700/50 backdrop-blur-md mb-8 shadow-[0_0_15px_rgba(6,182,212,0.15)]">
+            <div class="anim-fade-up anim-delay-1 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900/60 border border-slate-700/50 backdrop-blur-md mb-8 shadow-[0_0_15px_rgba(79,179,201,0.15)]">
                 <span class="relative flex h-2.5 w-2.5">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                  <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-500"></span>
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4FB3C9] opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#3A93A8]"></span>
                 </span>
-                <span class="text-xs font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400 tracking-wider uppercase">Next-Gen Identity Intelligence</span>
+                <span class="text-xs font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#8FD8E8] to-[#2F7E8F] tracking-wider uppercase">Next-Gen Identity Intelligence</span>
             </div>
 
             <!-- Headline -->
             <h1 class="anim-fade-up anim-delay-2 text-5xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight mb-6 leading-tight">
                 Uncover the Truth <br/>
-                <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 drop-shadow-[0_0_30px_rgba(6,182,212,0.3)]">Hidden Online</span>
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#8FD8E8] via-[#4FB3C9] to-[#2F7E8F] drop-shadow-[0_0_30px_rgba(79,179,201,0.3)]">Hidden Online</span>
             </h1>
 
             <p class="anim-fade-up anim-delay-3 mt-6 text-base sm:text-lg lg:text-xl text-slate-300 font-medium max-w-2xl mx-auto mb-12 leading-relaxed">
@@ -376,11 +384,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <!-- Search Form with animated border -->
             <div class="anim-fade-scale anim-delay-4 relative max-w-3xl mx-auto group mt-4">
-                <div class="absolute -inset-1.5 bg-gradient-to-r from-cyan-500 via-purple-500 to-blue-500 rounded-3xl blur-md opacity-20 group-hover:opacity-60 transition duration-700 group-hover:duration-300 animate-pulse"></div>
+                <div class="absolute -inset-1.5 bg-gradient-to-r from-[#4FB3C9] via-[#2F7E8F] to-[#0B1F40] rounded-3xl blur-md opacity-20 group-hover:opacity-60 transition duration-700 group-hover:duration-300 animate-pulse"></div>
                 <form id="searchFormContainer" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="relative p-2 bg-slate-900/90 backdrop-blur-xl rounded-3xl border border-slate-700/50 flex flex-col sm:flex-row items-stretch gap-2 transition-all shadow-2xl search-glow gradient-border-spin">
                     <div class="flex flex-grow items-center gap-3 pl-5 py-2">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-purple-500/20 flex items-center justify-center border border-slate-700/50">
-                            <i class="fa-solid fa-microchip text-cyan-400 text-lg"></i>
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#4FB3C9]/20 to-[#0B1F40]/40 flex items-center justify-center border border-slate-700/50">
+                            <i class="fa-solid fa-microchip text-[#4FB3C9] text-lg"></i>
                         </div>
                         <input
                             type="text"
@@ -392,7 +400,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             required>
                     </div>
 
-                    <button type="submit" id="submitScanButton" class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white px-8 py-4 rounded-2xl text-base font-bold transition-all flex items-center justify-center gap-3 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/50 active:scale-95 cursor-pointer sm:min-w-[180px] hover:scale-[1.02]">
+                    <button type="submit" id="submitScanButton" class="bg-gradient-to-r from-[#4FB3C9] to-[#2F7E8F] hover:from-[#8FD8E8] hover:to-[#3A93A8] text-white px-8 py-4 rounded-2xl text-base font-bold transition-all flex items-center justify-center gap-3 shadow-lg shadow-[#4FB3C9]/25 hover:shadow-[#4FB3C9]/50 active:scale-95 cursor-pointer sm:min-w-[180px] hover:scale-[1.02]">
                         <i class="fa-solid fa-radar text-lg" id="buttonIconNode"></i>
                         <span id="buttonTextNode">Initiate Scan</span>
                     </button>
@@ -402,20 +410,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Trust Indicators -->
             <div class="anim-fade-up anim-delay-5 mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-sm text-slate-400 font-medium">
                 <div class="flex items-center gap-2.5 float-animation">
-                    <div class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
-                        <i class="fa-solid fa-bolt text-purple-400 text-xs"></i>
+                    <div class="w-8 h-8 rounded-lg bg-[#0B1F40]/50 flex items-center justify-center border border-[#0B1F40]">
+                        <i class="fa-solid fa-bolt text-[#8FD8E8] text-xs"></i>
                     </div>
                     <span>AI-Powered Analysis</span>
                 </div>
                 <div class="flex items-center gap-2.5 float-animation float-delay-1">
-                    <div class="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center border border-cyan-500/20">
-                        <i class="fa-solid fa-shield-halved text-cyan-400 text-xs"></i>
+                    <div class="w-8 h-8 rounded-lg bg-[#4FB3C9]/10 flex items-center justify-center border border-[#4FB3C9]/25">
+                        <i class="fa-solid fa-shield-halved text-[#4FB3C9] text-xs"></i>
                     </div>
                     <span>Military-Grade Encryption</span>
                 </div>
                 <div class="flex items-center gap-2.5 float-animation float-delay-2">
-                    <div class="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
-                        <i class="fa-solid fa-globe text-blue-400 text-xs"></i>
+                    <div class="w-8 h-8 rounded-lg bg-[#2F7E8F]/15 flex items-center justify-center border border-[#2F7E8F]/30">
+                        <i class="fa-solid fa-globe text-[#6FB6C8] text-xs"></i>
                     </div>
                     <span>50+ Networks Scanned</span>
                 </div>
@@ -427,19 +435,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <section class="w-full relative z-10 py-10 border-y border-slate-800/50">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
-                <div class="anim-fade-up text-center p-6 rounded-2xl bg-slate-900/30 backdrop-blur-sm border border-slate-800/30 hover:border-cyan-500/30 transition-all duration-300">
+                <div class="anim-fade-up text-center p-6 rounded-2xl bg-slate-900/30 backdrop-blur-sm border border-slate-800/30 hover:border-[#4FB3C9]/40 transition-all duration-300">
                     <div class="stat-number text-3xl sm:text-4xl font-black text-white mb-1" data-target="50" data-suffix="+">0+</div>
                     <p class="text-xs sm:text-sm text-slate-400 font-semibold uppercase tracking-wider">Networks Scanned</p>
                 </div>
-                <div class="anim-fade-up text-center p-6 rounded-2xl bg-slate-900/30 backdrop-blur-sm border border-slate-800/30 hover:border-purple-500/30 transition-all duration-300">
+                <div class="anim-fade-up text-center p-6 rounded-2xl bg-slate-900/30 backdrop-blur-sm border border-slate-800/30 hover:border-[#4FB3C9]/40 transition-all duration-300">
                     <div class="stat-number text-3xl sm:text-4xl font-black text-white mb-1" data-target="2" data-suffix="M+">0</div>
                     <p class="text-xs sm:text-sm text-slate-400 font-semibold uppercase tracking-wider">Reports Generated</p>
                 </div>
-                <div class="anim-fade-up text-center p-6 rounded-2xl bg-slate-900/30 backdrop-blur-sm border border-slate-800/30 hover:border-blue-500/30 transition-all duration-300">
+                <div class="anim-fade-up text-center p-6 rounded-2xl bg-slate-900/30 backdrop-blur-sm border border-slate-800/30 hover:border-[#4FB3C9]/40 transition-all duration-300">
                     <div class="stat-number text-3xl sm:text-4xl font-black text-white mb-1" data-target="99" data-suffix="%">0%</div>
                     <p class="text-xs sm:text-sm text-slate-400 font-semibold uppercase tracking-wider">Accuracy Rate</p>
                 </div>
-                <div class="anim-fade-up text-center p-6 rounded-2xl bg-slate-900/30 backdrop-blur-sm border border-slate-800/30 hover:border-green-500/30 transition-all duration-300">
+                <div class="anim-fade-up text-center p-6 rounded-2xl bg-slate-900/30 backdrop-blur-sm border border-slate-800/30 hover:border-[#4FB3C9]/40 transition-all duration-300">
                     <div class="stat-number text-3xl sm:text-4xl font-black text-white mb-1" data-target="120" data-suffix="s">0s</div>
                     <p class="text-xs sm:text-sm text-slate-400 font-semibold uppercase tracking-wider">Avg. Scan Time</p>
                 </div>
@@ -452,59 +460,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Section Header -->
         <div class="text-center max-w-2xl mx-auto mb-14 anim-fade-up">
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/50 border border-slate-700/50 backdrop-blur-md text-xs font-bold text-slate-300 tracking-wide shadow-sm mb-5">
-                <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+                <span class="relative flex h-2.5 w-2.5">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4FB3C9] opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#3A93A8]"></span>
+                </span>
                 Core Capabilities
             </div>
             <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight mb-4">
-                Intelligence at Your <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400">Fingertips</span>
+                Intelligence at Your <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#8FD8E8] to-[#4FB3C9]">Fingertips</span>
             </h2>
             <p class="text-slate-400 text-sm sm:text-base font-medium leading-relaxed">Powered by advanced algorithms that analyze, correlate, and compile digital intelligence from across the open web.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             <!-- Card 1 -->
-            <div class="anim-fade-up anim-delay-1 group relative bg-slate-900/50 backdrop-blur-md p-8 rounded-3xl border border-slate-700/50 hover:border-cyan-500/50 transition-all duration-500 hover:shadow-[0_0_40px_rgba(6,182,212,0.15)] hover:-translate-y-3 card-glow-border">
-                <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-cyan-500/10 to-transparent rounded-bl-[100px] opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
-                <div class="w-16 h-16 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center text-cyan-400 text-2xl mb-6 shadow-lg border border-slate-700 group-hover:bg-gradient-to-br group-hover:from-cyan-500 group-hover:to-cyan-600 group-hover:text-white group-hover:scale-110 transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(6,182,212,0.3)]">
+            <div class="anim-fade-up anim-delay-1 group relative bg-slate-900/50 backdrop-blur-md p-8 rounded-3xl border border-slate-700/50 hover:border-[#4FB3C9]/50 transition-all duration-500 hover:shadow-[0_0_40px_rgba(79,179,201,0.15)] hover:-translate-y-3 card-glow-border">
+                <div class="absolute top-0 right-0 w-40 h-40 origin-top-right bg-gradient-to-bl from-[#4FB3C9]/10 to-transparent rounded-bl-[100px] scale-0 group-hover:scale-[6] transition-transform duration-700 ease-in-out"></div>
+                <div class="w-16 h-16 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center text-[#4FB3C9] text-2xl mb-6 shadow-lg border border-slate-700 group-hover:bg-gradient-to-br group-hover:from-[#4FB3C9] group-hover:to-[#2F7E8F] group-hover:text-white group-hover:scale-110 transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(79,179,201,0.3)]">
                     <i class="fa-solid fa-fingerprint"></i>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors">Identity Resolution</h3>
+                <h3 class="text-xl font-bold text-white mb-3 group-hover:text-[#8FD8E8] transition-colors">Identity Resolution</h3>
                 <p class="text-slate-400 text-sm leading-relaxed mb-5">
                     Connect the dots between disconnected online profiles to reveal the true digital identity behind any footprint.
                 </p>
-                <div class="flex items-center gap-2 text-cyan-400 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+                <div class="flex items-center gap-2 text-[#4FB3C9] text-sm font-semibold opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
                     <span>Learn more</span>
                     <i class="fa-solid fa-arrow-right text-xs"></i>
                 </div>
             </div>
 
             <!-- Card 2 -->
-            <div class="anim-fade-up anim-delay-3 group relative bg-slate-900/50 backdrop-blur-md p-8 rounded-3xl border border-slate-700/50 hover:border-purple-500/50 transition-all duration-500 hover:shadow-[0_0_40px_rgba(139,92,246,0.15)] hover:-translate-y-3 card-glow-border">
-                <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-purple-500/10 to-transparent rounded-bl-[100px] opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
-                <div class="w-16 h-16 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center text-purple-400 text-2xl mb-6 shadow-lg border border-slate-700 group-hover:bg-gradient-to-br group-hover:from-purple-500 group-hover:to-purple-600 group-hover:text-white group-hover:scale-110 transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(139,92,246,0.3)]">
+            <div class="anim-fade-up anim-delay-3 group relative bg-slate-900/50 backdrop-blur-md p-8 rounded-3xl border border-slate-700/50 hover:border-[#0B1F40]/80 transition-all duration-500 hover:shadow-[0_0_40px_rgba(11,31,64,0.6)] hover:-translate-y-3 card-glow-border">
+                <div class="absolute top-0 right-0 w-40 h-40 origin-top-right bg-gradient-to-bl from-[#0B1F40]/70 to-transparent rounded-bl-[100px] scale-0 group-hover:scale-[6] transition-transform duration-700 ease-in-out"></div>
+                <div class="w-16 h-16 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center text-[#8FD8E8] text-2xl mb-6 shadow-lg border border-slate-700 group-hover:bg-gradient-to-br group-hover:from-[#0B1F40] group-hover:to-[#1E3A8A] group-hover:text-white group-hover:scale-110 transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(11,31,64,0.5)]">
                     <i class="fa-solid fa-network-wired"></i>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3 group-hover:text-purple-300 transition-colors">Deep Network Trace</h3>
+                <h3 class="text-xl font-bold text-white mb-3 group-hover:text-[#8FD8E8] transition-colors">Deep Network Trace</h3>
                 <p class="text-slate-400 text-sm leading-relaxed mb-5">
                     We scour deep web sources, professional networks, and social media platforms simultaneously for comprehensive results.
                 </p>
-                <div class="flex items-center gap-2 text-purple-400 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+                <div class="flex items-center gap-2 text-[#8FD8E8] text-sm font-semibold opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
                     <span>Learn more</span>
                     <i class="fa-solid fa-arrow-right text-xs"></i>
                 </div>
             </div>
 
             <!-- Card 3 -->
-            <div class="anim-fade-up anim-delay-5 group relative bg-slate-900/50 backdrop-blur-md p-8 rounded-3xl border border-slate-700/50 hover:border-blue-500/50 transition-all duration-500 hover:shadow-[0_0_40px_rgba(59,130,246,0.15)] hover:-translate-y-3 card-glow-border">
-                <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-blue-500/10 to-transparent rounded-bl-[100px] opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
-                <div class="w-16 h-16 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center text-blue-400 text-2xl mb-6 shadow-lg border border-slate-700 group-hover:bg-gradient-to-br group-hover:from-blue-500 group-hover:to-blue-600 group-hover:text-white group-hover:scale-110 transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(59,130,246,0.3)]">
+            <div class="anim-fade-up anim-delay-5 group relative bg-slate-900/50 backdrop-blur-md p-8 rounded-3xl border border-slate-700/50 hover:border-[#2F7E8F]/50 transition-all duration-500 hover:shadow-[0_0_40px_rgba(47,126,143,0.3)] hover:-translate-y-3 card-glow-border">
+                <div class="absolute top-0 right-0 w-40 h-40 origin-top-right bg-gradient-to-bl from-[#2F7E8F]/20 to-transparent rounded-bl-[100px] scale-0 group-hover:scale-[6] transition-transform duration-700 ease-in-out"></div>
+                <div class="w-16 h-16 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center text-[#6FB6C8] text-2xl mb-6 shadow-lg border border-slate-700 group-hover:bg-gradient-to-br group-hover:from-[#2F7E8F] group-hover:to-[#1E3A8A] group-hover:text-white group-hover:scale-110 transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(47,126,143,0.4)]">
                     <i class="fa-solid fa-file-shield"></i>
                 </div>
-                <h3 class="text-xl font-bold text-white mb-3 group-hover:text-blue-300 transition-colors">Actionable Intelligence</h3>
+                <h3 class="text-xl font-bold text-white mb-3 group-hover:text-[#8FD8E8] transition-colors">Actionable Intelligence</h3>
                 <p class="text-slate-400 text-sm leading-relaxed mb-5">
                     Generate beautiful, structured reports detailing risk factors, linked accounts, and behavioral analysis.
                 </p>
-                <div class="flex items-center gap-2 text-blue-400 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+                <div class="flex items-center gap-2 text-[#6FB6C8] text-sm font-semibold opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
                     <span>Learn more</span>
                     <i class="fa-solid fa-arrow-right text-xs"></i>
                 </div>
@@ -516,45 +527,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <section class="w-full max-w-[1400px] mx-auto px-4 sm:px-6 py-20 relative z-10">
         <div class="text-center max-w-2xl mx-auto mb-14 anim-fade-up">
             <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/50 border border-slate-700/50 backdrop-blur-md text-xs font-bold text-slate-300 tracking-wide shadow-sm mb-5">
-                <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+                <span class="relative flex h-2.5 w-2.5">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4FB3C9] opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#3A93A8]"></span>
+                </span>
                 Simple Process
             </div>
             <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight mb-4">
-                How It <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">Works</span>
+                How It <span class="bg-clip-text text-transparent bg-gradient-to-r from-[#4FB3C9] to-[#1E3A8A]">Works</span>
             </h2>
             <p class="text-slate-400 text-sm sm:text-base font-medium leading-relaxed">Three simple steps to uncover any digital identity.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 relative">
             <!-- Connecting line (desktop only) -->
-            <div class="hidden md:block absolute top-20 left-[20%] right-[20%] h-px bg-gradient-to-r from-cyan-500/30 via-purple-500/30 to-blue-500/30"></div>
+            <div class="hidden md:block absolute top-20 left-[20%] right-[20%] h-px bg-gradient-to-r from-[#4FB3C9]/30 via-[#0B1F40]/70 to-[#2F7E8F]/30"></div>
 
             <!-- Step 1 -->
             <div class="anim-fade-up anim-delay-1 text-center relative">
-                <div class="w-16 h-16 mx-auto bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-2xl flex items-center justify-center text-white text-2xl mb-6 shadow-lg shadow-cyan-500/25 float-animation relative z-10">
+                <div class="w-16 h-16 mx-auto bg-gradient-to-br from-[#4FB3C9] to-[#3A93A8] rounded-2xl flex items-center justify-center text-white text-2xl mb-6 shadow-lg shadow-[#4FB3C9]/25 float-animation relative z-10">
                     <i class="fa-solid fa-keyboard"></i>
                 </div>
-                <div class="absolute top-2 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-slate-950 border-2 border-cyan-500 flex items-center justify-center text-cyan-400 text-xs font-black z-20 -mt-1 ml-8">1</div>
+                <div class="absolute top-2 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-slate-950 border-2 border-[#4FB3C9] flex items-center justify-center text-[#4FB3C9] text-xs font-black z-20 -mt-1 ml-8">1</div>
                 <h3 class="text-lg font-bold text-white mb-2">Enter Identity</h3>
                 <p class="text-slate-400 text-sm leading-relaxed max-w-xs mx-auto">Type a name, email, phone number, or social media profile URL into the search bar.</p>
             </div>
 
             <!-- Step 2 -->
             <div class="anim-fade-up anim-delay-3 text-center relative">
-                <div class="w-16 h-16 mx-auto bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center text-white text-2xl mb-6 shadow-lg shadow-purple-500/25 float-animation float-delay-1 relative z-10">
+                <div class="w-16 h-16 mx-auto bg-gradient-to-br from-[#0B1F40] to-[#1E3A8A] rounded-2xl flex items-center justify-center text-white text-2xl mb-6 shadow-lg shadow-[#0B1F40]/60 float-animation float-delay-1 relative z-10">
                     <i class="fa-solid fa-microchip"></i>
                 </div>
-                <div class="absolute top-2 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-slate-950 border-2 border-purple-500 flex items-center justify-center text-purple-400 text-xs font-black z-20 -mt-1 ml-8">2</div>
+                <div class="absolute top-2 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-slate-950 border-2 border-[#0B1F40] flex items-center justify-center text-[#8FD8E8] text-xs font-black z-20 -mt-1 ml-8">2</div>
                 <h3 class="text-lg font-bold text-white mb-2">AI Analyzes</h3>
                 <p class="text-slate-400 text-sm leading-relaxed max-w-xs mx-auto">Our engine scans 50+ networks, cross-references data points, and builds a comprehensive profile.</p>
             </div>
 
             <!-- Step 3 -->
             <div class="anim-fade-up anim-delay-5 text-center relative">
-                <div class="w-16 h-16 mx-auto bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center text-white text-2xl mb-6 shadow-lg shadow-blue-500/25 float-animation float-delay-2 relative z-10">
+                <div class="w-16 h-16 mx-auto bg-gradient-to-br from-[#2F7E8F] to-[#1E3A8A] rounded-2xl flex items-center justify-center text-white text-2xl mb-6 shadow-lg shadow-[#2F7E8F]/40 float-animation float-delay-2 relative z-10">
                     <i class="fa-solid fa-file-lines"></i>
                 </div>
-                <div class="absolute top-2 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-slate-950 border-2 border-blue-500 flex items-center justify-center text-blue-400 text-xs font-black z-20 -mt-1 ml-8">3</div>
+                <div class="absolute top-2 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-slate-950 border-2 border-[#2F7E8F] flex items-center justify-center text-[#6FB6C8] text-xs font-black z-20 -mt-1 ml-8">3</div>
                 <h3 class="text-lg font-bold text-white mb-2">Get Report</h3>
                 <p class="text-slate-400 text-sm leading-relaxed max-w-xs mx-auto">Receive a detailed, structured intelligence report with all discovered digital footprints.</p>
             </div>
@@ -591,7 +605,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     this.speedX = (Math.random() - 0.5) * 0.4;
                     this.speedY = (Math.random() - 0.5) * 0.4;
                     this.opacity = Math.random() * 0.5 + 0.1;
-                    this.color = ['#06b6d4', '#8b5cf6', '#3b82f6'][Math.floor(Math.random() * 3)];
+                    this.color = ['#4fb3c9', '#2f7e8f', '#0b1f40'][Math.floor(Math.random() * 3)];
                 }
                 update() {
                     this.x += this.speedX;
@@ -621,7 +635,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         const dist = Math.sqrt(dx * dx + dy * dy);
                         if (dist < 120) {
                             ctx.beginPath();
-                            ctx.strokeStyle = '#06b6d4';
+                            ctx.strokeStyle = '#4fb3c9';
                             ctx.globalAlpha = 0.05 * (1 - dist / 120);
                             ctx.lineWidth = 0.5;
                             ctx.moveTo(particles[i].x, particles[i].y);

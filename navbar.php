@@ -65,11 +65,11 @@ $active_page = pathinfo(basename($_SERVER['SCRIPT_FILENAME']), PATHINFO_FILENAME
 
 <nav id="mainNavbar" class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm transition-all duration-300">
     <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16">
+            <div class="flex items-center justify-between h-28">
 
             <div class="flex-shrink-0">
                 <a href="<?php echo BASE_URL; ?>" class="flex items-center group">
-                    <img src="<?php echo BASE_URL; ?>public/logo.png" alt="Identity Search AI Logo" class="h-12 w-auto">
+                    <img src="<?php echo BASE_URL; ?>public/logo.png" alt="Identity Search AI Logo" class="h-24 w-auto">
                 </a>
             </div>
 

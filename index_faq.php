@@ -6,7 +6,7 @@
 ?>
 <style>
     #faqAccordionContainer .active .faq-toggle-trigger span {
-        color: #22d3ee; /* cyan-400 */
+        color: #4fb3c9; /* brand teal */
     }
     #faqAccordionContainer .active .faq-toggle-trigger {
         padding-bottom: 0.75rem;
@@ -19,7 +19,10 @@
     <!-- FAQ Header -->
     <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
         <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-700/50 bg-slate-900/50 backdrop-blur-md text-xs font-bold text-slate-300 tracking-wide shadow-sm">
-            <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+            <span class="relative flex h-2.5 w-2.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4FB3C9] opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#3A93A8]"></span>
+            </span>
             Frequently Asked Questions
         </div>
 
@@ -37,19 +40,19 @@
 
         <div class="space-y-4">
             <!-- FAQ Item 1 -->
-            <div class="group bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-3xl overflow-hidden shadow-lg hover:shadow-[0_0_20px_rgba(6,182,212,0.1)] hover:border-cyan-500/50 transition-all duration-300">
+            <div class="group bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-3xl overflow-hidden shadow-lg hover:shadow-[0_0_20px_rgba(79,179,201,0.1)] hover:border-[#4FB3C9]/50 transition-all duration-300">
                 <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none faq-toggle-trigger group">
                     <div class="flex items-center gap-4 min-w-0">
-                        <div class="w-10 h-10 rounded-2xl bg-slate-800 text-cyan-400 border border-slate-700 flex items-center justify-center shrink-0 shadow-inner group-hover:bg-cyan-500 group-hover:text-white transition-all">
+                        <div class="w-10 h-10 rounded-2xl bg-slate-800 text-[#4FB3C9] border border-slate-700 flex items-center justify-center shrink-0 shadow-inner group-hover:bg-[#4FB3C9] group-hover:text-white transition-all">
                             <i class="fa-solid fa-fingerprint text-sm"></i>
                         </div>
 
-                        <span class="text-base font-bold text-slate-200 group-hover:text-cyan-400 transition-colors leading-snug">
+                        <span class="text-base font-bold text-slate-200 group-hover:text-[#4FB3C9] transition-colors leading-snug">
                             What is Identity Search AI
                         </span>
                     </div>
 
-                    <div class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-cyan-500 group-hover:border-cyan-400 transition-all">
+                    <div class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-[#4FB3C9] group-hover:border-[#4FB3C9] transition-all">
                         <i class="fa-solid fa-chevron-down text-slate-400 group-hover:text-white text-xs transition-transform duration-300 transform rotate-0"></i>
                     </div>
                 </button>
@@ -66,19 +69,19 @@
             </div>
 
             <!-- FAQ Item 2 -->
-            <div class="group bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-3xl overflow-hidden shadow-lg hover:shadow-[0_0_20px_rgba(6,182,212,0.1)] hover:border-cyan-500/50 transition-all duration-300">
+            <div class="group bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-3xl overflow-hidden shadow-lg hover:shadow-[0_0_20px_rgba(79,179,201,0.1)] hover:border-[#4FB3C9]/50 transition-all duration-300">
                 <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none faq-toggle-trigger group">
                     <div class="flex items-center gap-4 min-w-0">
-                        <div class="w-10 h-10 rounded-2xl bg-slate-800 text-cyan-400 border border-slate-700 flex items-center justify-center shrink-0 shadow-inner group-hover:bg-cyan-500 group-hover:text-white transition-all">
+                        <div class="w-10 h-10 rounded-2xl bg-slate-800 text-[#4FB3C9] border border-slate-700 flex items-center justify-center shrink-0 shadow-inner group-hover:bg-[#4FB3C9] group-hover:text-white transition-all">
                             <i class="fa-solid fa-magnifying-glass-chart text-sm"></i>
                         </div>
 
-                        <span class="text-base font-bold text-slate-200 group-hover:text-cyan-400 transition-colors leading-snug">
+                        <span class="text-base font-bold text-slate-200 group-hover:text-[#4FB3C9] transition-colors leading-snug">
                             Why choose Identity Search AI over standard background lookups
                         </span>
                     </div>
 
-                    <div class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-cyan-500 group-hover:border-cyan-400 transition-all">
+                    <div class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-[#4FB3C9] group-hover:border-[#4FB3C9] transition-all">
                         <i class="fa-solid fa-chevron-down text-slate-400 group-hover:text-white text-xs transition-transform duration-300 transform rotate-0"></i>
                     </div>
                 </button>
@@ -95,19 +98,19 @@
             </div>
 
             <!-- FAQ Item 3 -->
-            <div class="group bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-3xl overflow-hidden shadow-lg hover:shadow-[0_0_20px_rgba(6,182,212,0.1)] hover:border-cyan-500/50 transition-all duration-300">
+            <div class="group bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-3xl overflow-hidden shadow-lg hover:shadow-[0_0_20px_rgba(79,179,201,0.1)] hover:border-[#4FB3C9]/50 transition-all duration-300">
                 <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none faq-toggle-trigger group">
                     <div class="flex items-center gap-4 min-w-0">
-                        <div class="w-10 h-10 rounded-2xl bg-slate-800 text-cyan-400 border border-slate-700 flex items-center justify-center shrink-0 shadow-inner group-hover:bg-cyan-500 group-hover:text-white transition-all">
+                        <div class="w-10 h-10 rounded-2xl bg-slate-800 text-[#4FB3C9] border border-slate-700 flex items-center justify-center shrink-0 shadow-inner group-hover:bg-[#4FB3C9] group-hover:text-white transition-all">
                             <i class="fa-solid fa-layer-group text-sm"></i>
                         </div>
 
-                        <span class="text-base font-bold text-slate-200 group-hover:text-cyan-400 transition-colors leading-snug">
+                        <span class="text-base font-bold text-slate-200 group-hover:text-[#4FB3C9] transition-colors leading-snug">
                             What makes our intelligence console different
                         </span>
                     </div>
 
-                    <div class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-cyan-500 group-hover:border-cyan-400 transition-all">
+                    <div class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-[#4FB3C9] group-hover:border-[#4FB3C9] transition-all">
                         <i class="fa-solid fa-chevron-down text-slate-400 group-hover:text-white text-xs transition-transform duration-300 transform rotate-0"></i>
                     </div>
                 </button>
@@ -121,7 +124,7 @@
 
                             <ul class="space-y-3">
                                 <li class="flex gap-3">
-                                    <span class="mt-1 w-5 h-5 rounded-full bg-slate-800 text-cyan-400 flex items-center justify-center shrink-0 shadow-inner">
+                                    <span class="mt-1 w-5 h-5 rounded-full bg-slate-800 text-[#4FB3C9] flex items-center justify-center shrink-0 shadow-inner">
                                         <i class="fa-solid fa-check text-[10px]"></i>
                                     </span>
                                     <span>
@@ -130,7 +133,7 @@
                                     </span>
                                 </li>
                                 <li class="flex gap-3">
-                                    <span class="mt-1 w-5 h-5 rounded-full bg-slate-800 text-cyan-400 flex items-center justify-center shrink-0 shadow-inner">
+                                    <span class="mt-1 w-5 h-5 rounded-full bg-slate-800 text-[#4FB3C9] flex items-center justify-center shrink-0 shadow-inner">
                                         <i class="fa-solid fa-check text-[10px]"></i>
                                     </span>
                                     <span>
@@ -147,19 +150,19 @@
 
         <div class="space-y-4">
             <!-- FAQ Item 4 -->
-            <div class="group bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-3xl overflow-hidden shadow-lg hover:shadow-[0_0_20px_rgba(6,182,212,0.1)] hover:border-cyan-500/50 transition-all duration-300">
+            <div class="group bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-3xl overflow-hidden shadow-lg hover:shadow-[0_0_20px_rgba(79,179,201,0.1)] hover:border-[#4FB3C9]/50 transition-all duration-300">
                 <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none faq-toggle-trigger group">
                     <div class="flex items-center gap-4 min-w-0">
-                        <div class="w-10 h-10 rounded-2xl bg-slate-800 text-cyan-400 border border-slate-700 flex items-center justify-center shrink-0 shadow-inner group-hover:bg-cyan-500 group-hover:text-white transition-all">
+                        <div class="w-10 h-10 rounded-2xl bg-slate-800 text-[#4FB3C9] border border-slate-700 flex items-center justify-center shrink-0 shadow-inner group-hover:bg-[#4FB3C9] group-hover:text-white transition-all">
                             <i class="fa-solid fa-file-lines text-sm"></i>
                         </div>
 
-                        <span class="text-base font-bold text-slate-200 group-hover:text-cyan-400 transition-colors leading-snug">
+                        <span class="text-base font-bold text-slate-200 group-hover:text-[#4FB3C9] transition-colors leading-snug">
                             What information will I get in my generated dossier
                         </span>
                     </div>
 
-                    <div class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-cyan-500 group-hover:border-cyan-400 transition-all">
+                    <div class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-[#4FB3C9] group-hover:border-[#4FB3C9] transition-all">
                         <i class="fa-solid fa-chevron-down text-slate-400 group-hover:text-white text-xs transition-transform duration-300 transform rotate-0"></i>
                     </div>
                 </button>
@@ -176,19 +179,19 @@
             </div>
 
             <!-- FAQ Item 5 -->
-            <div class="group bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-3xl overflow-hidden shadow-lg hover:shadow-[0_0_20px_rgba(6,182,212,0.1)] hover:border-cyan-500/50 transition-all duration-300">
+            <div class="group bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-3xl overflow-hidden shadow-lg hover:shadow-[0_0_20px_rgba(79,179,201,0.1)] hover:border-[#4FB3C9]/50 transition-all duration-300">
                 <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none faq-toggle-trigger group">
                     <div class="flex items-center gap-4 min-w-0">
-                        <div class="w-10 h-10 rounded-2xl bg-slate-800 text-cyan-400 border border-slate-700 flex items-center justify-center shrink-0 shadow-inner group-hover:bg-cyan-500 group-hover:text-white transition-all">
+                        <div class="w-10 h-10 rounded-2xl bg-slate-800 text-[#4FB3C9] border border-slate-700 flex items-center justify-center shrink-0 shadow-inner group-hover:bg-[#4FB3C9] group-hover:text-white transition-all">
                             <i class="fa-solid fa-database text-sm"></i>
                         </div>
 
-                        <span class="text-base font-bold text-slate-200 group-hover:text-cyan-400 transition-colors leading-snug">
+                        <span class="text-base font-bold text-slate-200 group-hover:text-[#4FB3C9] transition-colors leading-snug">
                             Where are the background records gathered from
                         </span>
                     </div>
 
-                    <div class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-cyan-500 group-hover:border-cyan-400 transition-all">
+                    <div class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-[#4FB3C9] group-hover:border-[#4FB3C9] transition-all">
                         <i class="fa-solid fa-chevron-down text-slate-400 group-hover:text-white text-xs transition-transform duration-300 transform rotate-0"></i>
                     </div>
                 </button>
@@ -205,19 +208,19 @@
             </div>
 
             <!-- FAQ Item 6 -->
-            <div class="group bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-3xl overflow-hidden shadow-lg hover:shadow-[0_0_20px_rgba(6,182,212,0.1)] hover:border-cyan-500/50 transition-all duration-300">
+            <div class="group bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-3xl overflow-hidden shadow-lg hover:shadow-[0_0_20px_rgba(79,179,201,0.1)] hover:border-[#4FB3C9]/50 transition-all duration-300">
                 <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none faq-toggle-trigger group">
                     <div class="flex items-center gap-4 min-w-0">
-                        <div class="w-10 h-10 rounded-2xl bg-slate-800 text-cyan-400 border border-slate-700 flex items-center justify-center shrink-0 shadow-inner group-hover:bg-cyan-500 group-hover:text-white transition-all">
+                        <div class="w-10 h-10 rounded-2xl bg-slate-800 text-[#4FB3C9] border border-slate-700 flex items-center justify-center shrink-0 shadow-inner group-hover:bg-[#4FB3C9] group-hover:text-white transition-all">
                             <i class="fa-solid fa-credit-card text-sm"></i>
                         </div>
 
-                        <span class="text-base font-bold text-slate-200 group-hover:text-cyan-400 transition-colors leading-snug">
+                        <span class="text-base font-bold text-slate-200 group-hover:text-[#4FB3C9] transition-colors leading-snug">
                             What payment methods do you accept, and what is your refund policy
                         </span>
                     </div>
 
-                    <div class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-cyan-500 group-hover:border-cyan-400 transition-all">
+                    <div class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0 group-hover:bg-[#4FB3C9] group-hover:border-[#4FB3C9] transition-all">
                         <i class="fa-solid fa-chevron-down text-slate-400 group-hover:text-white text-xs transition-transform duration-300 transform rotate-0"></i>
                     </div>
                 </button>
