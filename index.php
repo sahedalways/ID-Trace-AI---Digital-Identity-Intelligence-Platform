@@ -455,10 +455,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const handleScroll = () => {
                 if (window.scrollY > 20) {
                     navbar.classList.remove("bg-transparent");
-                    navbar.classList.add("bg-white/80", "backdrop-blur-md", "shadow-sm");
+                    navbar.classList.add("bg-[#BFE4FD]/80", "backdrop-blur-md", "shadow-sm");
                 } else {
                     navbar.classList.add("bg-transparent");
-                    navbar.classList.remove("bg-white/80", "backdrop-blur-md", "shadow-sm");
+                    navbar.classList.remove("bg-[#BFE4FD]/80", "backdrop-blur-md", "shadow-sm");
                 }
             };
 
