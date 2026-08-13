@@ -57,15 +57,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php include 'head.php'; ?>
 </head>
 
-<body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white bg-slate-50 relative">
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#0072bc] selection:text-white bg-slate-50 relative">
 
-    <?php include 'navbar.php'; ?>
+    <!-- Sticky Glassmorphic Navbar Container -->
+    <header id="mainNavbar" class="sticky top-0 z-50 bg-transparent transition-all duration-300">
+        <?php include 'navbar.php'; ?>
+    </header>
 
     <!-- Full-width Background Decorations -->
-    <div class="absolute inset-x-0 top-0 -z-10 overflow-hidden" style="height: 900px;">
-        <div class="blob-1 absolute top-0 left-1/2 w-[900px] h-[900px] bg-emerald-50 rounded-full blur-3xl opacity-60 -translate-x-1/2 will-change-transform"></div>
-        <div class="blob-2 absolute top-24 -left-20 w-96 h-96 bg-[#128c7e]/10 rounded-full blur-3xl will-change-transform"></div>
-        <div class="blob-3 absolute bottom-0 right-0 w-96 h-96 bg-emerald-100 rounded-full blur-3xl opacity-70 will-change-transform"></div>
+    <div class="absolute inset-x-0 top-0 -z-10 overflow-hidden" style="height: 900px; background: linear-gradient(180deg, #BFE4FD 0%, #FFFFFF 100%);">
+        <div class="blob-1 absolute top-0 left-1/2 w-[900px] h-[900px] bg-[#0072bc]/10 rounded-full blur-3xl opacity-60 -translate-x-1/2 will-change-transform"></div>
+        <div class="blob-2 absolute top-24 -left-20 w-96 h-96 bg-[#0072bc]/15 rounded-full blur-3xl will-change-transform"></div>
+        <div class="blob-3 absolute bottom-0 right-0 w-96 h-96 bg-[#BFE4FD]/50 rounded-full blur-3xl opacity-70 will-change-transform"></div>
     </div>
 
     <main class="relative flex-grow w-full mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-16 md:pb-10" style="max-width: 1600px;">
@@ -135,8 +138,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <!-- Left Content -->
             <div class="text-center lg:text-left">
-                <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-50 border border-emerald-100 text-xs font-semibold text-emerald-800 tracking-wide shadow-sm">
-                    <span class="w-2 h-2 rounded-full bg-[#128c7e]"></span>
+                <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0072bc]/10 border border-[#0072bc]/20 text-xs font-semibold text-[#0072bc] tracking-wide shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-[#0072bc]"></span>
                     #1 Tool For Identity Intelligence
                 </div>
 
@@ -151,15 +154,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <!-- Feature Highlights -->
                 <div class="mt-9 flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-3">
                     <div class="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl bg-white border border-gray-200 shadow-sm text-[11px] sm:text-sm font-semibold text-gray-800">
-                        <i class="fa-solid fa-user-shield text-[#128c7e] text-xs sm:text-base"></i>
+                        <i class="fa-solid fa-user-shield text-[#0072bc] text-xs sm:text-base"></i>
                         Digital Identity Search
                     </div>
                     <div class="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl bg-white border border-gray-200 shadow-sm text-[11px] sm:text-sm font-semibold text-gray-800">
-                        <i class="fa-solid fa-globe text-[#128c7e] text-xs sm:text-base"></i>
+                        <i class="fa-solid fa-globe text-[#0072bc] text-xs sm:text-base"></i>
                         Online Footprint Analysis
                     </div>
                     <div class="inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-5 py-2 sm:py-2.5 rounded-lg sm:rounded-xl bg-white border border-gray-200 shadow-sm text-[11px] sm:text-sm font-semibold text-gray-800">
-                        <i class="fa-solid fa-file-lines text-[#128c7e] text-xs sm:text-base"></i>
+                        <i class="fa-solid fa-file-lines text-[#0072bc] text-xs sm:text-base"></i>
                         Smart Identity Reports
                     </div>
                 </div>
@@ -173,9 +176,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <!-- Search Form -->
                 <div class="mt-9 max-w-2xl mx-auto lg:mx-0">
-                    <form id="searchFormContainer" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="p-3 bg-white/95 backdrop-blur rounded-3xl border border-gray-200 shadow-[0_20px_60px_rgba(0,0,0,0.08)] flex flex-col sm:flex-row items-stretch gap-2.5 focus-within:border-[#128c7e] focus-within:shadow-[0_20px_70px_rgba(18,140,126,0.12)] transition-all duration-200">
+                    <form id="searchFormContainer" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="p-3 bg-white/95 backdrop-blur rounded-3xl border border-gray-200 shadow-[0_20px_60px_rgba(0,0,0,0.08)] flex flex-col sm:flex-row items-stretch gap-2.5 focus-within:border-[#0072bc] focus-within:shadow-[0_20px_70px_rgba(0,114,188,0.15)] transition-all duration-200">
                         <div class="flex flex-grow items-center gap-1.5 min-w-0 pl-4">
-                            <div class="w-9 h-9 flex items-center justify-center text-[#128c7e] shrink-0">
+                            <div class="w-9 h-9 flex items-center justify-center text-[#0072bc] shrink-0">
                                 <i class="fa-solid fa-magnifying-glass text-lg"></i>
                             </div>
                             <div class="flex-grow min-w-0 pl-2">
@@ -190,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
-                        <button type="submit" id="submitScanButton" class="bg-[#128c7e] hover:bg-[#0e6f64] active:scale-[0.98] text-white px-8 py-4 rounded-2xl text-sm lg:text-base font-bold transition-all flex items-center justify-center gap-2.5 shadow-sm shadow-emerald-200 cursor-pointer min-w-[155px]">
+                        <button type="submit" id="submitScanButton" class="bg-[#0072bc] hover:bg-[#005a96] active:scale-[0.98] text-white px-8 py-4 rounded-2xl text-sm lg:text-base font-bold transition-all flex items-center justify-center gap-2.5 shadow-sm shadow-blue-200 cursor-pointer min-w-[155px]">
                             <span id="buttonIconNode" class="w-5 h-5 lg:w-6 lg:h-6 flex items-center justify-center shrink-0">
                                 <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8.10008 21.221C6.71021 19.2375 5.89258 16.8243 5.89258 14.2187C5.89258 10.8443 8.6265 8.10938 11.9989 8.10938C15.3712 8.10938 18.1051 10.8443 18.1051 14.2187" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -205,15 +208,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <div class="mt-5 flex flex-wrap items-center justify-center lg:justify-start gap-x-6 gap-y-2 text-xs lg:text-sm text-gray-600 font-medium">
                         <div class="flex items-center gap-2">
-                            <i class="fa-solid fa-check text-[#128c7e]"></i>
+                            <i class="fa-solid fa-check text-[#0072bc]"></i>
                             Fast identity lookup
                         </div>
                         <div class="flex items-center gap-2">
-                            <i class="fa-solid fa-check text-[#128c7e]"></i>
+                            <i class="fa-solid fa-check text-[#0072bc]"></i>
                             AI-powered scan
                         </div>
                         <div class="flex items-center gap-2">
-                            <i class="fa-solid fa-check text-[#128c7e]"></i>
+                            <i class="fa-solid fa-check text-[#0072bc]"></i>
                             Detailed report generation
                         </div>
                     </div>
@@ -221,114 +224,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <!-- Right Hero Image / Visual -->
-            <div class="relative">
-                <div class="relative rounded-[20px] sm:rounded-[32px] border border-emerald-100 bg-white/90 backdrop-blur shadow-[0_25px_80px_rgba(0,0,0,0.10)] overflow-hidden">
-
-                    <!-- Top Mini Header -->
-                    <div class="flex items-center justify-between px-3 sm:px-6 lg:px-8 py-3 sm:py-5 border-b border-gray-100 bg-gradient-to-r from-emerald-50 to-white">
-                        <div class="flex items-center gap-2.5 sm:gap-3.5">
-                            <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#128c7e] text-white flex items-center justify-center shadow-sm text-xs sm:text-base">
-                                <i class="fa-solid fa-fingerprint"></i>
-                            </div>
-                            <div class="text-left">
-                                <p class="text-[11px] sm:text-sm font-bold text-gray-900">Identity Search Intelligence</p>
-                                <p class="text-[10px] sm:text-sm text-gray-500 font-medium">AI-powered digital footprint analysis</p>
-                            </div>
-                        </div>
-                        <div class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-100 text-xs font-bold text-emerald-800">
-                            <span class="w-2 h-2 rounded-full bg-[#128c7e] animate-pulse"></span>
-                            Live Scan Ready
-                        </div>
-                    </div>
-
-                    <!-- Hero Slider -->
-                    <div class="relative p-3 sm:p-5 lg:p-7">
-                        <div id="heroSlider" class="relative rounded-[28px] overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-emerald-100 border border-emerald-100 group/slider">
-
-                            <div class="slider-track flex transition-transform duration-700 ease-in-out">
-                                <!-- Slide 1 -->
-                                <div class="slider-slide min-w-full relative">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1200&q=80"
-                                        alt="Digital Identity Search"
-                                        class="w-full h-[240px] sm:h-[340px] lg:h-[460px] xl:h-[500px] object-cover">
-                                    <div class="absolute inset-0 bg-black/30"></div>
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
-                                    <div class="absolute left-0 right-0 bottom-0 p-4 sm:p-7 lg:p-9 text-left">
-                                        <div class="max-w-lg">
-                                            <div class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/90 backdrop-blur text-[10px] sm:text-xs font-bold text-[#128c7e] mb-2 sm:mb-4">
-                                                <i class="fa-solid fa-wand-magic-sparkles"></i>
-                                                Identity Search Platform
-                                            </div>
-                                            <h3 class="text-sm sm:text-xl lg:text-2xl xl:text-3xl font-black text-white leading-tight">
-                                                Search smarter. Discover digital identity signals instantly.
-                                            </h3>
-                                            <p class="mt-2 sm:mt-3 text-[10px] sm:text-xs lg:text-sm text-white/90 font-medium leading-relaxed">
-                                                Uncover social profiles, digital traces, and identity intelligence in one streamlined search experience.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Slide 2 -->
-                                <div class="slider-slide min-w-full relative">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80"
-                                        alt="Data Intelligence Analytics"
-                                        class="w-full h-[240px] sm:h-[340px] lg:h-[460px] xl:h-[500px] object-cover">
-                                    <div class="absolute inset-0 bg-black/30"></div>
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
-                                    <div class="absolute left-0 right-0 bottom-0 p-4 sm:p-7 lg:p-9 text-left">
-                                        <div class="max-w-lg">
-                                            <div class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/90 backdrop-blur text-[10px] sm:text-xs font-bold text-[#128c7e] mb-2 sm:mb-4">
-                                                <i class="fa-solid fa-chart-line"></i>
-                                                AI Intelligence Engine
-                                            </div>
-                                            <h3 class="text-sm sm:text-xl lg:text-2xl xl:text-3xl font-black text-white leading-tight">
-                                                Analyze digital footprints across 50+ platforms.
-                                            </h3>
-                                            <p class="mt-2 sm:mt-3 text-[10px] sm:text-xs lg:text-sm text-white/90 font-medium leading-relaxed">
-                                                Our AI engine scans public data from social networks, professional profiles, and online databases.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Slide 3 -->
-                                <div class="slider-slide min-w-full relative">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80"
-                                        alt="Cyber Security Intelligence"
-                                        class="w-full h-[240px] sm:h-[340px] lg:h-[460px] xl:h-[500px] object-cover">
-                                    <div class="absolute inset-0 bg-black/30"></div>
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
-                                    <div class="absolute left-0 right-0 bottom-0 p-4 sm:p-7 lg:p-9 text-left">
-                                        <div class="max-w-lg">
-                                            <div class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white/90 backdrop-blur text-[10px] sm:text-xs font-bold text-[#128c7e] mb-2 sm:mb-4">
-                                                <i class="fa-solid fa-shield-halved"></i>
-                                                Smart Identity Reports
-                                            </div>
-                                            <h3 class="text-sm sm:text-xl lg:text-2xl xl:text-3xl font-black text-white leading-tight">
-                                                Generate detailed intelligence reports in seconds.
-                                            </h3>
-                                            <p class="mt-2 sm:mt-3 text-[10px] sm:text-xs lg:text-sm text-white/90 font-medium leading-relaxed">
-                                                Get AI-powered identity verification, risk assessment, and complete digital footprint analysis.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Nav Arrows -->
-                            <button class="slider-prev absolute left-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/20 backdrop-blur hover:bg-white/40 text-white flex items-center justify-center transition-all duration-200 opacity-0 group-hover/slider:opacity-100">
-                                <i class="fa-solid fa-chevron-left text-sm"></i>
-                            </button>
-                            <button class="slider-next absolute right-3 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/20 backdrop-blur hover:bg-white/40 text-white flex items-center justify-center transition-all duration-200 opacity-0 group-hover/slider:opacity-100">
-                                <i class="fa-solid fa-chevron-right text-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            <div class="relative flex items-center justify-center">
+                <img src="<?php echo BASE_URL; ?>public/identity_hero_graphic_blue.svg" alt="Hero Right Image" class="w-full h-auto max-h-[300px] sm:max-h-[400px] lg:max-h-[500px] object-contain">
             </div>
         </div>
     </main>
@@ -336,8 +233,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <section class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 mt-0 sm:mt-10 pt-4 sm:pt-14 pb-8 sm:pb-16">
         <!-- Section Header -->
         <div class="text-center max-w-2xl mx-auto mb-10">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-100 text-xs font-bold text-emerald-800 tracking-wide shadow-sm">
-                <span class="w-2 h-2 rounded-full bg-[#128c7e]"></span>
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#0072bc]/20 bg-[#0072bc]/10 text-xs font-bold text-[#0072bc] tracking-wide shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-[#0072bc]"></span>
                 Why Identity Intelligence Matters
             </div>
 
@@ -355,10 +252,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <!-- Card 1 -->
             <div class="group relative overflow-hidden bg-white p-6 sm:p-7 rounded-3xl border border-gray-200/80 shadow-sm hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
-                <div class="absolute top-0 right-0 w-28 h-28 bg-emerald-50 rounded-bl-[80px] opacity-70 group-hover:opacity-100 origin-top-right group-hover:scale-[6] transition-all duration-500 ease-in-out"></div>
+                <div class="absolute top-0 right-0 w-28 h-28 bg-[#BFE4FD]/30 rounded-bl-[80px] opacity-70 group-hover:opacity-100 origin-top-right group-hover:scale-[6] transition-all duration-500 ease-in-out"></div>
 
                 <div class="relative space-y-4">
-                    <div class="w-12 h-12 bg-emerald-50 text-[#128c7e] flex items-center justify-center rounded-2xl text-lg shadow-sm border border-emerald-100 group-hover:bg-[#128c7e] group-hover:text-white transition-all duration-300">
+                    <div class="w-12 h-12 bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center rounded-2xl text-lg shadow-sm border border-[#0072bc]/20 group-hover:bg-[#0072bc] group-hover:text-white transition-all duration-300">
                         <i class="fa-solid fa-user-shield"></i>
                     </div>
 
@@ -371,8 +268,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </p>
                     </div>
 
-                    <div class="pt-2 flex items-center gap-2 text-xs font-bold text-[#128c7e]">
-                        <span class="w-6 h-6 rounded-full bg-emerald-50 flex items-center justify-center">
+                    <div class="pt-2 flex items-center gap-2 text-xs font-bold text-[#0072bc]">
+                        <span class="w-6 h-6 rounded-full bg-[#0072bc]/10 flex items-center justify-center">
                             <i class="fa-solid fa-check text-[10px]"></i>
                         </span>
                         Personal risk awareness
@@ -382,10 +279,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <!-- Card 2 -->
             <div class="group relative overflow-hidden bg-white p-6 sm:p-7 rounded-3xl border border-gray-200/80 shadow-sm hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
-                <div class="absolute top-0 right-0 w-28 h-28 bg-emerald-50 rounded-bl-[80px] opacity-70 group-hover:opacity-100 origin-top-right group-hover:scale-[6] transition-all duration-500 ease-in-out"></div>
+                <div class="absolute top-0 right-0 w-28 h-28 bg-[#BFE4FD]/30 rounded-bl-[80px] opacity-70 group-hover:opacity-100 origin-top-right group-hover:scale-[6] transition-all duration-500 ease-in-out"></div>
 
                 <div class="relative space-y-4">
-                    <div class="w-12 h-12 bg-emerald-50 text-[#128c7e] flex items-center justify-center rounded-2xl text-lg shadow-sm border border-emerald-100 group-hover:bg-[#128c7e] group-hover:text-white transition-all duration-300">
+                    <div class="w-12 h-12 bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center rounded-2xl text-lg shadow-sm border border-[#0072bc]/20 group-hover:bg-[#0072bc] group-hover:text-white transition-all duration-300">
                         <i class="fa-solid fa-chart-line"></i>
                     </div>
 
@@ -398,8 +295,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </p>
                     </div>
 
-                    <div class="pt-2 flex items-center gap-2 text-xs font-bold text-[#128c7e]">
-                        <span class="w-6 h-6 rounded-full bg-emerald-50 flex items-center justify-center">
+                    <div class="pt-2 flex items-center gap-2 text-xs font-bold text-[#0072bc]">
+                        <span class="w-6 h-6 rounded-full bg-[#0072bc]/10 flex items-center justify-center">
                             <i class="fa-solid fa-check text-[10px]"></i>
                         </span>
                         Better business confidence
@@ -409,10 +306,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <!-- Card 3 -->
             <div class="group relative overflow-hidden bg-white p-6 sm:p-7 rounded-3xl border border-gray-200/80 shadow-sm hover:shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
-                <div class="absolute top-0 right-0 w-28 h-28 bg-emerald-50 rounded-bl-[80px] opacity-70 group-hover:opacity-100 origin-top-right group-hover:scale-[6] transition-all duration-500 ease-in-out"></div>
+                <div class="absolute top-0 right-0 w-28 h-28 bg-[#BFE4FD]/30 rounded-bl-[80px] opacity-70 group-hover:opacity-100 origin-top-right group-hover:scale-[6] transition-all duration-500 ease-in-out"></div>
 
                 <div class="relative space-y-4">
-                    <div class="w-12 h-12 bg-emerald-50 text-[#128c7e] flex items-center justify-center rounded-2xl text-lg shadow-sm border border-emerald-100 group-hover:bg-[#128c7e] group-hover:text-white transition-all duration-300">
+                    <div class="w-12 h-12 bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center rounded-2xl text-lg shadow-sm border border-[#0072bc]/20 group-hover:bg-[#0072bc] group-hover:text-white transition-all duration-300">
                         <i class="fa-solid fa-ban"></i>
                     </div>
 
@@ -425,8 +322,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </p>
                     </div>
 
-                    <div class="pt-2 flex items-center gap-2 text-xs font-bold text-[#128c7e]">
-                        <span class="w-6 h-6 rounded-full bg-emerald-50 flex items-center justify-center">
+                    <div class="pt-2 flex items-center gap-2 text-xs font-bold text-[#0072bc]">
+                        <span class="w-6 h-6 rounded-full bg-[#0072bc]/10 flex items-center justify-center">
                             <i class="fa-solid fa-check text-[10px]"></i>
                         </span>
                         Early warning signals
@@ -446,6 +343,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } ?>
 
     <script>
+        // NAVBAR SCROLL GLASS EFFECT
+        document.addEventListener("DOMContentLoaded", () => {
+            const navbar = document.getElementById("mainNavbar");
+            if (!navbar) return;
+
+            const handleScroll = () => {
+                if (window.scrollY > 20) {
+                    navbar.classList.remove("bg-transparent");
+                    navbar.classList.add("bg-white/80", "backdrop-blur-md", "shadow-sm");
+                } else {
+                    navbar.classList.add("bg-transparent");
+                    navbar.classList.remove("bg-white/80", "backdrop-blur-md", "shadow-sm");
+                }
+            };
+
+            window.addEventListener("scroll", handleScroll);
+            handleScroll(); // Trigger initial state
+        });
+
         document.addEventListener("DOMContentLoaded", () => {
             const container = document.getElementById("faqAccordionContainer");
             if (!container) return;

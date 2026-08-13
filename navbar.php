@@ -37,6 +37,12 @@ $logout_url = BASE_URL . "logout?return=" . urlencode($relative_return);
 
 // Detect active page for menu highlighting
 $active_page = pathinfo(basename($_SERVER['SCRIPT_FILENAME']), PATHINFO_FILENAME);
+
+// Home page uses the glassmorphic header wrapper (id="mainNavbar") from index.php.
+// Other pages include navbar.php directly, so they need the solid white sticky nav.
+// Detect home page via both the active script name and the request URI for router.php compatibility.
+$request_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$is_home_page = ($active_page === 'index') || ($request_path === '/' || $request_path === '/index.php' || rtrim($request_path, '/') === rtrim(parse_url(BASE_URL, PHP_URL_PATH), '/'));
 ?>
 
 <style>
@@ -48,22 +54,7 @@ $active_page = pathinfo(basename($_SERVER['SCRIPT_FILENAME']), PATHINFO_FILENAME
     }
 </style>
 
-<script>
-    window.addEventListener('scroll', function() {
-        const nav = document.getElementById('mainNavbar');
-        if (window.scrollY > 20) {
-            nav.classList.add('bg-emerald-50/60', 'backdrop-blur-3xl', 'shadow-[0_8px_32px_rgba(18,140,126,0.12)]', 'border-b-emerald-200/50');
-            nav.classList.remove('bg-white', 'shadow-sm', 'border-b-gray-200');
-        } else {
-            nav.classList.remove('bg-emerald-50/60', 'backdrop-blur-3xl', 'shadow-[0_8px_32px_rgba(18,140,126,0.12)]', 'border-b-emerald-200/50');
-            nav.classList.add('bg-white', 'shadow-sm', 'border-b-gray-200');
-        }
-    });
-</script>
-
-
-
-<nav id="mainNavbar" class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm transition-all duration-300">
+<nav class="transition-all duration-300 <?= $is_home_page ? '' : 'bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm' ?>">
     <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
 
@@ -75,22 +66,22 @@ $active_page = pathinfo(basename($_SERVER['SCRIPT_FILENAME']), PATHINFO_FILENAME
 
             <div class="flex items-center gap-3 sm:gap-5">
                 <?php if ($isLoggedIn): ?>
-                    <a href="<?php echo BASE_URL; ?>my-plan" class="hidden sm:flex text-base font-semibold items-center gap-2 transition <?= $active_page === 'my-plan' ? 'text-[#128c7e]' : 'text-black hover:text-[#128c7e]' ?>">
-                        <i class="fa-regular fa-credit-card <?= $active_page === 'my-plan' ? 'text-[#128c7e]' : 'text-slate-400' ?>"></i> Subscription
+                    <a href="<?php echo BASE_URL; ?>my-plan" class="hidden sm:flex text-base font-semibold items-center gap-2 transition <?= $active_page === 'my-plan' ? 'text-[#0072bc]' : 'text-black hover:text-[#0072bc]' ?>">
+                        <i class="fa-regular fa-credit-card <?= $active_page === 'my-plan' ? 'text-[#0072bc]' : 'text-slate-400' ?>"></i> Subscription
                     </a>
-                    <a href="<?php echo BASE_URL; ?>my-report" class="hidden sm:flex text-base font-semibold items-center gap-2 transition <?= $active_page === 'my-report' ? 'text-[#128c7e]' : 'text-black hover:text-[#128c7e]' ?>">
-                        <i class="fa-solid fa-folder-open text-sm <?= $active_page === 'my-report' ? 'text-[#128c7e]' : 'text-slate-400' ?>"></i> Reports
+                    <a href="<?php echo BASE_URL; ?>my-report" class="hidden sm:flex text-base font-semibold items-center gap-2 transition <?= $active_page === 'my-report' ? 'text-[#0072bc]' : 'text-black hover:text-[#0072bc]' ?>">
+                        <i class="fa-solid fa-folder-open text-sm <?= $active_page === 'my-report' ? 'text-[#0072bc]' : 'text-slate-400' ?>"></i> Reports
                     </a>
-                    <a href="<?php echo BASE_URL; ?>my-promo" class="hidden sm:flex text-base font-semibold items-center gap-2 transition <?= $active_page === 'my-promo' ? 'text-[#128c7e]' : 'text-black hover:text-[#128c7e]' ?>">
-                        <i class="fa-solid fa-ticket text-sm <?= $active_page === 'my-promo' ? 'text-[#128c7e]' : 'text-slate-400' ?>"></i> Promo Codes
+                    <a href="<?php echo BASE_URL; ?>my-promo" class="hidden sm:flex text-base font-semibold items-center gap-2 transition <?= $active_page === 'my-promo' ? 'text-[#0072bc]' : 'text-black hover:text-[#0072bc]' ?>">
+                        <i class="fa-solid fa-ticket text-sm <?= $active_page === 'my-promo' ? 'text-[#0072bc]' : 'text-slate-400' ?>"></i> Promo Codes
                     </a>
 
-                    <a href="<?php echo BASE_URL; ?>support" class="hidden sm:flex items-center gap-2 text-base font-semibold transition <?= $active_page === 'support' ? 'text-[#128c7e]' : 'text-black hover:text-[#128c7e]' ?>">
-                        <i class="fa-solid fa-headset text-sm <?= $active_page === 'support' ? 'text-[#128c7e]' : 'text-slate-400' ?>"></i> Customer Support
+                    <a href="<?php echo BASE_URL; ?>support" class="hidden sm:flex items-center gap-2 text-base font-semibold transition <?= $active_page === 'support' ? 'text-[#0072bc]' : 'text-black hover:text-[#0072bc]' ?>">
+                        <i class="fa-solid fa-headset text-sm <?= $active_page === 'support' ? 'text-[#0072bc]' : 'text-slate-400' ?>"></i> Customer Support
                     </a>
 
                     <div class="relative">
-                        <button type="button" onclick="toggleUserDropdown(event)" class="flex items-center gap-2 text-base text-black font-semibold hover:text-[#128c7e] focus:outline-none py-1.5 px-3 hover:bg-gray-50 rounded-xl transition border border-transparent cursor-pointer">
+                        <button type="button" onclick="toggleUserDropdown(event)" class="flex items-center gap-2 text-base text-black font-semibold hover:text-[#0072bc] focus:outline-none py-1.5 px-3 hover:bg-gray-50 rounded-xl transition border border-transparent cursor-pointer">
                             <span class="truncate-nav-text"><?php echo htmlspecialchars($userDisplayName); ?></span>
                             <i class="fa-solid fa-chevron-down text-xs text-gray-400 pointer-events-none"></i>
                         </button>
@@ -120,23 +111,23 @@ $active_page = pathinfo(basename($_SERVER['SCRIPT_FILENAME']), PATHINFO_FILENAME
                 <?php else: ?>
                     <!-- Desktop View: Inline Row Menu -->
                     <div class="hidden md:flex items-center gap-6">
-                        <a href="<?php echo BASE_URL; ?>buy-credit" class="text-base font-semibold transition <?= $active_page === 'buy-credit' ? 'text-[#128c7e]' : 'text-black hover:text-[#128c7e]' ?>">
+                        <a href="<?php echo BASE_URL; ?>buy-credit" class="text-base font-semibold transition <?= $active_page === 'buy-credit' ? 'text-[#0072bc]' : 'text-black hover:text-[#0072bc]' ?>">
                             Pricing
                         </a>
-                        <a href="<?php echo htmlspecialchars($signin_url); ?>" class="text-base font-semibold transition <?= $active_page === 'signin' ? 'text-[#128c7e]' : 'text-black hover:text-[#128c7e]' ?>">
+                        <a href="<?php echo htmlspecialchars($signin_url); ?>" class="text-base font-semibold transition <?= $active_page === 'signin' ? 'text-[#0072bc]' : 'text-black hover:text-[#0072bc]' ?>">
                             Login
                         </a>
-                        <a href="<?php echo htmlspecialchars($signin_url); ?>" class="text-base font-semibold transition <?= $active_page === 'signin' ? 'text-[#128c7e]' : 'text-black hover:text-[#128c7e]' ?>">
+                        <a href="<?php echo htmlspecialchars($signin_url); ?>" class="text-base font-semibold transition <?= $active_page === 'signin' ? 'text-[#0072bc]' : 'text-black hover:text-[#0072bc]' ?>">
                             Register
                         </a>
-                        <a href="<?php echo BASE_URL; ?>buy-credit" class="text-base font-semibold <?= $active_page === 'buy-credit' ? 'text-[#128c7e] bg-emerald-50' : 'text-black hover:text-[#128c7e] bg-gray-100 hover:bg-gray-200' ?> px-5 py-2.5 rounded-xl transition">
+                        <a href="<?php echo BASE_URL; ?>buy-credit" class="text-base font-semibold <?= $active_page === 'buy-credit' ? 'text-[#0072bc] bg-blue-50' : 'text-black hover:text-[#0072bc] bg-gray-100 hover:bg-gray-200' ?> px-5 py-2.5 rounded-xl transition">
                             Get Report
                         </a>
                     </div>
 
                     <!-- Mobile View: Hamburger Dropdown -->
                     <div class="relative md:hidden">
-                        <button type="button" onclick="toggleUserDropdown(event)" class="w-10 h-10 flex items-center justify-center text-black hover:text-[#128c7e] hover:bg-gray-50 rounded-xl transition border border-transparent focus:outline-none cursor-pointer text-lg" title="Open Navigation Menu">
+                        <button type="button" onclick="toggleUserDropdown(event)" class="w-10 h-10 flex items-center justify-center text-black hover:text-[#0072bc] hover:bg-gray-50 rounded-xl transition border border-transparent focus:outline-none cursor-pointer text-lg" title="Open Navigation Menu">
                             <i class="fa-solid fa-bars"></i>
                         </button>
 
