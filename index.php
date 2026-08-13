@@ -238,8 +238,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             to { opacity: 1; transform: scale(1); }
         }
         @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(79,179,201,0.2), 0 0 60px rgba(79,179,201,0.05); }
-            50% { box-shadow: 0 0 30px rgba(79,179,201,0.4), 0 0 80px rgba(79,179,201,0.1); }
+            0%, 100% { box-shadow: 0 0 12px rgba(79,179,201,0.25), 0 0 24px rgba(79,179,201,0.08); }
+            50% { box-shadow: 0 0 16px rgba(79,179,201,0.4), 0 0 32px rgba(79,179,201,0.12); }
         }
         @keyframes shimmer {
             0% { background-position: -200% 0; }
@@ -250,8 +250,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             50% { transform: translateY(-10px); }
         }
         @keyframes gradientRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { --border-angle: 360deg; }
         }
         @keyframes countUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -300,27 +299,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .float-delay-3 { animation-delay: 1.5s; }
 
         /* Animated gradient border for search bar */
+        @property --border-angle {
+            syntax: '<angle>';
+            inherits: false;
+            initial-value: 0deg;
+        }
+        @keyframes border-spin {
+            to { --border-angle: 360deg; }
+        }
         .gradient-border-spin {
             position: relative;
-            overflow: hidden;
             border: none !important;
+            border-radius: 1.5rem;
         }
         .gradient-border-spin::before {
             content: '';
             position: absolute;
             inset: 0;
-            border-radius: 1.5rem;
+            border-radius: inherit;
             padding: 2px;
-            background: conic-gradient(from var(--border-angle, 0deg), #4fb3c9, #2f7e8f, #0b1f40, #4fb3c9);
+            background: conic-gradient(from var(--border-angle, 0deg), transparent 45%, #4fb3c9 50%, transparent 55%);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
-            opacity: 0.5;
-            transition: opacity 0.3s;
             pointer-events: none;
+            animation: border-spin 4s linear infinite;
+            transition: background 0.3s ease;
         }
-        .gradient-border-spin:hover::before {
-            opacity: 1;
+        /* On focus, stop rotating and show solid border */
+        .gradient-border-spin:focus-within::before {
+            animation: none;
+            background: #4fb3c9;
         }
 
         /* Feature card animated border */
@@ -384,8 +393,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <!-- Search Form with animated border -->
             <div class="anim-fade-scale anim-delay-4 relative max-w-3xl mx-auto group mt-4">
-                <div class="absolute -inset-1.5 bg-gradient-to-r from-[#4FB3C9] via-[#2F7E8F] to-[#0B1F40] rounded-3xl blur-md opacity-20 group-hover:opacity-60 transition duration-700 group-hover:duration-300 animate-pulse"></div>
-                <form id="searchFormContainer" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="relative p-2 bg-slate-900/90 backdrop-blur-xl rounded-3xl border border-slate-700/50 flex flex-col sm:flex-row items-stretch gap-2 transition-all shadow-2xl search-glow gradient-border-spin">
+                <form id="searchFormContainer" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="relative p-2 bg-slate-900/90 backdrop-blur-xl rounded-3xl flex flex-col sm:flex-row items-stretch gap-2 transition-all gradient-border-spin">
                     <div class="flex flex-grow items-center gap-3 pl-5 py-2">
                         <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#4FB3C9]/20 to-[#0B1F40]/40 flex items-center justify-center border border-slate-700/50">
                             <i class="fa-solid fa-microchip text-[#4FB3C9] text-lg"></i>
