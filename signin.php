@@ -29,10 +29,11 @@ if (empty($return_path) || strpos($return_path, '/') !== 0) {
 $prefilled_email = isset($_GET['email']) ? trim($_GET['email']) : '';
 
 // Dynamically reference the initialized authentication gateway routing script with the encoded path
-$google_auth_url = BASE_URL . "auth_google?return=" . urlencode($return_path); 
+$google_auth_url = BASE_URL . "auth_google?return=" . urlencode($return_path);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Sign in or create an account — Identity Search AI</title>
     <?php include 'head.php'; ?>
@@ -42,201 +43,10 @@ $google_auth_url = BASE_URL . "auth_google?return=" . urlencode($return_path);
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .otp-box::-webkit-outer-spin-button, .otp-box::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         .otp-box { -moz-appearance: textfield; }
-
-        /* ====== Dark mode overrides for signin page ====== */
-        body {
-            background-color: #020617 !important;
-            color: #ffffff !important;
-        }
-
-        .selection-bg-white {
-            selection-background: #ffffff;
-            selection-color: #000000;
-        }
-
-        /* ====== Gradient border spinner ====== */
-        .gradient-border-spin {
-            position: relative;
-            border: none !important;
-            border-radius: 1.5rem;
-        }
-        .gradient-border-spin::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 2px;
-            background: conic-gradient(from var(--border-angle, 0deg), transparent 45%, #4fb3c9 50%, transparent 55%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-            animation: border-spin 4s linear infinite;
-            transition: background 0.3s ease;
-        }
-        .gradient-border-spin:focus-within::before {
-            animation: none;
-            background: #4fb3c9;
-        }
-        @keyframes border-spin {
-            to { --border-angle: 360deg; }
-        }
-
-        /* ====== Feature card glowing border ====== */
-        .card-glow-border {
-            position: relative;
-            overflow: hidden;
-        }
-        .card-glow-border::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 1px;
-            background: linear-gradient(135deg, transparent 40%, rgba(79,179,201,0.3) 50%, transparent 60%);
-            background-size: 300% 300%;
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: shimmer 4s ease-in-out infinite;
-        }
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-
-        /* ====== Animation keyframes ====== */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 12px rgba(79,179,201,0.25), 0 0 24px rgba(79,179,201,0.08); }
-            50% { box-shadow: 0 0 16px rgba(79,179,201,0.4), 0 0 32px rgba(79,179,201,0.12); }
-        }
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-        @keyframes floatY {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        @keyframes gradientRotate {
-            to { --border-angle: 360deg; }
-        }
-
-        /* ====== Animation classes ====== */
-        .anim-fade-up {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-        .anim-fade-up.visible {
-            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        .anim-fade-scale {
-            opacity: 0;
-            transform: scale(0.9);
-        }
-        .anim-fade-scale.visible {
-            animation: fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        .anim-delay-1 { animation-delay: 0.1s !important; }
-        .anim-delay-2 { animation-delay: 0.2s !important; }
-        .anim-delay-3 { animation-delay: 0.3s !important; }
-        .anim-delay-4 { animation-delay: 0.4s !important; }
-        .anim-delay-5 { animation-delay: 0.5s !important; }
-        .anim-delay-6 { animation-delay: 0.6s !important; }
-
-        .search-glow { animation: pulseGlow 3s ease-in-out infinite; }
-
-        .shimmer-text {
-            background: linear-gradient(90deg, #e2e8f0 25%, #4fb3c9 50%, #e2e8f0 75%);
-            background-size: 200% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shimmer 3s infinite;
-        }
-
-        .float-animation { animation: floatY 4s ease-in-out infinite; }
-        .float-delay-1 { animation-delay: 0.5s; }
-        .float-delay-2 { animation-delay: 1s; }
-        .float-delay-3 { animation-delay: 1.5s; }
-
-        /* Animated gradient border for search bar */
-        @property --border-angle {
-            syntax: '<angle>';
-            inherits: false;
-            initial-value: 0deg;
-        }
-        @keyframes border-spin {
-            to { --border-angle: 360deg; }
-        }
-        .gradient-border-spin {
-            position: relative;
-            border: none !important;
-            border-radius: 1.5rem;
-        }
-        .gradient-border-spin::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 2px;
-            background: conic-gradient(from var(--border-angle, 0deg), transparent 45%, #4fb3c9 50%, transparent 55%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-            animation: border-spin 4s linear infinite;
-            transition: background 0.3s ease;
-        }
-        .gradient-border-spin:focus-within::before {
-            animation: none;
-            background: #4fb3c9;
-        }
-
-        /* Feature card animated border */
-        .card-glow-border {
-            position: relative;
-            overflow: hidden;
-        }
-        .card-glow-border::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            padding: 1px;
-            background: linear-gradient(135deg, transparent 40%, rgba(79,179,201,0.3) 50%, transparent 60%);
-            background-size: 300% 300%;
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: shimmer 4s ease-in-out infinite;
-        }
-
-        /* Trusted brand strip */
-        .trust-strip {
-            animation: borderGlow 3s ease-in-out infinite;
-        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between bg-slate-950 text-white relative selection:bg-white selection:text-black">
 
-    <!-- Floating Particles Canvas -->
-    <canvas id="particleCanvas" class="fixed inset-0 -z-5 pointer-events-none" style="z-index: -5;"></canvas>
-
-    <!-- Floating Blobs Background -->
-    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#0B1F40]/50 rounded-full blur-[120px] mix-blend-screen animate-blob"></div>
-        <div class="absolute top-[20%] right-[-10%] w-[40%] h-[40%] bg-[#4FB3C9]/15 rounded-full blur-[120px] mix-blend-screen animate-blob animation-delay-2000"></div>
-        <div class="absolute bottom-[-20%] left-[20%] w-[50%] h-[50%] bg-[#1E3A8A]/40 rounded-full blur-[120px] mix-blend-screen animate-blob animation-delay-4000"></div>
-        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] opacity-10"></div>
-    </div>
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white">
 
     <?php include 'navbar.php'; ?>
 
@@ -267,17 +77,17 @@ $google_auth_url = BASE_URL . "auth_google?return=" . urlencode($return_path);
 
             <form id="emailSubmissionForm" class="space-y-3">
                 <div class="relative">
-                    <input type="email" id="emailField" placeholder="Enter your email address" class="w-full bg-slate-800 border border-slate-600 focus:border-[#4FB3C9] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-gray-100 text-base font-semibold px-4 py-3.5 placeholder-gray-500 transition shadow-sm" value="<?php echo htmlspecialchars($prefilled_email, ENT_QUOTES, 'UTF-8'); ?>" required>
+                    <input type="email" id="emailField" placeholder="Enter your email address" class="w-full bg-white border border-gray-200 focus:border-[#128c7e] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-gray-900 text-base font-semibold px-4 py-3.5 placeholder-gray-400 transition shadow-sm" value="<?php echo htmlspecialchars($prefilled_email, ENT_QUOTES, 'UTF-8'); ?>" required>
                 </div>
-                <button type="submit" id="emailSubmitBtn" class="w-full bg-gradient-to-r from-[#4FB3C9] to-[#2F7E8F] hover:from-[#8FD8E8] hover:to-[#3A93A8] text-white font-bold py-3.5 px-4 rounded-xl transition text-[15px] tracking-wide shadow-sm flex items-center justify-center gap-2 cursor-pointer">
+                <button type="submit" id="emailSubmitBtn" class="w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white font-bold py-3.5 px-4 rounded-xl transition text-[15px] tracking-wide shadow-sm flex items-center justify-center gap-2 cursor-pointer">
                     <span>Continue with email</span>
                 </button>
             </form>
 
-            <div class="relative flex items-center my-6"><div class="flex-grow border-t border-slate-600"></div><span class="flex-shrink mx-3 text-xs text-gray-400 font-normal lowercase">or</span><div class="flex-grow border-t border-slate-600"></div></div>
+            <div class="relative flex items-center my-6"><div class="flex-grow border-t border-gray-200"></div><span class="flex-shrink mx-3 text-xs text-gray-400 font-normal lowercase">or</span><div class="flex-grow border-t border-gray-200"></div></div>
 
-            <a href="<?php echo htmlspecialchars($google_auth_url); ?>" class="w-full bg-slate-800 hover:bg-gray-600 text-gray-100 font-bold py-3.5 px-4 rounded-xl border border-slate-600 shadow-sm transition text-[15px] flex items-center justify-center gap-2.5 group">
-                <svg class="w-5 h-5 flex-shrink-0 text-gray-300" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <a href="<?php echo htmlspecialchars($google_auth_url); ?>" class="w-full bg-white hover:bg-gray-50 text-gray-800 font-bold py-3.5 px-4 rounded-xl border border-gray-200 shadow-sm transition text-[15px] flex items-center justify-center gap-2.5 group">
+                <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
                 </svg>
                 <span>Continue with Google</span>
@@ -292,17 +102,16 @@ $google_auth_url = BASE_URL . "auth_google?return=" . urlencode($return_path);
 
             <form id="otpVerificationForm" class="space-y-6">
                 <div class="flex items-center justify-between gap-2 px-1" id="otpInputsCluster">
-                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-slate-800 border border-slate-600 focus:border-[#4FB3C9] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-center text-xl font-bold text-gray-100 shadow-sm transition" required>
-                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-slate-800 border border-slate-600 focus:border-[#4FB3C9] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-center text-xl font-bold text-gray-100 shadow-sm transition" required disabled>
-                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-slate-800 border border-slate-600 focus:border-[#4FB3C9] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-center text-xl font-bold text-gray-100 shadow-sm transition" required disabled>
-                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-slate-800 border border-slate-600 focus:border-[#4FB3C9] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-center text-xl font-bold text-gray-100 shadow-sm transition" required disabled>
-                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-slate-800 border border-slate-600 focus:border-[#4FB3C9] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-center text-xl font-bold text-gray-100 shadow-sm transition" required disabled>
+                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-white border border-gray-200 focus:border-[#128c7e] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-center text-xl font-bold text-gray-900 shadow-sm transition" required>
+                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-white border border-gray-200 focus:border-[#128c7e] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-center text-xl font-bold text-gray-900 shadow-sm transition" required disabled>
+                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-white border border-gray-200 focus:border-[#128c7e] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-center text-xl font-bold text-gray-900 shadow-sm transition" required disabled>
+                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-white border border-gray-200 focus:border-[#128c7e] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-center text-xl font-bold text-gray-900 shadow-sm transition" required disabled>
                     <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-white border border-gray-200 focus:border-[#128c7e] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-center text-xl font-bold text-gray-900 shadow-sm transition" required disabled>
                 </div>
                 <button type="submit" id="otpSubmitBtn" class="w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white font-bold py-3.5 px-4 rounded-xl transition text-[15px] tracking-wide shadow-sm flex items-center justify-center cursor-pointer">Verify code</button>
             </form>
 
-            <div class="text-center text-xs text-gray-400 font-semibold">Didn't receive the email? <button type="button" id="resendOtpBtn" class="text-[#4FB3C9] hover:text-[#2F7E8F] underline ml-0.5 font-bold transition cursor-pointer">Resend code</button></div>
+            <div class="text-center text-xs text-gray-500 font-semibold">Didn't receive the email? <button type="button" id="resendOtpBtn" class="text-[#128c7e] hover:text-[#0e6f64] underline ml-0.5 font-bold transition cursor-pointer">Resend code</button></div>
         </div>
 
         <div id="stageNameCollectionBlock" class="hidden space-y-6">
@@ -313,15 +122,15 @@ $google_auth_url = BASE_URL . "auth_google?return=" . urlencode($return_path);
 
             <form id="nameCollectionForm" class="space-y-3">
                 <div class="relative">
-                    <input type="text" id="nameField" placeholder="Enter your full name" class="w-full bg-slate-800 border border-slate-600 focus:border-[#4FB3C9] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-gray-100 text-base font-semibold px-4 py-3.5 placeholder-gray-500 transition shadow-sm" required minlength="2">
+                    <input type="text" id="nameField" placeholder="Enter your full name" class="w-full bg-white border border-gray-200 focus:border-[#128c7e] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-gray-900 text-base font-semibold px-4 py-3.5 placeholder-gray-400 transition shadow-sm" required minlength="2">
                 </div>
-                <button type="submit" id="nameSubmitBtn" class="w-full bg-gradient-to-r from-[#4FB3C9] to-[#2F7E8F] hover:from-[#8FD8E8] hover:to-[#3A93A8] text-white font-bold py-3.5 px-4 rounded-xl transition text-[15px] tracking-wide shadow-sm flex items-center justify-center cursor-pointer">
+                <button type="submit" id="nameSubmitBtn" class="w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white font-bold py-3.5 px-4 rounded-xl transition text-[15px] tracking-wide shadow-sm flex items-center justify-center cursor-pointer">
                     <span>Complete Registration</span>
                 </button>
             </form>
         </div>
 
-        <p class="text-center text-xs text-gray-400 font-semibold leading-relaxed mt-6">By continuing, you agree with our <a href="terms" class="underline text-gray-300 hover:text-gray-100 transition">Terms</a> and <a href="privacy" class="underline text-gray-300 hover:text-gray-100 transition">Privacy Policy</a>.</p>
+        <p class="text-center text-xs text-gray-500 font-semibold leading-relaxed mt-6">By continuing, you agree with our <a href="terms" class="underline text-gray-700 hover:text-gray-900 transition">Terms</a> and <a href="privacy" class="underline text-gray-700 hover:text-gray-900 transition">Privacy Policy</a>.</p>
     </main>
 
     <?php if (file_exists('index_footer.php')) { include 'index_footer.php'; } ?>
