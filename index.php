@@ -317,82 +317,88 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-7">
 
             <!-- Card 1 -->
-            <div class="group relative overflow-hidden bg-white p-6 sm:p-7 rounded-3xl border border-gray-100 shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 animate-on-scroll">
-                <div class="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl from-[#BFE4FD]/40 to-transparent rounded-bl-[80px] opacity-70 group-hover:opacity-100 origin-top-right group-hover:scale-[6] transition-all duration-500 ease-in-out"></div>
+            <div class="animate-on-scroll">
+                <div class="group relative overflow-hidden bg-white p-6 sm:p-7 rounded-3xl border border-gray-100 shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 h-full">
+                    <div class="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl from-[#BFE4FD]/40 to-transparent rounded-bl-[80px] opacity-70 group-hover:opacity-100 origin-top-right group-hover:scale-[6] transition-all duration-500 ease-in-out"></div>
 
-                <div class="relative space-y-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-[#0072bc]/10 to-blue-400/10 text-[#0072bc] flex items-center justify-center rounded-2xl text-lg shadow-sm border border-[#0072bc]/20 group-hover:from-[#0072bc] group-hover:to-blue-500 group-hover:text-white group-hover:shadow-md group-hover:shadow-blue-200 transition-all duration-500">
-                        <i class="fa-solid fa-user-shield"></i>
-                    </div>
+                    <div class="relative space-y-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-[#0072bc]/10 to-blue-400/10 text-[#0072bc] flex items-center justify-center rounded-2xl text-lg shadow-sm border border-[#0072bc]/20 group-hover:from-[#0072bc] group-hover:to-blue-500 group-hover:text-white group-hover:shadow-md group-hover:shadow-blue-200 transition-all duration-500">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
 
-                    <div>
-                        <h4 class="text-base font-black text-gray-900">
-                            Smarter Personal Decisions
-                        </h4>
-                        <p class="mt-2 text-sm text-gray-600 font-semibold leading-relaxed">
-                            Audit individual digital history tracks before scheduling transactions or professional onboarding pipelines.
-                        </p>
-                    </div>
+                        <div>
+                            <h4 class="text-base font-black text-gray-900">
+                                Smarter Personal Decisions
+                            </h4>
+                            <p class="mt-2 text-sm text-gray-600 font-semibold leading-relaxed">
+                                Audit individual digital history tracks before scheduling transactions or professional onboarding pipelines.
+                            </p>
+                        </div>
 
-                    <div class="pt-2 flex items-center gap-2 text-xs font-bold text-[#0072bc]">
-                        <span class="w-6 h-6 rounded-full bg-[#0072bc]/10 flex items-center justify-center">
-                            <i class="fa-solid fa-check text-[10px]"></i>
-                        </span>
-                        Personal risk awareness
+                        <div class="pt-2 flex items-center gap-2 text-xs font-bold text-[#0072bc]">
+                            <span class="w-6 h-6 rounded-full bg-[#0072bc]/10 flex items-center justify-center">
+                                <i class="fa-solid fa-check text-[10px]"></i>
+                            </span>
+                            Personal risk awareness
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Card 2 -->
-            <div class="group relative overflow-hidden bg-white p-6 sm:p-7 rounded-3xl border border-gray-100 shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 animate-on-scroll scroll-delay-100">
-                <div class="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl from-purple-100/60 to-transparent rounded-bl-[80px] opacity-70 group-hover:opacity-100 origin-top-right group-hover:scale-[6] transition-all duration-500 ease-in-out"></div>
+            <div class="animate-on-scroll scroll-delay-100">
+                <div class="group relative overflow-hidden bg-white p-6 sm:p-7 rounded-3xl border border-gray-100 shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 h-full">
+                    <div class="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl from-purple-100/60 to-transparent rounded-bl-[80px] opacity-70 group-hover:opacity-100 origin-top-right group-hover:scale-[6] transition-all duration-500 ease-in-out"></div>
 
-                <div class="relative space-y-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-[#0072bc]/10 to-blue-400/10 text-[#0072bc] flex items-center justify-center rounded-2xl text-lg shadow-sm border border-[#0072bc]/20 group-hover:from-[#0072bc] group-hover:to-blue-500 group-hover:text-white group-hover:shadow-md group-hover:shadow-blue-200 transition-all duration-500">
-                        <i class="fa-solid fa-chart-line"></i>
-                    </div>
+                    <div class="relative space-y-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-[#0072bc]/10 to-blue-400/10 text-[#0072bc] flex items-center justify-center rounded-2xl text-lg shadow-sm border border-[#0072bc]/20 group-hover:from-[#0072bc] group-hover:to-blue-500 group-hover:text-white group-hover:shadow-md group-hover:shadow-blue-200 transition-all duration-500">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
 
-                    <div>
-                        <h4 class="text-base font-black text-gray-900">
-                            Increase Company Trust
-                        </h4>
-                        <p class="mt-2 text-sm text-gray-600 font-semibold leading-relaxed">
-                            Maintain corporate entity transparency thresholds cleanly utilizing open-source historical records lookups.
-                        </p>
-                    </div>
+                        <div>
+                            <h4 class="text-base font-black text-gray-900">
+                                Increase Company Trust
+                            </h4>
+                            <p class="mt-2 text-sm text-gray-600 font-semibold leading-relaxed">
+                                Maintain corporate entity transparency thresholds cleanly utilizing open-source historical records lookups.
+                            </p>
+                        </div>
 
-                    <div class="pt-2 flex items-center gap-2 text-xs font-bold text-[#0072bc]">
-                        <span class="w-6 h-6 rounded-full bg-[#0072bc]/10 flex items-center justify-center">
-                            <i class="fa-solid fa-check text-[10px]"></i>
-                        </span>
-                        Better business confidence
+                        <div class="pt-2 flex items-center gap-2 text-xs font-bold text-[#0072bc]">
+                            <span class="w-6 h-6 rounded-full bg-[#0072bc]/10 flex items-center justify-center">
+                                <i class="fa-solid fa-check text-[10px]"></i>
+                            </span>
+                            Better business confidence
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Card 3 -->
-            <div class="group relative overflow-hidden bg-white p-6 sm:p-7 rounded-3xl border border-gray-100 shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 animate-on-scroll scroll-delay-200">
-                <div class="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl from-teal-100/60 to-transparent rounded-bl-[80px] opacity-70 group-hover:opacity-100 origin-top-right group-hover:scale-[6] transition-all duration-500 ease-in-out"></div>
+            <div class="animate-on-scroll scroll-delay-200">
+                <div class="group relative overflow-hidden bg-white p-6 sm:p-7 rounded-3xl border border-gray-100 shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 h-full">
+                    <div class="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl from-teal-100/60 to-transparent rounded-bl-[80px] opacity-70 group-hover:opacity-100 origin-top-right group-hover:scale-[6] transition-all duration-500 ease-in-out"></div>
 
-                <div class="relative space-y-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-[#0072bc]/10 to-blue-400/10 text-[#0072bc] flex items-center justify-center rounded-2xl text-lg shadow-sm border border-[#0072bc]/20 group-hover:from-[#0072bc] group-hover:to-blue-500 group-hover:text-white group-hover:shadow-md group-hover:shadow-blue-200 transition-all duration-500">
-                        <i class="fa-solid fa-ban"></i>
-                    </div>
+                    <div class="relative space-y-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-[#0072bc]/10 to-blue-400/10 text-[#0072bc] flex items-center justify-center rounded-2xl text-lg shadow-sm border border-[#0072bc]/20 group-hover:from-[#0072bc] group-hover:to-blue-500 group-hover:text-white group-hover:shadow-md group-hover:shadow-blue-200 transition-all duration-500">
+                            <i class="fa-solid fa-ban"></i>
+                        </div>
 
-                    <div>
-                        <h4 class="text-base font-black text-gray-900">
-                            Avoid Bad Engagements
-                        </h4>
-                        <p class="mt-2 text-sm text-gray-600 font-semibold leading-relaxed">
-                            Instantly recognize malicious behavior flags or platform spoofing identities before issues materialize.
-                        </p>
-                    </div>
+                        <div>
+                            <h4 class="text-base font-black text-gray-900">
+                                Avoid Bad Engagements
+                            </h4>
+                            <p class="mt-2 text-sm text-gray-600 font-semibold leading-relaxed">
+                                Instantly recognize malicious behavior flags or platform spoofing identities before issues materialize.
+                            </p>
+                        </div>
 
-                    <div class="pt-2 flex items-center gap-2 text-xs font-bold text-[#0072bc]">
-                        <span class="w-6 h-6 rounded-full bg-[#0072bc]/10 flex items-center justify-center">
-                            <i class="fa-solid fa-check text-[10px]"></i>
-                        </span>
-                        Early warning signals
+                        <div class="pt-2 flex items-center gap-2 text-xs font-bold text-[#0072bc]">
+                            <span class="w-6 h-6 rounded-full bg-[#0072bc]/10 flex items-center justify-center">
+                                <i class="fa-solid fa-check text-[10px]"></i>
+                            </span>
+                            Early warning signals
+                        </div>
                     </div>
                 </div>
             </div>
