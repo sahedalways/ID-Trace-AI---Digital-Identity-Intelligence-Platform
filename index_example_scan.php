@@ -119,8 +119,8 @@
                     </div>
                 </div>
 
-                <!-- Completion state (hidden by default, shown on hover) -->
-                <div class="mt-6 p-4 rounded-2xl bg-gradient-to-r from-[#0072bc] to-blue-500 shadow-lg shadow-blue-200 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <!-- Completion state (always visible) -->
+                <div class="mt-6 p-4 rounded-2xl bg-gradient-to-r from-[#0072bc] to-blue-500 shadow-lg shadow-blue-200 text-center">
                     <p class="text-sm font-black text-white">Your identity report is ready</p>
                     <button class="mt-3 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#0072bc] text-xs font-black hover:bg-blue-50 transition-colors">
                         <i class="fa-solid fa-file-lines"></i>

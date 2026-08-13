@@ -37,7 +37,7 @@
             <!-- Step 01 -->
             <div class="relative animate-on-scroll">
                 <div class="group relative bg-white/80 backdrop-blur border border-blue-100/60 rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-[0_20px_60px_rgba(0,114,188,0.12)] hover:-translate-y-1.5 transition-all duration-500 h-full overflow-hidden">
-                    <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-[#BFE4FD]/50 to-transparent rounded-bl-[60px] opacity-60 group-hover:opacity-100 group-hover:scale-[5] origin-top-right transition-all duration-500"></div>
+                    <div class="absolute inset-0 bg-gradient-to-bl from-[#BFE4FD]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                     <div class="relative">
                         <!-- Step number badge -->
@@ -77,7 +77,7 @@
             <!-- Step 02 -->
             <div class="relative animate-on-scroll scroll-delay-100">
                 <div class="group relative bg-white/80 backdrop-blur border border-blue-100/60 rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-[0_20px_60px_rgba(0,114,188,0.12)] hover:-translate-y-1.5 transition-all duration-500 h-full overflow-hidden">
-                    <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-[#BFE4FD]/50 to-transparent rounded-bl-[60px] opacity-60 group-hover:opacity-100 group-hover:scale-[5] origin-top-right transition-all duration-500"></div>
+                    <div class="absolute inset-0 bg-gradient-to-bl from-[#BFE4FD]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                     <div class="relative">
                         <div class="flex items-center justify-between mb-6">
@@ -125,7 +125,7 @@
             <!-- Step 03 -->
             <div class="relative animate-on-scroll scroll-delay-200">
                 <div class="group relative bg-white/80 backdrop-blur border border-blue-100/60 rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-[0_20px_60px_rgba(0,114,188,0.12)] hover:-translate-y-1.5 transition-all duration-500 h-full overflow-hidden">
-                    <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-[#BFE4FD]/50 to-transparent rounded-bl-[60px] opacity-60 group-hover:opacity-100 group-hover:scale-[5] origin-top-right transition-all duration-500"></div>
+                    <div class="absolute inset-0 bg-gradient-to-bl from-[#BFE4FD]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                     <div class="relative">
                         <div class="flex items-center justify-between mb-6">

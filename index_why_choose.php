@@ -31,78 +31,86 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6 max-w-6xl mx-auto">
 
         <!-- Stat 1: 32+ Public Sources -->
-        <div class="group relative overflow-hidden bg-white rounded-3xl border border-blue-100/60 shadow-sm hover:shadow-[0_20px_60px_rgba(0,114,188,0.12)] hover:-translate-y-1.5 transition-all duration-500 p-6 sm:p-8 text-center animate-on-scroll">
-            <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-[#BFE4FD]/40 to-transparent rounded-bl-[60px] opacity-60 group-hover:opacity-100 group-hover:scale-[5] origin-top-right transition-all duration-500"></div>
+        <div class="animate-on-scroll">
+            <div class="group relative overflow-hidden bg-white rounded-3xl border border-blue-100/60 shadow-sm hover:shadow-[0_20px_60px_rgba(0,114,188,0.12)] hover:-translate-y-1.5 transition-all duration-500 p-6 sm:p-8 text-center h-full">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-[#BFE4FD]/40 to-transparent rounded-bl-[60px] opacity-60 group-hover:opacity-100 group-hover:scale-[5] origin-top-right transition-all duration-500"></div>
 
-            <div class="relative">
-                <div class="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br from-[#0072bc]/10 to-blue-400/10 text-[#0072bc] flex items-center justify-center text-lg border border-[#0072bc]/20 group-hover:from-[#0072bc] group-hover:to-blue-500 group-hover:text-white transition-all duration-500">
-                    <i class="fa-solid fa-database"></i>
+                <div class="relative">
+                    <div class="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br from-[#0072bc]/10 to-blue-400/10 text-[#0072bc] flex items-center justify-center text-lg border border-[#0072bc]/20 group-hover:from-[#0072bc] group-hover:to-blue-500 group-hover:text-white transition-all duration-500">
+                        <i class="fa-solid fa-database"></i>
+                    </div>
+
+                    <p class="mt-5 text-4xl sm:text-5xl font-black text-gray-900 tracking-tight">
+                        32<span class="text-[#0072bc]">+</span>
+                    </p>
+                    <p class="mt-2 text-sm font-black text-gray-800">Public Sources</p>
+                    <p class="mt-2 text-xs text-gray-500 font-semibold leading-relaxed">
+                        Analyze signals from multiple publicly available sources.
+                    </p>
                 </div>
-
-                <p class="mt-5 text-4xl sm:text-5xl font-black text-gray-900 tracking-tight">
-                    32<span class="text-[#0072bc]">+</span>
-                </p>
-                <p class="mt-2 text-sm font-black text-gray-800">Public Sources</p>
-                <p class="mt-2 text-xs text-gray-500 font-semibold leading-relaxed">
-                    Analyze signals from multiple publicly available sources.
-                </p>
             </div>
         </div>
 
         <!-- Stat 2: AI Powered Analysis -->
-        <div class="group relative overflow-hidden bg-white rounded-3xl border border-blue-100/60 shadow-sm hover:shadow-[0_20px_60px_rgba(0,114,188,0.12)] hover:-translate-y-1.5 transition-all duration-500 p-6 sm:p-8 text-center animate-on-scroll scroll-delay-100">
-            <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-purple-100/40 to-transparent rounded-bl-[60px] opacity-60 group-hover:opacity-100 group-hover:scale-[5] origin-top-right transition-all duration-500"></div>
+        <div class="animate-on-scroll scroll-delay-100">
+            <div class="group relative overflow-hidden bg-white rounded-3xl border border-blue-100/60 shadow-sm hover:shadow-[0_20px_60px_rgba(0,114,188,0.12)] hover:-translate-y-1.5 transition-all duration-500 p-6 sm:p-8 text-center h-full">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-purple-100/40 to-transparent rounded-bl-[60px] opacity-60 group-hover:opacity-100 group-hover:scale-[5] origin-top-right transition-all duration-500"></div>
 
-            <div class="relative">
-                <div class="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br from-purple-500/10 to-purple-400/10 text-purple-600 flex items-center justify-center text-lg border border-purple-200/40 group-hover:from-purple-500 group-hover:to-purple-600 group-hover:text-white transition-all duration-500">
-                    <i class="fa-solid fa-brain"></i>
+                <div class="relative">
+                    <div class="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br from-purple-500/10 to-purple-400/10 text-purple-600 flex items-center justify-center text-lg border border-purple-200/40 group-hover:from-purple-500 group-hover:to-purple-600 group-hover:text-white transition-all duration-500">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+
+                    <p class="mt-5 text-4xl sm:text-5xl font-black text-gray-900 tracking-tight">
+                        AI
+                    </p>
+                    <p class="mt-2 text-sm font-black text-gray-800">Powered Analysis</p>
+                    <p class="mt-2 text-xs text-gray-500 font-semibold leading-relaxed">
+                        Turn scattered information into an understandable report.
+                    </p>
                 </div>
-
-                <p class="mt-5 text-4xl sm:text-5xl font-black text-gray-900 tracking-tight">
-                    AI
-                </p>
-                <p class="mt-2 text-sm font-black text-gray-800">Powered Analysis</p>
-                <p class="mt-2 text-xs text-gray-500 font-semibold leading-relaxed">
-                    Turn scattered information into an understandable report.
-                </p>
             </div>
         </div>
 
         <!-- Stat 3: Fast Results -->
-        <div class="group relative overflow-hidden bg-white rounded-3xl border border-blue-100/60 shadow-sm hover:shadow-[0_20px_60px_rgba(0,114,188,0.12)] hover:-translate-y-1.5 transition-all duration-500 p-6 sm:p-8 text-center animate-on-scroll scroll-delay-200">
-            <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-teal-100/40 to-transparent rounded-bl-[60px] opacity-60 group-hover:opacity-100 group-hover:scale-[5] origin-top-right transition-all duration-500"></div>
+        <div class="animate-on-scroll scroll-delay-200">
+            <div class="group relative overflow-hidden bg-white rounded-3xl border border-blue-100/60 shadow-sm hover:shadow-[0_20px_60px_rgba(0,114,188,0.12)] hover:-translate-y-1.5 transition-all duration-500 p-6 sm:p-8 text-center h-full">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-teal-100/40 to-transparent rounded-bl-[60px] opacity-60 group-hover:opacity-100 group-hover:scale-[5] origin-top-right transition-all duration-500"></div>
 
-            <div class="relative">
-                <div class="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br from-teal-500/10 to-teal-400/10 text-teal-600 flex items-center justify-center text-lg border border-teal-200/40 group-hover:from-teal-500 group-hover:to-teal-600 group-hover:text-white transition-all duration-500">
-                    <i class="fa-solid fa-bolt"></i>
+                <div class="relative">
+                    <div class="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br from-teal-500/10 to-teal-400/10 text-teal-600 flex items-center justify-center text-lg border border-teal-200/40 group-hover:from-teal-500 group-hover:to-teal-600 group-hover:text-white transition-all duration-500">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+
+                    <p class="mt-5 text-4xl sm:text-5xl font-black text-gray-900 tracking-tight">
+                        Fast
+                    </p>
+                    <p class="mt-2 text-sm font-black text-gray-800">Intelligence</p>
+                    <p class="mt-2 text-xs text-gray-500 font-semibold leading-relaxed">
+                        Get useful intelligence without manually searching dozens of websites.
+                    </p>
                 </div>
-
-                <p class="mt-5 text-4xl sm:text-5xl font-black text-gray-900 tracking-tight">
-                    Fast
-                </p>
-                <p class="mt-2 text-sm font-black text-gray-800">Intelligence</p>
-                <p class="mt-2 text-xs text-gray-500 font-semibold leading-relaxed">
-                    Get useful intelligence without manually searching dozens of websites.
-                </p>
             </div>
         </div>
 
         <!-- Stat 4: Public Data Sources -->
-        <div class="group relative overflow-hidden bg-white rounded-3xl border border-blue-100/60 shadow-sm hover:shadow-[0_20px_60px_rgba(0,114,188,0.12)] hover:-translate-y-1.5 transition-all duration-500 p-6 sm:p-8 text-center animate-on-scroll scroll-delay-300">
-            <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-amber-100/40 to-transparent rounded-bl-[60px] opacity-60 group-hover:opacity-100 group-hover:scale-[5] origin-top-right transition-all duration-500"></div>
+        <div class="animate-on-scroll scroll-delay-300">
+            <div class="group relative overflow-hidden bg-white rounded-3xl border border-blue-100/60 shadow-sm hover:shadow-[0_20px_60px_rgba(0,114,188,0.12)] hover:-translate-y-1.5 transition-all duration-500 p-6 sm:p-8 text-center h-full">
+                <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-amber-100/40 to-transparent rounded-bl-[60px] opacity-60 group-hover:opacity-100 group-hover:scale-[5] origin-top-right transition-all duration-500"></div>
 
-            <div class="relative">
-                <div class="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br from-amber-500/10 to-amber-400/10 text-amber-600 flex items-center justify-center text-lg border border-amber-200/40 group-hover:from-amber-500 group-hover:to-amber-600 group-hover:text-white transition-all duration-500">
-                    <i class="fa-solid fa-shield-halved"></i>
+                <div class="relative">
+                    <div class="w-12 h-12 mx-auto rounded-2xl bg-gradient-to-br from-amber-500/10 to-amber-400/10 text-amber-600 flex items-center justify-center text-lg border border-amber-200/40 group-hover:from-amber-500 group-hover:to-amber-600 group-hover:text-white transition-all duration-500">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+
+                    <p class="mt-5 text-4xl sm:text-5xl font-black text-gray-900 tracking-tight">
+                        Public
+                    </p>
+                    <p class="mt-2 text-sm font-black text-gray-800">Data Sources</p>
+                    <p class="mt-2 text-xs text-gray-500 font-semibold leading-relaxed">
+                        Clearly explain our public-source and compliance approach.
+                    </p>
                 </div>
-
-                <p class="mt-5 text-4xl sm:text-5xl font-black text-gray-900 tracking-tight">
-                    Public
-                </p>
-                <p class="mt-2 text-sm font-black text-gray-800">Data Sources</p>
-                <p class="mt-2 text-xs text-gray-500 font-semibold leading-relaxed">
-                    Clearly explain our public-source and compliance approach.
-                </p>
             </div>
         </div>
     </div>

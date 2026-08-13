@@ -31,109 +31,117 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
 
         <!-- Use Case 1: Personal Safety -->
-        <div class="group relative overflow-hidden bg-white rounded-3xl border border-blue-100/60 shadow-sm hover:shadow-[0_20px_60px_rgba(0,114,188,0.12)] hover:-translate-y-1.5 transition-all duration-500 animate-on-scroll">
-            <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-blue-100/60 to-transparent rounded-bl-[100px] opacity-60 group-hover:opacity-100 group-hover:scale-[4] origin-top-right transition-all duration-700"></div>
+        <div class="animate-on-scroll">
+            <div class="group relative overflow-hidden bg-white hover:bg-blue-50/60 rounded-3xl border border-blue-100/60 shadow-sm hover:shadow-[0_20px_60px_rgba(0,114,188,0.12)] hover:-translate-y-1.5 transition-all duration-500 h-full">
+                <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-blue-100/80 to-transparent rounded-bl-[100px] opacity-60 group-hover:opacity-100 group-hover:scale-[8] origin-top-right transition-all duration-700"></div>
 
-            <div class="relative p-6 sm:p-8">
-                <div class="flex items-start justify-between">
-                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0072bc] to-blue-500 text-white flex items-center justify-center text-xl shadow-lg shadow-blue-200 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
-                        <i class="fa-solid fa-shield-halved"></i>
+                <div class="relative p-6 sm:p-8">
+                    <div class="flex items-start justify-between">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0072bc] to-blue-500 text-white flex items-center justify-center text-xl shadow-lg shadow-blue-200 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-blue-50 text-[#0072bc] text-[10px] font-black border border-blue-100">01</span>
                     </div>
-                    <span class="px-3 py-1 rounded-full bg-blue-50 text-[#0072bc] text-[10px] font-black border border-blue-100">01</span>
-                </div>
 
-                <h3 class="mt-5 text-lg font-black text-gray-900">
-                    Personal Safety
-                </h3>
-                <p class="mt-2.5 text-sm text-gray-600 font-semibold leading-relaxed">
-                    Understand someone's public digital footprint before engaging. Whether it's a new connection, a date, or a roommate, know who you're dealing with.
-                </p>
+                    <h3 class="mt-5 text-lg font-black text-gray-900">
+                        Personal Safety
+                    </h3>
+                    <p class="mt-2.5 text-sm text-gray-600 font-semibold leading-relaxed">
+                        Understand someone's public digital footprint before engaging. Whether it's a new connection, a date, or a roommate, know who you're dealing with.
+                    </p>
 
-                <!-- Example chip -->
-                <div class="mt-5 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-100 text-xs font-bold text-gray-600">
-                    <i class="fa-solid fa-user-check text-[#0072bc]"></i>
-                    "Is this person who they say they are?"
+                    <!-- Example chip -->
+                    <div class="mt-5 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-100 text-xs font-bold text-gray-600">
+                        <i class="fa-solid fa-user-check text-[#0072bc]"></i>
+                        "Is this person who they say they are?"
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Use Case 2: Business Verification -->
-        <div class="group relative overflow-hidden bg-white rounded-3xl border border-purple-100/60 shadow-sm hover:shadow-[0_20px_60px_rgba(147,51,234,0.12)] hover:-translate-y-1.5 transition-all duration-500 animate-on-scroll scroll-delay-100">
-            <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-purple-100/60 to-transparent rounded-bl-[100px] opacity-60 group-hover:opacity-100 group-hover:scale-[4] origin-top-right transition-all duration-700"></div>
+        <div class="animate-on-scroll scroll-delay-100">
+            <div class="group relative overflow-hidden bg-white hover:bg-purple-50/60 rounded-3xl border border-purple-100/60 shadow-sm hover:shadow-[0_20px_60px_rgba(147,51,234,0.12)] hover:-translate-y-1.5 transition-all duration-500 h-full">
+                <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-purple-100/80 to-transparent rounded-bl-[100px] opacity-60 group-hover:opacity-100 group-hover:scale-[8] origin-top-right transition-all duration-700"></div>
 
-            <div class="relative p-6 sm:p-8">
-                <div class="flex items-start justify-between">
-                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 text-white flex items-center justify-center text-xl shadow-lg shadow-purple-200 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
-                        <i class="fa-solid fa-briefcase"></i>
+                <div class="relative p-6 sm:p-8">
+                    <div class="flex items-start justify-between">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 text-white flex items-center justify-center text-xl shadow-lg shadow-purple-200 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-purple-50 text-purple-600 text-[10px] font-black border border-purple-100">02</span>
                     </div>
-                    <span class="px-3 py-1 rounded-full bg-purple-50 text-purple-600 text-[10px] font-black border border-purple-100">02</span>
-                </div>
 
-                <h3 class="mt-5 text-lg font-black text-gray-900">
-                    Business Verification
-                </h3>
-                <p class="mt-2.5 text-sm text-gray-600 font-semibold leading-relaxed">
-                    Research potential clients, partners, vendors, or business contacts. Validate legitimacy before signing contracts or extending credit.
-                </p>
+                    <h3 class="mt-5 text-lg font-black text-gray-900">
+                        Business Verification
+                    </h3>
+                    <p class="mt-2.5 text-sm text-gray-600 font-semibold leading-relaxed">
+                        Research potential clients, partners, vendors, or business contacts. Validate legitimacy before signing contracts or extending credit.
+                    </p>
 
-                <!-- Example chip -->
-                <div class="mt-5 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-100 text-xs font-bold text-gray-600">
-                    <i class="fa-solid fa-building-shield text-purple-600"></i>
-                    "Can I trust this business partner?"
+                    <!-- Example chip -->
+                    <div class="mt-5 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-100 text-xs font-bold text-gray-600">
+                        <i class="fa-solid fa-building-shield text-purple-600"></i>
+                        "Can I trust this business partner?"
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Use Case 3: Online Fraud Awareness -->
-        <div class="group relative overflow-hidden bg-white rounded-3xl border border-amber-100/60 shadow-sm hover:shadow-[0_20px_60px_rgba(245,158,11,0.12)] hover:-translate-y-1.5 transition-all duration-500 animate-on-scroll">
-            <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-amber-100/60 to-transparent rounded-bl-[100px] opacity-60 group-hover:opacity-100 group-hover:scale-[4] origin-top-right transition-all duration-700"></div>
+        <div class="animate-on-scroll">
+            <div class="group relative overflow-hidden bg-white hover:bg-amber-50/60 rounded-3xl border border-amber-100/60 shadow-sm hover:shadow-[0_20px_60px_rgba(245,158,11,0.12)] hover:-translate-y-1.5 transition-all duration-500 h-full">
+                <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-amber-100/80 to-transparent rounded-bl-[100px] opacity-60 group-hover:opacity-100 group-hover:scale-[8] origin-top-right transition-all duration-700"></div>
 
-            <div class="relative p-6 sm:p-8">
-                <div class="flex items-start justify-between">
-                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 text-white flex items-center justify-center text-xl shadow-lg shadow-amber-200 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
-                        <i class="fa-solid fa-user-secret"></i>
+                <div class="relative p-6 sm:p-8">
+                    <div class="flex items-start justify-between">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 text-white flex items-center justify-center text-xl shadow-lg shadow-amber-200 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                            <i class="fa-solid fa-user-secret"></i>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-amber-50 text-amber-600 text-[10px] font-black border border-amber-100">03</span>
                     </div>
-                    <span class="px-3 py-1 rounded-full bg-amber-50 text-amber-600 text-[10px] font-black border border-amber-100">03</span>
-                </div>
 
-                <h3 class="mt-5 text-lg font-black text-gray-900">
-                    Online Fraud Awareness
-                </h3>
-                <p class="mt-2.5 text-sm text-gray-600 font-semibold leading-relaxed">
-                    Identify suspicious identity patterns and potential risk signals. Spot fake profiles, impersonation attempts, and scam indicators early.
-                </p>
+                    <h3 class="mt-5 text-lg font-black text-gray-900">
+                        Online Fraud Awareness
+                    </h3>
+                    <p class="mt-2.5 text-sm text-gray-600 font-semibold leading-relaxed">
+                        Identify suspicious identity patterns and potential risk signals. Spot fake profiles, impersonation attempts, and scam indicators early.
+                    </p>
 
-                <!-- Example chip -->
-                <div class="mt-5 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-100 text-xs font-bold text-gray-600">
-                    <i class="fa-solid fa-triangle-exclamation text-amber-500"></i>
-                    "Is this profile legitimate or a scam?"
+                    <!-- Example chip -->
+                    <div class="mt-5 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-100 text-xs font-bold text-gray-600">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-500"></i>
+                        "Is this profile legitimate or a scam?"
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Use Case 4: Digital Reputation -->
-        <div class="group relative overflow-hidden bg-white rounded-3xl border border-teal-100/60 shadow-sm hover:shadow-[0_20px_60px_rgba(20,184,166,0.12)] hover:-translate-y-1.5 transition-all duration-500 animate-on-scroll scroll-delay-100">
-            <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-teal-100/60 to-transparent rounded-bl-[100px] opacity-60 group-hover:opacity-100 group-hover:scale-[4] origin-top-right transition-all duration-700"></div>
+        <div class="animate-on-scroll scroll-delay-100">
+            <div class="group relative overflow-hidden bg-white hover:bg-teal-50/60 rounded-3xl border border-teal-100/60 shadow-sm hover:shadow-[0_20px_60px_rgba(20,184,166,0.12)] hover:-translate-y-1.5 transition-all duration-500 h-full">
+                <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-teal-100/80 to-transparent rounded-bl-[100px] opacity-60 group-hover:opacity-100 group-hover:scale-[8] origin-top-right transition-all duration-700"></div>
 
-            <div class="relative p-6 sm:p-8">
-                <div class="flex items-start justify-between">
-                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-500 text-white flex items-center justify-center text-xl shadow-lg shadow-teal-200 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
-                        <i class="fa-solid fa-star"></i>
+                <div class="relative p-6 sm:p-8">
+                    <div class="flex items-start justify-between">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-500 text-white flex items-center justify-center text-xl shadow-lg shadow-teal-200 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-teal-50 text-teal-600 text-[10px] font-black border border-teal-100">04</span>
                     </div>
-                    <span class="px-3 py-1 rounded-full bg-teal-50 text-teal-600 text-[10px] font-black border border-teal-100">04</span>
-                </div>
 
-                <h3 class="mt-5 text-lg font-black text-gray-900">
-                    Digital Reputation
-                </h3>
-                <p class="mt-2.5 text-sm text-gray-600 font-semibold leading-relaxed">
-                    Discover where an identity appears across the public web. Monitor your own digital footprint or research someone else's online presence.
-                </p>
+                    <h3 class="mt-5 text-lg font-black text-gray-900">
+                        Digital Reputation
+                    </h3>
+                    <p class="mt-2.5 text-sm text-gray-600 font-semibold leading-relaxed">
+                        Discover where an identity appears across the public web. Monitor your own digital footprint or research someone else's online presence.
+                    </p>
 
-                <!-- Example chip -->
-                <div class="mt-5 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-100 text-xs font-bold text-gray-600">
-                    <i class="fa-solid fa-magnifying-glass-chart text-teal-500"></i>
-                    "What does the web say about this person?"
+                    <!-- Example chip -->
+                    <div class="mt-5 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-100 text-xs font-bold text-gray-600">
+                        <i class="fa-solid fa-magnifying-glass-chart text-teal-500"></i>
+                        "What does the web say about this person?"
+                    </div>
                 </div>
             </div>
         </div>
