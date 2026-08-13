@@ -296,6 +296,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </main>
 
+    <?php if (file_exists('index_how_it_works.php')) {
+        include 'index_how_it_works.php';
+    } ?>
+
+    <?php if (file_exists('index_report_preview.php')) {
+        include 'index_report_preview.php';
+    } ?>
+
+    <?php if (file_exists('index_intelligence_network.php')) {
+        include 'index_intelligence_network.php';
+    } ?>
+
+    <?php if (file_exists('index_use_cases.php')) {
+        include 'index_use_cases.php';
+    } ?>
+
+    <?php if (file_exists('index_ai_vs_search.php')) {
+        include 'index_ai_vs_search.php';
+    } ?>
+
+    <?php if (file_exists('index_example_scan.php')) {
+        include 'index_example_scan.php';
+    } ?>
+
+    <?php if (file_exists('index_why_choose.php')) {
+        include 'index_why_choose.php';
+    } ?>
+
     <section class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 mt-0 sm:mt-10 pt-4 sm:pt-14 pb-8 sm:pb-16">
         <!-- Section Header -->
         <div class="text-center max-w-2xl mx-auto mb-10 animate-on-scroll">
@@ -408,6 +436,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <?php if (file_exists('index_faq.php')) {
         include 'index_faq.php';
+    } ?>
+
+    <?php if (file_exists('index_final_cta.php')) {
+        include 'index_final_cta.php';
     } ?>
 
     <?php if (file_exists('index_footer.php')) {
