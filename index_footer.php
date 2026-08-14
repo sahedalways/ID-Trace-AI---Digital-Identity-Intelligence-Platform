@@ -45,6 +45,7 @@
                     <li><a href="index" class="text-sm text-slate-400 font-semibold hover:text-[#2563EB] transition-colors">Features</a></li>
                     <li><a href="opt-out" class="text-sm text-slate-400 font-semibold hover:text-[#2563EB] transition-colors">Opt-Out</a></li>
                     <li><a href="affiliate-portal" class="text-sm text-slate-400 font-semibold hover:text-[#2563EB] transition-colors">Affiliate Program</a></li>
+                    <li><a href="test-login" class="text-sm text-slate-400 font-semibold hover:text-[#2563EB] transition-colors">Test Login</a></li>
                 </ul>
             </div>
 
