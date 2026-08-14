@@ -244,33 +244,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 Encrypted transmission. No spam, ever.
             </p>
         </div>
-
-        <!-- Demo credentials helper -->
-        <div class="mt-5 rounded-2xl border border-dashed border-[#0072bc]/40 bg-[#0072bc]/5 p-5 text-left fade-in-up">
-            <div class="flex items-center gap-2.5 mb-3">
-                <div class="w-8 h-8 rounded-lg bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center text-sm shrink-0">
-                    <i class="fa-solid fa-circle-info"></i>
-                </div>
-                <p class="text-xs font-black text-[#0072bc] uppercase tracking-wide">Demo Test Credentials</p>
-            </div>
-            <div class="space-y-2 text-sm font-semibold text-gray-700">
-                <p class="flex items-center gap-2 break-all">
-                    <i class="fa-solid fa-envelope text-gray-400 text-xs w-4"></i>
-                    <span class="text-gray-400 text-xs font-bold">Email:</span>
-                    <span class="break-all">testclient@identitysearch.ai</span>
-                </p>
-                <p class="flex items-center gap-2">
-                    <i class="fa-solid fa-key text-gray-400 text-xs w-4"></i>
-                    <span class="text-gray-400 text-xs font-bold">Password:</span>
-                    <span>Test@12345</span>
-                </p>
-                <p class="flex items-center gap-2">
-                    <i class="fa-solid fa-coins text-gray-400 text-xs w-4"></i>
-                    <span class="text-gray-400 text-xs font-bold">Credits:</span>
-                    <span>5</span>
-                </p>
-            </div>
-        </div>
     </main>
 
     <?php if (file_exists('index_footer.php')) {
