@@ -177,7 +177,7 @@ if(empty($firstNamePlaceholder)) $firstNamePlaceholder = 'target';
     <div class="space-y-1.5">
         <div class="flex items-center justify-between text-[11px] font-bold text-gray-400 uppercase tracking-wide px-0.5">
             <span>Dossier Integrity Check</span>
-            <span id="integrityScoreLabel" class="text-[#128c7e] font-extrabold text-xs">0%</span>
+            <span id="integrityScoreLabel" class="text-[#0072bc] font-extrabold text-xs">0%</span>
         </div>
         <div class="grid grid-cols-4 gap-1.5 w-full">
             <div id="barSegment1" class="h-1.5 rounded-full bg-gray-100 transition-colors duration-300"></div>
@@ -201,7 +201,7 @@ if(empty($firstNamePlaceholder)) $firstNamePlaceholder = 'target';
                     <span id="nameStatusIcon" class="shrink-0 flex items-center"></span>
                 </div>
                 <p class="text-xs text-black font-semibold leading-relaxed">Enter real full name to generate accurate result. Do not use nickname.</p>
-                <input type="text" id="targetNameInput" name="target_name" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-semibold text-black focus:outline-none focus:ring-2 focus:ring-[#128c7e] focus:border-[#128c7e] focus:bg-white transition-all" value="<?= htmlspecialchars($target['name'] ?? '') ?>" autocomplete="off">
+                <input type="text" id="targetNameInput" name="target_name" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-semibold text-black focus:outline-none focus:ring-2 focus:ring-[#0072bc] focus:border-[#0072bc] focus:bg-white transition-all" value="<?= htmlspecialchars($target['name'] ?? '') ?>" autocomplete="off">
             </div>
 
             <div class="space-y-2">
@@ -219,7 +219,7 @@ if(empty($firstNamePlaceholder)) $firstNamePlaceholder = 'target';
                         <div id="avatarPlaceholderIcon" class="<?= !empty($target['avatar']) ? 'hidden' : '' ?> w-full h-full bg-gray-200 rounded-xl flex items-center justify-center text-gray-400"><i class="fa-solid fa-user text-lg"></i></div>
                     </div>
                     <div class="grow">
-                        <input type="file" id="avatarInput" name="new_avatar" accept="image/*" class="block w-full text-xs text-slate-500 file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-[#128c7e] hover:file:bg-emerald-100 cursor-pointer">
+                        <input type="file" id="avatarInput" name="new_avatar" accept="image/*" class="block w-full text-xs text-slate-500 file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-[#0072bc] hover:file:bg-blue-100 cursor-pointer">
                     </div>
                 </div>
             </div>
@@ -230,7 +230,7 @@ if(empty($firstNamePlaceholder)) $firstNamePlaceholder = 'target';
                     <span id="emailStatusIcon" class="shrink-0 flex items-center"></span>
                 </div>
                 <p class="text-xs text-black font-semibold leading-relaxed">Enter an email address that this person frequently uses. It will greatly improve report accuracy.</p>
-                <input type="email" id="targetEmailInput" name="input_email" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-semibold text-black focus:outline-none focus:ring-2 focus:ring-[#128c7e] focus:border-[#128c7e] focus:bg-white transition-all" placeholder="<?= htmlspecialchars($firstNamePlaceholder) ?>@email.com" value="<?= htmlspecialchars($target['input_email'] ?? '') ?>" autocomplete="off">
+                <input type="email" id="targetEmailInput" name="input_email" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-semibold text-black focus:outline-none focus:ring-2 focus:ring-[#0072bc] focus:border-[#0072bc] focus:bg-white transition-all" placeholder="<?= htmlspecialchars($firstNamePlaceholder) ?>@email.com" value="<?= htmlspecialchars($target['input_email'] ?? '') ?>" autocomplete="off">
             </div>
 
             <div class="space-y-3">
@@ -247,22 +247,22 @@ if(empty($firstNamePlaceholder)) $firstNamePlaceholder = 'target';
 
                     <?php foreach ($existingSocials as $sUrl): if (trim($sUrl) === $primaryUrl || empty(trim($sUrl))) continue; ?>
                         <div class="flex gap-2 items-center row-s">
-                            <input type="url" name="social_urls[]" class="grow px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-mono text-black font-semibold focus:outline-none focus:ring-2 focus:ring-[#128c7e] focus:border-[#128c7e] focus:bg-white" value="<?= htmlspecialchars($sUrl) ?>">
+                            <input type="url" name="social_urls[]" class="grow px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-mono text-black font-semibold focus:outline-none focus:ring-2 focus:ring-[#0072bc] focus:border-[#0072bc] focus:bg-white" value="<?= htmlspecialchars($sUrl) ?>">
                             <button type="button" onclick="this.parentNode.remove(); handleGlobalMatrixRecalculation();" class="p-2.5 text-red-500 hover:bg-red-50 rounded-xl transition-all cursor-pointer"><i class="fa-solid fa-trash-can text-sm"></i></button>
                         </div>
                     <?php endforeach; ?>
 
                     <?php if ($needsAutoPopulatedField): ?>
                         <div class="flex gap-2 items-center row-s">
-                            <input type="url" name="social_urls[]" placeholder="https://socialmedia.com/handle" class="grow px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-mono text-black font-semibold focus:outline-none focus:ring-2 focus:ring-[#128c7e] focus:border-[#128c7e] focus:bg-white">
+                            <input type="url" name="social_urls[]" placeholder="https://socialmedia.com/handle" class="grow px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-mono text-black font-semibold focus:outline-none focus:ring-2 focus:ring-[#0072bc] focus:border-[#0072bc] focus:bg-white">
                             <button type="button" onclick="this.parentNode.remove(); handleGlobalMatrixRecalculation();" class="p-2.5 text-red-500 hover:bg-red-50 rounded-xl transition-all cursor-pointer"><i class="fa-solid fa-trash-can text-sm"></i></button>
                         </div>
                     <?php endif; ?>
                 </div>
-                <button type="button" id="addS" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#128c7e] hover:text-[#0e6f64] transition-all cursor-pointer"><i class="fa-solid fa-square-plus text-sm"></i> Add more social profile url</button>
+                <button type="button" id="addS" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#0072bc] hover:text-[#005ea3] transition-all cursor-pointer"><i class="fa-solid fa-square-plus text-sm"></i> Add more social profile url</button>
             </div>
 
-            <button type="submit" id="submitReportGenerationBtn" class="w-full bg-[#128c7e] hover:bg-[#0e6f64] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-[#128c7e] text-white font-bold py-4 rounded-xl text-sm transition-all shadow-md tracking-wide flex items-center justify-center gap-2 cursor-pointer">
+            <button type="submit" id="submitReportGenerationBtn" class="w-full bg-[#0072bc] hover:bg-[#005ea3] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-[#0072bc] text-white font-bold py-4 rounded-xl text-sm transition-all shadow-md tracking-wide flex items-center justify-center gap-2 cursor-pointer">
                 <span id="btnLabelText">Generate Report</span>
             </button>
         </div>
@@ -310,11 +310,11 @@ if(empty($firstNamePlaceholder)) $firstNamePlaceholder = 'target';
         // Apply red layout frame rules if text exists but fails validation pattern bounds
         if (emailInput) {
             if (emailValue !== '' && !emailValid) {
-                emailInput.classList.remove('bg-gray-50', 'border-gray-200', 'focus:ring-[#128c7e]', 'focus:border-[#128c7e]');
+                emailInput.classList.remove('bg-gray-50', 'border-gray-200', 'focus:ring-[#0072bc]', 'focus:border-[#0072bc]');
                 emailInput.classList.add('bg-red-50/30', 'border-red-500', 'focus:ring-red-500', 'focus:border-red-500');
             } else {
                 emailInput.classList.remove('bg-red-50/30', 'border-red-500', 'focus:ring-red-500', 'focus:border-red-500');
-                emailInput.classList.add('bg-gray-50', 'border-gray-200', 'focus:ring-[#128c7e]', 'focus:border-[#128c7e]');
+                emailInput.classList.add('bg-gray-50', 'border-gray-200', 'focus:ring-[#0072bc]', 'focus:border-[#0072bc]');
             }
         }
 
@@ -395,7 +395,7 @@ if(empty($firstNamePlaceholder)) $firstNamePlaceholder = 'target';
             addVectorBtn.addEventListener("click", () => {
                 const container = document.createElement("div"); 
                 container.className = "flex gap-2 items-center row-s opacity-0 transition-all duration-300 transform -translate-y-1";
-                container.innerHTML = `<input type="url" name="social_urls[]" placeholder="https://socialmedia.com/handle" class="grow px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-mono text-black font-semibold focus:outline-none focus:ring-2 focus:ring-[#128c7e] focus:border-[#128c7e] focus:bg-white"><button type="button" onclick="this.parentNode.remove(); handleGlobalMatrixRecalculation();" class="p-2.5 text-red-500 hover:bg-red-50 rounded-xl transition-all cursor-pointer"><i class="fa-solid fa-trash-can text-sm"></i></button>`;
+                container.innerHTML = `<input type="url" name="social_urls[]" placeholder="https://socialmedia.com/handle" class="grow px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-mono text-black font-semibold focus:outline-none focus:ring-2 focus:ring-[#0072bc] focus:border-[#0072bc] focus:bg-white"><button type="button" onclick="this.parentNode.remove(); handleGlobalMatrixRecalculation();" class="p-2.5 text-red-500 hover:bg-red-50 rounded-xl transition-all cursor-pointer"><i class="fa-solid fa-trash-can text-sm"></i></button>`;
                 
                 document.getElementById("sBox").appendChild(container);
                 setTimeout(() => container.classList.remove("opacity-0", "-translate-y-1"), 30);

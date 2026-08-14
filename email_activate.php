@@ -35,8 +35,8 @@ function sendActivationEmail($toEmail, $name) {
                     <p style='font-size: 12px; color: #111827; font-weight: 700; margin: 0 0 2px 0;'>Best Regards,</p>
                     <p style='font-size: 12px; color: #111827; font-weight: 700; margin: 0 0 10px 0;'>James Smith</p>
                     <p style='font-size: 11px; color: #6B7280; font-weight: 500; margin: 0 0 2px 0;'>Affiliate Manager</p>
-                    <p style='font-size: 11px; color: #6B7280; font-weight: 400; margin: 0 0 2px 0;'>E: <a href='mailto:smith@identitysearch.ai' style='color: #128c7e; text-decoration: none;'>smith@identitysearch.ai</a></p>
-                    <p style='font-size: 11px; color: #6B7280; font-weight: 400; margin: 0 0 2px 0;'>Telegram: <a href='https://t.me/identitysearchai' style='color: #128c7e; text-decoration: none;'>https://t.me/identitysearchai</a></p>
+                    <p style='font-size: 11px; color: #6B7280; font-weight: 400; margin: 0 0 2px 0;'>E: <a href='mailto:smith@identitysearch.ai' style='color: #0072bc; text-decoration: none;'>smith@identitysearch.ai</a></p>
+                    <p style='font-size: 11px; color: #6B7280; font-weight: 400; margin: 0 0 2px 0;'>Telegram: <a href='https://t.me/identitysearchai' style='color: #0072bc; text-decoration: none;'>https://t.me/identitysearchai</a></p>
                 </div>
 
                 <div style='padding: 16px 20px; border-top: 1px solid #F3F4F6; background-color: #FAFAFA; text-align: center; font-family: \"Roboto\", sans-serif;'>

@@ -92,7 +92,7 @@ if (isset($all_reviews) && is_array($all_reviews)) {
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#0072bc] selection:text-white">
 
     <?php include 'navbar.php'; ?>
 
@@ -109,14 +109,14 @@ if (isset($all_reviews) && is_array($all_reviews)) {
                              onerror="this.style.display='none'; document.getElementById('letterFallbackAvatar').classList.remove('hidden');">
                     <?php endif; ?>
                     
-                    <div id="letterFallbackAvatar" class="letter-avatar absolute inset-0 w-full h-full bg-emerald-50 text-[#128c7e] font-bold text-2xl flex items-center justify-center uppercase <?php echo !empty($target['avatar']) ? 'hidden' : ''; ?>">
+                    <div id="letterFallbackAvatar" class="letter-avatar absolute inset-0 w-full h-full bg-emerald-50 text-[#0072bc] font-bold text-2xl flex items-center justify-center uppercase <?php echo !empty($target['avatar']) ? 'hidden' : ''; ?>">
                         <?php echo $firstLetter; ?>
                     </div>
                 </div>
                 <div class="min-w-0 text-left">
                     <h1 class="text-xl font-bold text-gray-900 truncate tracking-tight"><?php echo escapeHtml($target['name']); ?></h1>
                     <p class="text-xs text-gray-400 font-semibold mt-1 uppercase tracking-wider">
-                        Source: <span class="text-[#128c7e] font-bold"><?php echo escapeHtml($cleanSource); ?></span>
+                        Source: <span class="text-[#0072bc] font-bold"><?php echo escapeHtml($cleanSource); ?></span>
                     </p>
                 </div>
             </div>
@@ -124,13 +124,13 @@ if (isset($all_reviews) && is_array($all_reviews)) {
             <div id="scanningPanel" class="<?php echo ($hasBeenScannedBefore || !empty($error)) ? 'hidden' : ''; ?> bg-white rounded-2xl border border-gray-200 shadow-sm p-6 text-center">
                 <div class="flex items-center justify-center gap-2 text-gray-800 font-bold text-base mb-4">
                     <div id="scanStatusIconContainer" class="flex items-center justify-center">
-                        <div id="scanSpinner" class="w-4 h-4 border-2 border-emerald-100 border-t-[#128c7e] rounded-full animate-spin"></div>
+                        <div id="scanSpinner" class="w-4 h-4 border-2 border-blue-100 border-t-[#0072bc] rounded-full animate-spin"></div>
                     </div>
                     <span id="scanStatusText">0 data source found</span>
                 </div>
 
                 <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden relative mb-4">
-                    <div id="scanProgressBar" class="progress-bar-fill bg-[#128c7e] h-full w-0" style="width: 0%;"></div>
+                    <div id="scanProgressBar" class="progress-bar-fill bg-[#0072bc] h-full w-0" style="width: 0%;"></div>
                 </div>
                 <p id="scanPleaseWait" class="text-xs text-black font-semibold mb-4">Please wait, analyzing data packages...</p>
 
@@ -141,7 +141,7 @@ if (isset($all_reviews) && is_array($all_reviews)) {
                         <span class="w-7 h-7 rounded-full bg-blue-700 border-2 border-white text-white flex items-center justify-center text-xs font-bold shadow-sm" title="LinkedIn"><i class="fa-brands fa-linkedin-in text-[10px]"></i></span>
                         <span class="w-7 h-7 rounded-full bg-slate-900 border-2 border-white text-white flex items-center justify-center text-xs font-bold shadow-sm" title="Twitter / X"><i class="fa-brands fa-x-twitter text-[10px]"></i></span>
                         <span class="w-7 h-7 rounded-full bg-black border-2 border-white text-white flex items-center justify-center text-xs font-bold shadow-sm" title="TikTok"><i class="fa-brands fa-tiktok text-[10px]"></i></span>
-                        <span class="w-7 h-7 rounded-full bg-[#128c7e] border-2 border-white text-white flex items-center justify-center text-xs font-bold shadow-sm" title="TrueCaller"><i class="fa-solid fa-phone text-[9px]"></i></span>
+                        <span class="w-7 h-7 rounded-full bg-[#0072bc] border-2 border-white text-white flex items-center justify-center text-xs font-bold shadow-sm" title="TrueCaller"><i class="fa-solid fa-phone text-[9px]"></i></span>
                         <span class="w-7 h-7 rounded-full bg-blue-500 border-2 border-white text-white flex items-center justify-center text-xs font-bold shadow-sm" title="Google Logs"><i class="fa-brands fa-google text-[10px]"></i></span>
                         <span class="w-7 h-7 rounded-full bg-red-600 border-2 border-white text-white flex items-center justify-center text-xs font-bold shadow-sm" title="YouTube Directory"><i class="fa-brands fa-youtube text-[10px]"></i></span>
                         <span class="w-7 h-7 rounded-full bg-gray-700 border-2 border-white text-white flex items-center justify-center text-xs font-bold shadow-sm" title="Wikipedia Node"><i class="fa-solid fa-w text-[9px]"></i></span>
@@ -170,12 +170,12 @@ if (isset($all_reviews) && is_array($all_reviews)) {
                                     <i class="fa-solid fa-envelope text-base"></i>
                                 </span>
                                 <input type="email" id="guestEmailInputField" name="guest_email" required 
-                                       class="block w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-semibold text-black focus:outline-none focus:ring-2 focus:ring-[#128c7e] focus:border-[#128c7e] transition-all" 
+                                       class="block w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-semibold text-black focus:outline-none focus:ring-2 focus:ring-[#0072bc] focus:border-[#0072bc] transition-all" 
                                        placeholder="name@example.com"
                                        value="<?php echo isset($_POST['guest_email']) ? escapeHtml($_POST['guest_email']) : ''; ?>">
                             </div>
 
-                            <button type="submit" id="guestEmailSubmitBtn" class="w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white font-bold py-3.5 px-4 rounded-xl text-sm shadow-md transition-all tracking-wide flex items-center justify-center gap-2 cursor-pointer">
+                            <button type="submit" id="guestEmailSubmitBtn" class="w-full bg-[#0072bc] hover:bg-[#005ea3] text-white font-bold py-3.5 px-4 rounded-xl text-sm shadow-md transition-all tracking-wide flex items-center justify-center gap-2 cursor-pointer">
                                 <span id="btnTextNode">Continue</span>
                             </button>
                         </form>
@@ -218,7 +218,7 @@ if (isset($all_reviews) && is_array($all_reviews)) {
                                     </div>
                                     
                                     <span class="inline-flex items-center gap-1 bg-gray-50 text-slate-700 border border-gray-100 text-[10px] font-bold px-2 py-0.5 rounded-lg tracking-wide shrink-0">
-                                        <i class="fa-solid fa-location-dot text-[#128c7e] text-xs"></i>
+                                        <i class="fa-solid fa-location-dot text-[#0072bc] text-xs"></i>
                                         <?php echo htmlspecialchars($review['country']); ?>
                                     </span>
                                 </div>

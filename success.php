@@ -324,7 +324,7 @@ $redirect_url = $hasTargetVid ? BASE_URL . "view?id=" . urlencode($vid) : BASE_U
         body { background-color: #f9fafb !important; color: #111827 !important; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#0072bc] selection:text-white">
 
     <?php include 'navbar.php'; ?>
 
@@ -340,14 +340,14 @@ $redirect_url = $hasTargetVid ? BASE_URL . "view?id=" . urlencode($vid) : BASE_U
                     <p class="text-xs font-semibold text-red-600 leading-relaxed px-2"><?php echo htmlspecialchars($error_message); ?></p>
                 </div>
                 <div class="pt-2">
-                    <a href="<?php echo BASE_URL; ?>buy-credit" class="block w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white py-4 rounded-xl font-bold text-sm transition shadow-sm cursor-pointer">
+                    <a href="<?php echo BASE_URL; ?>buy-credit" class="block w-full bg-[#0072bc] hover:bg-[#005ea3] text-white py-4 rounded-xl font-bold text-sm transition shadow-sm cursor-pointer">
                         Try Again
                     </a>
                 </div>
             </div>
         <?php else: ?>
             <div class="w-full bg-white border border-gray-200 rounded-3xl p-8 text-center space-y-6 shadow-sm">
-                <div class="w-16 h-16 bg-emerald-50 text-[#128c7e] rounded-2xl flex items-center justify-center mx-auto border border-emerald-100 text-2xl">
+                <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto border border-emerald-100 text-2xl">
                     <i class="fa-solid fa-circle-check"></i>
                 </div>
                 <div class="space-y-1.5">
@@ -357,11 +357,11 @@ $redirect_url = $hasTargetVid ? BASE_URL . "view?id=" . urlencode($vid) : BASE_U
                 
                 <div class="pt-2">
                     <?php if ($hasTargetVid): ?>
-                        <button disabled class="w-full bg-[#128c7e] text-white py-4 rounded-xl font-bold text-sm transition shadow-sm opacity-70 cursor-not-allowed flex items-center justify-center gap-2">
+                        <button disabled class="w-full bg-[#0072bc] text-white py-4 rounded-xl font-bold text-sm transition shadow-sm opacity-70 cursor-not-allowed flex items-center justify-center gap-2">
                             <i class="fa-solid fa-spinner animate-spin"></i> Redirecting...
                         </button>
                     <?php else: ?>
-                        <a href="<?php echo $redirect_url; ?>" class="block w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white py-4 rounded-xl font-bold text-sm transition shadow-sm cursor-pointer">
+                        <a href="<?php echo $redirect_url; ?>" class="block w-full bg-[#0072bc] hover:bg-[#005ea3] text-white py-4 rounded-xl font-bold text-sm transition shadow-sm cursor-pointer">
                             Go to Homepage
                         </a>
                     <?php endif; ?>

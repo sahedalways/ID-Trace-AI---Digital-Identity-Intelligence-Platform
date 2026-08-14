@@ -41,12 +41,12 @@ try {
                         <div style='margin-bottom: 8px; font-size: 11px; color: #4B5563;'><b style='color: #111827;'>Billing Address:</b> {$escapedStreet}, {$escapedZip}, {$escapedCountry}</div>
                         <div style='margin-bottom: 8px; font-size: 11px; color: #4B5563;'><b style='color: #111827;'>Plan Name:</b> <span style='text-transform: uppercase;'>{$escapedPlanName}</span></div>
                         <div style='margin-bottom: 8px; font-size: 11px; color: #4B5563;'><b style='color: #111827;'>Credits:</b> {$credits_allocated} Reports</div>
-                        <div style='margin-bottom: 8px; font-size: 11px; color: #4B5563;'><b style='color: #111827;'>Amount:</b> <span style='color: #128c7e; font-weight: 700;'>{$formatted_price}</span></div>
+                        <div style='margin-bottom: 8px; font-size: 11px; color: #4B5563;'><b style='color: #111827;'>Amount:</b> <span style='color: #0072bc; font-weight: 700;'>{$formatted_price}</span></div>
                         <div style='margin-bottom: 8px; font-size: 11px; color: #4B5563;'><b style='color: #111827;'>TXID:</b> <span style='font-family: monospace; color: #6B7280;'>{$unique_tid}</span></div>
                         <div style='font-size: 11px; color: #4B5563;'><b style='color: #111827;'>Date:</b> {$invoice_date}</div>
                     </div>
 
-                    <p style='font-size: 11px; color: #4B5563; font-weight: 400; line-height: 1.5; margin-top: 0; margin-bottom: 0;'>To download payment invoice, please visit your <a href='https://idtrace.ai/my-plan' style='color: #128c7e; text-decoration: none; font-weight: 500;'>account dashboard</a>.</p>
+                    <p style='font-size: 11px; color: #4B5563; font-weight: 400; line-height: 1.5; margin-top: 0; margin-bottom: 0;'>To download payment invoice, please visit your <a href='https://idtrace.ai/my-plan' style='color: #0072bc; text-decoration: none; font-weight: 500;'>account dashboard</a>.</p>
                 </div>
 
                 <div style='padding: 20px; border-top: 1px solid #F3F4F6; background-color: #FAFAFA; text-align: center;'>
@@ -55,7 +55,7 @@ try {
                     </div>
                     <p style='font-size: 9px; color: #4B5563; font-weight: 500; margin: 0 0 4px 0;'>&copy; 2026 - Identity Search AI</p>
                     <p style='font-size: 9px; color: #4B5563; font-weight: 400; margin: 0;'>
-                        <a href='mailto:support@identitysearch.ai' style='color: #128c7e; text-decoration: none;'>support@identitysearch.ai</a>
+                        <a href='mailto:support@identitysearch.ai' style='color: #0072bc; text-decoration: none;'>support@identitysearch.ai</a>
                     </p>
                 </div>
 

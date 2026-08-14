@@ -24,7 +24,7 @@ $engineIcons = [
     'instagram'  => 'fa-brands fa-instagram text-pink-600',
     'twitter'    => 'fa-brands fa-x-twitter text-slate-800',
     'tiktok'     => 'fa-brands fa-tiktok text-black',
-    'truecaller' => 'fa-solid fa-phone text-[#128c7e]'
+    'truecaller' => 'fa-solid fa-phone text-[#0072bc]'
 ];
 $currentIconClass = $engineIcons[$engine] ?? 'fa-solid fa-magnifying-glass text-gray-400';
 ?>
@@ -40,14 +40,14 @@ $currentIconClass = $engineIcons[$engine] ?? 'fa-solid fa-magnifying-glass text-
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#0072bc] selection:text-white">
 
     <?php include 'navbar.php'; ?>
 
     <main class="max-w-4xl w-full mx-auto px-4 sm:px-6 py-8 flex-grow">
         
         <section id="searchConsoleWrapper" class="mb-10">
-            <form action="search" method="GET" id="intelligenceForm" onsubmit="executeOsintLookup(event)" class="relative flex flex-col sm:flex-row items-stretch sm:items-center w-full bg-white sm:border border-gray-200 focus-within:border-[#128c7e] rounded-2xl transition shadow-xl p-2.5 sm:p-2 z-30 gap-2 sm:gap-0 border">
+            <form action="search" method="GET" id="intelligenceForm" onsubmit="executeOsintLookup(event)" class="relative flex flex-col sm:flex-row items-stretch sm:items-center w-full bg-white sm:border border-gray-200 focus-within:border-[#0072bc] rounded-2xl transition shadow-xl p-2.5 sm:p-2 z-30 gap-2 sm:gap-0 border">
                 
                 <div class="flex items-center w-full bg-transparent gap-1 relative">
                     <div class="relative inline-block text-left pl-1">
@@ -73,7 +73,7 @@ $currentIconClass = $engineIcons[$engine] ?? 'fa-solid fa-magnifying-glass text-
                                 <i class="fa-brands fa-tiktok text-black w-4 text-center"></i> TikTok
                             </button>
                             <button type="button" onclick="selectDropdownEngine('truecaller')" class="flex items-center gap-3 w-full px-4 py-2.5 text-sm hover:bg-slate-50 transition text-left cursor-pointer">
-                                <i class="fa-solid fa-phone text-[#128c7e] w-4 text-center"></i> TrueCaller
+                                <i class="fa-solid fa-phone text-[#0072bc] w-4 text-center"></i> TrueCaller
                             </button>
                         </div>
                     </div>
@@ -87,7 +87,7 @@ $currentIconClass = $engineIcons[$engine] ?? 'fa-solid fa-magnifying-glass text-
                     </button>
                 </div>
                 
-                <button type="submit" id="searchSubmitBtn" class="bg-[#128c7e] hover:bg-[#0e6f64] text-white font-bold px-6 py-2.5 rounded-xl transition text-sm tracking-wide shadow-sm flex items-center h-11 sm:min-w-[125px] justify-center outline-none disabled:opacity-80 disabled:cursor-not-allowed cursor-pointer">
+                <button type="submit" id="searchSubmitBtn" class="bg-[#0072bc] hover:bg-[#005ea3] text-white font-bold px-6 py-2.5 rounded-xl transition text-sm tracking-wide shadow-sm flex items-center h-11 sm:min-w-[125px] justify-center outline-none disabled:opacity-80 disabled:cursor-not-allowed cursor-pointer">
                     <span id="btnLabelContainer">Search</span>
                 </button>
             </form>
@@ -97,7 +97,7 @@ $currentIconClass = $engineIcons[$engine] ?? 'fa-solid fa-magnifying-glass text-
 
         <section id="osintResultsWrapper">
             <div id="initialPlaceholderModule" class="<?php echo empty($search_query) ? '' : 'hidden'; ?> bg-white rounded-2xl p-12 border border-gray-200/80 text-center max-w-lg mx-auto shadow-sm my-6 fade-in-up">
-                <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-[#128c7e] flex items-center justify-center mx-auto mb-4 shadow-inner"><i class="fa-solid fa-radar text-xl animate-pulse"></i></div>
+                <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-[#0072bc] flex items-center justify-center mx-auto mb-4 shadow-inner"><i class="fa-solid fa-radar text-xl animate-pulse"></i></div>
                 <h3 class="text-lg font-bold text-gray-900 mb-1">Initiate Lookup Protocol</h3>
                 <p class="text-sm text-black font-medium max-w-xs mx-auto">Input structural entity attributes above to orchestrate live web graph data extraction metrics natively.</p>
             </div>
@@ -187,7 +187,7 @@ $currentIconClass = $engineIcons[$engine] ?? 'fa-solid fa-magnifying-glass text-
                 'instagram': 'fa-brands fa-instagram text-pink-600',
                 'twitter': 'fa-brands fa-x-twitter text-slate-800',
                 'tiktok': 'fa-brands fa-tiktok text-black',
-                'truecaller': 'fa-solid fa-phone text-[#128c7e]'
+                'truecaller': 'fa-solid fa-phone text-[#0072bc]'
             };
 
             const iconEl = document.getElementById('activeDropdownIcon');

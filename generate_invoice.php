@@ -58,7 +58,7 @@ $invoice_date = date('F d, Y', strtotime($tx['created_at']));
         }
     </style>
 </head>
-<body class="font-sans text-gray-900 antialiased selection:bg-[#128c7e] selection:text-white">
+<body class="font-sans text-gray-900 antialiased selection:bg-[#0072bc] selection:text-white">
 
     <!-- TOP FLOATING INTERACTION WIDGET LAYER -->
     <div class="no-print max-w-3xl w-full mx-auto px-4 mt-6">
@@ -70,7 +70,7 @@ $invoice_date = date('F d, Y', strtotime($tx['created_at']));
                     <p class="text-[11px] text-slate-400 font-medium">Verified invoice ready. Click the utility controller to prompt system preservation hooks.</p>
                 </div>
             </div>
-            <button onclick="window.print();" class="bg-[#128c7e] hover:bg-[#0e6f64] text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-sm transition whitespace-nowrap tracking-wide flex items-center gap-2">
+            <button onclick="window.print();" class="bg-[#0072bc] hover:bg-[#005ea3] text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-sm transition whitespace-nowrap tracking-wide flex items-center gap-2">
                 Save / Print
             </button>
         </div>
@@ -84,7 +84,7 @@ $invoice_date = date('F d, Y', strtotime($tx['created_at']));
             <div class="space-y-4">
                 <div class="flex items-center gap-2 select-none">
                     <span class="text-2xl">🕵️‍♂️</span>
-                    <h1 class="text-xl font-medium tracking-tight text-gray-700">Identity Search <span class="bg-[#128c7e] text-white text-sm font-black px-2 py-0.5 rounded inline-flex items-center justify-center tracking-widest mt-0.5">AI</span></h1>
+                    <h1 class="text-xl font-medium tracking-tight text-gray-700">Identity Search <span class="bg-[#0072bc] text-white text-sm font-black px-2 py-0.5 rounded inline-flex items-center justify-center tracking-widest mt-0.5">AI</span></h1>
                 </div>
 
                 <div class="text-xs space-y-1 pt-2 font-medium text-gray-700 leading-normal">
@@ -95,7 +95,7 @@ $invoice_date = date('F d, Y', strtotime($tx['created_at']));
 
             <!-- FIXED: Large, pure-text paid label badge explicitly mapped for print sheets -->
             <div class="pt-1 select-none">
-                <span class="inline-block bg-[#128c7e] text-white text-sm font-black px-7 py-2.5 rounded-xl shadow-sm uppercase tracking-widest border border-transparent">
+                <span class="inline-block bg-[#0072bc] text-white text-sm font-black px-7 py-2.5 rounded-xl shadow-sm uppercase tracking-widest border border-transparent">
                     Paid
                 </span>
             </div>
@@ -155,7 +155,7 @@ $invoice_date = date('F d, Y', strtotime($tx['created_at']));
                 </div>
                 <div class="flex justify-between font-bold text-gray-900 pt-3 border-t border-gray-200 text-sm">
                     <span>Total Paid</span>
-                    <span class="text-[#128c7e] font-black">$<?php echo number_format($tx['plan_cost'], 2); ?> USD</span>
+                    <span class="text-[#0072bc] font-black">$<?php echo number_format($tx['plan_cost'], 2); ?> USD</span>
                 </div>
             </div>
         </div>

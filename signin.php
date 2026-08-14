@@ -44,14 +44,14 @@ $google_auth_url = BASE_URL . "auth_google?return=" . urlencode($return_path);
         .otp-box { -moz-appearance: textfield; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#0072bc] selection:text-white">
 
     <?php include 'navbar.php'; ?>
 
     <main class="w-full mx-auto max-w-[440px] px-6 py-12 flex-grow flex flex-col justify-center fade-in-up">
         
         <div class="flex flex-col items-center justify-center mb-8 text-center select-none">
-            <span class="text-[#128c7e] w-16 h-16 flex items-center justify-center shrink-0 animate-fingerprint">
+            <span class="text-[#0072bc] w-16 h-16 flex items-center justify-center shrink-0 animate-fingerprint">
                 <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M8.10008 21.221C6.71021 19.2375 5.89258 16.8243 5.89258 14.2187C5.89258 10.8443 8.6265 8.10938 11.9989 8.10938C15.3712 8.10938 18.1051 10.8443 18.1051 14.2187" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M8.10008 21.221C6.71021 19.2375 5.89258 16.8243 5.89258 14.2187C5.89258 10.8443 8.6265 8.10938 11.9989 8.10938C15.3712 8.10938 18.1051 10.8443 18.1051 14.2187" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -75,9 +75,9 @@ $google_auth_url = BASE_URL . "auth_google?return=" . urlencode($return_path);
 
             <form id="emailSubmissionForm" class="space-y-3">
                 <div class="relative">
-                    <input type="email" id="emailField" placeholder="Enter your email address" class="w-full bg-white border border-gray-200 focus:border-[#128c7e] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-gray-900 text-base font-semibold px-4 py-3.5 placeholder-gray-400 transition shadow-sm" value="<?php echo htmlspecialchars($prefilled_email, ENT_QUOTES, 'UTF-8'); ?>" required>
+                    <input type="email" id="emailField" placeholder="Enter your email address" class="w-full bg-white border border-gray-200 focus:border-[#0072bc] focus:ring-4 focus:ring-blue-50 rounded-xl outline-none text-gray-900 text-base font-semibold px-4 py-3.5 placeholder-gray-400 transition shadow-sm" value="<?php echo htmlspecialchars($prefilled_email, ENT_QUOTES, 'UTF-8'); ?>" required>
                 </div>
-                <button type="submit" id="emailSubmitBtn" class="w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white font-bold py-3.5 px-4 rounded-xl transition text-[15px] tracking-wide shadow-sm flex items-center justify-center gap-2 cursor-pointer">
+                <button type="submit" id="emailSubmitBtn" class="w-full bg-[#0072bc] hover:bg-[#005ea3] text-white font-bold py-3.5 px-4 rounded-xl transition text-[15px] tracking-wide shadow-sm flex items-center justify-center gap-2 cursor-pointer">
                     <span>Continue with email</span>
                 </button>
             </form>
@@ -100,17 +100,17 @@ $google_auth_url = BASE_URL . "auth_google?return=" . urlencode($return_path);
 
             <form id="otpVerificationForm" class="space-y-6">
                 <div class="flex items-center justify-between gap-2 px-1" id="otpInputsCluster">
-                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-white border border-gray-200 focus:border-[#128c7e] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-center text-xl font-bold text-gray-900 shadow-sm transition" required>
-                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-white border border-gray-200 focus:border-[#128c7e] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-center text-xl font-bold text-gray-900 shadow-sm transition" required disabled>
-                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-white border border-gray-200 focus:border-[#128c7e] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-center text-xl font-bold text-gray-900 shadow-sm transition" required disabled>
-                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-white border border-gray-200 focus:border-[#128c7e] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-center text-xl font-bold text-gray-900 shadow-sm transition" required disabled>
-                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-white border border-gray-200 focus:border-[#128c7e] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-center text-xl font-bold text-gray-900 shadow-sm transition" required disabled>
-                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-white border border-gray-200 focus:border-[#128c7e] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-center text-xl font-bold text-gray-900 shadow-sm transition" required disabled>
+                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-white border border-gray-200 focus:border-[#0072bc] focus:ring-4 focus:ring-blue-50 rounded-xl outline-none text-center text-xl font-bold text-gray-900 shadow-sm transition" required>
+                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-white border border-gray-200 focus:border-[#0072bc] focus:ring-4 focus:ring-blue-50 rounded-xl outline-none text-center text-xl font-bold text-gray-900 shadow-sm transition" required disabled>
+                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-white border border-gray-200 focus:border-[#0072bc] focus:ring-4 focus:ring-blue-50 rounded-xl outline-none text-center text-xl font-bold text-gray-900 shadow-sm transition" required disabled>
+                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-white border border-gray-200 focus:border-[#0072bc] focus:ring-4 focus:ring-blue-50 rounded-xl outline-none text-center text-xl font-bold text-gray-900 shadow-sm transition" required disabled>
+                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-white border border-gray-200 focus:border-[#0072bc] focus:ring-4 focus:ring-blue-50 rounded-xl outline-none text-center text-xl font-bold text-gray-900 shadow-sm transition" required disabled>
+                    <input type="number" min="0" max="9" maxlength="1" class="otp-box w-12 h-14 bg-white border border-gray-200 focus:border-[#0072bc] focus:ring-4 focus:ring-blue-50 rounded-xl outline-none text-center text-xl font-bold text-gray-900 shadow-sm transition" required disabled>
                 </div>
-                <button type="submit" id="otpSubmitBtn" class="w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white font-bold py-3.5 px-4 rounded-xl transition text-[15px] tracking-wide shadow-sm flex items-center justify-center cursor-pointer">Verify code</button>
+                <button type="submit" id="otpSubmitBtn" class="w-full bg-[#0072bc] hover:bg-[#005ea3] text-white font-bold py-3.5 px-4 rounded-xl transition text-[15px] tracking-wide shadow-sm flex items-center justify-center cursor-pointer">Verify code</button>
             </form>
 
-            <div class="text-center text-xs text-gray-500 font-semibold">Didn't receive the email? <button type="button" id="resendOtpBtn" class="text-[#128c7e] hover:text-[#0e6f64] underline ml-0.5 font-bold transition cursor-pointer">Resend code</button></div>
+            <div class="text-center text-xs text-gray-500 font-semibold">Didn't receive the email? <button type="button" id="resendOtpBtn" class="text-[#0072bc] hover:text-[#005ea3] underline ml-0.5 font-bold transition cursor-pointer">Resend code</button></div>
         </div>
 
         <div id="stageNameCollectionBlock" class="hidden space-y-6">
@@ -121,9 +121,9 @@ $google_auth_url = BASE_URL . "auth_google?return=" . urlencode($return_path);
 
             <form id="nameCollectionForm" class="space-y-3">
                 <div class="relative">
-                    <input type="text" id="nameField" placeholder="Enter your full name" class="w-full bg-white border border-gray-200 focus:border-[#128c7e] focus:ring-4 focus:ring-emerald-50 rounded-xl outline-none text-gray-900 text-base font-semibold px-4 py-3.5 placeholder-gray-400 transition shadow-sm" required minlength="2">
+                    <input type="text" id="nameField" placeholder="Enter your full name" class="w-full bg-white border border-gray-200 focus:border-[#0072bc] focus:ring-4 focus:ring-blue-50 rounded-xl outline-none text-gray-900 text-base font-semibold px-4 py-3.5 placeholder-gray-400 transition shadow-sm" required minlength="2">
                 </div>
-                <button type="submit" id="nameSubmitBtn" class="w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white font-bold py-3.5 px-4 rounded-xl transition text-[15px] tracking-wide shadow-sm flex items-center justify-center cursor-pointer">
+                <button type="submit" id="nameSubmitBtn" class="w-full bg-[#0072bc] hover:bg-[#005ea3] text-white font-bold py-3.5 px-4 rounded-xl transition text-[15px] tracking-wide shadow-sm flex items-center justify-center cursor-pointer">
                     <span>Complete Registration</span>
                 </button>
             </form>

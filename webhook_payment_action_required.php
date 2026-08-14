@@ -35,7 +35,7 @@ try {
                         </div>
                         <p style='font-size: 9px; color: #4B5563; font-weight: 500; margin: 0 0 4px 0;'>&copy; 2026 - Identity Search AI</p>
                         <p style='font-size: 9px; color: #4B5563; font-weight: 400; margin: 0;'>
-                            <a href='mailto:support@identitysearch.ai' style='color: #128c7e; text-decoration: none;'>support@identitysearch.ai</a>
+                            <a href='mailto:support@identitysearch.ai' style='color: #0072bc; text-decoration: none;'>support@identitysearch.ai</a>
                         </p>
                     </div>
                 </div>

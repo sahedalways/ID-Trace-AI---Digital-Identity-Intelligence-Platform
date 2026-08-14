@@ -73,7 +73,7 @@ try {
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#0072bc] selection:text-white">
 
     <?php include 'navbar.php'; ?>
 
@@ -87,7 +87,7 @@ try {
                 </h1>
                 <!-- UPDATED: Description paragraph block removed completely from here -->
             </div>
-            <a href="<?php echo BASE_URL; ?>" class="bg-[#128c7e] hover:bg-[#0e6f64] text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow-sm transition-colors flex items-center gap-1.5 cursor-pointer">
+            <a href="<?php echo BASE_URL; ?>" class="bg-[#0072bc] hover:bg-[#005ea3] text-white px-4 py-2.5 rounded-xl text-xs font-bold shadow-sm transition-colors flex items-center gap-1.5 cursor-pointer">
                 <i class="fa-solid fa-plus text-[10px]"></i> New Report
             </a>
         </div>
@@ -102,7 +102,7 @@ try {
                     </div>
                     <h3 class="text-sm font-bold text-gray-900">No Intelligence Records Found</h3>
                     <p class="text-xs text-gray-500 font-medium mt-1 mb-6 max-w-xs mx-auto">You have not requested or generated any system intelligence profiles yet.</p>
-                    <a href="<?php echo BASE_URL; ?>" class="inline-flex items-center justify-center gap-2 bg-[#128c7e] hover:bg-[#0e6f64] text-white py-3.5 px-8 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer">
+                    <a href="<?php echo BASE_URL; ?>" class="inline-flex items-center justify-center gap-2 bg-[#0072bc] hover:bg-[#005ea3] text-white py-3.5 px-8 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer">
                         <i class="fa-solid fa-bolt"></i> Initiate First Deep Scan
                     </a>
                 </div>
@@ -132,7 +132,7 @@ try {
 
                     // Configuration Rules for Conditional Status Tags and Font Awesome sub-indicators
                     $statusStyles = [
-                        'completed'  => ['css' => 'bg-emerald-50 text-[#128c7e] border-emerald-100', 'icon' => 'fa-solid fa-circle-check'],
+                        'completed'  => ['css' => 'bg-emerald-50 text-emerald-700 border-emerald-100', 'icon' => 'fa-solid fa-circle-check'],
                         'processing' => ['css' => 'bg-amber-50 text-amber-700 border-amber-100', 'icon' => 'fa-solid fa-spinner animate-spin'],
                         'pending'    => ['css' => 'bg-blue-50 text-blue-600 border-blue-100', 'icon' => 'fa-solid fa-clock'],
                         'failed'     => ['css' => 'bg-rose-50 text-rose-600 border-rose-100', 'icon' => 'fa-solid fa-circle-exclamation']
@@ -152,7 +152,7 @@ try {
                                          class="w-full h-full object-cover"
                                          onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
                                 <?php endif; ?>
-                                <div class="absolute inset-0 w-full h-full bg-emerald-50 text-[#128c7e] font-bold text-base flex items-center justify-center uppercase <?php echo !empty($report['target_avatar']) ? 'hidden' : ''; ?>">
+                                <div class="absolute inset-0 w-full h-full bg-emerald-50 text-[#0072bc] font-bold text-base flex items-center justify-center uppercase <?php echo !empty($report['target_avatar']) ? 'hidden' : ''; ?>">
                                     <?php echo strtoupper(substr($targetName, 0, 1)); ?>
                                 </div>
                             </div>
@@ -181,7 +181,7 @@ try {
 
                         <!-- Action Controls (Clean, content-sized w-auto button on mobile instead of block layout) -->
                         <div class="shrink-0 flex justify-center w-full sm:w-auto">
-                            <a href="<?php echo BASE_URL; ?>report?id=<?php echo $cleanVid; ?>" class="inline-flex items-center justify-center bg-[#128c7e] hover:bg-[#0e6f64] text-white py-2.5 px-5 rounded-xl text-xs font-bold shadow-sm transition-colors cursor-pointer gap-1.5 border border-transparent whitespace-nowrap">
+                            <a href="<?php echo BASE_URL; ?>report?id=<?php echo $cleanVid; ?>" class="inline-flex items-center justify-center bg-[#0072bc] hover:bg-[#005ea3] text-white py-2.5 px-5 rounded-xl text-xs font-bold shadow-sm transition-colors cursor-pointer gap-1.5 border border-transparent whitespace-nowrap">
                                 <i class="fa-solid fa-passport text-xs"></i> View Report
                             </a>
                         </div>

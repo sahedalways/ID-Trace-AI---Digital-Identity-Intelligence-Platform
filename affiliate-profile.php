@@ -185,7 +185,7 @@ $method_icons = [
                     <div class="bg-slate-50 rounded-xl px-4 py-3 border border-slate-100">
                         <div class="flex items-center justify-between">
                             <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Affiliate ID</span>
-                            <span class="text-xs font-mono font-bold text-[#128c7e]"><?= htmlspecialchars($user['aid']) ?></span>
+                            <span class="text-xs font-mono font-bold text-[#0072bc]"><?= htmlspecialchars($user['aid']) ?></span>
                         </div>
                         <div class="flex items-center justify-between mt-2">
                             <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</span>
@@ -201,14 +201,14 @@ $method_icons = [
             <!-- Payment Profile -->
             <div id="payment-sec" class="bg-white rounded-[2.5rem] p-8 shadow-xl shadow-slate-200/40 border border-slate-100">
                 <h3 class="text-lg font-black mb-6 flex items-center gap-2">
-                    <i class="fa fa-wallet text-emerald-500"></i> Payment Profile
+                    <i class="fa fa-wallet text-[#0072bc]"></i> Payment Profile
                 </h3>
 
                 <?php if ($payment_filled): ?>
                     <form method="POST" class="space-y-4" id="paymentForm">
                         <div>
                             <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 block">Payment Gateway</label>
-                            <select name="payment_method" id="paySelect" onchange="togglePayUI()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold text-slate-700 outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer">
+                            <select name="payment_method" id="paySelect" onchange="togglePayUI()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold text-slate-700 outline-none focus:ring-2 focus:ring-[#0072bc] cursor-pointer">
                                 <option value="">— Select Method —</option>
                                 <option value="payoneer" <?= $payment['payment_method'] === 'payoneer' ? 'selected' : '' ?>>Payoneer</option>
                                 <option value="usdt_bep20" <?= $payment['payment_method'] === 'usdt_bep20' ? 'selected' : '' ?>>USDT (BEP-20)</option>
@@ -217,16 +217,16 @@ $method_icons = [
                         </div>
 
                         <div id="form_payoneer" class="pay-box <?= $payment['payment_method'] !== 'payoneer' ? 'hidden' : '' ?> space-y-3">
-                            <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-3 flex items-center gap-2.5">
-                                <div class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
-                                    <i class="fa-solid fa-envelope text-emerald-600 text-sm"></i>
+                            <div class="bg-blue-50 border border-blue-100 rounded-xl p-3 flex items-center gap-2.5">
+                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-envelope text-blue-600 text-sm"></i>
                                 </div>
-                                <span class="text-[11px] font-bold text-emerald-800">Enter your Payoneer email for quick payouts</span>
+                                <span class="text-[11px] font-bold text-blue-800">Enter your Payoneer email for quick payouts</span>
                             </div>
                             <?php
                             $current_val = ($payment['payment_method'] === 'payoneer') ? htmlspecialchars($payment['payment_info']) : '';
                             ?>
-                            <input type="email" name="payoneer_email" value="<?= $current_val ?>" placeholder="Payoneer Email Address" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-emerald-500">
+                            <input type="email" name="payoneer_email" value="<?= $current_val ?>" placeholder="Payoneer Email Address" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-[#0072bc]">
                         </div>
 
                         <div id="form_usdt_bep20" class="pay-box <?= $payment['payment_method'] !== 'usdt_bep20' ? 'hidden' : '' ?> space-y-3">
@@ -239,7 +239,7 @@ $method_icons = [
                             <?php
                             $current_val = ($payment['payment_method'] === 'usdt_bep20') ? htmlspecialchars($payment['payment_info']) : '';
                             ?>
-                            <input type="text" name="usdt_address" value="<?= $current_val ?>" placeholder="USDT Wallet Address (BEP-20)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-emerald-500">
+                            <input type="text" name="usdt_address" value="<?= $current_val ?>" placeholder="USDT Wallet Address (BEP-20)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-[#0072bc]">
                         </div>
 
                         <div id="form_bank_transfer" class="pay-box <?= $payment['payment_method'] !== 'bank_transfer' ? 'hidden' : '' ?> space-y-3">
@@ -261,26 +261,26 @@ $method_icons = [
                                 }
                             }
                             ?>
-                            <input type="text" name="b_bank_name" value="<?= htmlspecialchars($bank_data['Bank Name'] ?? '') ?>" placeholder="Bank Name" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-emerald-500">
-                            <input type="text" name="b_name" value="<?= htmlspecialchars($bank_data['Beneficiary Name'] ?? '') ?>" placeholder="Beneficiary Name" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-emerald-500">
-                            <input type="text" name="b_acc" value="<?= htmlspecialchars($bank_data['Account Number'] ?? '') ?>" placeholder="Account Number" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-emerald-500">
-                            <input type="text" name="b_routing" value="<?= htmlspecialchars($bank_data['Routing Number'] ?? '') ?>" placeholder="Routing Number (optional)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-emerald-500">
-                            <input type="text" name="b_swift" value="<?= htmlspecialchars($bank_data['Swift Code'] ?? '') ?>" placeholder="Swift Code" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-emerald-500">
-                            <textarea name="b_address" placeholder="Bank Branch Address" rows="2" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-emerald-500"><?= htmlspecialchars($bank_data['Bank Address'] ?? '') ?></textarea>
+                            <input type="text" name="b_bank_name" value="<?= htmlspecialchars($bank_data['Bank Name'] ?? '') ?>" placeholder="Bank Name" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-[#0072bc]">
+                            <input type="text" name="b_name" value="<?= htmlspecialchars($bank_data['Beneficiary Name'] ?? '') ?>" placeholder="Beneficiary Name" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-[#0072bc]">
+                            <input type="text" name="b_acc" value="<?= htmlspecialchars($bank_data['Account Number'] ?? '') ?>" placeholder="Account Number" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-[#0072bc]">
+                            <input type="text" name="b_routing" value="<?= htmlspecialchars($bank_data['Routing Number'] ?? '') ?>" placeholder="Routing Number (optional)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-[#0072bc]">
+                            <input type="text" name="b_swift" value="<?= htmlspecialchars($bank_data['Swift Code'] ?? '') ?>" placeholder="Swift Code" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-[#0072bc]">
+                            <textarea name="b_address" placeholder="Bank Branch Address" rows="2" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-[#0072bc]"><?= htmlspecialchars($bank_data['Bank Address'] ?? '') ?></textarea>
                         </div>
 
                         <p class="text-[10px] text-red-500 font-bold px-1 italic hidden" id="paymentNote">
                             <i class="fa fa-info-circle mr-1"></i> Note: You cannot edit payment info after saving.
                         </p>
 
-                        <button type="submit" name="update_payment" id="savePaymentBtn" class="bg-emerald-600 text-white py-3 px-8 rounded-2xl font-black uppercase text-[11px] tracking-widest shadow-lg hover:bg-emerald-700 transition cursor-pointer hidden">Update Payment Info</button>
+                        <button type="submit" name="update_payment" id="savePaymentBtn" class="bg-[#0072bc] text-white py-3 px-8 rounded-2xl font-black uppercase text-[11px] tracking-widest shadow-lg hover:bg-[#005ea3] transition cursor-pointer hidden">Update Payment Info</button>
                     </form>
 
                 <?php else: ?>
                     <form method="POST" class="space-y-4" id="paymentForm">
                         <div>
                             <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 block">Select Payment Gateway</label>
-                            <select name="payment_method" id="paySelect" onchange="togglePayUI()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold text-slate-700 outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer">
+                            <select name="payment_method" id="paySelect" onchange="togglePayUI()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold text-slate-700 outline-none focus:ring-2 focus:ring-[#0072bc] cursor-pointer">
                                 <option value="">— Select Method —</option>
                                 <option value="payoneer">Payoneer</option>
                                 <option value="usdt_bep20">USDT (BEP-20)</option>
@@ -290,13 +290,13 @@ $method_icons = [
 
                         <!-- Payoneer Form -->
                         <div id="form_payoneer" class="pay-box hidden space-y-3">
-                            <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-3 flex items-center gap-2.5">
-                                <div class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
-                                    <i class="fa-solid fa-envelope text-emerald-600 text-sm"></i>
+                            <div class="bg-blue-50 border border-blue-100 rounded-xl p-3 flex items-center gap-2.5">
+                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-envelope text-blue-600 text-sm"></i>
                                 </div>
-                                <span class="text-[11px] font-bold text-emerald-800">Enter your Payoneer email for quick payouts</span>
+                                <span class="text-[11px] font-bold text-blue-800">Enter your Payoneer email for quick payouts</span>
                             </div>
-                            <input type="email" name="payoneer_email" placeholder="Payoneer Email Address" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-emerald-500">
+                            <input type="email" name="payoneer_email" placeholder="Payoneer Email Address" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-[#0072bc]">
                         </div>
 
                         <!-- USDT BEP-20 Form -->
@@ -307,7 +307,7 @@ $method_icons = [
                                 </div>
                                 <span class="text-[11px] font-bold text-amber-800">Send USDT to your BEP-20 wallet address</span>
                             </div>
-                            <input type="text" name="usdt_address" placeholder="USDT Wallet Address (BEP-20)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-emerald-500">
+                            <input type="text" name="usdt_address" placeholder="USDT Wallet Address (BEP-20)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-[#0072bc]">
                         </div>
 
                         <!-- Bank Transfer Form -->
@@ -318,19 +318,19 @@ $method_icons = [
                                 </div>
                                 <span class="text-[11px] font-bold text-blue-800">Provide your bank details for wire transfer</span>
                             </div>
-                            <input type="text" name="b_bank_name" placeholder="Bank Name" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-emerald-500">
-                            <input type="text" name="b_name" placeholder="Beneficiary Name" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-emerald-500">
-                            <input type="text" name="b_acc" placeholder="Account Number" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-emerald-500">
-                            <input type="text" name="b_routing" placeholder="Routing Number (optional)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-emerald-500">
-                            <input type="text" name="b_swift" placeholder="Swift Code" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-emerald-500">
-                            <textarea name="b_address" placeholder="Bank Branch Address" rows="2" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
+                            <input type="text" name="b_bank_name" placeholder="Bank Name" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-[#0072bc]">
+                            <input type="text" name="b_name" placeholder="Beneficiary Name" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-[#0072bc]">
+                            <input type="text" name="b_acc" placeholder="Account Number" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-[#0072bc]">
+                            <input type="text" name="b_routing" placeholder="Routing Number (optional)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-[#0072bc]">
+                            <input type="text" name="b_swift" placeholder="Swift Code" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-[#0072bc]">
+                            <textarea name="b_address" placeholder="Bank Branch Address" rows="2" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold outline-none focus:ring-2 focus:ring-[#0072bc]"></textarea>
                         </div>
 
                         <p class="text-[10px] text-red-500 font-bold px-1 italic hidden" id="paymentNote">
                             <i class="fa fa-info-circle mr-1"></i> Note: You cannot edit payment info after saving.
                         </p>
 
-                        <button type="submit" name="update_payment" id="savePaymentBtn" class="bg-emerald-600 text-white py-3 px-8 rounded-2xl font-black uppercase text-[11px] tracking-widest shadow-lg hover:bg-emerald-700 transition cursor-pointer hidden">Save Payment Info</button>
+                        <button type="submit" name="update_payment" id="savePaymentBtn" class="bg-[#0072bc] text-white py-3 px-8 rounded-2xl font-black uppercase text-[11px] tracking-widest shadow-lg hover:bg-[#005ea3] transition cursor-pointer hidden">Save Payment Info</button>
                     </form>
                 <?php endif; ?>
             </div>

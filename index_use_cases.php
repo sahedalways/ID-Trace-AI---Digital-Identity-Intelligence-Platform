@@ -124,7 +124,7 @@
 
                 <div class="relative p-6 sm:p-8">
                     <div class="flex items-start justify-between">
-                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-500 text-white flex items-center justify-center text-xl shadow-lg shadow-teal-200 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-500 to-blue-600 text-white flex items-center justify-center text-xl shadow-lg shadow-blue-200 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
                             <i class="fa-solid fa-star"></i>
                         </div>
                         <span class="px-3 py-1 rounded-full bg-teal-50 text-teal-600 text-[10px] font-black border border-teal-100">04</span>

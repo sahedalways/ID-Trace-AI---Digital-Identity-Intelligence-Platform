@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action_request_otp'])
                     <div style='max-width:550px; margin:20px auto; font-family:sans-serif; border:1px solid #e5e7eb; padding:30px; border-radius:16px; background:#fff; text-align:left;'>
                         <h2 style='color:#111827; font-size:18px; font-weight:800; margin-bottom:12px;'>Password Recovery Request</h2>
                         <p style='color:#4b5563; font-size:13px; line-height:1.6;'>A verification event was initiated against this partner console profile. Use the 6-digit numeric sequence block below to authenticate your identity signature constraints:</p>
-                        <div style='margin:24px 0; background:#f0fdf4; text-align:center; padding:16px; border-radius:12px; font-family:monospace; font-size:26px; font-weight:800; tracking-wide:4px; color:#128c7e; border:1px dashed #bbf7d0;'>
+                        <div style='margin:24px 0; background:#eff6ff; text-align:center; padding:16px; border-radius:12px; font-family:monospace; font-size:26px; font-weight:800; tracking-wide:4px; color:#0072bc; border:1px dashed #bfdbfe;'>
                             {$generated_otp}
                         </div>
                         <p style='color:#9ca3af; font-size:11px; line-height:1.4; border-top:1px solid #f3f4f6; padding-top:12px; margin-top:20px;'>If you did not perform this security mapping route command parameter string change, please ignore this notice safely.</p>
@@ -151,7 +151,7 @@ $current_wizard_step = $_SESSION['reset_step'];
     <title>Account Recovery Module — PartnerTerminal</title>
     <?php include 'affiliate-head.php'; ?>
 </head>
-<body class="min-h-screen text-slate-900 font-sans antialiased flex flex-col justify-between selection:bg-[#128c7e] selection:text-white bg-[#f9fafb]">
+<body class="min-h-screen text-slate-900 font-sans antialiased flex flex-col justify-between selection:bg-[#0072bc] selection:text-white bg-[#f9fafb]">
 
     <?php include 'affiliate-navbar.php'; ?>
 
@@ -160,7 +160,7 @@ $current_wizard_step = $_SESSION['reset_step'];
             
             <?php if (!empty($status_msg)): ?>
                 <div class="p-4 rounded-xl text-xs font-semibold border <?= $status_success ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-red-50 border-red-200 text-red-600' ?> text-left">
-                    <i class="fa-solid <?= $status_success ? 'fa-circle-check text-[#128c7e]' : 'fa-circle-exclamation text-red-500' ?> mr-1.5 text-sm align-middle"></i>
+                    <i class="fa-solid <?= $status_success ? 'fa-circle-check text-[#0072bc]' : 'fa-circle-exclamation text-red-500' ?> mr-1.5 text-sm align-middle"></i>
                     <?= htmlspecialchars($status_msg) ?>
                 </div>
             <?php endif; ?>
@@ -177,9 +177,9 @@ $current_wizard_step = $_SESSION['reset_step'];
                         <div class="space-y-1.5">
                             <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Registered Partner Email</label>
                             <input type="email" name="email" id="email" required placeholder="partner@identity-network.com" 
-                                   class="w-full text-sm px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#128c7e] focus:bg-white focus:ring-1 focus:ring-[#128c7e] transition-all font-semibold text-gray-900 placeholder-gray-400">
+                                   class="w-full text-sm px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0072bc] focus:bg-white focus:ring-1 focus:ring-[#0072bc] transition-all font-semibold text-gray-900 placeholder-gray-400">
                         </div>
-                        <button type="submit" name="action_request_otp" class="w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white font-bold text-sm py-4 px-4 rounded-xl transition-all cursor-pointer border border-transparent shadow-sm flex items-center justify-center gap-1.5">
+                        <button type="submit" name="action_request_otp" class="w-full bg-[#0072bc] hover:bg-[#005ea3] text-white font-bold text-sm py-4 px-4 rounded-xl transition-all cursor-pointer border border-transparent shadow-sm flex items-center justify-center gap-1.5">
                             <i class="fa-solid fa-paper-plane text-xs"></i> Send Security Code
                         </button>
                     </form>
@@ -194,10 +194,10 @@ $current_wizard_step = $_SESSION['reset_step'];
                         <div class="space-y-1.5">
                             <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">6-Digit Verification Code</label>
                             <input type="text" name="otp" required maxlength="6" pattern="\d{6}" placeholder="000000" 
-                                   class="w-full text-center bg-gray-50 border border-gray-200 text-xl font-mono font-bold rounded-xl px-4 py-3.5 text-[#128c7e] outline-none focus:border-[#128c7e] focus:bg-white focus:ring-1 focus:ring-[#128c7e] transition-all tracking-widest">
+                                   class="w-full text-center bg-gray-50 border border-gray-200 text-xl font-mono font-bold rounded-xl px-4 py-3.5 text-[#0072bc] outline-none focus:border-[#0072bc] focus:bg-white focus:ring-1 focus:ring-[#0072bc] transition-all tracking-widest">
                         </div>
                         <div class="space-y-2">
-                            <button type="submit" name="action_verify_otp" class="w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white font-bold text-sm py-4 px-4 rounded-xl transition-all cursor-pointer border border-transparent shadow-sm flex items-center justify-center gap-1.5">
+                            <button type="submit" name="action_verify_otp" class="w-full bg-[#0072bc] hover:bg-[#005ea3] text-white font-bold text-sm py-4 px-4 rounded-xl transition-all cursor-pointer border border-transparent shadow-sm flex items-center justify-center gap-1.5">
                                 <i class="fa-solid fa-user-shield text-xs"></i> Validate Identity Match
                             </button>
                             <a href="affiliate-forgot?abort_wizard=1" class="block w-full text-center bg-gray-50 hover:bg-gray-100 text-gray-500 font-bold text-xs py-3.5 rounded-xl transition-all flex items-center justify-center gap-1">
@@ -217,15 +217,15 @@ $current_wizard_step = $_SESSION['reset_step'];
                             <div class="space-y-1.5">
                                 <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">New Secure Password</label>
                                 <input type="password" name="password" id="password" required placeholder="••••••••••••" 
-                                       class="w-full text-sm px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#128c7e] focus:bg-white focus:ring-1 focus:ring-[#128c7e] transition-all font-semibold text-gray-900 placeholder-gray-400">
+                                       class="w-full text-sm px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0072bc] focus:bg-white focus:ring-1 focus:ring-[#0072bc] transition-all font-semibold text-gray-900 placeholder-gray-400">
                             </div>
                             <div class="space-y-1.5">
                                 <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Confirm Password Fields</label>
                                 <input type="password" name="conf_password" id="conf_password" required placeholder="••••••••••••" 
-                                       class="w-full text-sm px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#128c7e] focus:bg-white focus:ring-1 focus:ring-[#128c7e] transition-all font-semibold text-gray-900 placeholder-gray-400">
+                                       class="w-full text-sm px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0072bc] focus:bg-white focus:ring-1 focus:ring-[#0072bc] transition-all font-semibold text-gray-900 placeholder-gray-400">
                             </div>
                         </div>
-                        <button type="submit" name="action_reset_password" class="w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white font-bold text-sm py-4 px-4 rounded-xl transition-all cursor-pointer border border-transparent shadow-sm flex items-center justify-center gap-1.5">
+                        <button type="submit" name="action_reset_password" class="w-full bg-[#0072bc] hover:bg-[#005ea3] text-white font-bold text-sm py-4 px-4 rounded-xl transition-all cursor-pointer border border-transparent shadow-sm flex items-center justify-center gap-1.5">
                             <i class="fa-solid fa-floppy-disk text-xs"></i> Save Security Changes
                         </button>
                     </form>

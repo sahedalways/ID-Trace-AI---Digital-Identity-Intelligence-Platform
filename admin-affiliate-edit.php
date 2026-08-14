@@ -275,7 +275,7 @@ $methodLabels = [
                             class="w-full text-sm px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 transition font-semibold text-gray-900"><?= htmlspecialchars($affiliate['past_experience'] ?? '') ?></textarea>
                     </div>
 
-                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
                         Save Changes
                     </button>
                 </form>
@@ -324,8 +324,8 @@ $methodLabels = [
                                     </label>
                                     <label class="flex-1 cursor-pointer">
                                         <input type="radio" name="custom_bonus_type" value="fixed" <?= $customType === 'fixed' ? 'checked' : '' ?> class="peer hidden">
-                                        <div class="border-2 border-gray-200 rounded-xl p-2.5 text-center peer-checked:border-emerald-500 peer-checked:bg-emerald-50 transition">
-                                            <i class="fa-solid fa-lock text-emerald-600 text-sm mb-0.5"></i>
+                                        <div class="border-2 border-gray-200 rounded-xl p-2.5 text-center peer-checked:border-indigo-500 peer-checked:bg-indigo-50 transition">
+                                            <i class="fa-solid fa-lock text-indigo-600 text-sm mb-0.5"></i>
                                             <div class="text-[11px] font-bold text-gray-900">Fixed</div>
                                         </div>
                                     </label>
@@ -334,7 +334,7 @@ $methodLabels = [
                         </div>
                     </div>
 
-                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
                         Save Bonus Settings
                     </button>
                 </form>
@@ -372,11 +372,11 @@ $methodLabels = [
                     ?>
 
                     <div id="form_payoneer" class="pay-box <?= ($payment['payment_method'] ?? '') !== 'payoneer' ? 'hidden' : '' ?> space-y-3">
-                        <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-3 flex items-center gap-2.5">
-                            <div class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
-                                <i class="fa-solid fa-envelope text-emerald-600 text-sm"></i>
+                        <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-3 flex items-center gap-2.5">
+                            <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-envelope text-indigo-600 text-sm"></i>
                             </div>
-                            <span class="text-[11px] font-bold text-emerald-800">Enter Payoneer email for quick payouts</span>
+                            <span class="text-[11px] font-bold text-indigo-800">Enter Payoneer email for quick payouts</span>
                         </div>
                         <input type="email" name="payoneer_email" value="<?= ($payment['payment_method'] ?? '') === 'payoneer' ? htmlspecialchars($payment['payment_info']) : '' ?>" placeholder="Payoneer Email Address"
                             class="w-full text-sm px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 transition font-semibold text-gray-900">
@@ -416,7 +416,7 @@ $methodLabels = [
                             class="w-full text-sm px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-indigo-500 transition font-semibold text-gray-900"><?= htmlspecialchars($bank_data['Bank Address'] ?? '') ?></textarea>
                     </div>
 
-                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
                         Update Payment Info
                     </button>
                 </form>
@@ -443,7 +443,7 @@ $methodLabels = [
                         </div>
                     </div>
 
-                    <button type="submit" onclick="return confirm('Are you sure you want to reset this affiliate\'s password?')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
+                    <button type="submit" onclick="return confirm('Are you sure you want to reset this affiliate\'s password?')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
                         Reset Password
                     </button>
                 </form>

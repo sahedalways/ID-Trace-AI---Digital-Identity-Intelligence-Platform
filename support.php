@@ -24,7 +24,7 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true 
         }
         .profile-ring {
             padding: 5px;
-            background: linear-gradient(to right, #128c7e, #34d399);
+            background: linear-gradient(to right, #0072bc, #4aa8e6);
             border-radius: 2rem;
         }
         .contact-link {
@@ -34,7 +34,7 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true 
         }
         .contact-link:hover {
             background: rgba(255, 255, 255, 0.08);
-            border-color: #128c7e;
+            border-color: #0072bc;
             transform: translateY(-2px);
         }
     </style>
@@ -48,7 +48,7 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true 
 
             <div class="relative inline-block mb-8">
                 <div class="profile-ring">
-                    <div class="w-32 h-32 rounded-[1.7rem] bg-gradient-to-br from-[#128c7e] to-emerald-400 flex items-center justify-center border-4 border-[#0f172a]">
+                    <div class="w-32 h-32 rounded-[1.7rem] bg-gradient-to-br from-[#0072bc] to-blue-400 flex items-center justify-center border-4 border-[#0f172a]">
                         <i class="fa-solid fa-headset text-5xl text-white"></i>
                     </div>
                 </div>
@@ -57,7 +57,7 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true 
 
             <div class="mb-10">
                 <h1 class="text-3xl font-black text-white tracking-tight mb-2">Customer Support</h1>
-                <p class="text-[#128c7e] font-bold text-xs uppercase tracking-[0.2em]">Identity Search AI</p>
+                <p class="text-[#0072bc] font-bold text-xs uppercase tracking-[0.2em]">Identity Search AI</p>
                 <div class="flex items-center justify-center gap-2 mt-4">
                     <span class="h-1 w-1 rounded-full bg-slate-500"></span>
                     <p class="text-slate-400 text-sm italic">"We're here to help you, anytime"</p>
@@ -69,7 +69,7 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true 
                 <a href="https://t.me/identitysearchai" target="_blank" rel="noopener"
                    class="contact-link flex items-center justify-between p-5 rounded-2xl group">
                     <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-[#128c7e]/10 text-[#128c7e] group-hover:bg-[#128c7e] group-hover:text-white transition-all">
+                        <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-[#0072bc]/10 text-[#0072bc] group-hover:bg-[#0072bc] group-hover:text-white transition-all">
                             <i class="fa-brands fa-telegram text-xl"></i>
                         </div>
                         <div class="text-left">
@@ -77,7 +77,7 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true 
                             <p class="text-white font-semibold">@identitysearchai</p>
                         </div>
                     </div>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-slate-600 group-hover:text-[#128c7e] transition-colors"></i>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-slate-600 group-hover:text-[#0072bc] transition-colors"></i>
                 </a>
 
                 <a href="mailto:support@identitysearch.ai"

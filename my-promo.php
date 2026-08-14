@@ -37,7 +37,7 @@ function escapeHtml($str) {
         .copy-success-pop { transform: scale(1.05); border-color: #10b981 !important; background-color: #f0fdf4 !important; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#0072bc] selection:text-white">
 
     <?php include 'navbar.php'; ?>
 
@@ -83,20 +83,20 @@ function escapeHtml($str) {
         <!-- =========================================================================
              STEP-BY-STEP USER ONBOARDING HINTS
              ========================================================================= -->
-        <div class="bg-emerald-50/60 border border-emerald-100 rounded-2xl p-5 space-y-4 shadow-3sm">
-            <h3 class="text-xs font-bold uppercase tracking-widest text-emerald-900 flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-emerald-700"></i> How to Activate Your Code</h3>
+        <div class="bg-blue-50/60 border border-blue-100 rounded-2xl p-5 space-y-4 shadow-3sm">
+            <h3 class="text-xs font-bold uppercase tracking-widest text-blue-900 flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-blue-700"></i> How to Activate Your Code</h3>
             
-            <div class="space-y-3 text-xs font-semibold text-emerald-950">
+            <div class="space-y-3 text-xs font-semibold text-blue-950">
                 <div class="flex items-start gap-3">
-                    <span class="w-5 h-5 bg-emerald-700/10 text-emerald-800 rounded-md flex items-center justify-center font-bold text-[11px] shrink-0">1</span>
-                    <p class="leading-relaxed pt-0.5">Go to <a href="https://chatzara.com" target="_blank" class="text-[#128c7e] hover:underline font-bold">https://chatzara.com</a> and sign into your account dashboard profile.</p>
+                    <span class="w-5 h-5 bg-blue-700/10 text-blue-800 rounded-md flex items-center justify-center font-bold text-[11px] shrink-0">1</span>
+                    <p class="leading-relaxed pt-0.5">Go to <a href="https://chatzara.com" target="_blank" class="text-[#0072bc] hover:underline font-bold">https://chatzara.com</a> and sign into your account dashboard profile.</p>
                 </div>
                 <div class="flex items-start gap-3">
-                    <span class="w-5 h-5 bg-emerald-700/10 text-emerald-800 rounded-md flex items-center justify-center font-bold text-[11px] shrink-0">2</span>
+                    <span class="w-5 h-5 bg-blue-700/10 text-blue-800 rounded-md flex items-center justify-center font-bold text-[11px] shrink-0">2</span>
                     <p class="leading-relaxed pt-0.5">Navigate natively out to the <b class="text-slate-900">Profile > Upgrade Plan</b> configuration modules tab link.</p>
                 </div>
                 <div class="flex items-start gap-3">
-                    <span class="w-5 h-5 bg-emerald-700/10 text-emerald-800 rounded-md flex items-center justify-center font-bold text-[11px] shrink-0">3</span>
+                    <span class="w-5 h-5 bg-blue-700/10 text-blue-800 rounded-md flex items-center justify-center font-bold text-[11px] shrink-0">3</span>
                     <p class="leading-relaxed pt-0.5">Enter your copied unique promo token string sequence directly into the input container interface and click <b class="text-slate-900">Activate Premium Subscription</b>.</p>
                 </div>
             </div>

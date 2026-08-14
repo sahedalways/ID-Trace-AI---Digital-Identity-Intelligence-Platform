@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $escapedDetail = htmlspecialchars($input_detail ?: 'No additional details provided.', ENT_QUOTES, 'UTF-8');
             $htmlBody = "
                 <div style='font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:30px;'>
-                    <h2 style='color:#128c7e;'>Opt-Out Request Received</h2>
+                    <h2 style='color:#0072bc;'>Opt-Out Request Received</h2>
                     <p>We have received your data removal request. Our team will review and process it shortly.</p>
                     <div style='background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;margin:20px 0;'>
                         <p><strong>Name:</strong> {$escapedName}</p>
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Opt-Out — Identity Search AI</title>
     <?php include 'head.php'; ?>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white bg-slate-50">
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#0072bc] selection:text-white bg-slate-50">
 
     <?php include 'navbar.php'; ?>
 
@@ -88,22 +88,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="space-y-1.5">
                     <label for="optout_name" class="text-xs font-black uppercase text-gray-400 tracking-wider">Full Name</label>
                     <input type="text" name="optout_name" id="optout_name" placeholder="Enter your full name"
-                        class="w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-3 text-base text-black font-semibold outline-none focus:border-[#128c7e] focus:bg-white transition" required>
+                        class="w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-3 text-base text-black font-semibold outline-none focus:border-[#0072bc] focus:bg-white transition" required>
                 </div>
 
                 <div class="space-y-1.5">
                     <label for="optout_email" class="text-xs font-black uppercase text-gray-400 tracking-wider">Email Address</label>
                     <input type="email" name="optout_email" id="optout_email" value="<?= htmlspecialchars($session_email) ?>" placeholder="name@example.com"
-                        class="w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-3 text-base text-black font-semibold outline-none focus:border-[#128c7e] focus:bg-white transition" required>
+                        class="w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-3 text-base text-black font-semibold outline-none focus:border-[#0072bc] focus:bg-white transition" required>
                 </div>
 
                 <div class="space-y-1.5">
                     <label for="optout_detail" class="text-xs font-black uppercase text-gray-400 tracking-wider">Additional Details (Optional)</label>
                     <textarea name="optout_detail" id="optout_detail" rows="4" placeholder="Any specific information you'd like us to know..."
-                        class="w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-3 text-base text-black font-semibold outline-none focus:border-[#128c7e] focus:bg-white transition resize-none"></textarea>
+                        class="w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-3 text-base text-black font-semibold outline-none focus:border-[#0072bc] focus:bg-white transition resize-none"></textarea>
                 </div>
 
-                <button type="submit" class="w-full bg-[#128c7e] hover:bg-[#0e6f64] active:scale-[0.99] text-white py-4 rounded-xl text-base font-bold transition-all flex items-center justify-center gap-2 shadow-md shadow-emerald-100 cursor-pointer mt-2">
+                <button type="submit" class="w-full bg-[#0072bc] hover:bg-[#005ea3] active:scale-[0.99] text-white py-4 rounded-xl text-base font-bold transition-all flex items-center justify-center gap-2 shadow-md shadow-emerald-100 cursor-pointer mt-2">
                     <i class="fa-solid fa-user-slash text-sm shrink-0"></i>
                     Submit Opt-Out Request
                 </button>
@@ -112,12 +112,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm space-y-3">
                 <h3 class="text-sm font-bold text-gray-900 flex items-center gap-2">
-                    <i class="fa-solid fa-shield-halved text-[#128c7e]"></i> What happens next?
+                    <i class="fa-solid fa-shield-halved text-[#0072bc]"></i> What happens next?
                 </h3>
                 <ul class="space-y-2 text-sm text-gray-600 font-medium">
-                    <li class="flex items-start gap-2"><i class="fa-solid fa-check text-[#128c7e] mt-1 text-xs"></i> We will review your request within 5 business days.</li>
-                    <li class="flex items-start gap-2"><i class="fa-solid fa-check text-[#128c7e] mt-1 text-xs"></i> Your data will be removed within 30 days of verification.</li>
-                    <li class="flex items-start gap-2"><i class="fa-solid fa-check text-[#128c7e] mt-1 text-xs"></i> You will receive an email confirmation once the process is complete.</li>
+                    <li class="flex items-start gap-2"><i class="fa-solid fa-check text-[#0072bc] mt-1 text-xs"></i> We will review your request within 5 business days.</li>
+                    <li class="flex items-start gap-2"><i class="fa-solid fa-check text-[#0072bc] mt-1 text-xs"></i> Your data will be removed within 30 days of verification.</li>
+                    <li class="flex items-start gap-2"><i class="fa-solid fa-check text-[#0072bc] mt-1 text-xs"></i> You will receive an email confirmation once the process is complete.</li>
                 </ul>
             </div>
 

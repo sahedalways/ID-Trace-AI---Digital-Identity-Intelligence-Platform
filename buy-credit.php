@@ -47,23 +47,23 @@ $plan_design_meta = [
         
         /* Ultra-clean custom radio input styles matching WhatsApp Green branding matrix */
         .custom-radio:checked + .plan-card {
-            border-color: #128c7e !important;
+            border-color: #0072bc !important;
             background-color: #ffffff;
         }
         .custom-radio:checked + .plan-card .radio-circle {
-            border-color: #128c7e;
+            border-color: #0072bc;
         }
         .custom-radio:checked + .plan-card .radio-circle::after {
             content: '';
             display: block;
             width: 10px;
             height: 10px;
-            background: #128c7e;
+            background: #0072bc;
             border-radius: 50%;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#0072bc] selection:text-white">
 
     <?php include 'navbar.php'; ?>
 
@@ -137,9 +137,9 @@ $plan_design_meta = [
                                     </div>
 
                                     <!-- BUNDLED PREMIUM INTEGRATION OFFER HIGHLIGHT BOX -->
-                                    <div class="bg-emerald-50 border border-emerald-100 rounded-lg px-3 py-2 flex items-center gap-2 text-[11px] font-bold text-[#128c7e] w-full">
+                                    <div class="bg-blue-50 border border-blue-100 rounded-lg px-3 py-2 flex items-center gap-2 text-[11px] font-bold text-[#0072bc] w-full">
                                         <i class="fa-solid fa-gift text-xs shrink-0"></i>
-                                        <span>Included: 1-Year ChatZara Premium Free <span class="font-medium text-emerald-700/80">(Value $60)</span></span>
+                                        <span>Included: 1-Year ChatZara Premium Free <span class="font-medium text-blue-700/80">(Value $60)</span></span>
                                     </div>
 
                                 </label>
@@ -152,7 +152,7 @@ $plan_design_meta = [
 
                     <!-- Submit Button Call Action Area -->
                     <div class="pt-2">
-                        <button type="submit" id="submitCtaBtn" class="w-full bg-[#128c7e] hover:bg-[#0e6f64] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#128c7e] text-white py-4 px-4 rounded-xl text-[15px] font-bold transition shadow-sm tracking-wide flex items-center justify-center gap-2 cursor-pointer">
+                        <button type="submit" id="submitCtaBtn" class="w-full bg-[#0072bc] hover:bg-[#005ea3] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[#0072bc] text-white py-4 px-4 rounded-xl text-[15px] font-bold transition shadow-sm tracking-wide flex items-center justify-center gap-2 cursor-pointer">
                             <span id="btnTextLabel">Select a plan</span>
                         </button>
                     </div>
@@ -163,7 +163,7 @@ $plan_design_meta = [
                     <div class="flex items-center justify-center gap-1.5 text-gray-500 font-medium">
                         <i class="fa-solid fa-circle-check text-sm text-gray-400"></i> Cancel anytime, for any reason
                     </div>
-                    <div class="inline-flex items-center justify-center gap-1.5 bg-[#f0fdf4] text-[#16a34a] px-4 py-1.5 rounded-full text-xs font-bold border border-[#bbf7d0]/40">
+                    <div class="inline-flex items-center justify-center gap-1.5 bg-[#0072bc]/10 text-[#0072bc] px-4 py-1.5 rounded-full text-xs font-bold border border-[#0072bc]/20">
                         <i class="fa-solid fa-shield-halved text-xs"></i> 30-day money-back guarantee
                     </div>
                 </div>

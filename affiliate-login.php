@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Partner Sign In — PartnerTerminal</title>
     <?php include 'affiliate-head.php'; ?>
 </head>
-<body class="min-h-screen text-slate-900 font-sans antialiased flex flex-col justify-between selection:bg-[#128c7e] selection:text-white bg-[#f9fafb]">
+<body class="min-h-screen text-slate-900 font-sans antialiased flex flex-col justify-between selection:bg-[#0072bc] selection:text-white bg-[#f9fafb]">
 
     <?php include 'affiliate-navbar.php'; ?>
 
@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="max-w-md w-full space-y-6">
             
             <div class="text-center space-y-2">
-                <div class="inline-flex p-3.5 bg-emerald-50 text-[#128c7e] rounded-2xl border border-emerald-100 text-2xl">
+                <div class="inline-flex p-3.5 bg-blue-50 text-[#0072bc] rounded-2xl border border-blue-100 text-2xl">
                     <i class="fa-solid fa-right-to-bracket"></i>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Welcome Back Partner</h2>
@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php if (!empty($message)): ?>
                     <?php if ($status_type === 'success'): ?>
                         <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex gap-3 text-left">
-                            <i class="fa-solid fa-circle-check text-[#128c7e] text-base shrink-0 mt-0.5"></i>
+                            <i class="fa-solid fa-circle-check text-emerald-600 text-base shrink-0 mt-0.5"></i>
                             <p class="text-xs text-emerald-800 font-semibold leading-relaxed"><?= htmlspecialchars($message) ?></p>
                         </div>
                     <?php else: ?>
@@ -115,25 +115,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="space-y-1.5">
                         <label for="email" class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Account Email</label>
                         <input type="email" id="email" name="email" required value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>" placeholder="partner@domain.com" 
-                            class="w-full text-sm px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#128c7e] focus:bg-white focus:ring-1 focus:ring-[#128c7e] transition-all font-semibold text-gray-900 placeholder-gray-400">
+                            class="w-full text-sm px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0072bc] focus:bg-white focus:ring-1 focus:ring-[#0072bc] transition-all font-semibold text-gray-900 placeholder-gray-400">
                     </div>
 
                     <div class="space-y-1.5">
                         <div class="flex justify-between items-center">
                             <label for="password" class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Secure Password</label>
-                            <a href="affiliate-forgot" class="text-xs text-[#128c7e] font-bold hover:underline">Forgot Password?</a>
+                            <a href="affiliate-forgot" class="text-xs text-[#0072bc] font-bold hover:underline">Forgot Password?</a>
                         </div>
                         <input type="password" id="password" name="password" required placeholder="••••••••" 
-                            class="w-full text-sm px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#128c7e] focus:bg-white focus:ring-1 focus:ring-[#128c7e] transition-all font-semibold text-gray-900 placeholder-gray-400">
+                            class="w-full text-sm px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0072bc] focus:bg-white focus:ring-1 focus:ring-[#0072bc] transition-all font-semibold text-gray-900 placeholder-gray-400">
                     </div>
 
-                    <button type="submit" class="w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white font-bold text-sm py-4 px-4 rounded-xl transition-all shadow-sm mt-2 cursor-pointer border border-transparent">
+                    <button type="submit" class="w-full bg-[#0072bc] hover:bg-[#005ea3] text-white font-bold text-sm py-4 px-4 rounded-xl transition-all shadow-sm mt-2 cursor-pointer border border-transparent">
                         Login as Affiliate
                     </button>
                 </form>
 
                 <div class="border-t border-gray-100 pt-4 text-center text-xs font-semibold">
-                    <p class="text-gray-400">Not a network partner yet? <a href="affiliate-register" class="text-[#128c7e] font-bold hover:underline">Register as Affiliate</a></p>
+                    <p class="text-gray-400">Not a network partner yet? <a href="affiliate-register" class="text-[#0072bc] font-bold hover:underline">Register as Affiliate</a></p>
                 </div>
             </div>
         </div>

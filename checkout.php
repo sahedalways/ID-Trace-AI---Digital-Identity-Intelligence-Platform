@@ -179,8 +179,8 @@ $billing_cycle_text = $billing_intervals[$plan['name']] ?? 'every ' . $plan['val
         }
         .form-input:focus {
             outline: none;
-            border-color: #128c7e;
-            box-shadow: 0 0 0 1px #128c7e;
+            border-color: #0072bc;
+            box-shadow: 0 0 0 1px #0072bc;
             background-color: #ffffff;
         }
         .stripe-container-input {
@@ -191,8 +191,8 @@ $billing_cycle_text = $billing_intervals[$plan['name']] ?? 'every ' . $plan['val
             transition: all 0.2s;
         }
         .stripe-container-input--focus {
-            border-color: #128c7e;
-            box-shadow: 0 0 0 1px #128c7e;
+            border-color: #0072bc;
+            box-shadow: 0 0 0 1px #0072bc;
         }
         .method-tab-btn {
             background: #ffffff;
@@ -200,12 +200,12 @@ $billing_cycle_text = $billing_intervals[$plan['name']] ?? 'every ' . $plan['val
             transition: all 0.2s ease;
         }
         .method-tab-btn.active {
-            border-color: #128c7e;
+            border-color: #0072bc;
             background: #f0fdfa;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#0072bc] selection:text-white">
 
     <?php include 'navbar.php'; ?>
 
@@ -230,7 +230,7 @@ $billing_cycle_text = $billing_intervals[$plan['name']] ?? 'every ' . $plan['val
             
             <div class="space-y-3">
                 <div class="flex items-center gap-2">
-                    <span class="bg-[#128c7e] text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">1</span>
+                    <span class="bg-[#0072bc] text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">1</span>
                     <h3 class="text-base font-bold text-gray-900 tracking-tight">Account Identity</h3>
                 </div>
                 <div class="border border-gray-200 rounded-2xl p-4 bg-white shadow-sm">
@@ -242,7 +242,7 @@ $billing_cycle_text = $billing_intervals[$plan['name']] ?? 'every ' . $plan['val
 
             <div class="space-y-3">
                 <div class="flex items-center gap-2">
-                    <span class="bg-[#128c7e] text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">2</span>
+                    <span class="bg-[#0072bc] text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">2</span>
                     <h3 class="text-base font-bold text-gray-900 tracking-tight">Billing Details</h3>
                 </div>
                 <div class="border border-gray-200 rounded-2xl p-4 bg-white shadow-sm space-y-4">
@@ -274,24 +274,24 @@ $billing_cycle_text = $billing_intervals[$plan['name']] ?? 'every ' . $plan['val
 
             <?php include 'checkout_payment.php'; ?>
 
-            <div class="border border-emerald-100 bg-emerald-50/40 rounded-2xl p-4 text-xs text-gray-600 font-medium leading-relaxed border-dashed">
+            <div class="border border-blue-100 bg-blue-50/40 rounded-2xl p-4 text-xs text-gray-600 font-medium leading-relaxed border-dashed">
                 By Subscribing, you authorize Identity Search AI to charge you according to the terms until you cancel. You will be charged <span class="font-bold text-gray-900">$<?php echo number_format($plan['price'], 2); ?></span> immediately to unlock full account access logs.
             </div>
 
             <div class="space-y-3">
                 <label for="accept_terms" class="flex items-start justify-center gap-2.5 text-[11px] text-gray-500 font-medium leading-relaxed cursor-pointer">
-                    <input type="checkbox" id="accept_terms" name="accept_terms" required class="mt-0.5 h-4 w-4 accent-[#128c7e] cursor-pointer">
+                    <input type="checkbox" id="accept_terms" name="accept_terms" required class="mt-0.5 h-4 w-4 accent-[#0072bc] cursor-pointer">
                     <span class="text-left">By purchasing, you agree to our
-                        <a href="terms" class="underline text-[#128c7e] hover:text-[#0e6f64] transition">Terms and Conditions</a>
+                        <a href="terms" class="underline text-[#0072bc] hover:text-[#005ea3] transition">Terms and Conditions</a>
                         and
-                        <a href="privacy" class="underline text-[#128c7e] hover:text-[#0e6f64] transition">Privacy Policy</a>.
+                        <a href="privacy" class="underline text-[#0072bc] hover:text-[#005ea3] transition">Privacy Policy</a>.
                     </span>
                 </label>
-                <button type="submit" id="submitPaymentBtn" class="w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white py-4 px-4 rounded-xl text-[15px] font-bold transition shadow-sm flex items-center justify-center gap-2 cursor-pointer">
+                <button type="submit" id="submitPaymentBtn" class="w-full bg-[#0072bc] hover:bg-[#005ea3] text-white py-4 px-4 rounded-xl text-[15px] font-bold transition shadow-sm flex items-center justify-center gap-2 cursor-pointer">
                     <span id="btnText">Complete Checkout</span>
                 </button>
                 <div class="flex items-center justify-center gap-1.5 text-xs font-semibold text-gray-500">
-                    <i class="fa-solid fa-shield-halved text-xs text-[#128c7e]"></i> 30-day money-back guarantee
+                    <i class="fa-solid fa-shield-halved text-xs text-[#0072bc]"></i> 30-day money-back guarantee
                 </div>
             </div>
         </form>

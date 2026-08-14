@@ -115,14 +115,14 @@ $cleanName = !empty($user['name']) ? htmlspecialchars($user['name']) : 'User Pro
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#0072bc] selection:text-white">
 
     <?php include 'navbar.php'; ?>
 
     <main class="flex-grow max-w-2xl w-full mx-auto px-4 py-8 space-y-6">
         
         <?php if (!empty($success_msg)): ?>
-            <div class="bg-emerald-50 border border-emerald-200 text-[#128c7e] rounded-xl p-4 text-xs font-semibold shadow-sm animate-fade-in flex items-center gap-2">
+            <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl p-4 text-xs font-semibold shadow-sm animate-fade-in flex items-center gap-2">
                 <i class="fa-solid fa-circle-check"></i> <?php echo htmlspecialchars($success_msg); ?>
             </div>
         <?php endif; ?>
@@ -135,7 +135,7 @@ $cleanName = !empty($user['name']) ? htmlspecialchars($user['name']) : 'User Pro
                          class="w-full h-full object-cover relative z-10"
                          onerror="this.style.display='none'; document.getElementById('letterFallbackAvatar').classList.remove('hidden');">
                 <?php endif; ?>
-                <div id="letterFallbackAvatar" class="absolute inset-0 w-full h-full bg-emerald-50 text-[#128c7e] font-bold text-3xl flex items-center justify-center uppercase <?php echo !empty($user['avatar']) ? 'hidden' : ''; ?>">
+                <div id="letterFallbackAvatar" class="absolute inset-0 w-full h-full bg-emerald-50 text-[#0072bc] font-bold text-3xl flex items-center justify-center uppercase <?php echo !empty($user['avatar']) ? 'hidden' : ''; ?>">
                     <?php echo $firstLetter; ?>
                 </div>
             </div>
@@ -171,7 +171,7 @@ $cleanName = !empty($user['name']) ? htmlspecialchars($user['name']) : 'User Pro
             </div>
             
             <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex justify-center">
-                <button type="button" onclick="switchToEditMode(true)" class="w-full bg-[#128c7e] hover:bg-[#0e6f64] text-white py-3 px-6 rounded-xl text-xs font-bold shadow-sm transition-colors cursor-pointer flex items-center justify-center gap-2">
+                <button type="button" onclick="switchToEditMode(true)" class="w-full bg-[#0072bc] hover:bg-[#005ea3] text-white py-3 px-6 rounded-xl text-xs font-bold shadow-sm transition-colors cursor-pointer flex items-center justify-center gap-2">
                     <i class="fa-solid fa-user-gear text-sm"></i> Modify Profile Variables
                 </button>
             </div>
@@ -187,12 +187,12 @@ $cleanName = !empty($user['name']) ? htmlspecialchars($user['name']) : 'User Pro
                 
                 <div class="space-y-1">
                     <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide flex items-center gap-1.5"><i class="fa-solid fa-user text-gray-400 text-[10px]"></i> Full Name</label>
-                    <input type="text" name="name" required value="<?php echo htmlspecialchars($user['name'] ?? ''); ?>" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs font-semibold text-black focus:outline-none focus:ring-2 focus:ring-[#128c7e] focus:border-[#128c7e] focus:bg-white transition-all" autocomplete="off">
+                    <input type="text" name="name" required value="<?php echo htmlspecialchars($user['name'] ?? ''); ?>" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs font-semibold text-black focus:outline-none focus:ring-2 focus:ring-[#0072bc] focus:border-[#0072bc] focus:bg-white transition-all" autocomplete="off">
                 </div>
 
                 <div class="space-y-1">
                     <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide flex items-center gap-1.5"><i class="fa-solid fa-earth-americas text-gray-400 text-[10px]"></i> Country Jurisdiction</label>
-                    <select name="country" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs font-semibold text-black focus:outline-none focus:ring-2 focus:ring-[#128c7e] focus:border-[#128c7e] focus:bg-white transition-all cursor-pointer">
+                    <select name="country" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs font-semibold text-black focus:outline-none focus:ring-2 focus:ring-[#0072bc] focus:border-[#0072bc] focus:bg-white transition-all cursor-pointer">
                         <option value="">Select Target Country</option>
                         <?php foreach ($country_matrix as $iso_key => $country_name): ?>
                             <option value="<?php echo $iso_key; ?>" <?php echo ($current_iso === $iso_key) ? 'selected' : ''; ?>>
@@ -204,19 +204,19 @@ $cleanName = !empty($user['name']) ? htmlspecialchars($user['name']) : 'User Pro
 
                 <div class="space-y-1">
                     <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide flex items-center gap-1.5"><i class="fa-solid fa-location-dot text-gray-400 text-[10px]"></i> Street Address</label>
-                    <input type="text" name="street" value="<?php echo htmlspecialchars($user['street'] ?? ''); ?>" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs font-semibold text-black focus:outline-none focus:ring-2 focus:ring-[#128c7e] focus:border-[#128c7e] focus:bg-white transition-all" placeholder="1621 Central Ave" autocomplete="off">
+                    <input type="text" name="street" value="<?php echo htmlspecialchars($user['street'] ?? ''); ?>" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs font-semibold text-black focus:outline-none focus:ring-2 focus:ring-[#0072bc] focus:border-[#0072bc] focus:bg-white transition-all" placeholder="1621 Central Ave" autocomplete="off">
                 </div>
 
                 <div class="space-y-1">
                     <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide flex items-center gap-1.5"><i class="fa-solid fa-envelope-open-text text-gray-400 text-[10px]"></i> Zip Code</label>
-                    <input type="text" name="zip" value="<?php echo htmlspecialchars($user['zip'] ?? ''); ?>" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs font-semibold text-black focus:outline-none focus:ring-2 focus:ring-[#128c7e] focus:border-[#128c7e] focus:bg-white transition-all" placeholder="82001" autocomplete="off">
+                    <input type="text" name="zip" value="<?php echo htmlspecialchars($user['zip'] ?? ''); ?>" class="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-xs font-semibold text-black focus:outline-none focus:ring-2 focus:ring-[#0072bc] focus:border-[#0072bc] focus:bg-white transition-all" placeholder="82001" autocomplete="off">
                 </div>
 
                 <div class="flex items-center justify-end gap-3 pt-3 border-t border-gray-100">
                     <button type="button" onclick="switchToEditMode(false)" class="px-5 py-2.5 rounded-xl text-xs font-bold text-gray-500 hover:bg-gray-100 transition-colors cursor-pointer">
                         Cancel
                     </button>
-                    <button type="submit" class="bg-[#128c7e] hover:bg-[#0e6f64] text-white px-6 py-2.5 rounded-xl text-xs font-bold shadow-sm transition-colors cursor-pointer flex items-center gap-1.5">
+                    <button type="submit" class="bg-[#0072bc] hover:bg-[#005ea3] text-white px-6 py-2.5 rounded-xl text-xs font-bold shadow-sm transition-colors cursor-pointer flex items-center gap-1.5">
                         <i class="fa-solid fa-floppy-disk"></i> Save Variables
                     </button>
                 </div>

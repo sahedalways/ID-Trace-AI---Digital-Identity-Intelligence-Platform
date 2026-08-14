@@ -73,7 +73,7 @@ try {
         $headerMessage    = "Your Intelligence Report is Ready";
         $bodyNarrative    = "Our deep cognitive trace analysis core has successfully completed processing the requested targets.";
         $statusBadgeHtml  = "<span style='background-color: #D1FAE5; color: #065F46; padding: 2px 6px; font-size: 9px; font-weight: 700; border-radius: 5px; text-transform: uppercase; display: inline-block; letter-spacing: 0.3px;'>Complete</span>";
-        $buttonColorStyle = "background-color: #128c7e; box-shadow: 0 2px 4px rgba(18, 140, 126, 0.15);";
+        $buttonColorStyle = "background-color: #0072bc; box-shadow: 0 2px 4px rgba(18, 140, 126, 0.15);";
     }
 
     // =========================================================================
@@ -121,7 +121,7 @@ try {
                     </div>
                     <p style='font-size: 9px; color: #4B5563; font-weight: 500; margin: 0 0 4px 0;'>&copy; 2026 - Identity Search AI</p>
                     <p style='font-size: 9px; color: #4B5563; font-weight: 400; margin: 0;'>
-                        <a href='mailto:support@identitysearch.ai' style='color: #128c7e; text-decoration: none;'>support@identitysearch.ai</a>
+                        <a href='mailto:support@identitysearch.ai' style='color: #0072bc; text-decoration: none;'>support@identitysearch.ai</a>
                     </p>
                 </div>
 

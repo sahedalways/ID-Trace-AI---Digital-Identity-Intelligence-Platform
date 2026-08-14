@@ -61,7 +61,7 @@ if (isset($_GET['action'])) {
                             <p style='font-size: 13px; color: #4B5563; font-weight: 400; line-height: 1.5; margin-bottom: 24px; font-family: \"Roboto\", sans-serif; text-align: left;'>Use the single-use verification code below to complete your login sequence.</p>
 
                             <div style='text-align: center; margin-bottom: 24px;'>
-                                <div style='background-color: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 10px; padding: 10px; text-align: center; font-size: 22px; font-weight: 800; letter-spacing: 4px; color: #128c7e; font-family: \"Roboto\", sans-serif; display: inline-block; min-width: 150px;'>
+                                <div style='background-color: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 10px; padding: 10px; text-align: center; font-size: 22px; font-weight: 800; letter-spacing: 4px; color: #0072bc; font-family: \"Roboto\", sans-serif; display: inline-block; min-width: 150px;'>
                                     {$otp_code}
                                 </div>
                             </div>
@@ -77,7 +77,7 @@ if (isset($_GET['action'])) {
                             <p style='font-size: 10px; color: #4B5563; font-weight: 500; margin: 0 0 6px 0;'>&copy; 2026 - Identity Search AI</p>
 
                             <p style='font-size: 10px; color: #4B5563; font-weight: 400; margin: 0;'>
-                                <a href='mailto:support@identitysearch.ai' style='color: #128c7e; text-decoration: none;'>support@identitysearch.ai</a>
+                                <a href='mailto:support@identitysearch.ai' style='color: #0072bc; text-decoration: none;'>support@identitysearch.ai</a>
                             </p>
                         </div>
 

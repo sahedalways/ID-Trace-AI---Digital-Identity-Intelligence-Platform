@@ -106,8 +106,8 @@ if (isset($_SESSION['flash_success'])) {
                                 </label>
                                 <label class="flex-1 cursor-pointer">
                                     <input type="radio" name="global_bonus_type" value="fixed" <?= ($settings['global_bonus_type'] ?? 'recursion') === 'fixed' ? 'checked' : '' ?> class="peer hidden">
-                                    <div class="border-2 border-gray-200 rounded-xl p-3 text-center peer-checked:border-emerald-500 peer-checked:bg-emerald-50 transition">
-                                        <i class="fa-solid fa-lock text-emerald-600 text-lg mb-1"></i>
+                                    <div class="border-2 border-gray-200 rounded-xl p-3 text-center peer-checked:border-indigo-500 peer-checked:bg-indigo-50 transition">
+                                        <i class="fa-solid fa-lock text-indigo-600 text-lg mb-1"></i>
                                         <div class="text-xs font-bold text-gray-900">Fixed</div>
                                         <div class="text-[10px] text-gray-400 mt-0.5">One-time on registration</div>
                                     </div>
@@ -116,7 +116,7 @@ if (isset($_SESSION['flash_success'])) {
                         </div>
                     </div>
 
-                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs py-2.5 px-6 rounded-xl transition cursor-pointer">
                         Save Settings
                     </button>
                 </form>

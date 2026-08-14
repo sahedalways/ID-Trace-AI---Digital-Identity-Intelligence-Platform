@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <p style='font-size: 9px; color: #4B5563; font-weight: 500; margin: 0 0 4px 0;'>&copy; 2026 - Identity Search AI</p>
                             <p style='font-size: 9px; color: #4B5563; font-weight: 400; margin: 0;'>
-                                <a href='mailto:support@identitysearch.ai' style='color: #128c7e; text-decoration: none;'>support@identitysearch.ai</a>
+                                <a href='mailto:support@identitysearch.ai' style='color: #0072bc; text-decoration: none;'>support@identitysearch.ai</a>
                             </p>
                         </div>
 
@@ -120,116 +120,280 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Support Center — Identity Search AI</title>
     <?php include 'head.php'; ?>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white bg-slate-50">
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#0072bc] selection:text-white bg-slate-50 relative">
 
-    <?php include 'navbar.php'; ?>
+    <!-- Sticky Glassmorphic Navbar Container -->
+    <header id="mainNavbar" class="sticky top-0 z-50 bg-transparent transition-all duration-300">
+        <?php include 'navbar.php'; ?>
+    </header>
 
-    <main class="flex-grow max-w-xl w-full mx-auto px-4 sm:px-6 pt-12 pb-16">
-        <div class="space-y-6">
+    <!-- Full-width Background Decorations -->
+    <div class="absolute inset-x-0 top-0 -z-10 overflow-hidden" style="height: 900px; background: linear-gradient(180deg, #BFE4FD 0%, #FFFFFF 100%);">
+        <div class="blob-1 absolute top-0 left-1/2 w-[900px] h-[900px] bg-[#0072bc]/10 rounded-full blur-3xl opacity-60 -translate-x-1/2 will-change-transform"></div>
+        <div class="blob-2 absolute top-24 -left-20 w-96 h-96 bg-[#0072bc]/15 rounded-full blur-3xl will-change-transform"></div>
+        <div class="blob-3 absolute bottom-0 right-0 w-96 h-96 bg-[#BFE4FD]/50 rounded-full blur-3xl opacity-70 will-change-transform"></div>
+    </div>
 
-            <div class="text-center space-y-2">
-                <h1 class="text-3xl font-black tracking-tight text-gray-900">Support Center</h1>
-                <p class="text-base text-black font-semibold max-w-sm mx-auto leading-relaxed">
-                    Have questions or need technical support? Drop us a message below and we will respond shortly.
-                </p>
+    <main class="relative flex-grow w-full mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20" style="max-width: 1600px;">
+        <style>
+            @keyframes blobMove1 {
+                0%, 100% { transform: translateX(-50%) translateY(0); }
+                25% { transform: translateX(-40%) translateY(-20px); }
+                50% { transform: translateX(-50%) translateY(-10px); }
+                75% { transform: translateX(-60%) translateY(10px); }
+            }
+            @keyframes blobMove2 {
+                0%, 100% { transform: translate(0, 0); }
+                33% { transform: translate(30px, -15px); }
+                66% { transform: translate(-20px, 20px); }
+            }
+            @keyframes blobMove3 {
+                0%, 100% { transform: translate(0, 0); }
+                50% { transform: translate(-40px, -20px); }
+            }
+            .blob-1 { animation: blobMove1 18s ease-in-out infinite; }
+            .blob-2 { animation: blobMove2 14s ease-in-out infinite; }
+            .blob-3 { animation: blobMove3 16s ease-in-out infinite; }
+
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translateY(30px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .onload-anim { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; }
+            .onload-delay-100 { animation-delay: 100ms; }
+            .onload-delay-200 { animation-delay: 200ms; }
+            .onload-delay-300 { animation-delay: 300ms; }
+
+            .animate-on-scroll {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+                will-change: opacity, transform;
+            }
+            .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+
+            @keyframes spark-sweep {
+                0% { background-position: 0% 50%; }
+                100% { background-position: 200% 50%; }
+            }
+            .spark-text {
+                background: linear-gradient(
+                    135deg,
+                    #020617 35%,
+                    #2563eb 50%,
+                    #020617 65%
+                );
+                background-size: 200% auto;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                color: transparent;
+                animation: spark-sweep 5s linear infinite;
+            }
+
+            .navbar-scrolled {
+                background: linear-gradient(to right, #eef5ff 20%, #0072bc 100%);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            }
+            #mainNavbar #siteNavbar {
+                background: transparent !important;
+                border-bottom: none !important;
+                box-shadow: none !important;
+            }
+            #siteNavbar a,
+            #siteNavbar button,
+            #siteNavbar .text-black,
+            #siteNavbar .text-slate-400,
+            #siteNavbar .text-\[\#0072bc\] {
+                transition: color 0.35s ease, background-color 0.35s ease, border-color 0.35s ease;
+            }
+            #mainNavbar.navbar-scrolled #siteNavbar a:not(#userDropdownMenu a, #mobileDrawer a),
+            #mainNavbar.navbar-scrolled #siteNavbar button:not(#userDropdownMenu button, #mobileDrawer button),
+            #mainNavbar.navbar-scrolled #siteNavbar .text-black:not(#userDropdownMenu, #mobileDrawer),
+            #mainNavbar.navbar-scrolled #siteNavbar .text-slate-400:not(#userDropdownMenu .text-slate-400, #mobileDrawer .text-slate-400),
+            #mainNavbar.navbar-scrolled #siteNavbar .text-\[\#0072bc\]:not(#userDropdownMenu .text-\[\#0072bc\], #mobileDrawer .text-\[\#0072bc\]) {
+                color: #ffffff !important;
+            }
+            #mainNavbar.navbar-scrolled #siteNavbar a:hover:not(#userDropdownMenu a, #mobileDrawer a),
+            #mainNavbar.navbar-scrolled #siteNavbar button:hover:not(#userDropdownMenu button, #mobileDrawer button, #mobileMenuButton) {
+                color: #ffffff !important;
+            }
+            #mainNavbar.navbar-scrolled #siteNavbar #mobileMenuButton {
+                color: #ffffff !important;
+                border-color: rgba(255, 255, 255, 0.25);
+            }
+            #mainNavbar.navbar-scrolled #siteNavbar #mobileMenuButton:hover,
+            #mainNavbar.navbar-scrolled #siteNavbar #userMenuButton:hover {
+                background-color: rgba(255, 255, 255, 0.15);
+                color: #ffffff !important;
+            }
+        </style>
+
+        <!-- HERO -->
+        <section class="max-w-3xl mx-auto text-center pt-6 sm:pt-10">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0072bc]/10 backdrop-blur-md border border-[#0072bc]/20 text-xs font-semibold text-[#0072bc] tracking-wide shadow-lg shadow-[#0072bc]/10 hover:-translate-y-0.5 hover:shadow-[#0072bc]/25 transition-all duration-300 onload-anim">
+                <span class="w-2 h-2 rounded-full bg-[#0072bc] shadow-[0_0_8px_rgba(0,114,188,0.9)] animate-pulse"></span>
+                Support Center
             </div>
 
-            <!-- STATUS RESPONSE INTERFACES -->
-            <?php if (!empty($success_message)): ?>
-                <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-start gap-3 text-left">
-                    <i class="fa-solid fa-circle-check text-emerald-600 text-lg mt-0.5"></i>
-                    <p class="text-sm text-emerald-900 font-bold leading-normal"><?php echo htmlspecialchars($success_message); ?></p>
+            <h1 class="mt-7 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.08] onload-anim onload-delay-100">
+                <span class="spark-text">How can we help?</span>
+            </h1>
+
+            <p class="mt-6 text-sm sm:text-base lg:text-lg text-black font-semibold max-w-2xl leading-relaxed mx-auto onload-anim onload-delay-200">
+                Have questions or need technical support? Drop us a message below and we will respond shortly.
+            </p>
+        </section>
+
+        <section class="max-w-2xl mx-auto mt-12 mb-20">
+            <div class="space-y-6">
+
+                <!-- STATUS RESPONSE INTERFACES -->
+                        <?php if (!empty($success_message)): ?>
+                            <div class="p-4 bg-emerald-50 border border-emerald-200 border-l-4 border-l-emerald-500 rounded-2xl flex items-start gap-3 text-left">
+                                <i class="fa-solid fa-circle-check text-emerald-600 text-lg mt-0.5"></i>
+                                <p class="text-sm text-emerald-900 font-bold leading-normal"><?php echo htmlspecialchars($success_message); ?></p>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if (!empty($error_message)): ?>
+                            <div class="p-4 bg-red-50 border border-red-200 border-l-4 border-l-red-500 rounded-2xl flex items-start gap-3 text-left">
+                                <i class="fa-solid fa-circle-exclamation text-red-600 text-lg mt-0.5"></i>
+                                <p class="text-sm text-red-900 font-bold leading-normal"><?php echo htmlspecialchars($error_message); ?></p>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- CONTACT SUBMISSION GATEWAY -->
+                        <form id="contactSubmissionForm" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="relative bg-white/80 backdrop-blur rounded-3xl border border-gray-200 p-7 sm:p-9 shadow-xl ring-1 ring-black/5 space-y-5 text-left onload-anim onload-delay-300 overflow-hidden">
+
+                            <!-- Top gradient accent strip -->
+                            <div class="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-[#0072bc] via-blue-400 to-[#0072bc]"></div>
+
+                            <!-- Card header -->
+                            <div class="flex items-center gap-4 pb-5 border-b border-gray-100">
+                                <div class="w-11 h-11 rounded-2xl bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center text-lg shrink-0">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-black tracking-tight text-black leading-tight">Send us a message</h3>
+                                    <p class="text-xs font-semibold text-gray-400 mt-0.5">Fill in the fields below — we typically respond within 24 hours.</p>
+                                </div>
+                            </div>
+
+                            <div class="group">
+                                <label for="contact_name" class="block text-sm font-semibold text-black tracking-wide mb-2">Your Full Name</label>
+                                <div class="relative">
+                                    <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 group-focus-within:text-[#0072bc] transition-colors duration-300 text-sm pointer-events-none"></i>
+                                    <input
+                                        type="text"
+                                        name="contact_name"
+                                        id="contact_name"
+                                        value="<?php echo htmlspecialchars($preload_name); ?>"
+                                        placeholder="Enter your name"
+                                        class="w-full bg-slate-50 border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 text-base text-black font-semibold outline-none focus:bg-white focus:border-[#0072bc] focus:ring-4 focus:ring-[#0072bc]/10 transition-all duration-300"
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="group">
+                                <label for="contact_email" class="block text-sm font-semibold text-black tracking-wide mb-2">Your Email Address</label>
+                                <div class="relative">
+                                    <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 group-focus-within:text-[#0072bc] transition-colors duration-300 text-sm pointer-events-none"></i>
+                                    <input
+                                        type="email"
+                                        name="contact_email"
+                                        id="contact_email"
+                                        value="<?php echo htmlspecialchars($preload_email); ?>"
+                                        placeholder="name@example.com"
+                                        class="w-full bg-slate-50 border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 text-base text-black font-semibold outline-none focus:bg-white focus:border-[#0072bc] focus:ring-4 focus:ring-[#0072bc]/10 transition-all duration-300"
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="group">
+                                <label for="contact_subject" class="block text-sm font-semibold text-black tracking-wide mb-2">Inquiry Subject</label>
+                                <div class="relative">
+                                    <i class="fa-solid fa-tag absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 group-focus-within:text-[#0072bc] transition-colors duration-300 text-sm pointer-events-none"></i>
+                                    <input
+                                        type="text"
+                                        name="contact_subject"
+                                        id="contact_subject"
+                                        placeholder="What are you reaching out about?"
+                                        class="w-full bg-slate-50 border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 text-base text-black font-semibold outline-none focus:bg-white focus:border-[#0072bc] focus:ring-4 focus:ring-[#0072bc]/10 transition-all duration-300"
+                                        required
+                                    >
+                                </div>
+                            </div>
+
+                            <div class="group">
+                                <label for="contact_body" class="block text-sm font-semibold text-black tracking-wide mb-2">Message Details</label>
+                                <div class="relative">
+                                    <i class="fa-solid fa-comment-dots absolute left-4 top-4 text-gray-300 group-focus-within:text-[#0072bc] transition-colors duration-300 text-sm pointer-events-none"></i>
+                                    <textarea
+                                        name="contact_body"
+                                        id="contact_body"
+                                        rows="5"
+                                        placeholder="Type the full details of your message here..."
+                                        class="w-full bg-slate-50 border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 text-base text-black font-semibold outline-none focus:bg-white focus:border-[#0072bc] focus:ring-4 focus:ring-[#0072bc]/10 transition-all duration-300 resize-none"
+                                        required
+                                    ></textarea>
+                                </div>
+                            </div>
+
+                            <button type="submit" id="submitContactBtn" class="relative w-full bg-gradient-to-r from-[#0072bc] to-blue-600 hover:from-blue-600 hover:to-blue-700 active:scale-[0.99] text-white py-4 rounded-xl text-base font-bold transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-200 hover:shadow-xl hover:shadow-blue-300 overflow-hidden cursor-pointer mt-2 group">
+                                <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></span>
+                                <i id="btnIconNode" class="fa-solid fa-paper-plane text-sm shrink-0"></i>
+                                <span id="btnTextNode">Send Message</span>
+                            </button>
+
+                            <p class="text-center text-[11px] font-semibold text-gray-400 flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-lock text-[#0072bc]"></i>
+                                Encrypted transmission. No spam, ever.
+                            </p>
+                        </form>
+                    </div>
                 </div>
-            <?php endif; ?>
-
-            <?php if (!empty($error_message)): ?>
-                <div class="p-4 bg-red-50 border border-red-200 rounded-2xl flex items-start gap-3 text-left">
-                    <i class="fa-solid fa-circle-exclamation text-red-600 text-lg mt-0.5"></i>
-                    <p class="text-sm text-red-900 font-bold leading-normal"><?php echo htmlspecialchars($error_message); ?></p>
-                </div>
-            <?php endif; ?>
-
-            <!-- CONTACT SUBMISSION GATEWAY -->
-            <form id="contactSubmissionForm" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST" class="bg-white rounded-3xl border border-gray-200 p-6 sm:p-8 shadow-xl space-y-5 text-left">
-
-                <div class="space-y-1.5">
-                    <label for="contact_name" class="text-xs font-black uppercase text-gray-400 tracking-wider">Your Full Name</label>
-                    <input
-                        type="text"
-                        name="contact_name"
-                        id="contact_name"
-                        value="<?php echo htmlspecialchars($preload_name); ?>"
-                        placeholder="Enter your name"
-                        class="w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-3 text-base text-black font-semibold outline-none focus:border-[#128c7e] focus:bg-white transition"
-                        required
-                    >
-                </div>
-
-                <div class="space-y-1.5">
-                    <label for="contact_email" class="text-xs font-black uppercase text-gray-400 tracking-wider">Your Email Address</label>
-                    <input
-                        type="email"
-                        name="contact_email"
-                        id="contact_email"
-                        value="<?php echo htmlspecialchars($preload_email); ?>"
-                        placeholder="name@example.com"
-                        class="w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-3 text-base text-black font-semibold outline-none focus:border-[#128c7e] focus:bg-white transition"
-                        required
-                    >
-                </div>
-
-                <div class="space-y-1.5">
-                    <label for="contact_subject" class="text-xs font-black uppercase text-gray-400 tracking-wider">Inquiry Subject</label>
-                    <input
-                        type="text"
-                        name="contact_subject"
-                        id="contact_subject"
-                        placeholder="What are you reaching out about?"
-                        class="w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-3 text-base text-black font-semibold outline-none focus:border-[#128c7e] focus:bg-white transition"
-                        required
-                    >
-                </div>
-
-                <div class="space-y-1.5">
-                    <label for="contact_body" class="text-xs font-black uppercase text-gray-400 tracking-wider">Message Details</label>
-                    <textarea
-                        name="contact_body"
-                        id="contact_body"
-                        rows="5"
-                        placeholder="Type the full details of your message here..."
-                        class="w-full bg-slate-50 border border-gray-200 rounded-xl px-4 py-3 text-base text-black font-semibold outline-none focus:border-[#128c7e] focus:bg-white transition resize-none"
-                        required
-                    ></textarea>
-                </div>
-
-                <button type="submit" id="submitContactBtn" class="w-full bg-[#128c7e] hover:bg-[#0e6f64] active:scale-[0.99] text-white py-4 rounded-xl text-base font-bold transition-all flex items-center justify-center gap-2 shadow-md shadow-emerald-100 cursor-pointer mt-2">
-                    <i id="btnIconNode" class="fa-solid fa-paper-plane text-sm shrink-0"></i>
-                    <span id="btnTextNode">Send Message</span>
-                </button>
-
-            </form>
-        </div>
+        </section>
     </main>
 
-    <?php if (file_exists('index_footer.php')) { include 'index_footer.php'; } ?>
+    <?php if (file_exists('index_footer.php')) {
+        include 'index_footer.php';
+    } ?>
 
     <!-- ANIMATED LOCKOUT FORM BLOCK INTERCEPTOR SCRIPT -->
     <script>
-    document.getElementById('contactSubmissionForm').addEventListener('submit', function(e) {
-        const btn = document.getElementById('submitContactBtn');
-        const iconNode = document.getElementById('btnIconNode');
-        const textNode = document.getElementById('btnTextNode');
+        // NAVBAR SCROLL GLASS EFFECT
+        document.addEventListener("DOMContentLoaded", () => {
+            const navbar = document.getElementById("mainNavbar");
+            if (!navbar) return;
+            const handleScroll = () => {
+                if (window.scrollY > 20) {
+                    navbar.classList.add("navbar-scrolled");
+                } else {
+                    navbar.classList.remove("navbar-scrolled");
+                }
+            };
+            window.addEventListener("scroll", handleScroll, { passive: true });
+            handleScroll();
+        });
 
-        if (btn && iconNode && textNode) {
-            // Terminate double processing flows instantly
-            btn.style.pointerEvents = 'none';
-            btn.classList.add('opacity-80');
+        document.getElementById('contactSubmissionForm').addEventListener('submit', function(e) {
+            const btn = document.getElementById('submitContactBtn');
+            const iconNode = document.getElementById('btnIconNode');
+            const textNode = document.getElementById('btnTextNode');
 
-            // Trigger animation processing layouts
-            iconNode.className = "fa-solid fa-spinner animate-spin text-sm shrink-0";
-            textNode.textContent = "Processing...";
-        }
-    });
+            if (btn && iconNode && textNode) {
+                // Terminate double processing flows instantly
+                btn.style.pointerEvents = 'none';
+                btn.classList.add('opacity-80');
+
+                // Trigger animation processing layouts
+                iconNode.className = "fa-solid fa-spinner animate-spin text-sm shrink-0";
+                textNode.textContent = "Processing...";
+            }
+        });
     </script>
 </body>
 </html>

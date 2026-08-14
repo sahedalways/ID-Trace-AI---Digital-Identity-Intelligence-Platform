@@ -16,7 +16,7 @@ require_once 'my-plan-controller.php';
     </style>
 </head>
 
-<body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white bg-slate-50">
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#0072bc] selection:text-white bg-slate-50">
 
     <?php include 'navbar.php'; ?>
 
@@ -83,7 +83,7 @@ require_once 'my-plan-controller.php';
                     </div>
 
                     <div class="pt-4 border-t border-gray-100/70 space-y-3">
-                        <a href="<?php echo BASE_URL; ?>buy-credit" class="w-auto flex items-center justify-center gap-2 bg-[#128c7e] hover:bg-[#0e6f64] text-white py-4 px-6 rounded-xl text-sm font-bold transition shadow-sm cursor-pointer">
+                        <a href="<?php echo BASE_URL; ?>buy-credit" class="w-auto flex items-center justify-center gap-2 bg-[#0072bc] hover:bg-[#005ea3] text-white py-4 px-6 rounded-xl text-sm font-bold transition shadow-sm cursor-pointer">
                             <i class="fa-solid fa-circle-plus"></i> Upgrade Plan / Add Credits
                         </a>
 
@@ -101,7 +101,7 @@ require_once 'my-plan-controller.php';
                     </div>
                     <h3 class="text-sm font-bold text-gray-900">You have no active subscription</h3>
                     <p class="text-xs text-black font-medium mt-1 mb-6">Activate your account to start generating intelligence reports.</p>
-                    <a href="<?php echo BASE_URL; ?>buy-credit" class="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#128c7e] hover:bg-[#0e6f64] text-white py-4 px-12 rounded-xl text-sm font-bold transition shadow-sm cursor-pointer">
+                    <a href="<?php echo BASE_URL; ?>buy-credit" class="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#0072bc] hover:bg-[#005ea3] text-white py-4 px-12 rounded-xl text-sm font-bold transition shadow-sm cursor-pointer">
                         <i class="fa-solid fa-circle-plus"></i> Activate Subscription
                     </a>
                 </div>
@@ -149,8 +149,8 @@ require_once 'my-plan-controller.php';
                                     </td>
                                     <td class="py-4 px-6 text-center">
                                         <?php if ($tx['status'] === 'succeeded'): ?>
-                                            <span class="inline-flex items-center gap-1 bg-emerald-50 text-[#128c7e] text-[10px] font-semibold px-2 py-0.5 rounded-md uppercase border border-emerald-100">
-                                                <span class="w-1 h-1 rounded-full bg-[#128c7e]"></span> Paid
+                                            <span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 text-[10px] font-semibold px-2 py-0.5 rounded-md uppercase border border-emerald-100">
+                                                <span class="w-1 h-1 rounded-full bg-emerald-600"></span> Paid
                                             </span>
                                         <?php else: ?>
                                             <span class="inline-flex items-center gap-1 bg-red-50 text-red-600 text-[10px] font-semibold px-2 py-0.5 rounded-md uppercase border border-red-100">
@@ -160,7 +160,7 @@ require_once 'my-plan-controller.php';
                                     </td>
                                     <td class="py-4 px-6 text-center">
                                         <?php if ($tx['status'] === 'succeeded'): ?>
-                                            <a href="generate_invoice?tid=<?php echo urlencode($tx['tid']); ?>" target="_blank" class="inline-block bg-[#128c7e] text-white hover:bg-[#0e6f64] border border-transparent text-[10px] font-bold px-3 py-1.5 rounded-lg shadow-sm transition duration-150 tracking-tight" title="Download PDF Invoice">
+                                            <a href="generate_invoice?tid=<?php echo urlencode($tx['tid']); ?>" target="_blank" class="inline-block bg-[#0072bc] text-white hover:bg-[#005ea3] border border-transparent text-[10px] font-bold px-3 py-1.5 rounded-lg shadow-sm transition duration-150 tracking-tight" title="Download PDF Invoice">
                                                 Download
                                             </a>
                                         <?php else: ?>

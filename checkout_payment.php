@@ -6,18 +6,18 @@
 ?>
 <div class="space-y-3">
     <div class="flex items-center gap-2">
-        <span class="bg-[#128c7e] text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">3</span>
+        <span class="bg-[#0072bc] text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">3</span>
         <h3 class="text-base font-bold text-gray-900 tracking-tight">Select Payment Method</h3>
     </div>
 
     <div class="border border-gray-200 rounded-2xl p-4 bg-white shadow-sm space-y-4">
         
         <div class="flex flex-col gap-2 w-full">
-            <button type="button" id="selectCardTab" class="w-full px-4 py-3.5 rounded-xl flex items-center justify-center gap-2.5 font-bold text-sm text-white bg-[#128c7e] border-2 border-[#128c7e] transition-all duration-200">
+            <button type="button" id="selectCardTab" class="w-full px-4 py-3.5 rounded-xl flex items-center justify-center gap-2.5 font-bold text-sm text-white bg-[#0072bc] border-2 border-[#0072bc] transition-all duration-200">
                 <i id="cardTabIcon" class="fa-solid fa-credit-card text-white"></i> Credit or debit card
             </button>
-            <button type="button" id="selectWalletTab" class="w-full px-4 py-3.5 rounded-xl flex items-center justify-center gap-2.5 font-bold text-sm text-slate-600 bg-emerald-50/40 border border-[#128c7e] hover:bg-emerald-100/60 transition-all duration-200" disabled>
-                <i id="walletTabIcon" class="fa-solid fa-wallet text-[#128c7e]"></i> <span id="walletTabLabel">Digital Wallet</span>
+            <button type="button" id="selectWalletTab" class="w-full px-4 py-3.5 rounded-xl flex items-center justify-center gap-2.5 font-bold text-sm text-slate-600 bg-emerald-50/40 border border-[#0072bc] hover:bg-emerald-100/60 transition-all duration-200" disabled>
+                <i id="walletTabIcon" class="fa-solid fa-wallet text-[#0072bc]"></i> <span id="walletTabLabel">Digital Wallet</span>
             </button>
         </div>
 
@@ -97,10 +97,10 @@
         cardCvcElement.mount('#stripeCardCvcTarget');
 
         cardNumberElement.on('focus', () => {
-            cardNumberWrapper.classList.add('border-[#128c7e]', 'ring-1', 'ring-[#128c7e]');
+            cardNumberWrapper.classList.add('border-[#0072bc]', 'ring-1', 'ring-[#0072bc]');
         });
         cardNumberElement.on('blur', () => {
-            cardNumberWrapper.classList.remove('border-[#128c7e]', 'ring-1', 'ring-[#128c7e]');
+            cardNumberWrapper.classList.remove('border-[#0072bc]', 'ring-1', 'ring-[#0072bc]');
         });
 
         [
@@ -145,10 +145,10 @@
 
                 if (result.applePay) {
                     walletTabLabel.textContent = "Apple Pay";
-                    walletTabIcon.className = "fa-brands fa-apple text-base text-[#128c7e]";
+                    walletTabIcon.className = "fa-brands fa-apple text-base text-[#0072bc]";
                 } else {
                     walletTabLabel.textContent = "Google Pay";
-                    walletTabIcon.className = "fa-brands fa-google text-xs text-[#128c7e]";
+                    walletTabIcon.className = "fa-brands fa-google text-xs text-[#0072bc]";
                 }
             } else {
                 walletTab.style.display = 'none';
@@ -176,15 +176,15 @@
             currentPaymentMethodMode = 'card';
             
             // Activate Card: Solid Green (Heavy Border)
-            cardTab.className = "w-full px-4 py-3.5 rounded-xl flex items-center justify-center gap-2.5 font-bold text-sm text-white bg-[#128c7e] border-2 border-[#128c7e] transition-all duration-200";
+            cardTab.className = "w-full px-4 py-3.5 rounded-xl flex items-center justify-center gap-2.5 font-bold text-sm text-white bg-[#0072bc] border-2 border-[#0072bc] transition-all duration-200";
             cardTabIcon.className = "fa-solid fa-credit-card text-white";
             
             // Deactivate Wallet: Thin Border Accent
-            walletTab.className = "w-full px-4 py-3.5 rounded-xl flex items-center justify-center gap-2.5 font-bold text-sm text-slate-600 bg-emerald-50/40 border border-[#128c7e] hover:bg-emerald-100/60 transition-all duration-200";
+            walletTab.className = "w-full px-4 py-3.5 rounded-xl flex items-center justify-center gap-2.5 font-bold text-sm text-slate-600 bg-emerald-50/40 border border-[#0072bc] hover:bg-emerald-100/60 transition-all duration-200";
             if (walletTabLabel.textContent === "Apple Pay") {
-                walletTabIcon.className = "fa-brands fa-apple text-base text-[#128c7e]";
+                walletTabIcon.className = "fa-brands fa-apple text-base text-[#0072bc]";
             } else {
-                walletTabIcon.className = "fa-brands fa-google text-xs text-[#128c7e]";
+                walletTabIcon.className = "fa-brands fa-google text-xs text-[#0072bc]";
             }
 
             cardFieldsBlock.classList.remove('hidden');
@@ -200,7 +200,7 @@
             currentPaymentMethodMode = 'wallet';
             
             // Activate Wallet: Solid Green (Heavy Border)
-            walletTab.className = "w-full px-4 py-3.5 rounded-xl flex items-center justify-center gap-2.5 font-bold text-sm text-white bg-[#128c7e] border-2 border-[#128c7e] transition-all duration-200";
+            walletTab.className = "w-full px-4 py-3.5 rounded-xl flex items-center justify-center gap-2.5 font-bold text-sm text-white bg-[#0072bc] border-2 border-[#0072bc] transition-all duration-200";
             if (walletTabLabel.textContent === "Apple Pay") {
                 walletTabIcon.className = "fa-brands fa-apple text-base text-white";
             } else {
@@ -208,8 +208,8 @@
             }
             
             // Deactivate Card: Thin Border Accent
-            cardTab.className = "w-full px-4 py-3.5 rounded-xl flex items-center justify-center gap-2.5 font-bold text-sm text-slate-600 bg-emerald-50/40 border border-[#128c7e] hover:bg-emerald-100/60 transition-all duration-200";
-            cardTabIcon.className = "fa-solid fa-credit-card text-[#128c7e]";
+            cardTab.className = "w-full px-4 py-3.5 rounded-xl flex items-center justify-center gap-2.5 font-bold text-sm text-slate-600 bg-emerald-50/40 border border-[#0072bc] hover:bg-emerald-100/60 transition-all duration-200";
+            cardTabIcon.className = "fa-solid fa-credit-card text-[#0072bc]";
 
             cardFieldsBlock.classList.add('hidden');
             expressButtonBlock.classList.remove('hidden');
