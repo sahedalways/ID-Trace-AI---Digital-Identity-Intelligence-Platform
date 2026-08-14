@@ -15,38 +15,323 @@ if (session_status() === PHP_SESSION_NONE) session_start();
     <?php include 'head.php'; ?>
 </head>
 
-<body class="min-h-screen flex flex-col justify-between selection:bg-[#128c7e] selection:text-white bg-slate-50">
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#0072bc] selection:text-white bg-slate-50 relative">
 
-    <?php include 'navbar.php'; ?>
+    <!-- Sticky Glassmorphic Navbar Container -->
+    <header id="mainNavbar" class="sticky top-0 z-50 bg-transparent transition-all duration-300">
+        <?php include 'navbar.php'; ?>
+    </header>
 
-    <main class="flex-grow max-w-4xl w-full mx-auto px-4 sm:px-6 pt-12 pb-16">
-        <div class="space-y-8">
+    <!-- Full-width Background Decorations -->
+    <div class="absolute inset-x-0 top-0 -z-10 overflow-hidden" style="height: 900px; background: linear-gradient(180deg, #BFE4FD 0%, #FFFFFF 100%);">
+        <div class="blob-1 absolute top-0 left-1/2 w-[900px] h-[900px] bg-[#0072bc]/10 rounded-full blur-3xl opacity-60 -translate-x-1/2 will-change-transform"></div>
+        <div class="blob-2 absolute top-24 -left-20 w-96 h-96 bg-[#0072bc]/15 rounded-full blur-3xl will-change-transform"></div>
+        <div class="blob-3 absolute bottom-0 right-0 w-96 h-96 bg-[#BFE4FD]/50 rounded-full blur-3xl opacity-70 will-change-transform"></div>
+    </div>
 
-            <div class="text-center space-y-2">
-                <h1 class="text-3xl font-black tracking-tight text-gray-900">Terms and Conditions</h1>
-                <p class="text-sm text-gray-500 font-medium leading-relaxed max-w-xl mx-auto">Rules for the use of the platform console and provision of automated intelligence services.</p>
-                <p class="text-xs text-gray-400 font-bold uppercase tracking-widest pt-2">Last Updated: July 2026</p>
+    <main class="relative flex-grow w-full mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20" style="max-width: 1600px;">
+        <style>
+            @keyframes blobMove1 {
+
+                0%,
+                100% {
+                    transform: translateX(-50%) translateY(0);
+                }
+
+                25% {
+                    transform: translateX(-40%) translateY(-20px);
+                }
+
+                50% {
+                    transform: translateX(-50%) translateY(-10px);
+                }
+
+                75% {
+                    transform: translateX(-60%) translateY(10px);
+                }
+            }
+
+            @keyframes blobMove2 {
+
+                0%,
+                100% {
+                    transform: translate(0, 0);
+                }
+
+                33% {
+                    transform: translate(30px, -15px);
+                }
+
+                66% {
+                    transform: translate(-20px, 20px);
+                }
+            }
+
+            @keyframes blobMove3 {
+
+                0%,
+                100% {
+                    transform: translate(0, 0);
+                }
+
+                50% {
+                    transform: translate(-40px, -20px);
+                }
+            }
+
+            .blob-1 {
+                animation: blobMove1 18s ease-in-out infinite;
+            }
+
+            .blob-2 {
+                animation: blobMove2 14s ease-in-out infinite;
+            }
+
+            .blob-3 {
+                animation: blobMove3 16s ease-in-out infinite;
+            }
+
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translateY(30px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            .onload-anim {
+                animation: fadeInUp 0.8s ease-out forwards;
+                opacity: 0;
+            }
+            .onload-delay-100 { animation-delay: 100ms; }
+            .onload-delay-200 { animation-delay: 200ms; }
+            .onload-delay-300 { animation-delay: 300ms; }
+
+            .animate-on-scroll {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+                will-change: opacity, transform;
+            }
+            .animate-on-scroll.is-visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            @keyframes spark-sweep {
+                0% { background-position: 0% 50%; }
+                100% { background-position: 200% 50%; }
+            }
+            .spark-text {
+                background: linear-gradient(
+                    135deg,
+                    #020617 35%,
+                    #2563eb 50%,
+                    #020617 65%
+                );
+                background-size: 200% auto;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                color: transparent;
+                animation: spark-sweep 5s linear infinite;
+            }
+
+            .navbar-scrolled {
+                background: linear-gradient(to right, #eef5ff 20%, #0072bc 100%);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            }
+
+            /* Start transparent on sub pages so the glass effect matches home */
+            #mainNavbar #siteNavbar {
+                background: transparent !important;
+                border-bottom: none !important;
+                box-shadow: none !important;
+            }
+
+            /* Smooth color transitions for navbar links, buttons, and icons */
+            #siteNavbar a,
+            #siteNavbar button,
+            #siteNavbar .text-black,
+            #siteNavbar .text-slate-400,
+            #siteNavbar .text-\[\#0072bc\] {
+                transition: color 0.35s ease, background-color 0.35s ease, border-color 0.35s ease;
+            }
+
+            /* When scrolled, switch navbar text and icons to white */
+            #mainNavbar.navbar-scrolled #siteNavbar a:not(#userDropdownMenu a, #mobileDrawer a),
+            #mainNavbar.navbar-scrolled #siteNavbar button:not(#userDropdownMenu button, #mobileDrawer button),
+            #mainNavbar.navbar-scrolled #siteNavbar .text-black:not(#userDropdownMenu, #mobileDrawer),
+            #mainNavbar.navbar-scrolled #siteNavbar .text-slate-400:not(#userDropdownMenu .text-slate-400, #mobileDrawer .text-slate-400),
+            #mainNavbar.navbar-scrolled #siteNavbar .text-\[\#0072bc\]:not(#userDropdownMenu .text-\[\#0072bc\], #mobileDrawer .text-\[\#0072bc\]) {
+                color: #ffffff !important;
+            }
+
+            /* Adjust hover states when scrolled for better contrast on dark gradient */
+            #mainNavbar.navbar-scrolled #siteNavbar a:hover:not(#userDropdownMenu a, #mobileDrawer a),
+            #mainNavbar.navbar-scrolled #siteNavbar button:hover:not(#userDropdownMenu button, #mobileDrawer button, #mobileMenuButton) {
+                color: #ffffff !important;
+            }
+
+            /* Mobile hamburger: keep icon white and subtle glass highlight when scrolled */
+            #mainNavbar.navbar-scrolled #siteNavbar #mobileMenuButton {
+                color: #ffffff !important;
+                border-color: rgba(255, 255, 255, 0.25);
+            }
+
+            #mainNavbar.navbar-scrolled #siteNavbar #mobileMenuButton:hover,
+            #mainNavbar.navbar-scrolled #siteNavbar #userMenuButton:hover {
+                background-color: rgba(255, 255, 255, 0.15);
+                color: #ffffff !important;
+            }
+
+            /* Terms accordion card enhancements */
+            .terms-card.active {
+                border-color: rgba(0, 114, 188, 0.35);
+                box-shadow: 0 12px 40px rgba(0, 114, 188, 0.12);
+            }
+            .terms-card.active .terms-number-badge {
+                background-color: #0072bc;
+                border-color: #0072bc;
+                color: #ffffff;
+                box-shadow: 0 4px 14px rgba(0, 114, 188, 0.35);
+            }
+            .terms-toc-link.active {
+                color: #0072bc !important;
+                background-color: rgba(0, 114, 188, 0.06);
+                border-left-color: #0072bc;
+            }
+        </style>
+
+        <!-- HERO -->
+        <section class="max-w-3xl mx-auto text-center pt-6 sm:pt-10">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0072bc]/10 backdrop-blur-md border border-[#0072bc]/20 text-xs font-semibold text-[#0072bc] tracking-wide shadow-lg shadow-[#0072bc]/10 hover:-translate-y-0.5 hover:shadow-[#0072bc]/25 transition-all duration-300 onload-anim">
+                <span class="w-2 h-2 rounded-full bg-[#0072bc] shadow-[0_0_8px_rgba(0,114,188,0.9)] animate-pulse"></span>
+                Legal &amp; Compliance
             </div>
 
-            <div class="p-4 bg-amber-50 border border-amber-200 rounded-2xl">
-                <p class="text-xs sm:text-sm text-amber-900 font-semibold leading-relaxed">
-                    <i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1"></i>
-                    WE ASK THAT YOU KINDLY CLOSELY REVIEW THESE TERMS AND CONDITIONS, INCLUDING THE DISPUTE RESOLUTION CLAUSES, OPTING-OUT LINK AND FCRA AND OTHER USE RESTRICTIONS SET FORTH BELOW) BEFORE YOU USE, ACCESS, POST OR PURCHASE ANY ITEM ON www.identitysearch.ai, THE Identity Search AI APPLICATION, OR ANY OTHER AFFILIATED WEBSITE OR MOBILE APPLICATION THAT LINKS TO AND UTILIZES THESE TERMS (ALL SUCH PLATFORMS, COLLECTIVELY REFERRED TO AS THE "SITE").
-                    Please note that, among other items, these terms contain an agreement to arbitration and a class action waiver giving up a right to a court hearing or jury trial or to participate in class action litigation. Arbitration is mandatory and is the exclusive remedy for any and all disputes unless specified below. Please carefully review the dispute resolution section below.
-                    WE STRONGLY URGE YOU TO CLOSELY REVIEW THESE TERMS AND CONDITIONS IN FULL BEFORE USING OR ACCESSING ANY CONTENT OR PURCHASING ANY PLAN ON OR THROUGH THE SITE. BY VIRTUE OF YOUR USING OR MAKING ANY PURCHASE ON THE SITE, YOU EFFECTIVELY DEMONSTRATE IN FULL YOUR ACCEPTANCE OF THE TERMS AND CONDITIONS SET FORTH BELOW OR OTHERWISE CONTAINED HEREIN. IF YOU DO NOT WISH TO ACCEPT THESE TERMS AND CONDITIONS, PLEASE DO NOT USE, PROVIDE ANY INFORMATION TO, OR PURCHASE ANY ITEMS ON, THE SITE!
-                </p>
+            <h1 class="mt-7 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.08] onload-anim onload-delay-100">
+                <span class="spark-text">Terms and Conditions</span>
+            </h1>
+
+            <p class="mt-6 text-sm sm:text-base lg:text-lg text-black font-semibold max-w-2xl leading-relaxed mx-auto onload-anim onload-delay-200">
+                Rules for the use of the platform console and provision of automated intelligence services.
+            </p>
+
+            <div class="mt-6 flex items-center justify-center onload-anim onload-delay-300">
+                <span class="inline-flex items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-full bg-white/80 backdrop-blur border border-white/60 shadow-sm ring-1 ring-black/5 text-xs font-bold text-gray-800">
+                    <i class="fa-solid fa-calendar-check text-[#0072bc] text-sm"></i>
+                    Last Updated: July 2026
+                </span>
+            </div>
+        </section>
+
+        <!-- LEGAL NOTICE BANNER -->
+        <section class="max-w-7xl mx-auto mt-10 mb-4 animate-on-scroll">
+            <div class="relative overflow-hidden p-6 sm:p-8 bg-gradient-to-br from-amber-50 via-amber-50 to-orange-50 border border-amber-200 rounded-3xl shadow-sm ring-1 ring-amber-900/5">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-amber-200/50 to-transparent rounded-bl-[80px] opacity-70 pointer-events-none"></div>
+                <div class="relative flex items-start gap-3 sm:gap-4">
+                    <div class="hidden sm:flex w-10 h-10 shrink-0 rounded-xl bg-amber-100 border border-amber-200 items-center justify-center">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-600 text-lg"></i>
+                    </div>
+                    <div class="text-xs sm:text-sm text-amber-900 font-semibold leading-relaxed space-y-3">
+                        <p>
+                            WE ASK THAT YOU KINDLY CLOSELY REVIEW THESE TERMS AND CONDITIONS, INCLUDING THE DISPUTE RESOLUTION CLAUSES, OPTING-OUT LINK AND FCRA AND OTHER USE RESTRICTIONS SET FORTH BELOW) BEFORE YOU USE, ACCESS, POST OR PURCHASE ANY ITEM ON www.identitysearch.ai, THE Identity Search AI APPLICATION, OR ANY OTHER AFFILIATED WEBSITE OR MOBILE APPLICATION THAT LINKS TO AND UTILIZES THESE TERMS (ALL SUCH PLATFORMS, COLLECTIVELY REFERRED TO AS THE "SITE").
+                        </p>
+                        <p>
+                            Please note that, among other items, these terms contain an agreement to arbitration and a class action waiver giving up a right to a court hearing or jury trial or to participate in class action litigation. Arbitration is mandatory and is the exclusive remedy for any and all disputes unless specified below. Please carefully review the dispute resolution section below.
+                        </p>
+                        <p>
+                            WE STRONGLY URGE YOU TO CLOSELY REVIEW THESE TERMS AND CONDITIONS IN FULL BEFORE USING OR ACCESSING ANY CONTENT OR PURCHASING ANY PLAN ON OR THROUGH THE SITE. BY VIRTUE OF YOUR USING OR MAKING ANY PURCHASE ON THE SITE, YOU EFFECTIVELY DEMONSTRATE IN FULL YOUR ACCEPTANCE OF THE TERMS AND CONDITIONS SET FORTH BELOW OR OTHERWISE CONTAINED HEREIN. IF YOU DO NOT WISH TO ACCEPT THESE TERMS AND CONDITIONS, PLEASE DO NOT USE, PROVIDE ANY INFORMATION TO, OR PURCHASE ANY ITEMS ON, THE SITE!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TERMS CONTENT -->
+        <section class="max-w-7xl mx-auto mt-8 mb-16 grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-8 lg:gap-12">
+
+            <!-- Mobile / Tablet Table of Contents -->
+            <div class="lg:hidden">
+                <div class="bg-white/80 backdrop-blur border border-gray-200 rounded-2xl shadow-sm ring-1 ring-black/5 p-4">
+                    <button type="button" id="tocMobileToggle" class="w-full flex items-center justify-between gap-3 text-left focus:outline-none cursor-pointer">
+                        <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                            <i class="fa-solid fa-list text-[#0072bc]"></i>
+                            Table of Contents
+                        </span>
+                        <span class="w-6 h-6 shrink-0 rounded-full bg-slate-50 border border-gray-200 flex items-center justify-center">
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-transform duration-300"></i>
+                        </span>
+                    </button>
+                    <div id="tocMobilePanel" class="hidden mt-3 pt-3 border-t border-gray-100">
+                        <ul class="space-y-0.5">
+                            <li><a href="#terms-section-1" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">1. Introduction and an initial note regarding the Fair Credit Reporting Act and related obligations</a></li>
+                            <li><a href="#terms-section-2" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">2. Scope of these Terms, License Grant, Electronic Signature and Legal Age Requirement</a></li>
+                            <li><a href="#terms-section-3" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">3. Class Action Waiver, Mandatory Arbitration, Dispute Resolution and Governing Law</a></li>
+                            <li><a href="#terms-section-4" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">4. Definitions</a></li>
+                            <li><a href="#terms-section-5" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">5. User Workspace Accounts</a></li>
+                            <li><a href="#terms-section-6" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">6. Reporting &amp; System Limitations</a></li>
+                            <li><a href="#terms-section-7" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">7. Modifications to these Terms</a></li>
+                            <li><a href="#terms-section-8" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">8. Content Moderation, Notice-and-Action, and Complaints</a></li>
+                            <li><a href="#terms-section-9" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">9. Some of Our Reserved Rights</a></li>
+                            <li><a href="#terms-section-10" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">10. Proprietary Rights</a></li>
+                            <li><a href="#terms-section-11" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">11. Indemnification</a></li>
+                            <li><a href="#terms-section-12" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">12. Limitation of Liability</a></li>
+                            <li><a href="#terms-section-13" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">13. Subscription, Billing Cancellation and Refund Policy</a></li>
+                            <li><a href="#terms-section-14" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">14. Treatment of Reversals and Chargebacks</a></li>
+                            <li><a href="#terms-section-15" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">15. Entire Agreement</a></li>
+                            <li><a href="#terms-section-16" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">16. Misconduct</a></li>
+                            <li><a href="#terms-section-17" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">17. Important Reminder: Certain Prohibited Uses of the Site</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
+            <!-- Sticky Table of Contents -->
+            <aside class="hidden lg:block">
+                <div class="sticky top-20 space-y-4">
+                    <div class="bg-white/80 backdrop-blur border border-gray-200 rounded-2xl shadow-sm ring-1 ring-black/5 p-5">
+                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-list text-[#0072bc]"></i>
+                            Table of Contents
+                        </p>
+                        <ul class="space-y-0.5 max-h-[calc(100vh-11rem)] overflow-y-auto pr-1">
+                            <li><a href="#terms-section-1" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">1. Introduction and an initial note regarding the Fair Credit Reporting Act and related obligations</a></li>
+                            <li><a href="#terms-section-2" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">2. Scope of these Terms, License Grant, Electronic Signature and Legal Age Requirement</a></li>
+                            <li><a href="#terms-section-3" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">3. Class Action Waiver, Mandatory Arbitration, Dispute Resolution and Governing Law</a></li>
+                            <li><a href="#terms-section-4" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">4. Definitions</a></li>
+                            <li><a href="#terms-section-5" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">5. User Workspace Accounts</a></li>
+                            <li><a href="#terms-section-6" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">6. Reporting &amp; System Limitations</a></li>
+                            <li><a href="#terms-section-7" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">7. Modifications to these Terms</a></li>
+                            <li><a href="#terms-section-8" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">8. Content Moderation, Notice-and-Action, and Complaints</a></li>
+                            <li><a href="#terms-section-9" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">9. Some of Our Reserved Rights</a></li>
+                            <li><a href="#terms-section-10" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">10. Proprietary Rights</a></li>
+                            <li><a href="#terms-section-11" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">11. Indemnification</a></li>
+                            <li><a href="#terms-section-12" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">12. Limitation of Liability</a></li>
+                            <li><a href="#terms-section-13" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">13. Subscription, Billing Cancellation and Refund Policy</a></li>
+                            <li><a href="#terms-section-14" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">14. Treatment of Reversals and Chargebacks</a></li>
+                            <li><a href="#terms-section-15" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">15. Entire Agreement</a></li>
+                            <li><a href="#terms-section-16" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">16. Misconduct</a></li>
+                            <li><a href="#terms-section-17" class="terms-toc-link block text-sm font-semibold text-gray-600 leading-snug py-2 px-3 rounded-lg border-l-2 border-transparent hover:text-[#0072bc] hover:bg-[#0072bc]/5 transition-all duration-300">17. Important Reminder: Certain Prohibited Uses of the Site</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Accordion -->
             <div class="space-y-4" id="termsAccordionContainer">
 
                 <!-- 1 -->
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2sm">
-                    <button type="button" class="w-full p-5 flex items-center justify-between text-left focus:outline-none terms-toggle-trigger group">
-                        <span class="text-base font-black text-gray-900 group-hover:text-[#128c7e] transition-colors">1. Introduction and an initial note regarding the Fair Credit Reporting Act and related obligations</span>
-                        <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-transform duration-300 transform rotate-180"></i>
+                <div id="terms-section-1" class="scroll-mt-28 bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 transition-all duration-300 terms-card">
+                    <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none terms-toggle-trigger group">
+                        <span class="flex items-center gap-3 sm:gap-4 min-w-0">
+                            <span class="terms-number-badge w-10 h-10 shrink-0 rounded-xl bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-black flex items-center justify-center text-sm transition-all duration-300">1</span>
+                            <span class="text-base font-black text-gray-900 group-hover:text-[#0072bc] transition-colors leading-snug">1. Introduction and an initial note regarding the Fair Credit Reporting Act and related obligations</span>
+                        </span>
+                        <span class="w-7 h-7 shrink-0 rounded-full bg-slate-50 border border-gray-200 flex items-center justify-center group-hover:bg-[#0072bc] group-hover:border-[#0072bc] transition-all duration-300">
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-all duration-300 transform rotate-180 group-hover:text-white"></i>
+                        </span>
                     </button>
-                    <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
-                        <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
+                    <div class="terms-content-slider transition-all duration-500 ease-in-out bg-white opacity-100">
+                        <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-gray-800 font-semibold leading-relaxed space-y-3 border-t border-gray-100">
                             <p>These Terms and Conditions (collectively, the "Terms"), together with our Privacy Policy, represent the legally binding agreement between you ("You" or "Your") and Identity Search AI (our website) is provided by Cpabossaffiliate LLC , acting through Identity Search AI ('we', 'our' or 'us').</p>
                             <p>Identity Search AI is a database of publicly available sources of information aggregated for Your convenience, intended for personal individual use rather than for professional purposes, that makes available services that allow users to search for information as permitted by these Terms, such as to learn what information is in their own public records, to reconnect with long-lost friends or relatives, or, for example, to learn about the neighbors, online dates, acquaintances, buying/selling a personal item and other uses. Through Identity Search AI, end-user visitors to the Site can view and/or access certain content, information, media, text, data, images, graphics, user interfaces, audio, video, photographs, trademarks, logos, artwork, designs, magnetic translations, digital conversions, products, services, software functionality and other materials posted to or made available through the Site (collectively, "Content") as compiled, distributed and displayed by Identity Search AI and other third-party content providers ("Third-Party Providers") including, but not limited to, third-party websites or services that provide information about individuals (each, a "Search Subject") that can be searched for and accessed through the Site or other services We make available ("Identity Search AI Queries").</p>
                             <p class="p-3 bg-red-50 border border-red-200 rounded-xl text-sm">WE DO NOT PROVIDE PRIVATE INVESTIGATOR SERVICES AND ARE NOT A CONSUMER REPORTING AGENCY AS DEFINED BY THE FAIR CREDIT REPORTING ACT 15 U.S.C. § 1681 et seq. ("FCRA") BECAUSE THE INFORMATION WE PROVIDE IS NOT COLLECTED OR PROVIDED, IN WHOLE OR IN PART, FOR THE PURPOSE OF SERVING AS A FACTOR IN ESTABLISHING A PERSON'S ELIGIBILITY FOR (a) CREDIT OR INSURANCE TO BE USED PRIMARILY FOR PERSONAL, FAMILY, OR HOUSEHOLD PURPOSES; (b) EMPLOYMENT PURPOSES; (c) BENEFITS, TENANCY OR EDUCATIONAL ADMISSION CONSIDERATIONS; OR (d) IN CONNECTION WITH A BUSINESS TRANSACTION INITIATED BY AN INDIVIDUAL CONSUMER FOR PERSONAL, FAMILY, OR HOUSEHOLD PURPOSES. WE DO NOT MAKE ANY REPRESENTATION OR WARRANTY AS TO THE CREDIT WORTHINESS, CREDIT STANDING, CREDIT CAPACITY, CHARACTER, GENERAL REPUTATION, PERSONAL CHARACTERISTICS, OR MODE OF LIVING OF ANY PERSON. AS SUCH, THE ADDITIONAL PROTECTIONS AFFORDED TO CONSUMERS AND OBLIGATIONS PLACED UPON CONSUMER REPORTING AGENCIES UNDER FCRA ARE NOT CONTEMPLATED BY, NOR CONTAINED WITHIN, THESE TERMS.</p>
@@ -67,13 +352,18 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                 </div>
 
                 <!-- 2 -->
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2sm">
-                    <button type="button" class="w-full p-5 flex items-center justify-between text-left focus:outline-none terms-toggle-trigger group">
-                        <span class="text-base font-black text-gray-900 group-hover:text-[#128c7e] transition-colors">2. Scope of these Terms, License Grant, Electronic Signature and Legal Age Requirement</span>
-                        <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-transform duration-300 transform rotate-180"></i>
+                <div id="terms-section-2" class="scroll-mt-28 bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 transition-all duration-300 terms-card">
+                    <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none terms-toggle-trigger group">
+                        <span class="flex items-center gap-3 sm:gap-4 min-w-0">
+                            <span class="terms-number-badge w-10 h-10 shrink-0 rounded-xl bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-black flex items-center justify-center text-sm transition-all duration-300">2</span>
+                            <span class="text-base font-black text-gray-900 group-hover:text-[#0072bc] transition-colors leading-snug">2. Scope of these Terms, License Grant, Electronic Signature and Legal Age Requirement</span>
+                        </span>
+                        <span class="w-7 h-7 shrink-0 rounded-full bg-slate-50 border border-gray-200 flex items-center justify-center group-hover:bg-[#0072bc] group-hover:border-[#0072bc] transition-all duration-300">
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-all duration-300 transform rotate-180 group-hover:text-white"></i>
+                        </span>
                     </button>
-                    <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
-                        <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
+                    <div class="terms-content-slider transition-all duration-500 ease-in-out bg-white opacity-100">
+                        <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-gray-800 font-semibold leading-relaxed space-y-3 border-t border-gray-100">
                             <p>We reserve the right at any time and without notice to deny You access to the Site or to any portion thereof and to terminate Your rights under these Terms, in Our sole and absolute discretion. Your rights under these Terms will terminate automatically if You fail to comply with these Terms, subject to the survival rights of certain provisions identified herein. Termination will be effective without notice. Upon termination, You must promptly destroy all copies of any aspect of the Site in Your possession, custody or control.</p>
                             <p>These Terms govern: Your use and access of the Content We provide and/or make available; Your purchase of membership plans from the Site; and Your use of any Identity Search AI Queries provided to You in connection therewith. IDENTITY SEARCH AI GRANTS YOU A NON-EXCLUSIVE, NON-TRANSFERABLE (that means Your account is for You alone to use--Your neighbor, coworker, spouse or assistant should obtain their own accounts) REVOCABLE AND LIMITED LICENSE FOR INDIVIDUAL, PERSONAL (NOT PROFESSIONAL) USE AND PROVIDES THE USE OF THE SITE, THE RELATED CONTENT, AND THE IDENTITY SEARCH AI QUERIES (and, if You are a subscriber, certain other services) TO YOU ONLY ON THE CONDITION THAT YOU ACCEPT AND AGREE TO ALL OF THE TERMS CONTAINED HEREIN. You acknowledge and agree, however, that Identity Search AI may terminate this license at any time for any reason. BY USING THE SITE, YOU EXPRESSLY ACCEPT AND AGREE TO BE BOUND BY AND ABIDE BY ALL THE TERMS CONTAINED HEREIN, AND BY ACCEPTING THESE TERMS THROUGH THE COMPLETION OF A PURCHASE, SELECTION OF A METHOD OF PAYMENT, AND YOUR ENTRY OF PAYMENT METHOD INFORMATION, YOU HEREBY AUTHORIZE US TO CHARGE SUCH SELECTED PAYMENT METHOD AND ITS ASSOCIATED PAYMENT ACCOUNT THAT YOU HAVE SPECIFIED FOR THE PURCHASE OF ONE OF OUR MEMBERSHIP PLANS. IF YOU DO NOT AGREE WITH THE ENTIRETY OF THESE TERMS, YOU ARE NOT GRANTED PERMISSION TO AND MAY NOT ACCESS OR USE THIS SITE AND/OR THE CONTENT, AND YOU ARE HEREBY INSTRUCTED TO EXIT THE SITE IMMEDIATELY.</p>
                             <p>Accordingly, these Terms apply to You when You: (a) access, view, download, or otherwise use any page on the Site other than the home page located at www.identitysearch.ai; and/or (b) submit an online application to become a Identity Search AI user and/or subscriber, which enables You to utilize a host of services made available to such users/subscribers by and through the Site. By engaging in either of these actions, You acknowledge and agree that You (a) have read, understand and agree to be bound by these Terms in their entirety; (b) consent to the use of electronic signatures, contracts, orders and other records, and to the electronic delivery of notices, policies and records of transactions initiated or completed through the site or through any other interactions with Identity Search AI; and (c) waive any rights or requirements under any statutes, regulations, rules, ordinances or other laws in any jurisdiction which require (i) an original signature, (ii) delivery or retention of non-electronic records, or (iii) payments or the granting of credits in ways other than through electronic means. By providing Your email address, You agree to receive email from Us. The Site and its services are available only to individuals that are at least eighteen (18) years of age and that can enter into legally binding contracts under applicable law. If You are under eighteen (18) years of age or do not agree to these Terms in their entirety, do not access, view, download or otherwise use any page on the Site other than the home page located at www.identitysearch.ai and do not submit an online application to become a user or subscriber. The Identity Search AI Privacy Policy ("Privacy Policy") is part of these Terms and is incorporated herein by reference. By accepting these Terms, You hereby acknowledge, understand and agree to the collection and use of certain of Your personally identifiable information by the Site as described in the Privacy Policy. Any requests to remove Your information from Identity Search AI's People Search results will be governed by the procedures described in the Privacy Policy. Click here to view the Privacy Policy.</p>
@@ -82,13 +372,18 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                 </div>
 
                 <!-- 3 -->
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2sm">
-                    <button type="button" class="w-full p-5 flex items-center justify-between text-left focus:outline-none terms-toggle-trigger group">
-                        <span class="text-base font-black text-gray-900 group-hover:text-[#128c7e] transition-colors">3. Class Action Waiver, Mandatory Arbitration, Dispute Resolution and Governing Law</span>
-                        <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-transform duration-300 transform rotate-180"></i>
+                <div id="terms-section-3" class="scroll-mt-28 bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 transition-all duration-300 terms-card">
+                    <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none terms-toggle-trigger group">
+                        <span class="flex items-center gap-3 sm:gap-4 min-w-0">
+                            <span class="terms-number-badge w-10 h-10 shrink-0 rounded-xl bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-black flex items-center justify-center text-sm transition-all duration-300">3</span>
+                            <span class="text-base font-black text-gray-900 group-hover:text-[#0072bc] transition-colors leading-snug">3. Class Action Waiver, Mandatory Arbitration, Dispute Resolution and Governing Law</span>
+                        </span>
+                        <span class="w-7 h-7 shrink-0 rounded-full bg-slate-50 border border-gray-200 flex items-center justify-center group-hover:bg-[#0072bc] group-hover:border-[#0072bc] transition-all duration-300">
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-all duration-300 transform rotate-180 group-hover:text-white"></i>
+                        </span>
                     </button>
-                    <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
-                        <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
+                    <div class="terms-content-slider transition-all duration-500 ease-in-out bg-white opacity-100">
+                        <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-gray-800 font-semibold leading-relaxed space-y-3 border-t border-gray-100">
                             <p>BY USE OF THE SITE, YOU ACKNOWLEDGE AND AGREE TO OUR MANDATORY ARBITRATION OF DISPUTES PROVISION THAT GENERALLY REQUIRES THE USE OF ARBITRATION ON AN INDIVIDUAL BASIS TO RESOLVE DISPUTES, RATHER THAN JURY TRIALS OR CLASS ACTIONS, AND ALSO LIMITS THE REMEDIES AVAILABLE TO YOU IN THE EVENT OF A DISPUTE. You acknowledge and agree that all claims, disputes or controversies between You and Us (including against any of Our employees, agents, affiliates, subsidiaries, predecessors, successors or assigns) relating to the Site or related websites, the Content, Identity Search AI Queries, related services and materials, any related transaction or relationship and/or Your information, including, without limitation, tort and contract claims, claims based upon any federal, state or local statute, law, order, ordinance or regulation, the issue of arbitrability, shall be resolved by the final and binding arbitration procedures set below. You further acknowledge and agree that any such claims shall be brought solely in Your individual capacity and not as a plaintiff or class member in any purported class, representative proceeding, or private attorney general capacity. Similarly, you agree that any controversy concerning whether a dispute is arbitrable shall be determined by the arbitrator and not by a court and the arbitrator may not consolidate more than one person's claims and may not otherwise preside over any form of a representative or class proceeding. You voluntarily and knowingly waive any right to a jury trial.</p>
                             <p>BY AGREEING TO THIS AGREEMENT TO ARBITRATE, YOU ACKNOWLEDGE THAT YOU ARE GIVING UP YOUR RIGHT TO GO TO COURT AND YOUR RIGHT TO A JURY TRIAL. In arbitration, disputes are resolved by neutral arbitrators, rather than by a judge or jury. Arbitration is more informal than a court trial, however, an arbitrator can award relief.</p>
                             <p>Separate and apart from the agreement to arbitrate set forth above, You hereby waive any right to bring or participate in any class action in any way related to, or arising from, these Terms or the matters that they describe. You acknowledge that this class action waiver is material and essential to the arbitration of any dispute(s) You may have and is non-severable from this agreement to arbitrate claims.</p>
@@ -107,13 +402,18 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                 </div>
 
                 <!-- 4 -->
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2sm">
-                    <button type="button" class="w-full p-5 flex items-center justify-between text-left focus:outline-none terms-toggle-trigger group">
-                        <span class="text-base font-black text-gray-900 group-hover:text-[#128c7e] transition-colors">4. Definitions</span>
-                        <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-transform duration-300 transform rotate-180"></i>
+                <div id="terms-section-4" class="scroll-mt-28 bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 transition-all duration-300 terms-card">
+                    <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none terms-toggle-trigger group">
+                        <span class="flex items-center gap-3 sm:gap-4 min-w-0">
+                            <span class="terms-number-badge w-10 h-10 shrink-0 rounded-xl bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-black flex items-center justify-center text-sm transition-all duration-300">4</span>
+                            <span class="text-base font-black text-gray-900 group-hover:text-[#0072bc] transition-colors leading-snug">4. Definitions</span>
+                        </span>
+                        <span class="w-7 h-7 shrink-0 rounded-full bg-slate-50 border border-gray-200 flex items-center justify-center group-hover:bg-[#0072bc] group-hover:border-[#0072bc] transition-all duration-300">
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-all duration-300 transform rotate-180 group-hover:text-white"></i>
+                        </span>
                     </button>
-                    <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
-                        <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
+                    <div class="terms-content-slider transition-all duration-500 ease-in-out bg-white opacity-100">
+                        <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-gray-800 font-semibold leading-relaxed space-y-3 border-t border-gray-100">
                             <p>Report / Dossier: Means a structured, aggregated compilation of open-source intelligence metrics providing public profile data footprints relative to a validated identity query target.</p>
                             <p>Platform Engine: The interactive UI configuration mechanisms, scanning infrastructure algorithms, database layers, and API network gateways accessible under the Identity Search AI brand parameters.</p>
                             <p>Private User: Any natural individual looking up infrastructure parameters for personal safety optimization, independent reputation tracking, or private validation objectives outside of primary commercial reselling channels.</p>
@@ -122,13 +422,18 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                 </div>
 
                 <!-- 5 -->
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2sm">
-                    <button type="button" class="w-full p-5 flex items-center justify-between text-left focus:outline-none terms-toggle-trigger group">
-                        <span class="text-base font-black text-gray-900 group-hover:text-[#128c7e] transition-colors">5. User Workspace Accounts</span>
-                        <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-transform duration-300 transform rotate-180"></i>
+                <div id="terms-section-5" class="scroll-mt-28 bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 transition-all duration-300 terms-card">
+                    <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none terms-toggle-trigger group">
+                        <span class="flex items-center gap-3 sm:gap-4 min-w-0">
+                            <span class="terms-number-badge w-10 h-10 shrink-0 rounded-xl bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-black flex items-center justify-center text-sm transition-all duration-300">5</span>
+                            <span class="text-base font-black text-gray-900 group-hover:text-[#0072bc] transition-colors leading-snug">5. User Workspace Accounts</span>
+                        </span>
+                        <span class="w-7 h-7 shrink-0 rounded-full bg-slate-50 border border-gray-200 flex items-center justify-center group-hover:bg-[#0072bc] group-hover:border-[#0072bc] transition-all duration-300">
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-all duration-300 transform rotate-180 group-hover:text-white"></i>
+                        </span>
                     </button>
-                    <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
-                        <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
+                    <div class="terms-content-slider transition-all duration-500 ease-in-out bg-white opacity-100">
+                        <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-gray-800 font-semibold leading-relaxed space-y-3 border-t border-gray-100">
                             <p>5.1. To initialize digital footprint audits, trace data arrays, or persist historical intelligence records, operators must establish a workspace profile using an active electronic communication signature.</p>
                             <p>5.2. Workspace access codes and single-use verification links are strictly non-transferable. Operators assume direct responsibility for maintaining absolute confidentiality barriers around access tokens and account credentials.</p>
                             <p>5.3. Identity Search AI retains autonomous rights to limit access parameters, freeze analytical processing runs, or drop credentials instantly if behavior thresholds are breached or suspicious activity maps are registered.</p>
@@ -137,13 +442,18 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                 </div>
 
                 <!-- 6 -->
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2sm">
-                    <button type="button" class="w-full p-5 flex items-center justify-between text-left focus:outline-none terms-toggle-trigger group">
-                        <span class="text-base font-black text-gray-900 group-hover:text-[#128c7e] transition-colors">6. Reporting & System Limitations</span>
-                        <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-transform duration-300 transform rotate-180"></i>
+                <div id="terms-section-6" class="scroll-mt-28 bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 transition-all duration-300 terms-card">
+                    <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none terms-toggle-trigger group">
+                        <span class="flex items-center gap-3 sm:gap-4 min-w-0">
+                            <span class="terms-number-badge w-10 h-10 shrink-0 rounded-xl bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-black flex items-center justify-center text-sm transition-all duration-300">6</span>
+                            <span class="text-base font-black text-gray-900 group-hover:text-[#0072bc] transition-colors leading-snug">6. Reporting & System Limitations</span>
+                        </span>
+                        <span class="w-7 h-7 shrink-0 rounded-full bg-slate-50 border border-gray-200 flex items-center justify-center group-hover:bg-[#0072bc] group-hover:border-[#0072bc] transition-all duration-300">
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-all duration-300 transform rotate-180 group-hover:text-white"></i>
+                        </span>
                     </button>
-                    <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
-                        <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
+                    <div class="terms-content-slider transition-all duration-500 ease-in-out bg-white opacity-100">
+                        <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-gray-800 font-semibold leading-relaxed space-y-3 border-t border-gray-100">
                             <p>6.1. Identity Search AI acts solely as a specialized discovery overlay pipeline. We do not edit public registers, do not manage open data archives, and make no explicit claims regarding the absolute correctness or completeness of the open-source records returned.</p>
                             <p>6.2. Analytical calculations compile directly onto server environments. Dossier availability parameters vary based on system capacities, platform query limits, and target open-source availability levels.</p>
                             <p>6.3. Rendered dossiers remain persistently accessible within user profile storage sections for a fixed period of 30 days following generation, after which records are dropped automatically from storage layers.</p>
@@ -152,26 +462,36 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                 </div>
 
                 <!-- 7 -->
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2sm">
-                    <button type="button" class="w-full p-5 flex items-center justify-between text-left focus:outline-none terms-toggle-trigger group">
-                        <span class="text-base font-black text-gray-900 group-hover:text-[#128c7e] transition-colors">7. Modifications to these Terms</span>
-                        <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-transform duration-300 transform rotate-180"></i>
+                <div id="terms-section-7" class="scroll-mt-28 bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 transition-all duration-300 terms-card">
+                    <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none terms-toggle-trigger group">
+                        <span class="flex items-center gap-3 sm:gap-4 min-w-0">
+                            <span class="terms-number-badge w-10 h-10 shrink-0 rounded-xl bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-black flex items-center justify-center text-sm transition-all duration-300">7</span>
+                            <span class="text-base font-black text-gray-900 group-hover:text-[#0072bc] transition-colors leading-snug">7. Modifications to these Terms</span>
+                        </span>
+                        <span class="w-7 h-7 shrink-0 rounded-full bg-slate-50 border border-gray-200 flex items-center justify-center group-hover:bg-[#0072bc] group-hover:border-[#0072bc] transition-all duration-300">
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-all duration-300 transform rotate-180 group-hover:text-white"></i>
+                        </span>
                     </button>
-                    <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
-                        <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
+                    <div class="terms-content-slider transition-all duration-500 ease-in-out bg-white opacity-100">
+                        <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-gray-800 font-semibold leading-relaxed space-y-3 border-t border-gray-100">
                             <p>We may modify these Terms, in whole or in part, from time to time in Our sole discretion, effective immediately upon posting modified Terms to the Site and, if You are a subscriber, by directly communicating them to You when You log in to the Site; provided, however, that: (i) any modification to the Dispute Resolution section shall not apply to any disputes initiated prior to the applicable modification; and (ii) any modification to the Membership Requirements and Conditions: Registration, Account Username and Password, Term/Termination and Fees, Taxes and Billing section shall not apply to any charges incurred prior to the applicable modification. By not terminating Your account ("Account") within seven (7) days after Our providing a notice of modifications to the Terms as described above or by continuing to use or access the Site or any of its services after modified Terms are posted to the Site, You agree to comply with, and be bound by, such modifications. Unless explicitly stated otherwise, any future offer(s) made available to You on the Site that augment(s) or otherwise enhance(s) the current features of the Site shall be subject to these Terms.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- 8 -->
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2sm">
-                    <button type="button" class="w-full p-5 flex items-center justify-between text-left focus:outline-none terms-toggle-trigger group">
-                        <span class="text-base font-black text-gray-900 group-hover:text-[#128c7e] transition-colors">8. Content Moderation, Notice-and-Action, and Complaints</span>
-                        <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-transform duration-300 transform rotate-180"></i>
+                <div id="terms-section-8" class="scroll-mt-28 bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 transition-all duration-300 terms-card">
+                    <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none terms-toggle-trigger group">
+                        <span class="flex items-center gap-3 sm:gap-4 min-w-0">
+                            <span class="terms-number-badge w-10 h-10 shrink-0 rounded-xl bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-black flex items-center justify-center text-sm transition-all duration-300">8</span>
+                            <span class="text-base font-black text-gray-900 group-hover:text-[#0072bc] transition-colors leading-snug">8. Content Moderation, Notice-and-Action, and Complaints</span>
+                        </span>
+                        <span class="w-7 h-7 shrink-0 rounded-full bg-slate-50 border border-gray-200 flex items-center justify-center group-hover:bg-[#0072bc] group-hover:border-[#0072bc] transition-all duration-300">
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-all duration-300 transform rotate-180 group-hover:text-white"></i>
+                        </span>
                     </button>
-                    <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
-                        <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
+                    <div class="terms-content-slider transition-all duration-500 ease-in-out bg-white opacity-100">
+                        <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-gray-800 font-semibold leading-relaxed space-y-3 border-t border-gray-100">
                             <p><b>I. Content Moderation and Restrictions</b></p>
                             <p>We may moderate, restrict, remove, disable access to, or otherwise take action with respect to any content, information, reviews, comments, or other material submitted to or made available on the Site ("User Content") where we determine, in good faith, that such content:</p>
                             <p>(a) violates these Terms or any applicable policies; (b) is unlawful or alleged to be unlawful under applicable law; (c) may cause harm to the Site, our users, or third parties; or (d) we are required to remove or restrict by law, court order, or competent authority.</p>
@@ -195,13 +515,18 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                 </div>
 
                 <!-- 9 -->
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2sm">
-                    <button type="button" class="w-full p-5 flex items-center justify-between text-left focus:outline-none terms-toggle-trigger group">
-                        <span class="text-base font-black text-gray-900 group-hover:text-[#128c7e] transition-colors">9. Some of Our Reserved Rights</span>
-                        <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-transform duration-300 transform rotate-180"></i>
+                <div id="terms-section-9" class="scroll-mt-28 bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 transition-all duration-300 terms-card">
+                    <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none terms-toggle-trigger group">
+                        <span class="flex items-center gap-3 sm:gap-4 min-w-0">
+                            <span class="terms-number-badge w-10 h-10 shrink-0 rounded-xl bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-black flex items-center justify-center text-sm transition-all duration-300">9</span>
+                            <span class="text-base font-black text-gray-900 group-hover:text-[#0072bc] transition-colors leading-snug">9. Some of Our Reserved Rights</span>
+                        </span>
+                        <span class="w-7 h-7 shrink-0 rounded-full bg-slate-50 border border-gray-200 flex items-center justify-center group-hover:bg-[#0072bc] group-hover:border-[#0072bc] transition-all duration-300">
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-all duration-300 transform rotate-180 group-hover:text-white"></i>
+                        </span>
                     </button>
-                    <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
-                        <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
+                    <div class="terms-content-slider transition-all duration-500 ease-in-out bg-white opacity-100">
+                        <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-gray-800 font-semibold leading-relaxed space-y-3 border-t border-gray-100">
                             <p>We allow access to the Site as it may be available at any given time as contemplated and provided for in these Terms. You are solely responsible for Your use of the Site and any information You obtain from the Site. Identity Search AI reserves the right to:</p>
                             <p>A. monitor, view, record, review, audit or otherwise police Your or others' use of the Site, Identity Search AI Queries, Our other services or the associated information made available by subscribers during the application process ("Registration Data");</p>
                             <p>B. moderate any dispute between You and any other third party, including, but not limited to, disputes with other Site visitors, subscribers, or Search Subjects;</p>
@@ -213,13 +538,18 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                 </div>
 
                 <!-- 10 -->
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2sm">
-                    <button type="button" class="w-full p-5 flex items-center justify-between text-left focus:outline-none terms-toggle-trigger group">
-                        <span class="text-base font-black text-gray-900 group-hover:text-[#128c7e] transition-colors">10. Proprietary Rights</span>
-                        <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-transform duration-300 transform rotate-180"></i>
+                <div id="terms-section-10" class="scroll-mt-28 bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 transition-all duration-300 terms-card">
+                    <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none terms-toggle-trigger group">
+                        <span class="flex items-center gap-3 sm:gap-4 min-w-0">
+                            <span class="terms-number-badge w-10 h-10 shrink-0 rounded-xl bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-black flex items-center justify-center text-sm transition-all duration-300">10</span>
+                            <span class="text-base font-black text-gray-900 group-hover:text-[#0072bc] transition-colors leading-snug">10. Proprietary Rights</span>
+                        </span>
+                        <span class="w-7 h-7 shrink-0 rounded-full bg-slate-50 border border-gray-200 flex items-center justify-center group-hover:bg-[#0072bc] group-hover:border-[#0072bc] transition-all duration-300">
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-all duration-300 transform rotate-180 group-hover:text-white"></i>
+                        </span>
                     </button>
-                    <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
-                        <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
+                    <div class="terms-content-slider transition-all duration-500 ease-in-out bg-white opacity-100">
+                        <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-gray-800 font-semibold leading-relaxed space-y-3 border-t border-gray-100">
                             <p>The proprietary rights to all Content, including, without limitation, the Identity Search AI Queries, and any rights in the design, selection, arrangement, compilation, and coordination of such Content, are owned by or licensed to Identity Search AI and are protected under applicable laws (including, but not limited to, copyright, trademark and other intellectual property laws). Except as expressly provided in these Terms or with Identity Search AI's express written consent, You are not granted any rights or licenses to use any patents, copyrights, trade secrets, rights of publicity, trademarks, service marks, know-how or other proprietary rights of Identity Search AI or with respect to any of the Content. The "Identity Search AI®" name and logo as well as all custom graphics, icons and service names are trademarks of Identity Search AI and these and all other rights are reserved. All other trademarks are the property of their respective owners.</p>
                             <p>Identity Search AI reserves any and all rights not explicitly granted in these Terms. By using the Site, You do not acquire any ownership rights to the Site, Our services, Content, or any other information obtained therefrom.</p>
                         </div>
@@ -227,26 +557,36 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                 </div>
 
                 <!-- 11 -->
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2sm">
-                    <button type="button" class="w-full p-5 flex items-center justify-between text-left focus:outline-none terms-toggle-trigger group">
-                        <span class="text-base font-black text-gray-900 group-hover:text-[#128c7e] transition-colors">11. Indemnification</span>
-                        <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-transform duration-300 transform rotate-180"></i>
+                <div id="terms-section-11" class="scroll-mt-28 bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 transition-all duration-300 terms-card">
+                    <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none terms-toggle-trigger group">
+                        <span class="flex items-center gap-3 sm:gap-4 min-w-0">
+                            <span class="terms-number-badge w-10 h-10 shrink-0 rounded-xl bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-black flex items-center justify-center text-sm transition-all duration-300">11</span>
+                            <span class="text-base font-black text-gray-900 group-hover:text-[#0072bc] transition-colors leading-snug">11. Indemnification</span>
+                        </span>
+                        <span class="w-7 h-7 shrink-0 rounded-full bg-slate-50 border border-gray-200 flex items-center justify-center group-hover:bg-[#0072bc] group-hover:border-[#0072bc] transition-all duration-300">
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-all duration-300 transform rotate-180 group-hover:text-white"></i>
+                        </span>
                     </button>
-                    <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
-                        <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
+                    <div class="terms-content-slider transition-all duration-500 ease-in-out bg-white opacity-100">
+                        <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-gray-800 font-semibold leading-relaxed space-y-3 border-t border-gray-100">
                             <p>You agree to defend, indemnify and hold Identity Search AI, its parents, subsidiaries, affiliates, joint ventures, and third-party service providers, and each of their respective members, officers, directors, employees, agents, shareholders, co-branders, content licensors, suppliers, contractors, attorneys, and other partners, harmless from and against any and all liabilities, claims, expenses (including reasonable attorneys' fees), damages, suits, costs, demands, and judgments made by any third party, including, but not limited to, by any Search Subject, arising from or related to: (a) Your use of the Site or any Content You obtain through the Site, including, but not limited to, information obtained through Identity Search AI Queries and other information about Search Subjects; (b) Your failure to comply with these Terms including, but not limited to, Your violation of any laws or any rights of another individual or entity; or (c) any claim that Identity Search AI is obligated to pay any taxes in connection with Your use of the Site, Our services or otherwise. The provisions of this paragraph are for the benefit of Identity Search AI, its parents, subsidiaries, affiliates, joint ventures, and third-party service providers and each of their respective officers, directors, members, employees, agents, shareholders, co-branders, licensors, suppliers, contractors, attorneys and other partners. Each of these individuals and entities shall have the right to assert and enforce these provisions directly against You on his, her, or its own behalf.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- 12 -->
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2sm">
-                    <button type="button" class="w-full p-5 flex items-center justify-between text-left focus:outline-none terms-toggle-trigger group">
-                        <span class="text-base font-black text-gray-900 group-hover:text-[#128c7e] transition-colors">12. Limitation of Liability</span>
-                        <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-transform duration-300 transform rotate-180"></i>
+                <div id="terms-section-12" class="scroll-mt-28 bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 transition-all duration-300 terms-card">
+                    <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none terms-toggle-trigger group">
+                        <span class="flex items-center gap-3 sm:gap-4 min-w-0">
+                            <span class="terms-number-badge w-10 h-10 shrink-0 rounded-xl bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-black flex items-center justify-center text-sm transition-all duration-300">12</span>
+                            <span class="text-base font-black text-gray-900 group-hover:text-[#0072bc] transition-colors leading-snug">12. Limitation of Liability</span>
+                        </span>
+                        <span class="w-7 h-7 shrink-0 rounded-full bg-slate-50 border border-gray-200 flex items-center justify-center group-hover:bg-[#0072bc] group-hover:border-[#0072bc] transition-all duration-300">
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-all duration-300 transform rotate-180 group-hover:text-white"></i>
+                        </span>
                     </button>
-                    <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
-                        <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
+                    <div class="terms-content-slider transition-all duration-500 ease-in-out bg-white opacity-100">
+                        <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-gray-800 font-semibold leading-relaxed space-y-3 border-t border-gray-100">
                             <p>YOU EXPRESSLY UNDERSTAND AND AGREE THAT IDENTITY SEARCH AI AND ITS PARENTS, SUBSIDIARIES, AFFILIATES, JOINT VENTURES AND THIRD-PARTY SERVICE PROVIDERS, AND EACH OF THEIR RESPECTIVE MEMBERS, OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, SHAREHOLDERS, CO-BRANDERS, CONTENT LICENSORS, SUPPLIERS, CONTRACTORS, ATTORNEYS AND OTHER PARTNERS SHALL NOT BE LIABLE TO YOU OR ANY THIRD PARTY FOR ANY DIRECT, INDIRECT, PUNITIVE, INCIDENTAL, SPECIAL, CONSEQUENTIAL OR EXEMPLARY DAMAGES (though some states do not permit the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to You) INCLUDING, BUT NOT LIMITED TO, DAMAGES FOR LOSS OF PROFITS, GOODWILL, USE, DATA OR INTANGIBLE LOSSES (EVEN IF IDENTITY SEARCH AI HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES), TO THE FULLEST EXTENT PERMITTED BY LAW, ARISING FROM OR RELATED TO: (a) THE USE OF OR THE INABILITY TO USE THE SITE, ANY INFORMATION CONTAINED THEREIN, THE CONTENT, IDENTITY SEARCH AI QUERIES OR ANY OTHER IDENTITY SEARCH AI PRODUCTS OR SERVICES; (b) THE COST OF PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES RESULTING FROM YOUR PURCHASE OF OR OBTAINING ANY IDENTITY SEARCH AI PRODUCTS, SERVICES, CONTENT OR OTHER DATA THROUGH THE SITE; (c) THE UNAUTHORIZED ACCESS TO, OR ALTERATION OF, YOUR REGISTRATION DATA OR ANY OTHER INFORMATION ABOUT YOU MAINTAINED BY IDENTITY SEARCH AI; AND (d) ANY OTHER DISPUTE RELATING TO THE SITE, ANY INFORMATION CONTAINED THEREIN, OR ANY OTHER IDENTITY SEARCH AI PRODUCTS OR SERVICES. THIS LIMITATION APPLIES TO ALL STATUTORY AND COMMON-LAW CAUSES OF ACTION INCLUDING, BUT NOT LIMITED TO, BREACH OF CONTRACT, BREACH OF WARRANTY, NEGLIGENCE, STRICT LIABILITY, MISREPRESENTATION AND ANY AND ALL OTHER TORTS. YOU HEREBY RELEASE IDENTITY SEARCH AI AND ITS PARENTS, SUBSIDIARIES, AFFILIATES, JOINT VENTURES AND THIRD-PARTY SERVICE PROVIDERS, AND EACH OF THEIR RESPECTIVE MEMBERS, OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, SHAREHOLDERS, CO-BRANDERS, CONTENT LICENSORS, SUPPLIERS, CONTRACTORS, ATTORNEYS AND OTHER PARTNERS, FROM ANY AND ALL OBLIGATIONS, LIABILITIES, AND CLAIMS IN EXCESS OF THE LIMITATIONS STATED HEREIN. IF APPLICABLE LAW DOES NOT EXPLICITLY PROHIBIT SUCH LIMITATION, IN NO EVENT SHALL THE AGGREGATE MAXIMUM LIABILITY TO YOU UNDER ANY AND ALL CIRCUMSTANCES ARISING OUT OF OR RELATING TO THE USE OF THE SERVICES AND/OR THE CONTENT EXCEED THE GREATER OF ONE HUNDRED U.S. DOLLARS ($100.00) OR THE AMOUNT YOU PAY TO IDENTITY SEARCH AI, IF ANY, IN THE PAST SIX MONTHS, FOR ACCESS TO OR USE OF THE SERVICES. NO ACTION, REGARDLESS OF FORM, ARISING OUT OF YOUR USE OF THE SITE, ANY INFORMATION CONTAINED THEREIN, THE CONTENT, IDENTITY SEARCH AI QUERIES OR ANY OTHER IDENTITY SEARCH AI PRODUCT AND/OR SERVICE MAY BE BROUGHT BY YOU OR IDENTITY SEARCH AI MORE THAN ONE (1) YEAR FOLLOWING THE EVENT WHICH GAVE RISE TO THE CAUSE OF ACTION. THE LIMITATION OF LIABILITY SET FORTH IN THIS SECTION IS A FUNDAMENTAL ELEMENT OF THE BASIS OF THE BARGAIN BETWEEN YOU AND IDENTITY SEARCH AI AND ACCESS TO THE SITE WOULD NOT BE PROVIDED TO YOU WITHOUT SUCH LIMITATIONS. IN THE EVENT SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF DAMAGES TO THE EXTENT INDICATED ABOVE, OUR LIABILITY IN SUCH JURISDICTIONS SHALL BE LIMITED TO THE EXTENT PERMITTED BY LAW.</p>
                             <p>12.1. Under no structural or judicial criteria can Identity Search AI, its technical architects, or corporate entities be held liable for losses or complications resulting from user-side actions executed based on dossier analysis records.</p>
                             <p>12.2. This system compiles open OSINT variables and explicitly does not perform operations as a consumer reporting entity. All tracking results are completely barred from evaluation processes governed by Fair Credit Reporting Act (FCRA) provisions.</p>
@@ -256,13 +596,18 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                 </div>
 
                 <!-- 13 -->
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2sm">
-                    <button type="button" class="w-full p-5 flex items-center justify-between text-left focus:outline-none terms-toggle-trigger group">
-                        <span class="text-base font-black text-gray-900 group-hover:text-[#128c7e] transition-colors">13. Subscription, Billing Cancellation and Refund Policy</span>
-                        <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-transform duration-300 transform rotate-180"></i>
+                <div id="terms-section-13" class="scroll-mt-28 bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 transition-all duration-300 terms-card">
+                    <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none terms-toggle-trigger group">
+                        <span class="flex items-center gap-3 sm:gap-4 min-w-0">
+                            <span class="terms-number-badge w-10 h-10 shrink-0 rounded-xl bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-black flex items-center justify-center text-sm transition-all duration-300">13</span>
+                            <span class="text-base font-black text-gray-900 group-hover:text-[#0072bc] transition-colors leading-snug">13. Subscription, Billing Cancellation and Refund Policy</span>
+                        </span>
+                        <span class="w-7 h-7 shrink-0 rounded-full bg-slate-50 border border-gray-200 flex items-center justify-center group-hover:bg-[#0072bc] group-hover:border-[#0072bc] transition-all duration-300">
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-all duration-300 transform rotate-180 group-hover:text-white"></i>
+                        </span>
                     </button>
-                    <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
-                        <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
+                    <div class="terms-content-slider transition-all duration-500 ease-in-out bg-white opacity-100">
+                        <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-gray-800 font-semibold leading-relaxed space-y-3 border-t border-gray-100">
                             <p>By selecting a membership plan (Monthly, Quarterly, Semi-Annual, or Annual) on Identity Search AI, you expressly authorize us to charge your payment method immediately for the initial term and automatically on a recurring basis at the start of each renewal period until you cancel.</p>
                             <ul class="list-disc ml-6 space-y-1">
                                 <li>Billing Cycles: Depending on the selected plan, your card will be charged every 30 days ($36/month), every 3 months ($55/quarter), every 6 months ($72/semi-annually), or every 12 months ($96/annually).</li>
@@ -286,52 +631,72 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                 </div>
 
                 <!-- 14 -->
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2sm">
-                    <button type="button" class="w-full p-5 flex items-center justify-between text-left focus:outline-none terms-toggle-trigger group">
-                        <span class="text-base font-black text-gray-900 group-hover:text-[#128c7e] transition-colors">14. Treatment of Reversals and Chargebacks</span>
-                        <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-transform duration-300 transform rotate-180"></i>
+                <div id="terms-section-14" class="scroll-mt-28 bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 transition-all duration-300 terms-card">
+                    <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none terms-toggle-trigger group">
+                        <span class="flex items-center gap-3 sm:gap-4 min-w-0">
+                            <span class="terms-number-badge w-10 h-10 shrink-0 rounded-xl bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-black flex items-center justify-center text-sm transition-all duration-300">14</span>
+                            <span class="text-base font-black text-gray-900 group-hover:text-[#0072bc] transition-colors leading-snug">14. Treatment of Reversals and Chargebacks</span>
+                        </span>
+                        <span class="w-7 h-7 shrink-0 rounded-full bg-slate-50 border border-gray-200 flex items-center justify-center group-hover:bg-[#0072bc] group-hover:border-[#0072bc] transition-all duration-300">
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-all duration-300 transform rotate-180 group-hover:text-white"></i>
+                        </span>
                     </button>
-                    <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
-                        <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
+                    <div class="terms-content-slider transition-all duration-500 ease-in-out bg-white opacity-100">
+                        <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-gray-800 font-semibold leading-relaxed space-y-3 border-t border-gray-100">
                             <p>As occurs with other online merchants, intentional credit/debit card reversals and chargebacks are frequently indicators of possible fraudulent use and/or theft of Our services and We may treat them as such. We reserve the right to investigate further and file complaints with the appropriate local and federal authorities. Please be advised that We regularly monitor all internet protocol address information and other user activity and that this information may be used in a civil and/or criminal case against any customer, especially in instances of possible theft or fraudulent behavior.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- 15 -->
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2sm">
-                    <button type="button" class="w-full p-5 flex items-center justify-between text-left focus:outline-none terms-toggle-trigger group">
-                        <span class="text-base font-black text-gray-900 group-hover:text-[#128c7e] transition-colors">15. Entire Agreement</span>
-                        <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-transform duration-300 transform rotate-180"></i>
+                <div id="terms-section-15" class="scroll-mt-28 bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 transition-all duration-300 terms-card">
+                    <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none terms-toggle-trigger group">
+                        <span class="flex items-center gap-3 sm:gap-4 min-w-0">
+                            <span class="terms-number-badge w-10 h-10 shrink-0 rounded-xl bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-black flex items-center justify-center text-sm transition-all duration-300">15</span>
+                            <span class="text-base font-black text-gray-900 group-hover:text-[#0072bc] transition-colors leading-snug">15. Entire Agreement</span>
+                        </span>
+                        <span class="w-7 h-7 shrink-0 rounded-full bg-slate-50 border border-gray-200 flex items-center justify-center group-hover:bg-[#0072bc] group-hover:border-[#0072bc] transition-all duration-300">
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-all duration-300 transform rotate-180 group-hover:text-white"></i>
+                        </span>
                     </button>
-                    <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
-                        <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
+                    <div class="terms-content-slider transition-all duration-500 ease-in-out bg-white opacity-100">
+                        <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-gray-800 font-semibold leading-relaxed space-y-3 border-t border-gray-100">
                             <p>These Terms, the Privacy Policy, and all other applicable operating rules, policies, price schedules and other supplemental terms and conditions or documents that may be published or agreed upon by You from time to time, which are expressly incorporated herein by reference, shall constitute the entire and only agreement between You and Identity Search AI with respect to Your use of the Site. These Terms supersede all prior or contemporaneous agreements, representations, warranties and understandings with respect to Your use of the Site and the content contained therein. To the extent that any information or material that appears on or is posted to the Site, or otherwise is made available by Us, contains any representation, term or condition that is in conflict or inconsistent with these Terms, these Terms shall take precedence unless revised terms or conditions are contained in a signed writing by one of Our duly appointed officers.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- 16 -->
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2sm">
-                    <button type="button" class="w-full p-5 flex items-center justify-between text-left focus:outline-none terms-toggle-trigger group">
-                        <span class="text-base font-black text-gray-900 group-hover:text-[#128c7e] transition-colors">16. Misconduct</span>
-                        <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-transform duration-300 transform rotate-180"></i>
+                <div id="terms-section-16" class="scroll-mt-28 bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 transition-all duration-300 terms-card">
+                    <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none terms-toggle-trigger group">
+                        <span class="flex items-center gap-3 sm:gap-4 min-w-0">
+                            <span class="terms-number-badge w-10 h-10 shrink-0 rounded-xl bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-black flex items-center justify-center text-sm transition-all duration-300">16</span>
+                            <span class="text-base font-black text-gray-900 group-hover:text-[#0072bc] transition-colors leading-snug">16. Misconduct</span>
+                        </span>
+                        <span class="w-7 h-7 shrink-0 rounded-full bg-slate-50 border border-gray-200 flex items-center justify-center group-hover:bg-[#0072bc] group-hover:border-[#0072bc] transition-all duration-300">
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-all duration-300 transform rotate-180 group-hover:text-white"></i>
+                        </span>
                     </button>
-                    <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
-                        <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
+                    <div class="terms-content-slider transition-all duration-500 ease-in-out bg-white opacity-100">
+                        <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-gray-800 font-semibold leading-relaxed space-y-3 border-t border-gray-100">
                             <p>Identity Search AI reserves the right to restrict, suspend or terminate Your Account or access to the Site if We determine, in Our sole and absolute discretion, that You have violated these Terms.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- 17 -->
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-2sm">
-                    <button type="button" class="w-full p-5 flex items-center justify-between text-left focus:outline-none terms-toggle-trigger group">
-                        <span class="text-base font-black text-gray-900 group-hover:text-[#128c7e] transition-colors">17. Important Reminder: Certain Prohibited Uses of the Site</span>
-                        <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-transform duration-300 transform rotate-180"></i>
+                <div id="terms-section-17" class="scroll-mt-28 bg-white border border-gray-200 rounded-3xl overflow-hidden shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 transition-all duration-300 terms-card">
+                    <button type="button" class="w-full p-5 sm:p-6 flex items-center justify-between gap-4 text-left focus:outline-none terms-toggle-trigger group">
+                        <span class="flex items-center gap-3 sm:gap-4 min-w-0">
+                            <span class="terms-number-badge w-10 h-10 shrink-0 rounded-xl bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-black flex items-center justify-center text-sm transition-all duration-300">17</span>
+                            <span class="text-base font-black text-gray-900 group-hover:text-[#0072bc] transition-colors leading-snug">17. Important Reminder: Certain Prohibited Uses of the Site</span>
+                        </span>
+                        <span class="w-7 h-7 shrink-0 rounded-full bg-slate-50 border border-gray-200 flex items-center justify-center group-hover:bg-[#0072bc] group-hover:border-[#0072bc] transition-all duration-300">
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs transition-all duration-300 transform rotate-180 group-hover:text-white"></i>
+                        </span>
                     </button>
-                    <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
-                        <div class="px-5 pb-5 pt-1 text-sm sm:text-base text-black font-semibold leading-relaxed space-y-3">
+                    <div class="terms-content-slider transition-all duration-500 ease-in-out bg-white opacity-100">
+                        <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-gray-800 font-semibold leading-relaxed space-y-3 border-t border-gray-100">
                             <p>Operators explicitly commit to avoiding the following prohibited interaction behaviors:</p>
                             <ul class="list-disc ml-6 space-y-1">
                                 <li>Deploying malicious automatic tools, scripts, or continuous automated scraping routines to read system database nodes.</li>
@@ -356,7 +721,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                 </div>
 
             </div>
-        </div>
+        </section>
     </main>
 
     <?php if (file_exists('index_footer.php')) {
@@ -364,6 +729,42 @@ if (session_status() === PHP_SESSION_NONE) session_start();
     } ?>
 
     <script>
+        // NAVBAR SCROLL GLASS EFFECT
+        document.addEventListener("DOMContentLoaded", () => {
+            const navbar = document.getElementById("mainNavbar");
+            if (!navbar) return;
+            const handleScroll = () => {
+                if (window.scrollY > 20) {
+                    navbar.classList.add("navbar-scrolled");
+                } else {
+                    navbar.classList.remove("navbar-scrolled");
+                }
+            };
+            window.addEventListener("scroll", handleScroll, { passive: true });
+            handleScroll();
+        });
+
+        // INTERSECTION OBSERVER FOR SCROLL REVEAL ANIMATIONS
+        document.addEventListener("DOMContentLoaded", () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+                observer.observe(el);
+            });
+        });
+
+        // TERMS ACCORDION ENGINE
         document.addEventListener("DOMContentLoaded", () => {
             const container = document.getElementById("termsAccordionContainer");
             if (!container) return;
@@ -373,17 +774,60 @@ if (session_status() === PHP_SESSION_NONE) session_start();
             container.addEventListener("click", (e) => {
                 const trigger = e.target.closest(".terms-toggle-trigger");
                 if (!trigger) return;
-                const panel = trigger.parentElement.querySelector(".terms-content-slider");
+                const card = trigger.parentElement;
+                const panel = card.querySelector(".terms-content-slider");
                 const icon = trigger.querySelector("i");
                 if (panel.style.maxHeight === "0px" || panel.style.maxHeight === "") {
                     panel.style.maxHeight = panel.scrollHeight + "px";
                     panel.style.opacity = "1";
                     icon.style.transform = "rotate(180deg)";
+                    card.classList.add("active");
                 } else {
                     panel.style.maxHeight = "0px";
                     panel.style.opacity = "0";
                     icon.style.transform = "rotate(0deg)";
+                    card.classList.remove("active");
                 }
+            });
+        });
+
+        // DOCUMENT INDEX SCROLL SPY
+        document.addEventListener("DOMContentLoaded", () => {
+            const links = document.querySelectorAll(".terms-toc-link");
+            const sections = document.querySelectorAll("#termsAccordionContainer .terms-card");
+            if (!links.length || !sections.length) return;
+            const spy = () => {
+                let currentId = sections[0].id;
+                sections.forEach(section => {
+                    if (window.scrollY >= section.offsetTop - 180) {
+                        currentId = section.id;
+                    }
+                });
+                links.forEach(link => {
+                    link.classList.toggle("active", link.getAttribute("href") === "#" + currentId);
+                });
+            };
+            window.addEventListener("scroll", spy, { passive: true });
+            spy();
+        });
+
+        // MOBILE TABLE OF CONTENTS TOGGLE
+        document.addEventListener("DOMContentLoaded", () => {
+            const toggle = document.getElementById("tocMobileToggle");
+            const panel = document.getElementById("tocMobilePanel");
+            const chevron = toggle?.querySelector(".fa-chevron-down");
+            if (!toggle || !panel || !chevron) return;
+            toggle.addEventListener("click", () => {
+                const isOpen = !panel.classList.toggle("hidden");
+                chevron.style.transform = isOpen ? "rotate(180deg)" : "rotate(0deg)";
+                toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+            });
+            panel.querySelectorAll(".terms-toc-link").forEach(link => {
+                link.addEventListener("click", () => {
+                    panel.classList.add("hidden");
+                    chevron.style.transform = "rotate(0deg)";
+                    toggle.setAttribute("aria-expanded", "false");
+                });
             });
         });
     </script>
