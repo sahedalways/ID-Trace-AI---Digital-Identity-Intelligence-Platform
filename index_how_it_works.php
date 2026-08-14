@@ -60,7 +60,7 @@
                         <!-- Mini input mockup -->
                         <div class="mt-6 p-3 bg-slate-50 rounded-2xl border border-slate-100 flex items-center gap-2.5">
                             <i class="fa-solid fa-magnifying-glass text-[#0072bc] text-xs"></i>
-                            <span class="text-xs text-gray-400 font-semibold truncate">John Carter</span>
+                            <span class="text-xs text-gray-700 font-semibold truncate">John Carter</span>
                             <span class="ml-auto w-6 h-6 rounded-full bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center shrink-0">
                                 <i class="fa-solid fa-arrow-right text-[9px]"></i>
                             </span>

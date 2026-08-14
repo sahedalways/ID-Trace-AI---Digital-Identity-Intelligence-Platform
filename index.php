@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="blob-3 absolute bottom-0 right-0 w-96 h-96 bg-[#BFE4FD]/50 rounded-full blur-3xl opacity-70 will-change-transform"></div>
     </div>
 
-    <main class="relative flex-grow w-full mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-16 md:pb-10" style="max-width: 1600px;">
+    <main class="relative flex-grow w-full mx-auto px-4 sm:px-6 lg:px-8 pt-16 md:pb-10" style="max-width: 1600px;">
         <style>
             @keyframes blobMove1 {
 
@@ -332,7 +332,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <!-- Right Hero Image / Visual -->
             <div class="relative flex items-center justify-center onload-anim onload-delay-200">
-                <img src="<?php echo BASE_URL; ?>public/identity_hero_graphic_blue_v3.svg" alt="Hero Right Image" class="float-anim w-full h-auto max-h-[300px] sm:max-h-[400px] lg:max-h-[500px] object-contain drop-shadow-2xl">
+                <img src="<?php echo BASE_URL; ?>public/identity_hero_graphic_blue_v3.svg" alt="Hero Right Image" class="float-anim w-full max-w-[260px] sm:max-w-[380px] lg:max-w-[500px] h-auto max-h-[220px] sm:max-h-[340px] lg:max-h-[500px] object-contain drop-shadow-2xl mx-auto">
             </div>
         </div>
     </main>

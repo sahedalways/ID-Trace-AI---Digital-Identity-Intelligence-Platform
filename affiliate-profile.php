@@ -138,7 +138,9 @@ $method_icons = [
     <?php include 'head.php'; ?>
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen">
-    <?php include 'affiliate-navbar.php'; ?>
+    <header id="mainNavbar" class="sticky top-0 z-50 bg-transparent transition-all duration-300">
+        <?php include 'affiliate-navbar.php'; ?>
+    </header>
 
     <div class="max-w-[1650px] mx-auto px-4 py-10 space-y-6">
 

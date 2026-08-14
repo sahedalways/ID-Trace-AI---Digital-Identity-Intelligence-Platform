@@ -21,6 +21,8 @@ $active_script = pathinfo(basename($_SERVER['SCRIPT_FILENAME']), PATHINFO_FILENA
 // (matching the home page pattern) and only gains a tinted background on scroll.
 $request_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $is_portal_page = ($active_script === 'affiliate-portal') || (rtrim($request_path, '/') === '/affiliate-portal');
+$is_auth_page = in_array($active_script, ['affiliate-login', 'affiliate-register', 'affiliate-forgot']);
+$is_transparent_nav = $is_portal_page || $is_auth_page;
 
 /**
  * Helper function to output the correct Tailwind classes for active tabs.
@@ -41,7 +43,7 @@ function getActiveNavClass($current_page, $target_pages) {
     }
 </style>
 
-<nav id="affiliateNavbar" class="transition-all duration-300 <?= $is_portal_page ? '' : 'bg-[#BFE4FD] border-b border-blue-200/50' ?>">
+<nav id="affiliateNavbar" class="transition-all duration-300 <?= $is_transparent_nav ? '' : 'bg-[#BFE4FD] border-b border-blue-200/50' ?>">
     <div class="max-w-[1650px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             
@@ -243,16 +245,23 @@ window.addEventListener('resize', function() {
     }
 });
 
-<?php if (!$is_portal_page): ?>
-window.addEventListener('scroll', function() {
-    const nav = document.getElementById('affiliateNavbar');
-    if (window.scrollY > 20) {
-        nav.classList.add('bg-[#BFE4FD]/90', 'backdrop-blur-md', 'shadow-[0_8px_32px_rgba(0,114,188,0.12)]');
-        nav.classList.remove('bg-[#BFE4FD]', 'border-b-blue-200/50');
-    } else {
-        nav.classList.remove('bg-[#BFE4FD]/90', 'backdrop-blur-md', 'shadow-[0_8px_32px_rgba(0,114,188,0.12)]');
-        nav.classList.add('bg-[#BFE4FD]', 'border-b-blue-200/50');
+<?php if ($is_transparent_nav): ?>
+(function() {
+    const navbar = document.getElementById('mainNavbar');
+    if (!navbar) return;
+
+    function updateNav() {
+        if (window.scrollY > 20) {
+            navbar.classList.add('navbar-scrolled');
+        } else {
+            navbar.classList.remove('navbar-scrolled');
+        }
     }
-});
+
+    window.addEventListener('scroll', function() {
+        requestAnimationFrame(updateNav);
+    });
+    updateNav();
+})();
 <?php endif; ?>
 </script>

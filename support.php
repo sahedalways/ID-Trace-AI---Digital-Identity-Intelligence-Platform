@@ -41,7 +41,9 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true 
 </head>
 <body class="text-slate-200 bg-slate-950">
 
-    <?php include 'navbar.php'; ?>
+    <header id="mainNavbar" class="sticky top-0 z-50 bg-transparent transition-all duration-300">
+        <?php include 'navbar.php'; ?>
+    </header>
 
     <div class="min-h-[80vh] flex items-center justify-center px-4 py-12">
         <div class="manager-card w-full max-w-md rounded-[3rem] p-8 md:p-12 text-center">

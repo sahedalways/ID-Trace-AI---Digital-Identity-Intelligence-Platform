@@ -138,23 +138,133 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Become an Affiliate Partner - Identity Search AI</title>
     <?php include 'affiliate-head.php'; ?>
 </head>
-<body class="min-h-screen text-slate-900 font-sans antialiased flex flex-col justify-between selection:bg-[#0072bc] selection:text-white bg-[#f9fafb]">
+<body class="min-h-screen text-slate-900 font-sans antialiased flex flex-col selection:bg-[#0072bc] selection:text-white bg-slate-50 relative">
 
-    <?php include 'affiliate-navbar.php'; ?>
+    <header id="mainNavbar" class="sticky top-0 z-50 bg-transparent transition-all duration-300">
+        <?php include 'affiliate-navbar.php'; ?>
+    </header>
+
+    <!-- Full-width Background Decorations -->
+    <div class="absolute inset-x-0 top-0 -z-10 overflow-hidden" style="min-height: 100vh; background: linear-gradient(180deg, #BFE4FD 0%, #FFFFFF 100%);">
+        <div class="blob-1 absolute top-0 left-1/2 w-[900px] h-[900px] bg-[#0072bc]/10 rounded-full blur-3xl opacity-60 -translate-x-1/2 will-change-transform"></div>
+        <div class="blob-2 absolute top-24 -left-20 w-96 h-96 bg-[#0072bc]/15 rounded-full blur-3xl will-change-transform"></div>
+        <div class="blob-3 absolute bottom-0 right-0 w-96 h-96 bg-[#BFE4FD]/50 rounded-full blur-3xl opacity-70 will-change-transform"></div>
+    </div>
+
+    <style>
+        @keyframes blobMove1 {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            25% { transform: translateX(-40%) translateY(-20px); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+            75% { transform: translateX(-60%) translateY(10px); }
+        }
+        @keyframes blobMove2 {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(30px, -15px); }
+            66% { transform: translate(-20px, 20px); }
+        }
+        @keyframes blobMove3 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-40px, -20px); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .onload-anim {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+        .onload-delay-100 { animation-delay: 100ms; }
+        .onload-delay-200 { animation-delay: 200ms; }
+        .onload-delay-300 { animation-delay: 300ms; }
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .scroll-delay-100 { transition-delay: 100ms; }
+        .scroll-delay-200 { transition-delay: 200ms; }
+        .blob-1 { animation: blobMove1 18s ease-in-out infinite; }
+        .blob-2 { animation: blobMove2 14s ease-in-out infinite; }
+        .blob-3 { animation: blobMove3 16s ease-in-out infinite; }
+
+        .navbar-scrolled {
+            background: linear-gradient(to right, #eef5ff 20%, #0072bc 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Smooth color transitions for all navbar links, buttons, and icons */
+        #affiliateNavbar a,
+        #affiliateNavbar button,
+        #affiliateNavbar .text-slate-800,
+        #affiliateNavbar .text-slate-900,
+        #affiliateNavbar .text-slate-700,
+        #affiliateNavbar .text-slate-600,
+        #affiliateNavbar .text-slate-500,
+        #affiliateNavbar .text-rose-600 {
+            transition: color 0.35s ease, background-color 0.35s ease, border-color 0.35s ease;
+        }
+
+        /* When scrolled, switch navbar text and icons to white */
+        #mainNavbar.navbar-scrolled #affiliateNavbar a:not(#mobileAffiliateDrawer a),
+        #mainNavbar.navbar-scrolled #affiliateNavbar button:not(#mobileAffiliateDrawer button),
+        #mainNavbar.navbar-scrolled #affiliateNavbar .text-slate-800:not(#mobileAffiliateDrawer .text-slate-800),
+        #mainNavbar.navbar-scrolled #affiliateNavbar .text-slate-900:not(#mobileAffiliateDrawer .text-slate-900),
+        #mainNavbar.navbar-scrolled #affiliateNavbar .text-slate-700:not(#mobileAffiliateDrawer .text-slate-700),
+        #mainNavbar.navbar-scrolled #affiliateNavbar .text-slate-600:not(#mobileAffiliateDrawer .text-slate-600),
+        #mainNavbar.navbar-scrolled #affiliateNavbar .text-slate-500:not(#mobileAffiliateDrawer .text-slate-500),
+        #mainNavbar.navbar-scrolled #affiliateNavbar .text-rose-600:not(#mobileAffiliateDrawer .text-rose-600) {
+            color: #ffffff !important;
+        }
+
+        /* Adjust hover states when scrolled for better contrast on dark gradient */
+        #mainNavbar.navbar-scrolled #affiliateNavbar a:hover:not(#mobileAffiliateDrawer a),
+        #mainNavbar.navbar-scrolled #affiliateNavbar button:hover:not(#mobileAffiliateDrawer button, #affiliateMobileMenuButton) {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: #ffffff !important;
+        }
+
+        /* Mobile hamburger: keep icon white and subtle glass highlight when scrolled */
+        #mainNavbar.navbar-scrolled #affiliateNavbar #affiliateMobileMenuButton {
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        #mainNavbar.navbar-scrolled #affiliateNavbar #affiliateMobileMenuButton:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff !important;
+        }
+
+        /* Adjust mobile hamburger border when scrolled */
+        #mainNavbar.navbar-scrolled #affiliateNavbar .border-blue-200\/60 {
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Adjust separator color when scrolled */
+        #mainNavbar.navbar-scrolled #affiliateNavbar .bg-blue-300 {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+    </style>
 
     <main class="flex-grow flex items-center justify-center px-4 py-12 w-full">
-        <div class="max-w-md w-full space-y-6">
+        <div class="max-w-md w-full space-y-6 onload-anim">
             
-            <div class="text-center space-y-2">
+            <div class="text-center space-y-2 onload-anim onload-delay-100">
                 <div class="inline-flex p-3.5 bg-blue-50 text-[#0072bc] rounded-2xl border border-blue-100 text-2xl">
                     <i class="fa-solid fa-users-gear"></i>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Affiliate Partner Network</h2>
-                <p class="text-xs font-semibold text-gray-400">Apply to promote our advanced tracking solutions and earn commissions.</p>
+                <p class="text-xs font-semibold text-gray-800">Apply to promote our advanced tracking solutions and earn commissions.</p>
             </div>
 
             <?php if ($status_type === 'success'): ?>
-                <div class="bg-white border border-gray-200 shadow-sm rounded-3xl p-8 text-center space-y-6">
+                <div class="bg-white border border-gray-200 shadow-sm rounded-3xl p-8 text-center space-y-6 onload-anim onload-delay-200">
                     <div class="relative w-16 h-16 mx-auto flex items-center justify-center bg-amber-50 text-amber-600 rounded-2xl border border-amber-100 text-2xl">
                         <i class="fa-solid fa-hourglass-half animate-pulse"></i>
                     </div>
@@ -177,7 +287,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
             <?php else: ?>
-                <div class="bg-white border border-gray-200 shadow-sm rounded-3xl p-6 sm:p-8 space-y-6">
+                <div class="bg-white border border-gray-200 shadow-sm rounded-3xl p-6 sm:p-8 space-y-6 onload-anim onload-delay-200">
                     
                     <?php if (!empty($message) && $status_type === 'error'): ?>
                         <div class="bg-red-50 border border-red-100 rounded-xl p-4 flex gap-3 text-left">
@@ -189,61 +299,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <form action="affiliate-register" method="POST" class="space-y-4 text-left">
                         
                         <div class="space-y-1.5">
-                            <label for="name" class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Full Name *</label>
+                            <label for="name" class="block text-[11px] font-bold text-gray-400 uppercase tracking-wide mb-2">Full Name *</label>
                             <input type="text" id="name" name="name" required value="<?= isset($_POST['name']) ? htmlspecialchars($_POST['name']) : '' ?>" placeholder="John Doe" 
                                 class="w-full text-sm px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0072bc] focus:bg-white focus:ring-1 focus:ring-[#0072bc] transition-all font-semibold text-gray-900 placeholder-gray-400">
                         </div>
 
                         <div class="space-y-1.5">
-                            <label for="email" class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Email Address *</label>
+                            <label for="email" class="block text-[11px] font-bold text-gray-400 uppercase tracking-wide mb-2">Email Address *</label>
                             <input type="email" id="email" name="email" required value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>" placeholder="partner@domain.com" 
                                 class="w-full text-sm px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0072bc] focus:bg-white focus:ring-1 focus:ring-[#0072bc] transition-all font-semibold text-gray-900 placeholder-gray-400">
                         </div>
 
                         <div class="space-y-1.5">
-                            <label for="password" class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Account Password *</label>
+                            <label for="password" class="block text-[11px] font-bold text-gray-400 uppercase tracking-wide mb-2">Account Password *</label>
                             <input type="password" id="password" name="password" required minlength="6" placeholder="••••••••" 
                                 class="w-full text-sm px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0072bc] focus:bg-white focus:ring-1 focus:ring-[#0072bc] transition-all font-semibold text-gray-900 placeholder-gray-400">
                         </div>
 
                         <div class="space-y-1.5">
-                            <label for="country" class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Country Base *</label>
-                            <select id="country" name="country" required class="w-full text-sm px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0072bc] focus:bg-white focus:ring-1 focus:ring-[#0072bc] transition-all font-semibold text-gray-900 cursor-pointer">
-                                <option value="">Select Country</option>
-                                <?php foreach ($country_matrix as $iso => $country_name): ?>
-                                    <option value="<?= $iso; ?>" <?= ((isset($_POST['country']) && $_POST['country'] === $iso) || (!isset($_POST['country']) && $cf_country_code === $iso)) ? 'selected' : ''; ?>>
-                                        <?= htmlspecialchars($country_name); ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
+                            <label for="country" class="block text-[11px] font-bold text-gray-400 uppercase tracking-wide mb-2">Country Base *</label>
+                            <div class="relative">
+                                <select id="country" name="country" required class="w-full appearance-none text-sm px-4 pr-11 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0072bc] focus:bg-white focus:ring-1 focus:ring-[#0072bc] transition-all font-semibold text-gray-900 cursor-pointer">
+                                    <option value="">Select Country</option>
+                                    <?php foreach ($country_matrix as $iso => $country_name): ?>
+                                        <option value="<?= $iso; ?>" <?= ((isset($_POST['country']) && $_POST['country'] === $iso) || (!isset($_POST['country']) && $cf_country_code === $iso)) ? 'selected' : ''; ?>>
+                                            <?= htmlspecialchars($country_name); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <i class="fa-solid fa-chevron-down pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                            </div>
                         </div>
 
                         <div class="space-y-1.5">
-                            <label for="experience_level" class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Experience Level *</label>
-                            <select id="experience_level" name="experience_level" required class="w-full text-sm px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0072bc] focus:bg-white focus:ring-1 focus:ring-[#0072bc] transition-all font-semibold text-gray-900 cursor-pointer">
-                                <option value="">Select Skill Tier</option>
-                                <option value="New Affiliate" <?= (isset($_POST['experience_level']) && $_POST['experience_level'] === 'New Affiliate') ? 'selected' : ''; ?>>New Affiliate</option>
-                                <option value="Have some experience" <?= (isset($_POST['experience_level']) && $_POST['experience_level'] === 'Have some experience') ? 'selected' : ''; ?>>Have some experience</option>
-                                <option value="Expert" <?= (isset($_POST['experience_level']) && $_POST['experience_level'] === 'Expert') ? 'selected' : ''; ?>>Expert</option>
-                            </select>
+                            <label for="experience_level" class="block text-[11px] font-bold text-gray-400 uppercase tracking-wide mb-2">Experience Level *</label>
+                            <div class="relative">
+                                <select id="experience_level" name="experience_level" required class="w-full appearance-none text-sm px-4 pr-11 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0072bc] focus:bg-white focus:ring-1 focus:ring-[#0072bc] transition-all font-semibold text-gray-900 cursor-pointer">
+                                    <option value="">Select Skill Tier</option>
+                                    <option value="New Affiliate" <?= (isset($_POST['experience_level']) && $_POST['experience_level'] === 'New Affiliate') ? 'selected' : ''; ?>>New Affiliate</option>
+                                    <option value="Have some experience" <?= (isset($_POST['experience_level']) && $_POST['experience_level'] === 'Have some experience') ? 'selected' : ''; ?>>Have some experience</option>
+                                    <option value="Expert" <?= (isset($_POST['experience_level']) && $_POST['experience_level'] === 'Expert') ? 'selected' : ''; ?>>Expert</option>
+                                </select>
+                                <i class="fa-solid fa-chevron-down pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                            </div>
                         </div>
 
                         <div class="space-y-1.5">
-                            <label for="contact" class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Telegram Username *</label>
+                            <label for="contact" class="block text-[11px] font-bold text-gray-400 uppercase tracking-wide mb-2">Telegram Username *</label>
                             <input type="text" id="contact" name="contact" required value="<?= isset($_POST['contact']) ? htmlspecialchars($_POST['contact']) : '' ?>" placeholder="@username" 
                                 class="w-full text-sm px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0072bc] focus:bg-white focus:ring-1 focus:ring-[#0072bc] transition-all font-semibold text-gray-900 placeholder-gray-400">
                         </div>
 
                         <div class="space-y-1.5">
-                            <label for="past_experience" class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Past Affiliate Experience</label>
+                            <label for="past_experience" class="block text-[11px] font-bold text-gray-400 uppercase tracking-wide mb-2">Past Affiliate Experience</label>
                             <textarea id="past_experience" name="past_experience" rows="3" placeholder="Tell us about previous networks or campaigns you have managed (e.g. MaxBounty CPA networks, media buying)..." 
-                                class="w-full text-sm p-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0072bc] focus:bg-white focus:ring-1 focus:ring-[#0072bc] transition-all font-semibold text-gray-900 placeholder-gray-400 resize-none"><?= isset($_POST['past_experience']) ? htmlspecialchars($_POST['past_experience']) : '' ?></textarea>
+                                class="w-full text-sm px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0072bc] focus:bg-white focus:ring-1 focus:ring-[#0072bc] transition-all font-semibold text-gray-900 placeholder-gray-400 resize-none"><?= isset($_POST['past_experience']) ? htmlspecialchars($_POST['past_experience']) : '' ?></textarea>
                         </div>
 
                         <div class="space-y-1.5">
-                            <label for="traffic_source" class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Traffic Source & Promotional Strategy *</label>
+                            <label for="traffic_source" class="block text-[11px] font-bold text-gray-400 uppercase tracking-wide mb-2">Traffic Source & Promotional Strategy *</label>
                             <textarea id="traffic_source" name="traffic_source" required rows="3" placeholder="Tell us about your traffic channels: Websites URLs, Paid Ad Networks, Social Media profiles, or Lead Generation strategies..." 
-                                class="w-full text-sm p-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0072bc] focus:bg-white focus:ring-1 focus:ring-[#0072bc] transition-all font-semibold text-gray-900 placeholder-gray-400 resize-none"><?= isset($_POST['traffic_source']) ? htmlspecialchars($_POST['traffic_source']) : '' ?></textarea>
+                                class="w-full text-sm px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#0072bc] focus:bg-white focus:ring-1 focus:ring-[#0072bc] transition-all font-semibold text-gray-900 placeholder-gray-400 resize-none"><?= isset($_POST['traffic_source']) ? htmlspecialchars($_POST['traffic_source']) : '' ?></textarea>
                         </div>
 
                         <button type="submit" class="w-full bg-[#0072bc] hover:bg-[#005ea3] text-white font-bold text-sm py-4 px-4 rounded-xl transition-all shadow-sm mt-2 cursor-pointer border border-transparent">
@@ -252,7 +368,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </form>
 
                     <div class="border-t border-gray-100 pt-4 text-center">
-                        <p class="text-xs text-gray-400 font-semibold">Already a registered partner? <a href="affiliate-login" class="text-[#0072bc] font-bold hover:underline">Log in here</a></p>
+                        <p class="text-xs text-gray-700 font-semibold">Already a registered partner? <a href="affiliate-login" class="text-[#0072bc] font-bold hover:underline">Log in here</a></p>
                     </div>
                 </div>
             <?php endif; ?>
@@ -260,7 +376,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </main>
 
-    <footer class="w-full text-center py-6 border-t border-gray-200 bg-white/50 backdrop-blur-sm text-xs font-semibold text-gray-400">
+    <script>
+        // INTERSECTION OBSERVER FOR SCROLL ANIMATIONS
+        document.addEventListener("DOMContentLoaded", () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+                observer.observe(el);
+            });
+        });
+    </script>
+
+    <footer class="relative overflow-hidden w-full border-t border-gray-200 py-6 text-center text-xs text-gray-700 font-semibold">
+        <div class="absolute inset-0 -z-10" style="background: linear-gradient(180deg, #ffffff 0%, #F0F8FF 40%, #EAF5FF 60%, #FFFFFF 100%);"></div>
         <div class="flex items-center justify-center gap-2 mb-2">
             <img src="public/logo.png" alt="Identity Search AI Logo" class="h-12 w-auto">
         </div>

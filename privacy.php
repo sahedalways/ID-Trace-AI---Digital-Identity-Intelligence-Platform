@@ -1,7 +1,7 @@
-﻿<?php
+<?php
 /**
  * File: privacy.php
- * Privacy and Cookies Policy â€” exact content from Privacy Policy.docx
+ * Privacy and Cookies Policy — exact content from Privacy Policy.docx
  */
 require_once 'config.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Privacy Policy â€” Identity Search AI</title>
+    <title>Privacy Policy — Identity Search AI</title>
     <?php include 'head.php'; ?>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-[#0072bc] selection:text-white bg-slate-50 relative">
@@ -20,7 +20,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
     </header>
 
     <!-- Full-width Background Decorations -->
-    <div class="absolute inset-x-0 top-0 -z-10 overflow-hidden" style="height: 900px; background: linear-gradient(180deg, #BFE4FD 0%, #FFFFFF 100%);">
+    <div class="absolute inset-x-0 top-0 -z-10 overflow-hidden" style="min-height: 100vh; background: linear-gradient(180deg, #BFE4FD 0%, #FFFFFF 100%);">
         <div class="blob-1 absolute top-0 left-1/2 w-[900px] h-[900px] bg-[#0072bc]/10 rounded-full blur-3xl opacity-60 -translate-x-1/2 will-change-transform"></div>
         <div class="blob-2 absolute top-24 -left-20 w-96 h-96 bg-[#0072bc]/15 rounded-full blur-3xl will-change-transform"></div>
         <div class="blob-3 absolute bottom-0 right-0 w-96 h-96 bg-[#BFE4FD]/50 rounded-full blur-3xl opacity-70 will-change-transform"></div>
@@ -481,7 +481,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
                             <p>10.2. Your principal rights under data protection law are:</p>
                             <ul class="list-disc ml-6 space-y-1">
                                 <li>(a) The right to access - you can ask for copies of your personal data;</li>
-                                <li>(b) The right to rectification - you can ask us to rectify inaccurate personal data and to complete incomplete personal data. Please note that we pull service data straight from our third party data providers and any rectification requests will need to be actioned by them â€“ we will provide you with contact details for this purpose;</li>
+                                <li>(b) The right to rectification - you can ask us to rectify inaccurate personal data and to complete incomplete personal data. Please note that we pull service data straight from our third party data providers and any rectification requests will need to be actioned by them – we will provide you with contact details for this purpose;</li>
                                 <li>(c) The right to erasure - you can ask us to erase your personal data;</li>
                                 <li>(d) The right to restrict processing - you can ask us to restrict the processing of your personal data;</li>
                                 <li>(e) The right to object to processing - you can object to the processing of your personal data;</li>

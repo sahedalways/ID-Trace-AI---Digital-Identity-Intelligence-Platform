@@ -157,7 +157,9 @@ $sub2_display = !empty($client['sub2']) ? htmlspecialchars($client['sub2']) : 'â
 </head>
 <body class="min-h-screen text-slate-900 font-sans antialiased flex flex-col justify-between bg-slate-50/30">
 
-    <?php include 'affiliate-navbar.php'; ?>
+    <header id="mainNavbar" class="sticky top-0 z-50 bg-transparent transition-all duration-300">
+        <?php include 'affiliate-navbar.php'; ?>
+    </header>
 
     <main class="max-w-6xl w-full mx-auto px-4 sm:px-6 pt-8 pb-16 grow space-y-6">
         
@@ -338,7 +340,8 @@ $sub2_display = !empty($client['sub2']) ? htmlspecialchars($client['sub2']) : 'â
 
     </main>
 
-    <footer class="w-full bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-400 font-semibold">
+    <footer class="relative overflow-hidden w-full border-t border-gray-200 py-6 text-center text-xs text-gray-700 font-semibold">
+        <div class="absolute inset-0 -z-10" style="background: linear-gradient(180deg, #ffffff 0%, #F0F8FF 40%, #EAF5FF 60%, #FFFFFF 100%);"></div>
         <div class="flex items-center justify-center gap-2 mb-2">
             <img src="public/logo.png" alt="Identity Search AI Logo" class="h-12 w-auto">
         </div>

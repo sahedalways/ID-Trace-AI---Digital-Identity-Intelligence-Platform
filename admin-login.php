@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <i class="fa-solid fa-lock"></i>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Admin Access</h2>
-                <p class="text-xs text-gray-400 font-semibold">Authenticate with your admin credentials to access the control panel.</p>
+                <p class="text-xs text-gray-700 font-semibold">Authenticate with your admin credentials to access the control panel.</p>
             </div>
 
             <div class="bg-white border border-gray-200 shadow-sm rounded-3xl p-6 sm:p-8 space-y-6">
@@ -135,7 +135,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </main>
 
-    <footer class="w-full text-center py-6 border-t border-gray-200 bg-white/50 backdrop-blur-sm text-xs font-semibold text-gray-400">
+    <footer class="relative overflow-hidden w-full border-t border-gray-200 py-6 text-center text-xs text-gray-700 font-semibold">
+        <div class="absolute inset-0 -z-10" style="background: linear-gradient(180deg, #ffffff 0%, #F0F8FF 40%, #EAF5FF 60%, #FFFFFF 100%);"></div>
         <div class="flex items-center justify-center gap-2 mb-2">
             <img src="public/logo.png" alt="Identity Search AI Logo" class="h-12 w-auto">
         </div>

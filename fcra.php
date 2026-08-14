@@ -1,7 +1,7 @@
-﻿<?php
+<?php
 /**
  * File: fcra.php
- * Understanding the FCRA â€” exact content from Understanding the FCRA.docx
+ * Understanding the FCRA — exact content from Understanding the FCRA.docx
  */
 require_once 'config.php';
 if (session_status() === PHP_SESSION_NONE) session_start();
@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Understanding the FCRA â€” Identity Search AI</title>
+    <title>Understanding the FCRA — Identity Search AI</title>
     <?php include 'head.php'; ?>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-[#0072bc] selection:text-white bg-slate-50 relative">
@@ -20,7 +20,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
     </header>
 
     <!-- Full-width Background Decorations -->
-    <div class="absolute inset-x-0 top-0 -z-10 overflow-hidden" style="height: 900px; background: linear-gradient(180deg, #BFE4FD 0%, #FFFFFF 100%);">
+    <div class="absolute inset-x-0 top-0 -z-10 overflow-hidden" style="min-height: 100vh; background: linear-gradient(180deg, #BFE4FD 0%, #FFFFFF 100%);">
         <div class="blob-1 absolute top-0 left-1/2 w-[900px] h-[900px] bg-[#0072bc]/10 rounded-full blur-3xl opacity-60 -translate-x-1/2 will-change-transform"></div>
         <div class="blob-2 absolute top-24 -left-20 w-96 h-96 bg-[#0072bc]/15 rounded-full blur-3xl will-change-transform"></div>
         <div class="blob-3 absolute bottom-0 right-0 w-96 h-96 bg-[#BFE4FD]/50 rounded-full blur-3xl opacity-70 will-change-transform"></div>

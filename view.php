@@ -100,7 +100,7 @@ if (isset($all_reviews) && is_array($all_reviews)) {
     </header>
 
     <!-- Full-width Background Decorations -->
-    <div class="absolute inset-x-0 top-0 -z-10 overflow-hidden" style="height: 900px; background: linear-gradient(180deg, #BFE4FD 0%, #FFFFFF 100%);">
+    <div class="absolute inset-x-0 top-0 -z-10 overflow-hidden" style="min-height: 100vh; background: linear-gradient(180deg, #BFE4FD 0%, #FFFFFF 100%);">
         <div class="blob-1 absolute top-0 left-1/2 w-[900px] h-[900px] bg-[#0072bc]/10 rounded-full blur-3xl opacity-60 -translate-x-1/2 will-change-transform"></div>
         <div class="blob-2 absolute top-24 -left-20 w-96 h-96 bg-[#0072bc]/15 rounded-full blur-3xl will-change-transform"></div>
         <div class="blob-3 absolute bottom-0 right-0 w-96 h-96 bg-[#BFE4FD]/50 rounded-full blur-3xl opacity-70 will-change-transform"></div>
@@ -147,7 +147,7 @@ if (isset($all_reviews) && is_array($all_reviews)) {
                 </div>
                 <div class="min-w-0 text-left">
                     <h1 class="text-xl font-bold text-gray-900 truncate tracking-tight"><?php echo escapeHtml($target['name']); ?></h1>
-                    <p class="text-xs text-gray-400 font-semibold mt-1 uppercase tracking-wider">
+                    <p class="text-xs text-gray-700 font-semibold mt-1 uppercase tracking-wider">
                         Source: <span class="text-[#0072bc] font-bold"><?php echo escapeHtml($cleanSource); ?></span>
                     </p>
                 </div>

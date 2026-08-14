@@ -41,7 +41,9 @@ if (!isset($_SESSION['affiliate_id'])) {
 </head>
 <body class="text-slate-200 bg-slate-950">
 
-    <?php include 'affiliate-navbar.php'; ?>
+    <header id="mainNavbar" class="sticky top-0 z-50 bg-transparent transition-all duration-300">
+        <?php include 'affiliate-navbar.php'; ?>
+    </header>
 
     <div class="min-h-[80vh] flex items-center justify-center px-4 py-12">
         <div class="manager-card w-full max-w-md rounded-[3rem] p-8 md:p-12 text-center">
@@ -113,7 +115,8 @@ if (!isset($_SESSION['affiliate_id'])) {
         </div>
     </div>
 
-    <footer class="w-full bg-white border-t border-gray-200 py-6 text-center text-xs text-gray-400 font-semibold">
+    <footer class="relative overflow-hidden w-full border-t border-gray-200 py-6 text-center text-xs text-gray-700 font-semibold">
+        <div class="absolute inset-0 -z-10" style="background: linear-gradient(180deg, #ffffff 0%, #F0F8FF 40%, #EAF5FF 60%, #FFFFFF 100%);"></div>
         <div class="flex items-center justify-center gap-2 mb-2">
             <img src="public/logo.png" alt="Identity Search AI Logo" class="h-12 w-auto">
         </div>

@@ -41,7 +41,7 @@
                         </div>
                         <div>
                             <h3 class="text-base font-black text-gray-700">Traditional Search</h3>
-                            <p class="text-xs text-gray-400 font-semibold">Manual investigation</p>
+                            <p class="text-xs text-gray-700 font-semibold">Manual investigation</p>
                         </div>
                     </div>
                 </div>

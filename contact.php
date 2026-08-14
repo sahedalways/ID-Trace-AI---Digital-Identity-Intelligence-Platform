@@ -128,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </header>
 
     <!-- Full-width Background Decorations -->
-    <div class="absolute inset-x-0 top-0 -z-10 overflow-hidden" style="height: 900px; background: linear-gradient(180deg, #BFE4FD 0%, #FFFFFF 100%);">
+    <div class="absolute inset-x-0 top-0 -z-10 overflow-hidden" style="min-height: 100vh; background: linear-gradient(180deg, #BFE4FD 0%, #FFFFFF 100%);">
         <div class="blob-1 absolute top-0 left-1/2 w-[900px] h-[900px] bg-[#0072bc]/10 rounded-full blur-3xl opacity-60 -translate-x-1/2 will-change-transform"></div>
         <div class="blob-2 absolute top-24 -left-20 w-96 h-96 bg-[#0072bc]/15 rounded-full blur-3xl will-change-transform"></div>
         <div class="blob-3 absolute bottom-0 right-0 w-96 h-96 bg-[#BFE4FD]/50 rounded-full blur-3xl opacity-70 will-change-transform"></div>
@@ -276,12 +276,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </div>
                                 <div>
                                     <h3 class="text-lg font-black tracking-tight text-black leading-tight">Send us a message</h3>
-                                    <p class="text-xs font-semibold text-gray-400 mt-0.5">Fill in the fields below — we typically respond within 24 hours.</p>
+                                    <p class="text-xs font-semibold text-gray-800 mt-0.5">Fill in the fields below — we typically respond within 24 hours.</p>
                                 </div>
                             </div>
 
                             <div class="group">
-                                <label for="contact_name" class="block text-sm font-semibold text-black tracking-wide mb-2">Your Full Name</label>
+                                <label for="contact_name" class="block text-[11px] font-bold text-gray-400 uppercase tracking-wide mb-2">Your Full Name</label>
                                 <div class="relative">
                                     <i class="fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 group-focus-within:text-[#0072bc] transition-colors duration-300 text-sm pointer-events-none"></i>
                                     <input
@@ -290,14 +290,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         id="contact_name"
                                         value="<?php echo htmlspecialchars($preload_name); ?>"
                                         placeholder="Enter your name"
-                                        class="w-full bg-slate-50 border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 text-base text-black font-semibold outline-none focus:bg-white focus:border-[#0072bc] focus:ring-4 focus:ring-[#0072bc]/10 transition-all duration-300"
+                                        class="w-full bg-slate-50 border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 text-sm text-black font-semibold outline-none focus:bg-white focus:border-[#0072bc] focus:ring-4 focus:ring-[#0072bc]/10 transition-all duration-300"
                                         required
                                     >
                                 </div>
                             </div>
 
                             <div class="group">
-                                <label for="contact_email" class="block text-sm font-semibold text-black tracking-wide mb-2">Your Email Address</label>
+                                <label for="contact_email" class="block text-[11px] font-bold text-gray-400 uppercase tracking-wide mb-2">Your Email Address</label>
                                 <div class="relative">
                                     <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 group-focus-within:text-[#0072bc] transition-colors duration-300 text-sm pointer-events-none"></i>
                                     <input
@@ -306,14 +306,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         id="contact_email"
                                         value="<?php echo htmlspecialchars($preload_email); ?>"
                                         placeholder="name@example.com"
-                                        class="w-full bg-slate-50 border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 text-base text-black font-semibold outline-none focus:bg-white focus:border-[#0072bc] focus:ring-4 focus:ring-[#0072bc]/10 transition-all duration-300"
+                                        class="w-full bg-slate-50 border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 text-sm text-black font-semibold outline-none focus:bg-white focus:border-[#0072bc] focus:ring-4 focus:ring-[#0072bc]/10 transition-all duration-300"
                                         required
                                     >
                                 </div>
                             </div>
 
                             <div class="group">
-                                <label for="contact_subject" class="block text-sm font-semibold text-black tracking-wide mb-2">Inquiry Subject</label>
+                                <label for="contact_subject" class="block text-[11px] font-bold text-gray-400 uppercase tracking-wide mb-2">Inquiry Subject</label>
                                 <div class="relative">
                                     <i class="fa-solid fa-tag absolute left-4 top-1/2 -translate-y-1/2 text-gray-300 group-focus-within:text-[#0072bc] transition-colors duration-300 text-sm pointer-events-none"></i>
                                     <input
@@ -321,14 +321,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         name="contact_subject"
                                         id="contact_subject"
                                         placeholder="What are you reaching out about?"
-                                        class="w-full bg-slate-50 border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 text-base text-black font-semibold outline-none focus:bg-white focus:border-[#0072bc] focus:ring-4 focus:ring-[#0072bc]/10 transition-all duration-300"
+                                        class="w-full bg-slate-50 border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 text-sm text-black font-semibold outline-none focus:bg-white focus:border-[#0072bc] focus:ring-4 focus:ring-[#0072bc]/10 transition-all duration-300"
                                         required
                                     >
                                 </div>
                             </div>
 
                             <div class="group">
-                                <label for="contact_body" class="block text-sm font-semibold text-black tracking-wide mb-2">Message Details</label>
+                                <label for="contact_body" class="block text-[11px] font-bold text-gray-400 uppercase tracking-wide mb-2">Message Details</label>
                                 <div class="relative">
                                     <i class="fa-solid fa-comment-dots absolute left-4 top-4 text-gray-300 group-focus-within:text-[#0072bc] transition-colors duration-300 text-sm pointer-events-none"></i>
                                     <textarea
@@ -336,7 +336,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         id="contact_body"
                                         rows="5"
                                         placeholder="Type the full details of your message here..."
-                                        class="w-full bg-slate-50 border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 text-base text-black font-semibold outline-none focus:bg-white focus:border-[#0072bc] focus:ring-4 focus:ring-[#0072bc]/10 transition-all duration-300 resize-none"
+                                        class="w-full bg-slate-50 border border-gray-200 rounded-xl pl-11 pr-4 py-3.5 text-sm text-black font-semibold outline-none focus:bg-white focus:border-[#0072bc] focus:ring-4 focus:ring-[#0072bc]/10 transition-all duration-300 resize-none"
                                         required
                                     ></textarea>
                                 </div>

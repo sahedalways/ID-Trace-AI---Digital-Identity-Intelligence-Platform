@@ -213,7 +213,7 @@ $billing_cycle_text = $billing_intervals[$plan['name']] ?? 'every ' . $plan['val
     </header>
 
     <!-- Full-width Background Decorations -->
-    <div class="absolute inset-x-0 top-0 -z-10 overflow-hidden" style="height: 900px; background: linear-gradient(180deg, #BFE4FD 0%, #FFFFFF 100%);">
+    <div class="absolute inset-x-0 top-0 -z-10 overflow-hidden" style="min-height: 100vh; background: linear-gradient(180deg, #BFE4FD 0%, #FFFFFF 100%);">
         <div class="blob-1 absolute top-0 left-1/2 w-[900px] h-[900px] bg-[#0072bc]/10 rounded-full blur-3xl opacity-60 -translate-x-1/2 will-change-transform"></div>
         <div class="blob-2 absolute top-24 -left-20 w-96 h-96 bg-[#0072bc]/15 rounded-full blur-3xl will-change-transform"></div>
         <div class="blob-3 absolute bottom-0 right-0 w-96 h-96 bg-[#BFE4FD]/50 rounded-full blur-3xl opacity-70 will-change-transform"></div>
@@ -244,7 +244,7 @@ $billing_cycle_text = $billing_intervals[$plan['name']] ?? 'every ' . $plan['val
     <main class="flex-grow max-w-md w-full mx-auto px-4 py-8 space-y-6">
 
         <div class="border border-gray-200 rounded-2xl p-5 bg-white shadow-sm space-y-4 text-left">
-            <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Order Summary</h3>
+            <h3 class="text-xs font-semibold text-gray-800 uppercase tracking-wider">Order Summary</h3>
             <div class="flex justify-between items-start pt-1">
                 <div>
                     <h4 class="text-base font-bold text-gray-900 tracking-tight"><?php echo $display_name; ?></h4>
