@@ -228,7 +228,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button type="submit" id="submitLoginBtn" class="relative w-full bg-gradient-to-r from-[#0072bc] to-blue-600 hover:from-blue-600 hover:to-blue-700 active:scale-[0.99] text-white py-4 rounded-xl text-base font-bold transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-200 hover:shadow-xl hover:shadow-blue-300 overflow-hidden cursor-pointer group mt-2">
                     <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></span>
                     <i id="btnIconNode" class="fa-solid fa-right-to-bracket text-sm shrink-0"></i>
-                    <span id="btnTextNode">Sign In to User Panel</span>
+                    <span id="btnTextNode">Sign In</span>
                 </button>
             </form>
 
