@@ -68,18 +68,18 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true 
             </div>
 
             <div class="space-y-4">
-                <a href="https://t.me/identitysearchai" target="_blank" rel="noopener"
+                <a href="tel:+13074001496"
                    class="contact-link flex items-center justify-between p-5 rounded-2xl group">
                     <div class="flex items-center gap-4">
                         <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-[#0072bc]/10 text-[#0072bc] group-hover:bg-[#0072bc] group-hover:text-white transition-all">
-                            <i class="fa-brands fa-telegram text-xl"></i>
+                            <i class="fa-solid fa-phone text-lg"></i>
                         </div>
                         <div class="text-left">
-                            <p class="text-xs font-bold text-slate-500 uppercase">Telegram</p>
-                            <p class="text-white font-semibold">@identitysearchai</p>
+                            <p class="text-xs font-bold text-slate-500 uppercase">Phone</p>
+                            <p class="text-white font-semibold">(307) 400-1496</p>
                         </div>
                     </div>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-slate-600 group-hover:text-[#0072bc] transition-colors"></i>
+                    <i class="fa-solid fa-chevron-right text-slate-600 group-hover:text-white transition-colors"></i>
                 </a>
 
                 <a href="mailto:support@identitysearch.ai"
