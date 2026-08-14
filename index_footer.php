@@ -70,10 +70,14 @@
                         <i class="fa-solid fa-chevron-down text-slate-400 text-xs transition-transform duration-200 group-open:rotate-180"></i>
                     </summary>
                     <div class="px-4 pb-4">
-                        <p class="text-xs text-slate-300 font-medium leading-relaxed">
+                        <p id="fcraDisclaimerText" class="text-xs text-slate-300 font-medium leading-relaxed line-clamp-3">
                             <strong class="text-white">Disclaimer:</strong>
                             Identity Search AI functions strictly as an OSINT directory interface and does not compile consumer reporting statistics under the FCRA. You may not use our service or the information it provides to make decisions about consumer credit, employment, insurance, tenant screening, or any other purpose that would require FCRA compliance. Identity Search AI does not provide consumer reports and is not a consumer reporting agency. (These terms have special meanings under the Fair Credit Reporting Act, 15 USC 1681 et seq., ("Fair Credit Reporting Act"), which are incorporated herein by reference.) The information available on our website may not be 100% accurate, complete, or up to date, so do not use it as a substitute for your own due diligence, especially if you have concerns about a person's criminal history. Identity Search AI does not make any representation or warranty about the accuracy of the information available through our website or about the character or integrity of the person about whom you inquire. For more information governing permitted and prohibited uses, please review our <a href="https://identitysearch.ai/terms" class="text-[#2563EB] hover:underline" target="_blank" rel="noopener noreferrer">"Terms & Conditions"</a>.
                         </p>
+                        <button id="fcraReadMoreBtn" type="button" onclick="toggleFcraDisclaimer()" class="mt-2.5 inline-flex items-center gap-1.5 text-xs font-bold text-[#2563EB] hover:underline cursor-pointer">
+                            <span id="fcraReadMoreLabel">Read More</span>
+                            <i id="fcraReadMoreIcon" class="fa-solid fa-chevron-down text-[10px]"></i>
+                        </button>
                     </div>
                 </details>
             </div>
@@ -87,3 +91,27 @@
         </div>
     </div>
 </footer>
+
+<script>
+    function toggleFcraDisclaimer() {
+        const text = document.getElementById('fcraDisclaimerText');
+        const label = document.getElementById('fcraReadMoreLabel');
+        const icon = document.getElementById('fcraReadMoreIcon');
+        if (!text || !label || !icon) return;
+
+        const isExpanded = text.classList.contains('line-clamp-none');
+        if (isExpanded) {
+            text.classList.remove('line-clamp-none');
+            text.classList.add('line-clamp-3');
+            label.textContent = 'Read More';
+            icon.classList.remove('fa-chevron-up');
+            icon.classList.add('fa-chevron-down');
+        } else {
+            text.classList.add('line-clamp-none');
+            text.classList.remove('line-clamp-3');
+            label.textContent = 'Show Less';
+            icon.classList.remove('fa-chevron-down');
+            icon.classList.add('fa-chevron-up');
+        }
+    }
+</script>
