@@ -53,6 +53,37 @@ $plan_design_meta = [
         background: #0072bc;
         border-radius: 50%;
     }
+
+    /* Premium floating "Most Popular" badge */
+    .mp-badge {
+        overflow: hidden;
+        animation: mpGlow 2.8s ease-in-out infinite;
+    }
+    .mp-badge .mp-shine {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        border-radius: 9999px;
+    }
+    .mp-badge .mp-shine::after {
+        content: '';
+        position: absolute;
+        top: -4px;
+        left: 0;
+        height: calc(100% + 8px);
+        width: 45%;
+        background: linear-gradient(105deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.55) 50%, rgba(255,255,255,0) 100%);
+        transform: skewX(-20deg);
+        animation: mpShine 2.8s ease-in-out infinite;
+    }
+    @keyframes mpShine {
+        0% { transform: translateX(-140%) skewX(-20deg); }
+        60%, 100% { transform: translateX(320%) skewX(-20deg); }
+    }
+    @keyframes mpGlow {
+        0%, 100% { box-shadow: 0 8px 20px -6px rgba(245, 158, 11, 0.6), 0 0 0 2px rgba(255,255,255,0.7); }
+        50% { box-shadow: 0 10px 28px -4px rgba(244, 63, 94, 0.75), 0 0 0 2px rgba(255,255,255,0.7); }
+    }
 </style>
 
 <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm text-left">
@@ -107,13 +138,21 @@ $plan_design_meta = [
                                     <div class="min-w-0">
                                         <div class="flex items-center gap-2 flex-wrap">
                                             <span class="text-[15px] font-bold text-gray-900 tracking-tight"><?php echo htmlspecialchars($title_string); ?></span>
+                                            <?php if (!empty($meta['popular'])): ?>
+                                            <span class="mp-badge absolute -top-3 right-4 z-20 inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-amber-400 via-orange-400 to-rose-500 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-widest text-white">
+                                                <span class="mp-shine"></span>
+                                                <i class="fa-solid fa-crown text-[10px] relative"></i>
+                                                <span class="relative"><?php echo $meta['badge']; ?></span>
+                                            </span>
+                                            <?php elseif (!empty($meta['badge'])): ?>
                                             <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded-full <?php echo $meta['badge_class'] ?? 'bg-[#ef4444]'; ?> text-white whitespace-nowrap">
                                                 <?php echo $meta['badge']; ?>
                                             </span>
+                                            <?php endif; ?>
                                         </div>
                                         <div class="text-xs text-black font-medium mt-0.5">
                                             <span class="text-gray-400 line-through font-normal">$<?php echo $calculated_original_price; ?></span> 
-                                            <span class="text-gray-700 font-semibold">$<?php echo number_format($plan['price'], 0); ?> <?php echo htmlspecialchars($meta['billing_text']); ?></span>
+                                            <span class="text-gray-700 font-semibold">$<?php echo number_format($plan['price'], 2); ?> <?php echo htmlspecialchars($meta['billing_text']); ?></span>
                                         </div>
                                     </div>
                                 </div>
