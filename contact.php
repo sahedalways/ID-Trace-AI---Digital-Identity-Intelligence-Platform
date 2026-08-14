@@ -246,11 +246,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </section>
 
         <!-- BILLING INQUIRIES + CONTACT GRID -->
-        <section class="max-w-6xl mx-auto mt-12 mb-20">
+        <section class="max-w-6xl mx-auto mt-28 mb-20">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
 
-                <!-- LEFT: Billing inquiries (sticky on scroll) -->
-                <div class="space-y-6 lg:sticky lg:top-20 lg:self-start onload-anim onload-delay-300">
+                <!-- LEFT: Billing inquiries (scrolls) -->
+                <div class="space-y-6 onload-anim onload-delay-300">
 
                     <!-- Billing header -->
                     <div>
@@ -374,8 +374,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
 
-                <!-- RIGHT: Contact submission -->
-                <div class="space-y-6 onload-anim onload-delay-300">
+                <!-- RIGHT: Contact submission (sticky on scroll) -->
+                <div class="space-y-6 lg:sticky lg:top-20 lg:self-start onload-anim onload-delay-300">
 
                 <!-- STATUS RESPONSE INTERFACES -->
                         <?php if (!empty($success_message)): ?>
