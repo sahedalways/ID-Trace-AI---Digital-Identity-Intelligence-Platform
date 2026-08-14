@@ -93,6 +93,13 @@ $plan_design_meta = [
             50% { box-shadow: 0 10px 28px -4px rgba(244, 63, 94, 0.75), 0 0 0 2px rgba(255,255,255,0.7); }
         }
 
+        /* Premium card shine sweep */
+        .mp-card-shine { animation: mpCardShine 4.5s ease-in-out infinite; }
+        @keyframes mpCardShine {
+            0%, 55% { transform: translateX(-160%) skewX(-12deg); }
+            85%, 100% { transform: translateX(420%) skewX(-12deg); }
+        }
+
         @keyframes blobMove1 {
             0%, 100% { transform: translateX(-50%) translateY(0); }
             25% { transform: translateX(-40%) translateY(-20px); }
@@ -185,7 +192,7 @@ $plan_design_meta = [
 
                 <form id="billingForm" action="<?php echo BASE_URL; ?>checkout" method="GET" class="space-y-4" onsubmit="triggerCtaLoadingState(this)">
                     
-                    <div class="space-y-5">
+                    <div class="space-y-7">
                         <?php 
                         $isFirst = true;
                         foreach ($plans as $plan): 
@@ -215,7 +222,12 @@ $plan_design_meta = [
                                     <?php echo $isFirst ? 'checked' : ''; ?>
                                 >
                                 
-                                <label for="plan_<?php echo $code; ?>" class="plan-card border rounded-xl flex flex-col cursor-pointer transition-all bg-white block relative select-none space-y-3<?php echo !empty($meta['popular']) ? ' p-5 border-[#0072bc] ring-2 ring-[#0072bc]/50 bg-gradient-to-b from-blue-50/70 via-white to-white shadow-[0_10px_35px_rgba(0,114,188,0.18)] scale-[1.02] z-10' : ' p-4 border-gray-200 hover:border-gray-300'; ?>">
+                                <label for="plan_<?php echo $code; ?>" class="plan-card border rounded-xl flex flex-col cursor-pointer transition-all bg-white block relative select-none space-y-3<?php echo !empty($meta['popular']) ? ' p-5 border-2 border-[#0072bc] ring-4 ring-[#0072bc]/15 bg-gradient-to-b from-blue-100/80 via-white to-white shadow-[0_14px_45px_-10px_rgba(0,114,188,0.45)] scale-[1.04] z-10 mp-card' : ' p-4 border-gray-200 hover:border-gray-300'; ?>">
+                                    <?php if (!empty($meta['popular'])): ?>
+                                    <span class="pointer-events-none absolute inset-0 rounded-xl overflow-hidden z-0" aria-hidden="true">
+                                        <span class="mp-card-shine absolute inset-y-0 w-1/2 bg-gradient-to-r from-transparent via-white/30 to-transparent"></span>
+                                    </span>
+                                    <?php endif; ?>
                                     
                                     <div class="flex items-center justify-between gap-4 w-full">
                                         <div class="flex items-center gap-3.5 min-w-0">
