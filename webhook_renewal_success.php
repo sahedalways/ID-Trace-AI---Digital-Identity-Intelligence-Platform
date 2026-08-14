@@ -65,6 +65,9 @@ try {
             $db_validity_date = date('Y-m-d', $next_renewal_timestamp);
         } else {
             $plan_intervals = [
+                'm3'   => '+30 days',
+                'm5'   => '+30 days',
+                'm12'  => '+30 days',
                 'm1'   => '+30 days',
                 'q3'   => '+90 days',
                 'b6'   => '+180 days',

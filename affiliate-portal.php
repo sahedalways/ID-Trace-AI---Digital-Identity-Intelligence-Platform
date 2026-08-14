@@ -333,17 +333,17 @@ $portal_bonus_type = getGlobalBonusType($pdo);
                 <p class="mt-2 text-sm text-gray-500 font-medium">Choose a plan and earn 50% recurring commission on every referral</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                <!-- M1 Plan -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- M3 Plan -->
                 <div class="group relative bg-white p-6 sm:p-7 rounded-3xl border border-gray-100 shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 overflow-hidden">
                     <div class="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl from-[#BFE4FD]/40 to-transparent rounded-bl-[80px] opacity-70 group-hover:opacity-100 origin-top-right group-hover:scale-[6] transition-all duration-500 ease-in-out"></div>
                     <div class="relative p-1 space-y-5">
                         <div class="flex items-center justify-between">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-bold font-mono text-sm">M1</span>
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-bold font-mono text-sm">M3</span>
                             <span class="text-[10px] font-bold text-[#0072bc] bg-[#0072bc]/10 px-2 py-0.5 rounded-full uppercase tracking-wider">Best Value</span>
                         </div>
                         <div class="space-y-1">
-                            <div class="text-3xl font-black text-gray-900">$36<span class="text-sm font-semibold text-gray-400">.00</span></div>
+                            <div class="text-3xl font-black text-gray-900">$39.99<span class="text-sm font-semibold text-gray-400">/mo</span></div>
                             <div class="text-xs text-gray-500 font-medium">per month</div>
                         </div>
                         <ul class="space-y-2.5 text-xs font-semibold text-gray-600">
@@ -369,16 +369,19 @@ $portal_bonus_type = getGlobalBonusType($pdo);
                     </div>
                 </div>
 
-                <!-- Q3 Plan -->
-                <div class="group relative bg-white p-6 sm:p-7 rounded-3xl border border-gray-100 shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 overflow-hidden">
-                    <div class="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl from-[#BFE4FD]/40 to-transparent rounded-bl-[80px] opacity-70 group-hover:opacity-100 origin-top-right group-hover:scale-[6] transition-all duration-500 ease-in-out"></div>
-                    <div class="relative p-1 space-y-5">
+                <!-- M5 Plan -->
+                <div class="group relative bg-white border-2 border-[#0072bc] rounded-3xl shadow-lg hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-500 overflow-hidden ring-1 ring-[#0072bc]/10">
+                    <div class="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl from-[#BFE4FD]/50 to-transparent rounded-bl-[80px] opacity-70 group-hover:opacity-100 origin-top-right group-hover:scale-[6] transition-all duration-500 ease-in-out"></div>
+                    <div class="absolute top-0 right-0">
+                        <div class="bg-[#0072bc] text-white text-[9px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">Most Popular</div>
+                    </div>
+                    <div class="relative p-6 sm:p-7 space-y-5">
                         <div class="flex items-center justify-between">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-bold font-mono text-sm">Q3</span>
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-bold font-mono text-sm">M5</span>
                         </div>
                         <div class="space-y-1">
-                            <div class="text-3xl font-black text-gray-900">$55<span class="text-sm font-semibold text-gray-400">.00</span></div>
-                            <div class="text-xs text-gray-500 font-medium">per quarter</div>
+                            <div class="text-3xl font-black text-gray-900">$49.95<span class="text-sm font-semibold text-gray-400">/mo</span></div>
+                            <div class="text-xs text-gray-500 font-medium">per month</div>
                         </div>
                         <ul class="space-y-2.5 text-xs font-semibold text-gray-600">
                             <li class="flex items-center gap-2.5">
@@ -397,60 +400,23 @@ $portal_bonus_type = getGlobalBonusType($pdo);
                         <div class="pt-3 border-t border-gray-100">
                             <div class="flex items-center justify-between">
                                 <span class="text-xs text-gray-400 font-medium">Your Payout</span>
-                                <span class="text-lg font-black text-[#0072bc]">$<?= number_format($portal_bonus_amount, 2) ?> <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">/ <?= $portal_bonus_type === 'recursion' ? 'q' : 'one-time' ?></span></span>
+                                <span class="text-lg font-black text-[#0072bc]">$<?= number_format($portal_bonus_amount, 2) ?> <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">/ <?= $portal_bonus_type === 'recursion' ? 'mo' : 'one-time' ?></span></span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- B6 Plan -->
+                <!-- M12 Plan -->
                 <div class="group relative bg-white p-6 sm:p-7 rounded-3xl border border-gray-100 shadow-sm ring-1 ring-gray-900/5 hover:ring-gray-900/10 hover:shadow-xl hover:-translate-y-1.5 transition-all duration-500 overflow-hidden">
                     <div class="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl from-[#BFE4FD]/40 to-transparent rounded-bl-[80px] opacity-70 group-hover:opacity-100 origin-top-right group-hover:scale-[6] transition-all duration-500 ease-in-out"></div>
                     <div class="relative p-1 space-y-5">
                         <div class="flex items-center justify-between">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-bold font-mono text-sm">B6</span>
-                            <span class="text-[10px] font-bold text-[#0072bc] bg-[#0072bc]/10 px-2 py-0.5 rounded-full uppercase tracking-wider">Popular</span>
-                        </div>
-                        <div class="space-y-1">
-                            <div class="text-3xl font-black text-gray-900">$72<span class="text-sm font-semibold text-gray-400">.00</span></div>
-                            <div class="text-xs text-gray-500 font-medium">per 6 months</div>
-                        </div>
-                        <ul class="space-y-2.5 text-xs font-semibold text-gray-600">
-                            <li class="flex items-center gap-2.5">
-                                <i class="fa-solid fa-check-circle text-[#0072bc] text-sm"></i>
-                                <span>8 Reports + 3 <span class="text-blue-700 font-bold">Free</span></span>
-                            </li>
-                            <li class="flex items-center gap-2.5">
-                                <i class="fa-solid fa-check-circle text-[#0072bc] text-sm"></i>
-                                <span>Advanced OSINT Analytics</span>
-                            </li>
-                            <li class="flex items-center gap-2.5">
-                                <i class="fa-solid fa-check-circle text-[#0072bc] text-sm"></i>
-                                <span>Priority Support + API</span>
-                            </li>
-                        </ul>
-                        <div class="pt-3 border-t border-gray-100">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs text-gray-400 font-medium">Your Payout</span>
-                                <span class="text-lg font-black text-[#0072bc]">$<?= number_format($portal_bonus_amount, 2) ?> <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">/ <?= $portal_bonus_type === 'recursion' ? '6mo' : 'one-time' ?></span></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Y12 Plan -->
-                <div class="group relative bg-white border-2 border-[#0072bc] rounded-3xl shadow-lg hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-500 overflow-hidden ring-1 ring-[#0072bc]/10">
-                    <div class="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl from-[#BFE4FD]/50 to-transparent rounded-bl-[80px] opacity-70 group-hover:opacity-100 origin-top-right group-hover:scale-[6] transition-all duration-500 ease-in-out"></div>
-                    <div class="absolute top-0 right-0">
-                        <div class="bg-[#0072bc] text-white text-[9px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-wider">Best Deal</div>
-                    </div>
-                    <div class="relative p-6 sm:p-7 space-y-5">
-                        <div class="flex items-center justify-between">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-bold font-mono text-sm">Y12</span>
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#0072bc]/10 border border-[#0072bc]/20 text-[#0072bc] font-bold font-mono text-sm">M12</span>
+                            <span class="text-[10px] font-bold text-[#0072bc] bg-[#0072bc]/10 px-2 py-0.5 rounded-full uppercase tracking-wider">Best Deal</span>
                         </div>
                         <div class="space-y-1">
                             <div class="text-3xl font-black text-gray-900">$96<span class="text-sm font-semibold text-gray-400">.00</span></div>
-                            <div class="text-xs text-gray-500 font-medium">per year</div>
+                            <div class="text-xs text-gray-500 font-medium">per month</div>
                         </div>
                         <ul class="space-y-2.5 text-xs font-semibold text-gray-600">
                             <li class="flex items-center gap-2.5">
@@ -469,7 +435,7 @@ $portal_bonus_type = getGlobalBonusType($pdo);
                         <div class="pt-3 border-t border-gray-100">
                             <div class="flex items-center justify-between">
                                 <span class="text-xs text-gray-400 font-medium">Your Payout</span>
-                                <span class="text-lg font-black text-[#0072bc]">$<?= number_format($portal_bonus_amount, 2) ?> <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">/ <?= $portal_bonus_type === 'recursion' ? 'yr' : 'one-time' ?></span></span>
+                                <span class="text-lg font-black text-[#0072bc]">$<?= number_format($portal_bonus_amount, 2) ?> <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">/ <?= $portal_bonus_type === 'recursion' ? 'mo' : 'one-time' ?></span></span>
                             </div>
                         </div>
                     </div>
@@ -492,34 +458,26 @@ $portal_bonus_type = getGlobalBonusType($pdo);
                     <div class="space-y-4">
                         <div class="space-y-1.5">
                             <div class="flex justify-between text-xs font-semibold text-slate-700">
-                                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[#0072bc]"></span> M1 Referrals (<span id="val_m1_count" class="font-bold">10</span>)</span>
-                                <span class="font-mono font-bold text-gray-400">$36.00 Plan</span>
+                                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-[#0072bc]"></span> M3 Referrals (<span id="val_m3_count" class="font-bold">10</span>)</span>
+                                <span class="font-mono font-bold text-gray-400">$39.99 Plan</span>
                             </div>
-                            <input type="range" id="input_m1" min="0" max="250" value="10" oninput="calculateProjections()" class="w-full accent-[#0072bc] cursor-pointer h-1.5 bg-slate-100 rounded-lg appearance-none">
+                            <input type="range" id="input_m3" min="0" max="250" value="10" oninput="calculateProjections()" class="w-full accent-[#0072bc] cursor-pointer h-1.5 bg-slate-100 rounded-lg appearance-none">
                         </div>
 
                         <div class="space-y-1.5">
                             <div class="flex justify-between text-xs font-semibold text-slate-700">
-                                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-sky-500"></span> Q3 Referrals (<span id="val_q3_count" class="font-bold">5</span>)</span>
-                                <span class="font-mono font-bold text-gray-400">$55.00 Plan</span>
+                                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-sky-500"></span> M5 Referrals (<span id="val_m5_count" class="font-bold">5</span>)</span>
+                                <span class="font-mono font-bold text-gray-400">$49.95 Plan</span>
                             </div>
-                            <input type="range" id="input_q3" min="0" max="250" value="5" oninput="calculateProjections()" class="w-full accent-[#0072bc] cursor-pointer h-1.5 bg-slate-100 rounded-lg appearance-none">
+                            <input type="range" id="input_m5" min="0" max="250" value="5" oninput="calculateProjections()" class="w-full accent-[#0072bc] cursor-pointer h-1.5 bg-slate-100 rounded-lg appearance-none">
                         </div>
 
                         <div class="space-y-1.5">
                             <div class="flex justify-between text-xs font-semibold text-slate-700">
-                                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-blue-400"></span> B6 Referrals (<span id="val_b6_count" class="font-bold">3</span>)</span>
-                                <span class="font-mono font-bold text-gray-400">$72.00 Plan</span>
-                            </div>
-                            <input type="range" id="input_b6" min="0" max="250" value="3" oninput="calculateProjections()" class="w-full accent-[#0072bc] cursor-pointer h-1.5 bg-slate-100 rounded-lg appearance-none">
-                        </div>
-
-                        <div class="space-y-1.5">
-                            <div class="flex justify-between text-xs font-semibold text-slate-700">
-                                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-blue-600"></span> Y12 Referrals (<span id="val_y12_count" class="font-bold">2</span>)</span>
+                                <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-blue-400"></span> M12 Referrals (<span id="val_m12_count" class="font-bold">3</span>)</span>
                                 <span class="font-mono font-bold text-gray-400">$96.00 Plan</span>
                             </div>
-                            <input type="range" id="input_y12" min="0" max="250" value="2" oninput="calculateProjections()" class="w-full accent-[#0072bc] cursor-pointer h-1.5 bg-slate-100 rounded-lg appearance-none">
+                            <input type="range" id="input_m12" min="0" max="250" value="3" oninput="calculateProjections()" class="w-full accent-[#0072bc] cursor-pointer h-1.5 bg-slate-100 rounded-lg appearance-none">
                         </div>
                     </div>
                 </div>
@@ -698,20 +656,18 @@ $portal_bonus_type = getGlobalBonusType($pdo);
          */
         function calculateProjections() {
             // Read active counts
-            const m1 = parseInt(document.getElementById('input_m1').value) || 0;
-            const q3 = parseInt(document.getElementById('input_q3').value) || 0;
-            const b6 = parseInt(document.getElementById('input_b6').value) || 0;
-            const y12 = parseInt(document.getElementById('input_y12').value) || 0;
+            const m3 = parseInt(document.getElementById('input_m3').value) || 0;
+            const m5 = parseInt(document.getElementById('input_m5').value) || 0;
+            const m12 = parseInt(document.getElementById('input_m12').value) || 0;
 
             // Sync structural element numbers labels
-            document.getElementById('val_m1_count').textContent = m1;
-            document.getElementById('val_q3_count').textContent = q3;
-            document.getElementById('val_b6_count').textContent = b6;
-            document.getElementById('val_y12_count').textContent = y12;
+            document.getElementById('val_m3_count').textContent = m3;
+            document.getElementById('val_m5_count').textContent = m5;
+            document.getElementById('val_m12_count').textContent = m12;
 
-            // Compute monthly normalized split value weights:
+            // Compute monthly normalized split value weights (all plans are monthly recurring)
             const bonusAmount = <?= $portal_bonus_amount ?>;
-            const monthlySumForecast = (m1 * bonusAmount) + (q3 * bonusAmount / 3) + (b6 * bonusAmount / 6) + (y12 * bonusAmount / 12);
+            const monthlySumForecast = (m3 + m5 + m12) * bonusAmount;
 
             // Display formatted sum parameters inside layout context
             document.getElementById('projected_sum').textContent = monthlySumForecast.toLocaleString('en-US', {

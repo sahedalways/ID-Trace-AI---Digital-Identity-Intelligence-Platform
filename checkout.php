@@ -15,7 +15,7 @@ if (!isset($_SESSION['user_logged_in']) || $_SESSION['user_logged_in'] !== true 
 }
 
 $user_id = (int)$_SESSION['user_id'];
-$plan_name = isset($_GET['plan']) ? trim($_GET['plan']) : 'm1';
+$plan_name = isset($_GET['plan']) ? trim($_GET['plan']) : 'm12';
 $vid = isset($_GET['id']) ? trim($_GET['id']) : ''; // Dynamically intercepts context loop flow from view page if active
 
 // 1. Fetch User Profile
@@ -155,7 +155,15 @@ $paid_credit = (int)$plan['credit'];
 $free_credit = (int)$plan['free_credit'];
 $display_name = ($free_credit > 0) ? "{$paid_credit} Reports + {$free_credit} Free Pack" : "{$paid_credit} Reports Pack";
 
-$billing_intervals = ['m1' => 'monthly', 'q3' => 'every 3 months', 'b6' => 'every 6 months', 'y12' => 'annually'];
+$billing_intervals = [
+    'm3' => 'monthly',
+    'm5' => 'monthly',
+    'm12' => 'monthly',
+    'm1' => 'monthly',
+    'q3' => 'every 3 months',
+    'b6' => 'every 6 months',
+    'y12' => 'annually',
+];
 $billing_cycle_text = $billing_intervals[$plan['name']] ?? 'every ' . $plan['validity'] . ' days';
 ?>
 <!DOCTYPE html>

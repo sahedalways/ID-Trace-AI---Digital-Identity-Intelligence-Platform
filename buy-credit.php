@@ -11,7 +11,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 try {
     // Pull active plans directly out of your database architecture mapping matrix
-    $stmt = $pdo->query("SELECT * FROM `plans` ORDER BY `price` ASC");
+    $stmt = $pdo->query("SELECT * FROM `plans` WHERE `status` = 1 ORDER BY `sort_order` ASC");
     $plans = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (\PDOException $e) {
     die("System Schema Connection Error: " . htmlspecialchars($e->getMessage()));
@@ -19,21 +19,21 @@ try {
 
 // Configuration containing only strict design traits matching your layout rules
 $plan_design_meta = [
-    'm1' => [
-        'badge' => 'Save 52%',
-        'billing_text' => 'billed monthly',
-    ],
-    'q3' => [
-        'badge' => 'Save 56%',
-        'billing_text' => 'billed every 3 months',
-    ],
-    'b6' => [
-        'badge' => 'Save 64%',
-        'billing_text' => 'billed every 6 months',
-    ],
-    'y12' => [
+    'm12' => [
         'badge' => 'Save 68%',
-        'billing_text' => 'billed annually',
+        'billing_text' => 'billed monthly',
+        'badge_class' => 'bg-[#ef4444]',
+    ],
+    'm5' => [
+        'badge' => 'Most Popular',
+        'billing_text' => 'billed monthly',
+        'badge_class' => 'bg-gradient-to-r from-[#0072bc] to-blue-600',
+        'popular' => true,
+    ],
+    'm3' => [
+        'badge' => 'Save 47%',
+        'billing_text' => 'billed monthly',
+        'badge_class' => 'bg-[#ef4444]',
     ]
 ];
 ?>
@@ -184,7 +184,7 @@ $plan_design_meta = [
                                     <?php echo $isFirst ? 'checked' : ''; ?>
                                 >
                                 
-                                <label for="plan_<?php echo $code; ?>" class="plan-card border border-gray-200 rounded-xl p-4 flex flex-col cursor-pointer hover:border-gray-300 transition-all bg-white block relative select-none space-y-3">
+                                <label for="plan_<?php echo $code; ?>" class="plan-card border border-gray-200 rounded-xl p-4 flex flex-col cursor-pointer hover:border-gray-300 transition-all bg-white block relative select-none space-y-3<?php echo !empty($meta['popular']) ? ' ring-2 ring-[#0072bc]/40 border-[#0072bc]' : ''; ?>">
                                     
                                     <div class="flex items-center justify-between gap-4 w-full">
                                         <div class="flex items-center gap-3.5 min-w-0">
@@ -194,7 +194,7 @@ $plan_design_meta = [
                                             <div class="min-w-0">
                                                 <div class="flex items-center gap-2 flex-wrap">
                                                     <span class="text-[15px] font-bold text-gray-900 tracking-tight"><?php echo htmlspecialchars($title_string); ?></span>
-                                                    <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-[#ef4444] text-white whitespace-nowrap">
+                                                    <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded-full <?php echo $meta['badge_class'] ?? 'bg-[#ef4444]'; ?> text-white whitespace-nowrap">
                                                         <?php echo $meta['badge']; ?>
                                                     </span>
                                                 </div>

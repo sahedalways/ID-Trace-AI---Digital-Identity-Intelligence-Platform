@@ -235,9 +235,9 @@ if (session_status() === PHP_SESSION_NONE) session_start();
     </button>
                     <div class="terms-content-slider transition-all duration-300 ease-in-out bg-white opacity-100">
                         <div class="px-5 sm:px-6 pb-6 pt-1 text-sm sm:text-base text-gray-800 font-semibold leading-relaxed space-y-3 border-t border-gray-100">
-                            <p>By selecting a membership plan (Monthly, Quarterly, Semi-Annual, or Annual) on Identity Search AI, you expressly authorize us to charge your payment method immediately for the initial term and automatically on a recurring basis at the start of each renewal period until you cancel.</p>
+                            <p>By selecting a membership plan on Identity Search AI, you expressly authorize us to charge your payment method immediately for the initial term and automatically on a recurring basis at the start of each renewal period until you cancel.</p>
                             <ul class="list-disc ml-6 space-y-1">
-                                <li><b>Billing Cycles:</b> Depending on the selected plan, your card will be charged every 30 days ($36/month), every 3 months ($55/quarter), every 6 months ($72/semi-annually), or every 12 months ($96/annually).</li>
+                                <li><b>Billing Cycles:</b> All plans are billed monthly on a recurring basis — $39.99/month (3 Reports), $49.95/month (5 Reports + 2 Free), or $96/month (12 Reports + 4 Free).</li>
                                 <li><b>Billing Descriptor:</b> Charges will appear on your bank or credit card statement as "IDENTITYSEARCH.AI".</li>
                                 <li><b>Cancellation:</b> You may cancel your subscription at any time to avoid future recurring billing through your account dashboard or by contacting support@identitysearch.ai at least 24 hours prior to your next renewal date.</li>
                                 <li><b>30-Day Money-Back Guarantee:</b> If you are not satisfied with our service, you are eligible to request a refund within 30 days of your initial purchase by emailing support@identitysearch.ai.</li>

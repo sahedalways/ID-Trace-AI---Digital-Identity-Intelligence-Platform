@@ -175,6 +175,9 @@ try {
     } else {
         // Fallback calculations sequence if network connection issues drop tracking parameters
         $plan_intervals = [
+            'm3'   => '+30 days',
+            'm5'   => '+30 days',
+            'm12'  => '+30 days',
             'm1'   => '+30 days',
             'q3'   => '+90 days',
             'b6'   => '+180 days',
