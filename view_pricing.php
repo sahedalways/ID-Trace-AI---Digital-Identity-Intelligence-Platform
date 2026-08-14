@@ -118,7 +118,8 @@ $plan_design_meta = [
                     $free_credit = (int)$plan['free_credit'];
                     
                     $calculated_original_price = ($paid_credit > 0) ? $paid_credit * 25 : 25; 
-                    $perReportPrice = ($paid_credit > 0) ? round($plan['price'] / $paid_credit, 2) : 0;
+                    $total_credits = (int)$plan['credit'] + (int)$plan['free_credit'];
+                    $perReportPrice = ($total_credits > 0) ? round($plan['price'] / $total_credits, 2) : 0;
 
                     if ($free_credit > 0) {
                         $title_string = "{$paid_credit} reports + {$free_credit} free";
@@ -170,7 +171,7 @@ $plan_design_meta = [
                                 </div>
 
                                 <div class="text-right shrink-0 pl-2">
-                                    <div class="text-lg font-bold text-gray-900">$<?php echo number_format($perReportPrice, 0); ?></div>
+                                    <div class="text-lg font-bold text-gray-900">$<?php echo number_format($perReportPrice, 2); ?></div>
                                     <div class="text-[10px] font-semibold text-gray-400 mt-0.5">per report</div>
                                 </div>
                             </div>
