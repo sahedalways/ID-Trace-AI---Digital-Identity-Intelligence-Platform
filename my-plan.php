@@ -209,6 +209,10 @@ require_once 'my-plan-controller.php';
 
     </main>
 
+    <?php if (file_exists('index_footer.php')) {
+        include 'index_footer.php';
+    } ?>
+
     <script>
         // NAVBAR SCROLL GLASS EFFECT
         document.addEventListener("DOMContentLoaded", () => {
