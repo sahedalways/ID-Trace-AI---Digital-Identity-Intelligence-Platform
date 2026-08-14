@@ -63,6 +63,14 @@ define('BREVO_API_KEY', env('BREVO_API_KEY'));
 define('MAIL_FROM_EMAIL', env('MAIL_FROM_EMAIL', 'support@identitysearch.ai'));
 define('MAIL_FROM_NAME', env('MAIL_FROM_NAME', 'Identity Search AI'));
 
+// Replace with a static version bump whenever you need to force-refresh the logo (e.g. '2')
+define('LOGO_MANUAL_VERSION', env('LOGO_MANUAL_VERSION', '1'));
+
+// Cache-busted logo URL: appends the file's modification timestamp so browsers/CDNs
+// automatically fetch the new logo whenever public/logo.png is updated.
+define('LOGO_VERSION', LOGO_MANUAL_VERSION . '.' . (file_exists(__DIR__ . '/public/logo.png') ? filemtime(__DIR__ . '/public/logo.png') : '1'));
+define('LOGO_URL', BASE_URL . 'public/logo.png?v=' . LOGO_VERSION);
+
 // 5. Google OAuth2 Configuration
 define('GOOGLE_CLIENT_ID', env('GOOGLE_CLIENT_ID'));
 define('GOOGLE_CLIENT_SECRET', env('GOOGLE_CLIENT_SECRET'));

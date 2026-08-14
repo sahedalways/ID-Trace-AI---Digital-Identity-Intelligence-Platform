@@ -49,7 +49,7 @@ function getActiveNavClass($current_page, $target_pages) {
             
             <div class="flex-shrink-0">
                 <a href="<?= $isLoggedIn ? 'affiliate-dashboard' : 'affiliate-portal' ?>" class="flex items-center">
-                    <img src="public/logo.png" alt="Identity Search AI Logo" class="h-12 w-auto">
+                    <img src="<?php echo LOGO_URL; ?>" alt="Identity Search AI Logo" class="h-12 w-auto">
                 </a>
             </div>
 
@@ -144,7 +144,7 @@ function getActiveNavClass($current_page, $target_pages) {
     <div id="mobileAffiliateDrawer" class="fixed top-0 right-0 z-50 h-full w-[85%] max-w-sm bg-white shadow-2xl transform translate-x-full transition-transform duration-300 lg:hidden overflow-y-auto">
         <div class="flex items-center justify-between px-5 h-16 border-b border-gray-100">
             <a href="<?= $isLoggedIn ? 'affiliate-dashboard' : 'affiliate-portal' ?>" class="flex items-center">
-                <img src="public/logo.png" alt="Identity Search AI Logo" class="h-10 w-auto">
+                <img src="<?php echo LOGO_URL; ?>" alt="Identity Search AI Logo" class="h-10 w-auto">
             </a>
             <button type="button" onclick="closeAffiliateMenu()" class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition cursor-pointer">
                 <i class="fa-solid fa-xmark text-lg"></i>

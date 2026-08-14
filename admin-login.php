@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0">
                     <a href="admin-login" class="flex items-center gap-2.5">
-                        <img src="public/logo.png" alt="Identity Search AI Logo" class="h-10 w-auto">
+                        <img src="<?php echo LOGO_URL; ?>" alt="Identity Search AI Logo" class="h-10 w-auto">
                     </a>
                 </div>
                 <a href="index" class="text-sm font-semibold text-gray-500 hover:text-gray-900 transition flex items-center gap-1.5">
@@ -138,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <footer class="relative overflow-hidden w-full border-t border-gray-200 py-6 text-center text-xs text-gray-700 font-semibold">
         <div class="absolute inset-0 -z-10" style="background: linear-gradient(180deg, #ffffff 0%, #F0F8FF 40%, #EAF5FF 60%, #FFFFFF 100%);"></div>
         <div class="flex items-center justify-center gap-2 mb-2">
-            <img src="public/logo.png" alt="Identity Search AI Logo" class="h-12 w-auto">
+            <img src="<?php echo LOGO_URL; ?>" alt="Identity Search AI Logo" class="h-12 w-auto">
         </div>
         &copy; <?= date('Y'); ?> Identity Search AI Admin Panel. Restricted Access.
     </footer>

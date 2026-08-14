@@ -92,7 +92,7 @@ function getSidebarClass($current, $targets)
     <!-- Header with logo + collapse toggle -->
     <div class="flex items-center justify-between px-4 h-16 border-b border-gray-200 flex-shrink-0">
         <a href="admin-dashboard" class="flex items-center gap-3 overflow-hidden">
-            <img src="public/logo.png" alt="Logo" class="h-9 w-auto flex-shrink-0">
+            <img src="<?php echo LOGO_URL; ?>" alt="Logo" class="h-9 w-auto flex-shrink-0">
 
         </a>
         <button type="button" onclick="toggleSidebarCollapse()" class="hidden lg:flex items-center justify-center w-7 h-7 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-700 transition cursor-pointer flex-shrink-0" title="Collapse sidebar">

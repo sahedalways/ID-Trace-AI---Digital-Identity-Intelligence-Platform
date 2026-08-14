@@ -22,7 +22,7 @@
             <!-- Brand Column -->
             <div class="md:col-span-4 space-y-5">
                 <div class="inline-flex items-center rounded-xl bg-white px-4 py-2.5 shadow-lg shadow-black/20">
-                    <img src="public/logo.png" alt="Identity Search AI Logo" class="h-9 w-auto">
+                    <img src="<?php echo LOGO_URL; ?>" alt="Identity Search AI Logo" class="h-9 w-auto">
                 </div>
                 <p class="text-sm text-slate-300 font-medium leading-relaxed max-w-xs">
                     AI-powered digital identity intelligence platform. Analyze public footprints and generate comprehensive reports.

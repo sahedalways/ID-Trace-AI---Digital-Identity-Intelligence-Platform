@@ -769,7 +769,7 @@ $portal_bonus_type = getGlobalBonusType($pdo);
         <div class="absolute inset-0 -z-10" style="background: linear-gradient(180deg, #ffffff 0%, #F0F8FF 40%, #EAF5FF 60%, #FFFFFF 100%);"></div>
         <div class="text-center">
             <div class="flex items-center justify-center gap-2 mb-2">
-                <img src="<?php echo BASE_URL; ?>public/logo.png" alt="Identity Search AI Logo" class="h-12 w-auto">
+                <img src="<?php echo LOGO_URL; ?>" alt="Identity Search AI Logo" class="h-12 w-auto">
             </div>
             &copy; 2026 Identity Search AI Affiliate Portal. All rights reserved.
         </div>

@@ -129,7 +129,7 @@ unset($_SESSION['test_error'], $_SESSION['test_http_code'], $_SESSION['test_head
     <footer class="relative overflow-hidden w-full border-t border-gray-200 py-6 text-center text-xs text-gray-700 font-semibold">
         <div class="absolute inset-0 -z-10" style="background: linear-gradient(180deg, #ffffff 0%, #F0F8FF 40%, #EAF5FF 60%, #FFFFFF 100%);"></div>
         <div class="flex items-center justify-center gap-2 mb-2">
-            <img src="public/logo.png" alt="Identity Search AI Logo" class="h-12 w-auto">
+            <img src="<?php echo LOGO_URL; ?>" alt="Identity Search AI Logo" class="h-12 w-auto">
         </div>
         &copy; <?= date('Y'); ?> Identity Search AI Affiliate Portal. Debug Matrix Node.
     </footer>
