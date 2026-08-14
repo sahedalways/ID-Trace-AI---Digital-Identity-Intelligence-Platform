@@ -245,114 +245,114 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </p>
         </section>
 
-        <!-- BILLING INQUIRIES -->
-        <section class="max-w-4xl mx-auto mt-12 onload-anim onload-delay-300">
+        <!-- BILLING INQUIRIES + CONTACT GRID -->
+        <section class="max-w-6xl mx-auto mt-12 mb-20">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
 
-            <!-- Section header -->
-            <div class="text-center mb-8">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 text-xs font-semibold text-indigo-700 tracking-wide shadow-sm">
-                    <i class="fa-solid fa-credit-card"></i>
-                    Billing Inquiries
-                </div>
-                <h2 class="mt-4 text-2xl sm:text-3xl font-black tracking-tight text-black">Questions about your membership plan?</h2>
-                <p class="mt-3 text-sm sm:text-base text-gray-600 font-semibold max-w-2xl mx-auto leading-relaxed">
-                    Contact a member services representative who can explain your membership plan and assist you with any billing questions.
-                </p>
-            </div>
+                <!-- LEFT: Billing inquiries (sticky on scroll) -->
+                <div class="space-y-6 lg:sticky lg:top-20 lg:self-start onload-anim onload-delay-300">
 
-            <!-- Charge descriptor strip -->
-            <div class="relative bg-white/80 backdrop-blur rounded-3xl border border-gray-200 p-6 sm:p-8 shadow-xl ring-1 ring-black/5 overflow-hidden mb-6">
-                <div class="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-[#0072bc] via-blue-400 to-[#0072bc]"></div>
-                <div class="flex items-start sm:items-center gap-4">
-                    <div class="w-11 h-11 rounded-2xl bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center text-lg shrink-0">
-                        <i class="fa-solid fa-receipt"></i>
-                    </div>
+                    <!-- Billing header -->
                     <div>
-                        <h3 class="text-base font-black tracking-tight text-black">Charges on your bank card statement</h3>
-                        <p class="text-xs font-semibold text-gray-500 mt-1">Charges may appear as any of the following:</p>
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 text-xs font-semibold text-indigo-700 tracking-wide shadow-sm">
+                            <i class="fa-solid fa-credit-card"></i>
+                            Billing Inquiries
+                        </div>
+                        <h2 class="mt-4 text-2xl sm:text-3xl font-black tracking-tight text-black">Questions about your membership plan?</h2>
+                        <p class="mt-3 text-sm sm:text-base text-gray-600 font-semibold leading-relaxed">
+                            Contact a member services representative who can explain your membership plan and assist you with any billing questions.
+                        </p>
                     </div>
-                </div>
-                <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div class="flex items-center gap-3 rounded-2xl border border-gray-100 bg-slate-50 px-5 py-4">
-                        <div class="w-9 h-9 rounded-xl bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center text-sm shrink-0">
-                            <i class="fa-solid fa-building-columns"></i>
-                        </div>
-                        <div>
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wide">Descriptor 1</p>
-                            <p class="text-sm font-extrabold text-black mt-0.5 tracking-wide">IDENTITY SEARCH AI</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3 rounded-2xl border border-gray-100 bg-slate-50 px-5 py-4">
-                        <div class="w-9 h-9 rounded-xl bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center text-sm shrink-0">
-                            <i class="fa-solid fa-globe"></i>
-                        </div>
-                        <div>
-                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wide">Descriptor 2</p>
-                            <p class="text-sm font-extrabold text-black mt-0.5 tracking-wide">IDENTITYSEARCH.AI</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Info cards grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                <!-- Mailing address -->
-                <div class="relative bg-white/80 backdrop-blur rounded-3xl border border-gray-200 p-6 sm:p-7 shadow-xl ring-1 ring-black/5 overflow-hidden">
-                    <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#0072bc] via-blue-400 to-[#0072bc]"></div>
-                    <div class="flex items-center gap-4">
-                        <div class="w-11 h-11 rounded-2xl bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center text-lg shrink-0">
-                            <i class="fa-solid fa-location-dot"></i>
-                        </div>
-                        <h3 class="text-base font-black tracking-tight text-black">Mailing Address</h3>
-                    </div>
-                    <div class="mt-5 rounded-2xl bg-slate-50 border border-gray-100 p-5">
-                        <p class="text-sm font-extrabold text-black">Cpabossaffiliate LLC</p>
-                        <p class="text-sm font-semibold text-gray-600 mt-1">30 N Gould St Ste R</p>
-                        <p class="text-sm font-semibold text-gray-600">Sheridan, WY 82801</p>
-                    </div>
-                    <p class="mt-4 text-xs font-semibold text-amber-600 flex items-start gap-2 leading-relaxed">
-                        <i class="fa-solid fa-triangle-exclamation mt-0.5"></i>
-                        Please note: we do not accept opt-out requests via mail or email.
-                    </p>
-                </div>
-
-                <!-- Customer care -->
-                <div class="relative bg-white/80 backdrop-blur rounded-3xl border border-gray-200 p-6 sm:p-7 shadow-xl ring-1 ring-black/5 overflow-hidden">
-                    <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#0072bc] via-blue-400 to-[#0072bc]"></div>
-                    <div class="flex items-center gap-4">
-                        <div class="w-11 h-11 rounded-2xl bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center text-lg shrink-0">
-                            <i class="fa-solid fa-headset"></i>
-                        </div>
-                        <h3 class="text-base font-black tracking-tight text-black">Customer Care</h3>
-                    </div>
-                    <div class="mt-5 space-y-3">
-                        <a href="tel:+13074001496" class="flex items-center gap-3 rounded-2xl border border-gray-100 bg-slate-50 px-5 py-4 hover:border-[#0072bc]/40 hover:bg-white hover:shadow-lg transition-all duration-300 group">
-                            <div class="w-9 h-9 rounded-xl bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform duration-300">
-                                <i class="fa-solid fa-phone"></i>
+                    <!-- Charge descriptor card -->
+                    <div class="relative bg-white/80 backdrop-blur rounded-3xl border border-gray-200 p-6 sm:p-7 shadow-xl ring-1 ring-black/5 overflow-hidden">
+                        <div class="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-[#0072bc] via-blue-400 to-[#0072bc]"></div>
+                        <div class="flex items-start sm:items-center gap-4">
+                            <div class="w-11 h-11 rounded-2xl bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center text-lg shrink-0">
+                                <i class="fa-solid fa-receipt"></i>
                             </div>
                             <div>
-                                <p class="text-xs font-bold text-gray-400 uppercase tracking-wide">Contract No.</p>
-                                <p class="text-sm font-extrabold text-black mt-0.5">(307) 400-1496</p>
+                                <h3 class="text-base font-black tracking-tight text-black">Charges on your bank card statement</h3>
+                                <p class="text-xs font-semibold text-gray-500 mt-1">Charges may appear as any of the following:</p>
                             </div>
-                        </a>
-                        <a href="mailto:support@identitysearch.ai" class="flex items-center gap-3 rounded-2xl border border-gray-100 bg-slate-50 px-5 py-4 hover:border-[#0072bc]/40 hover:bg-white hover:shadow-lg transition-all duration-300 group">
-                            <div class="w-9 h-9 rounded-xl bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform duration-300">
-                                <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div class="flex items-center gap-3 rounded-2xl border border-gray-100 bg-slate-50 px-5 py-4">
+                                <div class="w-9 h-9 rounded-xl bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center text-sm shrink-0">
+                                    <i class="fa-solid fa-building-columns"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wide">Descriptor 1</p>
+                                    <p class="text-sm font-extrabold text-black mt-0.5 tracking-wide">IDENTITY SEARCH AI</p>
+                                </div>
                             </div>
-                            <div>
-                                <p class="text-xs font-bold text-gray-400 uppercase tracking-wide">Email</p>
-                                <p class="text-sm font-extrabold text-[#0072bc] mt-0.5 break-all">support@identitysearch.ai</p>
+                            <div class="flex items-center gap-3 rounded-2xl border border-gray-100 bg-slate-50 px-5 py-4">
+                                <div class="w-9 h-9 rounded-xl bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center text-sm shrink-0">
+                                    <i class="fa-solid fa-globe"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wide">Descriptor 2</p>
+                                    <p class="text-sm font-extrabold text-black mt-0.5 tracking-wide">IDENTITYSEARCH.AI</p>
+                                </div>
                             </div>
-                        </a>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Business hours -->
-                <div class="relative bg-white/80 backdrop-blur rounded-3xl border border-gray-200 p-6 sm:p-7 shadow-xl ring-1 ring-black/5 overflow-hidden md:col-span-2">
-                    <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#0072bc] via-blue-400 to-[#0072bc]"></div>
-                    <div class="flex flex-col lg:flex-row lg:items-center gap-6">
-                        <div class="flex items-center gap-4 shrink-0">
+                    <!-- Mailing address -->
+                    <div class="relative bg-white/80 backdrop-blur rounded-3xl border border-gray-200 p-6 sm:p-7 shadow-xl ring-1 ring-black/5 overflow-hidden">
+                        <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#0072bc] via-blue-400 to-[#0072bc]"></div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-11 h-11 rounded-2xl bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center text-lg shrink-0">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <h3 class="text-base font-black tracking-tight text-black">Mailing Address</h3>
+                        </div>
+                        <div class="mt-5 rounded-2xl bg-slate-50 border border-gray-100 p-5">
+                            <p class="text-sm font-extrabold text-black">Cpabossaffiliate LLC</p>
+                            <p class="text-sm font-semibold text-gray-600 mt-1">30 N Gould St Ste R</p>
+                            <p class="text-sm font-semibold text-gray-600">Sheridan, WY 82801</p>
+                        </div>
+                        <p class="mt-4 text-xs font-semibold text-amber-600 flex items-start gap-2 leading-relaxed">
+                            <i class="fa-solid fa-triangle-exclamation mt-0.5"></i>
+                            Please note: we do not accept opt-out requests via mail or email.
+                        </p>
+                    </div>
+
+                    <!-- Customer care -->
+                    <div class="relative bg-white/80 backdrop-blur rounded-3xl border border-gray-200 p-6 sm:p-7 shadow-xl ring-1 ring-black/5 overflow-hidden">
+                        <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#0072bc] via-blue-400 to-[#0072bc]"></div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-11 h-11 rounded-2xl bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center text-lg shrink-0">
+                                <i class="fa-solid fa-headset"></i>
+                            </div>
+                            <h3 class="text-base font-black tracking-tight text-black">Customer Care</h3>
+                        </div>
+                        <div class="mt-5 space-y-3">
+                            <a href="tel:+13074001496" class="flex items-center gap-3 rounded-2xl border border-gray-100 bg-slate-50 px-5 py-4 hover:border-[#0072bc]/40 hover:bg-white hover:shadow-lg transition-all duration-300 group">
+                                <div class="w-9 h-9 rounded-xl bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform duration-300">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wide">Contract No.</p>
+                                    <p class="text-sm font-extrabold text-black mt-0.5">(307) 400-1496</p>
+                                </div>
+                            </a>
+                            <a href="mailto:support@identitysearch.ai" class="flex items-center gap-3 rounded-2xl border border-gray-100 bg-slate-50 px-5 py-4 hover:border-[#0072bc]/40 hover:bg-white hover:shadow-lg transition-all duration-300 group">
+                                <div class="w-9 h-9 rounded-xl bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center text-sm shrink-0 group-hover:scale-110 transition-transform duration-300">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wide">Email</p>
+                                    <p class="text-sm font-extrabold text-[#0072bc] mt-0.5 break-all">support@identitysearch.ai</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Business hours -->
+                    <div class="relative bg-white/80 backdrop-blur rounded-3xl border border-gray-200 p-6 sm:p-7 shadow-xl ring-1 ring-black/5 overflow-hidden">
+                        <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#0072bc] via-blue-400 to-[#0072bc]"></div>
+                        <div class="flex items-center gap-4">
                             <div class="w-11 h-11 rounded-2xl bg-[#0072bc]/10 text-[#0072bc] flex items-center justify-center text-lg shrink-0">
                                 <i class="fa-regular fa-clock"></i>
                             </div>
@@ -361,7 +361,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <p class="text-xs font-semibold text-gray-500 mt-0.5">All times shown in Pacific Standard Time (PST)</p>
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-1">
+                        <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div class="rounded-2xl border border-gray-100 bg-slate-50 px-5 py-4">
                                 <p class="text-xs font-bold text-gray-400 uppercase tracking-wide">Mon – Fri</p>
                                 <p class="text-sm font-extrabold text-black mt-0.5">6:00am – 6:00pm PST</p>
@@ -373,28 +373,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Opt-out banner -->
-            <div class="mt-6 flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between rounded-3xl bg-gradient-to-r from-[#0072bc] to-blue-600 text-white p-6 sm:p-7 shadow-xl shadow-blue-200">
-                <div class="flex items-start gap-4">
-                    <div class="w-11 h-11 rounded-2xl bg-white/15 text-white flex items-center justify-center text-lg shrink-0">
-                        <i class="fa-solid fa-user-shield"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-base font-black tracking-tight text-white">Manage or remove your public records</h3>
-                        <p class="text-xs font-medium text-white/80 mt-1">Opt-out requests are processed securely through our dedicated portal.</p>
-                    </div>
-                </div>
-                <a href="https://identitysearch.ai/opt-out" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-xl bg-white text-[#0072bc] px-6 py-3 text-sm font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 shrink-0">
-                    Go to Opt-Out Portal
-                    <i class="fa-solid fa-arrow-right text-xs"></i>
-                </a>
-            </div>
-        </section>
-
-        <section class="max-w-2xl mx-auto mt-12 mb-20">
-            <div class="space-y-6">
+                <!-- RIGHT: Contact submission -->
+                <div class="space-y-6 onload-anim onload-delay-300">
 
                 <!-- STATUS RESPONSE INTERFACES -->
                         <?php if (!empty($success_message)): ?>
@@ -503,6 +484,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </form>
                     </div>
                 </div>
+
+            <!-- Opt-out banner -->
+            <div class="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-5 justify-between rounded-3xl bg-gradient-to-r from-[#0072bc] to-blue-600 text-white p-6 sm:p-7 shadow-xl shadow-blue-200">
+                <div class="flex items-start gap-4">
+                    <div class="w-11 h-11 rounded-2xl bg-white/15 text-white flex items-center justify-center text-lg shrink-0">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-black tracking-tight text-white">Manage or remove your public records</h3>
+                        <p class="text-xs font-medium text-white/80 mt-1">Opt-out requests are processed securely through our dedicated portal.</p>
+                    </div>
+                </div>
+                <a href="https://identitysearch.ai/opt-out" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-xl bg-white text-[#0072bc] px-6 py-3 text-sm font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 shrink-0">
+                    Go to Opt-Out Portal
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </a>
+            </div>
         </section>
     </main>
 
