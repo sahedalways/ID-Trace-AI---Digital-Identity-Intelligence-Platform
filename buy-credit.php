@@ -44,8 +44,8 @@ $plan_design_meta = [
     <?php include 'head.php'; ?>
     <style>
         body { background-color: #f9fafb !important; color: #111827 !important; }
-        
-        /* Ultra-clean custom radio input styles matching WhatsApp Green branding matrix */
+
+        /* Ultra-clean custom radio input styles matching brand matrix */
         .custom-radio:checked + .plan-card {
             border-color: #0072bc !important;
             background-color: #ffffff;
@@ -61,16 +61,91 @@ $plan_design_meta = [
             background: #0072bc;
             border-radius: 50%;
         }
+
+        @keyframes blobMove1 {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            25% { transform: translateX(-40%) translateY(-20px); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+            75% { transform: translateX(-60%) translateY(10px); }
+        }
+        @keyframes blobMove2 {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(30px, -15px); }
+            66% { transform: translate(-20px, 20px); }
+        }
+        @keyframes blobMove3 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-40px, -20px); }
+        }
+        .blob-1 { animation: blobMove1 18s ease-in-out infinite; }
+        .blob-2 { animation: blobMove2 14s ease-in-out infinite; }
+        .blob-3 { animation: blobMove3 16s ease-in-out infinite; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .onload-anim { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; }
+        .onload-delay-100 { animation-delay: 100ms; }
+        .onload-delay-200 { animation-delay: 200ms; }
+        .onload-delay-300 { animation-delay: 300ms; }
+
+        .navbar-scrolled {
+            background: linear-gradient(to right, #eef5ff 20%, #0072bc 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        #mainNavbar #siteNavbar {
+            background: transparent !important;
+            border-bottom: none !important;
+            box-shadow: none !important;
+        }
+        #siteNavbar a,
+        #siteNavbar button,
+        #siteNavbar .text-black,
+        #siteNavbar .text-slate-400,
+        #siteNavbar .text-\[\#0072bc\] {
+            transition: color 0.35s ease, background-color 0.35s ease, border-color 0.35s ease;
+        }
+        #mainNavbar.navbar-scrolled #siteNavbar a:not(#userDropdownMenu a, #mobileDrawer a),
+        #mainNavbar.navbar-scrolled #siteNavbar button:not(#userDropdownMenu button, #mobileDrawer button),
+        #mainNavbar.navbar-scrolled #siteNavbar .text-black:not(#userDropdownMenu, #mobileDrawer),
+        #mainNavbar.navbar-scrolled #siteNavbar .text-slate-400:not(#userDropdownMenu .text-slate-400, #mobileDrawer .text-slate-400),
+        #mainNavbar.navbar-scrolled #siteNavbar .text-\[\#0072bc\]:not(#userDropdownMenu .text-\[\#0072bc\], #mobileDrawer .text-\[\#0072bc\]) {
+            color: #ffffff !important;
+        }
+        #mainNavbar.navbar-scrolled #siteNavbar a:hover:not(#userDropdownMenu a, #mobileDrawer a),
+        #mainNavbar.navbar-scrolled #siteNavbar button:hover:not(#userDropdownMenu button, #mobileDrawer button, #mobileMenuButton) {
+            color: #ffffff !important;
+        }
+        #mainNavbar.navbar-scrolled #siteNavbar #mobileMenuButton {
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+        #mainNavbar.navbar-scrolled #siteNavbar #mobileMenuButton:hover,
+        #mainNavbar.navbar-scrolled #siteNavbar #userMenuButton:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff !important;
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-[#0072bc] selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-[#0072bc] selection:text-white bg-slate-50 relative">
 
-    <?php include 'navbar.php'; ?>
+    <!-- Sticky Glassmorphic Navbar Container -->
+    <header id="mainNavbar" class="sticky top-0 z-50 bg-transparent transition-all duration-300">
+        <?php include 'navbar.php'; ?>
+    </header>
 
-    <main class="flex-grow max-w-md w-full mx-auto px-4 py-8 flex items-center justify-center">
-        
+    <!-- Full-width Background Decorations -->
+    <div class="absolute inset-x-0 top-0 -z-10 overflow-hidden" style="height: 900px; background: linear-gradient(180deg, #BFE4FD 0%, #FFFFFF 100%);">
+        <div class="blob-1 absolute top-0 left-1/2 w-[900px] h-[900px] bg-[#0072bc]/10 rounded-full blur-3xl opacity-60 -translate-x-1/2 will-change-transform"></div>
+        <div class="blob-2 absolute top-24 -left-20 w-96 h-96 bg-[#0072bc]/15 rounded-full blur-3xl will-change-transform"></div>
+        <div class="blob-3 absolute bottom-0 right-0 w-96 h-96 bg-[#BFE4FD]/50 rounded-full blur-3xl opacity-70 will-change-transform"></div>
+    </div>
+
+    <main class="relative flex-grow max-w-md w-full mx-auto px-4 py-10 flex items-center justify-center">
+
         <!-- Standardized Premium Container Box -->
-        <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm text-left w-full">
+        <div class="bg-white/80 backdrop-blur border border-gray-200 rounded-3xl overflow-hidden shadow-xl ring-1 ring-black/5 text-left w-full onload-anim onload-delay-200">
 
             <div class="p-5 sm:p-6 space-y-5">
                 <div>
@@ -177,6 +252,21 @@ $plan_design_meta = [
     <?php if (file_exists('index_footer.php')) { include 'index_footer.php'; } ?>
 
     <script>
+        // NAVBAR SCROLL GLASS EFFECT
+        document.addEventListener("DOMContentLoaded", () => {
+            const navbar = document.getElementById("mainNavbar");
+            if (!navbar) return;
+            const handleScroll = () => {
+                if (window.scrollY > 20) {
+                    navbar.classList.add("navbar-scrolled");
+                } else {
+                    navbar.classList.remove("navbar-scrolled");
+                }
+            };
+            window.addEventListener("scroll", handleScroll, { passive: true });
+            handleScroll();
+        });
+
         function triggerCtaLoadingState(formEl) {
             const btn = document.getElementById('submitCtaBtn');
             const label = document.getElementById('btnTextLabel');
