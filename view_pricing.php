@@ -99,7 +99,7 @@ $plan_design_meta = [
                 <input type="hidden" name="id" value="<?php echo htmlspecialchars($vid, ENT_QUOTES, 'UTF-8'); ?>">
             <?php endif; ?>
             
-            <div class="space-y-3">
+            <div class="space-y-5">
                 <?php 
                 $isFirst = true;
                 foreach ($plans as $plan): 
@@ -129,7 +129,7 @@ $plan_design_meta = [
                             <?php echo $isFirst ? 'checked' : ''; ?>
                         >
                         
-                        <label for="embed_plan_<?php echo $code; ?>" class="plan-card-wrapper border border-gray-200 rounded-xl p-4 flex flex-col cursor-pointer hover:border-gray-300 transition-all bg-white block relative select-none space-y-3<?php echo !empty($meta['popular']) ? ' ring-2 ring-[#0072bc]/40 border-[#0072bc]' : ''; ?>">
+                        <label for="embed_plan_<?php echo $code; ?>" class="plan-card-wrapper border rounded-xl flex flex-col cursor-pointer transition-all bg-white block relative select-none space-y-3<?php echo !empty($meta['popular']) ? ' p-5 border-[#0072bc] ring-2 ring-[#0072bc]/50 bg-gradient-to-b from-blue-50/70 via-white to-white shadow-[0_10px_35px_rgba(0,114,188,0.18)] scale-[1.02] z-10' : ' p-4 border-gray-200 hover:border-gray-300'; ?>">
                             
                             <div class="flex items-center justify-between gap-4 w-full">
                                 <div class="flex items-center gap-3.5 min-w-0">
