@@ -100,7 +100,7 @@ function getActiveNavClass($current_page, $target_pages) {
                 <a href="affiliate-login" class="px-3.5 py-2 transition-all <?= getActiveNavClass($active_script, ['affiliate-login', 'affiliate-forgot']) ?>">
                     Affiliate Login
                 </a>
-                <a href="affiliate-register" class="bg-gradient-to-r from-[#0072bc] to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold px-4.5 py-2 rounded-xl transition-all shadow-sm shadow-blue-200 text-center tracking-wide ml-1">
+                <a href="affiliate-register" class="bg-gradient-to-r from-[#0072bc] to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold px-4.5 py-2 rounded-xl transition-all text-center tracking-wide ml-1">
                     Affiliate Register
                 </a>
                 
@@ -126,75 +126,120 @@ function getActiveNavClass($current_page, $target_pages) {
                 <?php endif; ?>
                 
                 <div class="relative lg:hidden">
-                    <button type="button" onclick="toggleAffiliateMenu(event)" class="flex items-center justify-center p-2 rounded-xl border border-blue-200/60 hover:bg-white/40 text-slate-700 outline-none transition cursor-pointer">
+                    <button id="affiliateMobileMenuButton" type="button" onclick="toggleAffiliateMenu(event)" class="w-10 h-10 flex items-center justify-center text-slate-700 hover:text-[#0072bc] hover:bg-gray-50 rounded-xl transition border border-transparent focus:outline-none cursor-pointer text-lg" title="Open Navigation Menu">
                         <i class="fa-solid fa-bars text-lg"></i>
                     </button>
-                    
-                    <div id="mobileAffiliateMenu" class="hidden absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-2xl shadow-xl py-2 z-50 text-left font-semibold text-[14px]">
-                        <?php if ($isLoggedIn): ?>
-                            <a href="affiliate-dashboard" class="flex items-center gap-2.5 px-4 py-2.5 text-slate-700 hover:bg-white/50 transition">
-                                <i class="fa-solid fa-chart-pie text-base text-slate-500"></i> Dashboard
-                            </a>
-                            <a href="affiliate-reports" class="flex items-center gap-2.5 px-4 py-2.5 text-slate-700 hover:bg-white/50 transition">
-                                <i class="fa-solid fa-chart-line text-base text-slate-500"></i> Reports
-                            </a>
-                            <a href="affiliate-clients" class="flex items-center gap-2.5 px-4 py-2.5 text-slate-700 hover:bg-white/50 transition">
-                                <i class="fa-solid fa-users text-base text-slate-500"></i> Clients
-                            </a>
-                            <a href="affiliate-payout" class="flex items-center gap-2.5 px-4 py-2.5 text-slate-700 hover:bg-white/50 transition">
-                                <i class="fa-solid fa-wallet text-base text-slate-500"></i> Withdraw
-                            </a>
-                            
-                            <hr class="border-gray-100 my-1.5">
-                            <span class="px-4 py-1.5 text-[10px] font-bold text-gray-400 uppercase tracking-wider block">S2S Tools</span>
-                            
-                            <a href="affiliate-postback" class="flex items-center gap-2.5 pl-6 pr-4 py-2 text-slate-600 hover:bg-white/50 transition">
-                                <i class="fa-solid fa-gear text-base text-slate-500"></i> Setup
-                            </a>
-                            <a href="test-postback" class="flex items-center gap-2.5 pl-6 pr-4 py-2 text-slate-600 hover:bg-white/50 transition">
-                                <i class="fa-solid fa-vial text-base text-slate-500"></i> Test Tool
-                            </a>
-                            <a href="postback-log" class="flex items-center gap-2.5 pl-6 pr-4 py-2 text-slate-600 hover:bg-white/50 transition">
-                                <i class="fa-solid fa-clock-rotate-left text-base text-slate-500"></i> Logs
-                            </a>
-
-                            <hr class="border-gray-100 my-1.5">
-                            <a href="affiliate-logout" class="flex items-center gap-2.5 px-4 py-2.5 text-rose-600 hover:bg-rose-50 transition font-bold">
-                                <i class="fa-solid fa-right-from-bracket text-base"></i> Logout
-                            </a>
-                        <?php else: ?>
-                            <a href="affiliate-login" class="flex items-center gap-2.5 px-4 py-2.5 text-slate-700 hover:bg-white/50 transition">
-                                <i class="fa-solid fa-right-to-bracket text-base text-slate-500"></i> Affiliate Login
-                            </a>
-                            <a href="affiliate-register" class="flex items-center gap-2.5 px-4 py-2.5 text-[#0072bc] hover:bg-blue-50 transition font-bold">
-                                <i class="fa-solid fa-user-plus text-base text-[#0072bc]"></i> Affiliate Register
-                            </a>
-                            
-                            <!-- Mobile Separator & User Portal (Only for Logged Out users) -->
-                            <hr class="border-gray-100 my-1.5">
-                            <a href="index" class="flex items-center gap-2.5 px-4 py-2.5 text-slate-700 hover:bg-gray-50 transition">
-                                <i class="fa-solid fa-house text-base text-gray-400"></i> User Portal
-                            </a>
-                        <?php endif; ?>
-                    </div>
                 </div>
             </div>
 
         </div>
     </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileAffiliateOverlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 lg:hidden opacity-0 pointer-events-none transition-opacity duration-300" onclick="closeAffiliateMenu()"></div>
+
+    <!-- Mobile Menu Drawer -->
+    <div id="mobileAffiliateDrawer" class="fixed top-0 right-0 z-50 h-full w-[85%] max-w-sm bg-white shadow-2xl transform translate-x-full transition-transform duration-300 lg:hidden overflow-y-auto">
+        <div class="flex items-center justify-between px-5 h-16 border-b border-gray-100">
+            <a href="<?= $isLoggedIn ? 'affiliate-dashboard' : 'affiliate-portal' ?>" class="flex items-center">
+                <img src="public/logo.png" alt="Identity Search AI Logo" class="h-10 w-auto">
+            </a>
+            <button type="button" onclick="closeAffiliateMenu()" class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition cursor-pointer">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+        <div class="px-3 py-4 space-y-1 font-semibold text-[14px]">
+            <?php if ($isLoggedIn): ?>
+                <a href="affiliate-dashboard" class="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-gray-50 rounded-xl transition">
+                    <i class="fa-solid fa-chart-pie text-base w-5 text-slate-500"></i> Dashboard
+                </a>
+                <a href="affiliate-reports" class="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-gray-50 rounded-xl transition">
+                    <i class="fa-solid fa-chart-line text-base w-5 text-slate-500"></i> Reports
+                </a>
+                <a href="affiliate-clients" class="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-gray-50 rounded-xl transition">
+                    <i class="fa-solid fa-users text-base w-5 text-slate-500"></i> Clients
+                </a>
+                <a href="affiliate-payout" class="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-gray-50 rounded-xl transition">
+                    <i class="fa-solid fa-wallet text-base w-5 text-slate-500"></i> Withdraw
+                </a>
+
+                <hr class="border-gray-100 my-2">
+                <span class="px-4 py-1.5 text-[10px] font-bold text-gray-400 uppercase tracking-wider block">S2S Tools</span>
+
+                <a href="affiliate-postback" class="flex items-center gap-3 pl-6 pr-4 py-3 text-slate-600 hover:bg-gray-50 rounded-xl transition">
+                    <i class="fa-solid fa-gear text-base w-5 text-slate-500"></i> Setup
+                </a>
+                <a href="test-postback" class="flex items-center gap-3 pl-6 pr-4 py-3 text-slate-600 hover:bg-gray-50 rounded-xl transition">
+                    <i class="fa-solid fa-vial text-base w-5 text-slate-500"></i> Test Tool
+                </a>
+                <a href="postback-log" class="flex items-center gap-3 pl-6 pr-4 py-3 text-slate-600 hover:bg-gray-50 rounded-xl transition">
+                    <i class="fa-solid fa-clock-rotate-left text-base w-5 text-slate-500"></i> Logs
+                </a>
+
+                <hr class="border-gray-100 my-2">
+                <a href="affiliate-logout" class="flex items-center gap-3 px-4 py-3 text-rose-600 hover:bg-rose-50 rounded-xl transition font-bold">
+                    <i class="fa-solid fa-right-from-bracket text-base w-5"></i> Logout
+                </a>
+            <?php else: ?>
+                <a href="affiliate-login" class="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-gray-50 rounded-xl transition">
+                    <i class="fa-solid fa-right-to-bracket text-base w-5 text-slate-500"></i> Affiliate Login
+                </a>
+                <a href="affiliate-register" class="flex items-center gap-3 px-4 py-3 text-[#0072bc] hover:bg-blue-50 rounded-xl transition font-bold">
+                    <i class="fa-solid fa-user-plus text-base w-5 text-[#0072bc]"></i> Affiliate Register
+                </a>
+
+                <hr class="border-gray-100 my-2">
+                <a href="index" class="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-gray-50 rounded-xl transition">
+                    <i class="fa-solid fa-house text-base w-5 text-gray-400"></i> User Portal
+                </a>
+            <?php endif; ?>
+        </div>
+    </div>
 </nav>
 
 <script>
-function toggleAffiliateMenu(event) {
-    event.stopPropagation();
-    const menu = document.getElementById('mobileAffiliateMenu');
-    if (menu) menu.classList.toggle('hidden');
+function openAffiliateMenu() {
+    const drawer = document.getElementById('mobileAffiliateDrawer');
+    const overlay = document.getElementById('mobileAffiliateOverlay');
+    if (!drawer || !overlay) return;
+    drawer.classList.remove('translate-x-full');
+    drawer.classList.add('translate-x-0');
+    overlay.classList.remove('opacity-0', 'pointer-events-none');
+    overlay.classList.add('opacity-100', 'pointer-events-auto');
+    document.body.classList.add('overflow-hidden');
 }
 
-window.addEventListener('click', function() {
-    const mobileMenu = document.getElementById('mobileAffiliateMenu');
-    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-        mobileMenu.classList.add('hidden');
+function closeAffiliateMenu() {
+    const drawer = document.getElementById('mobileAffiliateDrawer');
+    const overlay = document.getElementById('mobileAffiliateOverlay');
+    if (!drawer || !overlay) return;
+    drawer.classList.remove('translate-x-0');
+    drawer.classList.add('translate-x-full');
+    overlay.classList.remove('opacity-100', 'pointer-events-auto');
+    overlay.classList.add('opacity-0', 'pointer-events-none');
+    document.body.classList.remove('overflow-hidden');
+}
+
+function toggleAffiliateMenu(event) {
+    event.stopPropagation();
+    const drawer = document.getElementById('mobileAffiliateDrawer');
+    if (!drawer) return;
+    if (drawer.classList.contains('translate-x-0')) {
+        closeAffiliateMenu();
+    } else {
+        openAffiliateMenu();
+    }
+}
+
+document.getElementById('mobileAffiliateDrawer')?.addEventListener('click', function(e) {
+    if (e.target.closest('a')) {
+        closeAffiliateMenu();
+    }
+});
+
+window.addEventListener('resize', function() {
+    if (window.innerWidth >= 1024) {
+        closeAffiliateMenu();
     }
 });
 

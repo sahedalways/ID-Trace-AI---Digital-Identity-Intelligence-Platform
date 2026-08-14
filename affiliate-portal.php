@@ -154,6 +154,63 @@ $portal_bonus_type = getGlobalBonusType($pdo);
         .blob-3 {
             animation: blobMove3 16s ease-in-out infinite;
         }
+
+        .navbar-scrolled {
+            background: linear-gradient(to right, #eef5ff 20%, #0072bc 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Smooth color transitions for all navbar links, buttons, and icons */
+        #affiliateNavbar a,
+        #affiliateNavbar button,
+        #affiliateNavbar .text-slate-800,
+        #affiliateNavbar .text-slate-900,
+        #affiliateNavbar .text-slate-700,
+        #affiliateNavbar .text-slate-600,
+        #affiliateNavbar .text-slate-500,
+        #affiliateNavbar .text-rose-600 {
+            transition: color 0.35s ease, background-color 0.35s ease, border-color 0.35s ease;
+        }
+
+        /* When scrolled, switch navbar text and icons to white */
+        #mainNavbar.navbar-scrolled #affiliateNavbar a:not(#mobileAffiliateDrawer a),
+        #mainNavbar.navbar-scrolled #affiliateNavbar button:not(#mobileAffiliateDrawer button),
+        #mainNavbar.navbar-scrolled #affiliateNavbar .text-slate-800:not(#mobileAffiliateDrawer .text-slate-800),
+        #mainNavbar.navbar-scrolled #affiliateNavbar .text-slate-900:not(#mobileAffiliateDrawer .text-slate-900),
+        #mainNavbar.navbar-scrolled #affiliateNavbar .text-slate-700:not(#mobileAffiliateDrawer .text-slate-700),
+        #mainNavbar.navbar-scrolled #affiliateNavbar .text-slate-600:not(#mobileAffiliateDrawer .text-slate-600),
+        #mainNavbar.navbar-scrolled #affiliateNavbar .text-slate-500:not(#mobileAffiliateDrawer .text-slate-500),
+        #mainNavbar.navbar-scrolled #affiliateNavbar .text-rose-600:not(#mobileAffiliateDrawer .text-rose-600) {
+            color: #ffffff !important;
+        }
+
+        /* Adjust hover states when scrolled for better contrast on dark gradient */
+        #mainNavbar.navbar-scrolled #affiliateNavbar a:hover:not(#mobileAffiliateDrawer a),
+        #mainNavbar.navbar-scrolled #affiliateNavbar button:hover:not(#mobileAffiliateDrawer button, #affiliateMobileMenuButton) {
+            background-color: rgba(255, 255, 255, 0.12);
+            color: #ffffff !important;
+        }
+
+        /* Mobile hamburger: keep icon white and subtle glass highlight when scrolled */
+        #mainNavbar.navbar-scrolled #affiliateNavbar #affiliateMobileMenuButton {
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        #mainNavbar.navbar-scrolled #affiliateNavbar #affiliateMobileMenuButton:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff !important;
+        }
+
+        /* Adjust mobile hamburger border when scrolled */
+        #mainNavbar.navbar-scrolled #affiliateNavbar .border-blue-200\/60 {
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Adjust separator color when scrolled */
+        #mainNavbar.navbar-scrolled #affiliateNavbar .bg-blue-300 {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
     </style>
 
     <main class="relative w-full grow">
@@ -675,11 +732,9 @@ $portal_bonus_type = getGlobalBonusType($pdo);
 
             const handleScroll = () => {
                 if (window.scrollY > 20) {
-                    navbar.classList.remove("bg-transparent");
-                    navbar.classList.add("bg-[#BFE4FD]/95", "backdrop-blur-md", "shadow-sm");
+                    navbar.classList.add("navbar-scrolled");
                 } else {
-                    navbar.classList.add("bg-transparent");
-                    navbar.classList.remove("bg-[#BFE4FD]/95", "backdrop-blur-md", "shadow-sm");
+                    navbar.classList.remove("navbar-scrolled");
                 }
             };
 

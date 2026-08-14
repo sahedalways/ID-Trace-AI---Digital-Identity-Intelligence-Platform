@@ -193,15 +193,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 color: transparent;
                 animation: spark-sweep 5s linear infinite;
             }
+
+            .navbar-scrolled {
+                background: linear-gradient(to right, #eef5ff 20%, #0072bc 100%);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            }
+
+            /* Smooth color transitions for navbar links, buttons, and icons */
+            #siteNavbar a,
+            #siteNavbar button,
+            #siteNavbar .text-black,
+            #siteNavbar .text-slate-400,
+            #siteNavbar .text-\[\#0072bc\] {
+                transition: color 0.35s ease, background-color 0.35s ease, border-color 0.35s ease;
+            }
+
+            /* When scrolled, switch navbar text and icons to white */
+            #mainNavbar.navbar-scrolled #siteNavbar a:not(#userDropdownMenu a, #mobileDrawer a),
+            #mainNavbar.navbar-scrolled #siteNavbar button:not(#userDropdownMenu button, #mobileDrawer button),
+            #mainNavbar.navbar-scrolled #siteNavbar .text-black:not(#userDropdownMenu, #mobileDrawer),
+            #mainNavbar.navbar-scrolled #siteNavbar .text-slate-400:not(#userDropdownMenu .text-slate-400, #mobileDrawer .text-slate-400),
+            #mainNavbar.navbar-scrolled #siteNavbar .text-\[\#0072bc\]:not(#userDropdownMenu .text-\[\#0072bc\], #mobileDrawer .text-\[\#0072bc\]) {
+                color: #ffffff !important;
+            }
+
+            /* Adjust hover states when scrolled for better contrast on dark gradient */
+            #mainNavbar.navbar-scrolled #siteNavbar a:hover:not(#userDropdownMenu a, #mobileDrawer a),
+            #mainNavbar.navbar-scrolled #siteNavbar button:hover:not(#userDropdownMenu button, #mobileDrawer button, #mobileMenuButton) {
+                color: #ffffff !important;
+            }
+
+            /* Mobile hamburger: keep icon white and subtle glass highlight when scrolled */
+            #mainNavbar.navbar-scrolled #siteNavbar #mobileMenuButton {
+                color: #ffffff !important;
+                border-color: rgba(255, 255, 255, 0.25);
+            }
+
+            #mainNavbar.navbar-scrolled #siteNavbar #mobileMenuButton:hover,
+            #mainNavbar.navbar-scrolled #siteNavbar #userMenuButton:hover {
+                background-color: rgba(255, 255, 255, 0.15);
+                color: #ffffff !important;
+            }
         </style>
         <div class="grid grid-cols-1 xl:grid-cols-2 gap-8 lg:gap-10 xl:gap-24 items-center">
 
             <!-- Left Content -->
             <div class="text-center lg:text-left">
-                <div class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0072bc]/10 border border-[#0072bc]/20 text-xs font-semibold text-[#0072bc] tracking-wide shadow-sm onload-anim">
-                    <span class="w-2 h-2 rounded-full bg-[#0072bc]"></span>
-                    #1 Tool For Identity Intelligence
-                </div>
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0072bc]/10 border border-[#0072bc]/20 text-xs font-semibold text-[#0072bc] tracking-wide shadow-lg shadow-[#0072bc]/10 hover:-translate-y-0.5 hover:shadow-[#0072bc]/25 transition-all duration-300 onload-anim">
+                        <span class="w-2 h-2 rounded-full bg-[#0072bc] shadow-[0_0_8px_rgba(0,114,188,0.9)] animate-pulse"></span>
+                        #1 Tool For Identity Intelligence
+                    </div>
 
                 <h1 class="mt-7 text-3xl sm:text-4xl lg:text-[2.75rem] xl:text-[3.25rem] font-black tracking-tight max-w-3xl leading-[1.08] mx-auto lg:mx-0 onload-anim onload-delay-100">
                     <span class="spark-text">AI Tool Will Find Everything About Anyone Online</span>
@@ -454,11 +495,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             const handleScroll = () => {
                 if (window.scrollY > 20) {
-                    navbar.classList.remove("bg-transparent");
-                    navbar.classList.add("bg-[#BFE4FD]/95", "backdrop-blur-md", "shadow-sm");
+                    navbar.classList.add("navbar-scrolled");
                 } else {
-                    navbar.classList.add("bg-transparent");
-                    navbar.classList.remove("bg-[#BFE4FD]/95", "backdrop-blur-md", "shadow-sm");
+                    navbar.classList.remove("navbar-scrolled");
                 }
             };
 
