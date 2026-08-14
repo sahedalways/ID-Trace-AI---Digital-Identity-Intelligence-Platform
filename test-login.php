@@ -177,13 +177,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </span>
         </div>
 
-        <?php if (!empty($login_error)): ?>
-            <div class="mb-5 p-3.5 rounded-xl border border-red-200 bg-red-50 text-sm font-semibold text-red-700 flex items-start gap-2.5 text-left fade-in-up">
-                <i class="fa-solid fa-circle-exclamation mt-0.5 shrink-0"></i>
-                <span><?php echo htmlspecialchars($login_error); ?></span>
-            </div>
-        <?php endif; ?>
-
         <div class="relative bg-white/80 backdrop-blur rounded-3xl border border-gray-200 p-7 sm:p-8 shadow-xl ring-1 ring-black/5 overflow-hidden">
             <div class="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-[#0072bc] via-blue-400 to-[#0072bc]"></div>
 
@@ -249,6 +242,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php if (file_exists('index_footer.php')) {
         include 'index_footer.php';
     } ?>
+
+    <?php
+    $alert_type    = !empty($login_error) ? 'error' : '';
+    $alert_message = $login_error;
+    include 'alert-modal.php';
+    ?>
 
     <script>
         // NAVBAR SCROLL GLASS EFFECT
