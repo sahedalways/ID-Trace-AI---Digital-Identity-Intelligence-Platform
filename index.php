@@ -241,15 +241,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="text-center lg:text-left">
                     <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0072bc]/10 border border-[#0072bc]/20 text-xs font-semibold text-[#0072bc] tracking-wide shadow-lg shadow-[#0072bc]/10 hover:-translate-y-0.5 hover:shadow-[#0072bc]/25 transition-all duration-300 onload-anim">
                         <span class="w-2 h-2 rounded-full bg-[#0072bc] shadow-[0_0_8px_rgba(0,114,188,0.9)] animate-pulse"></span>
-                        #1 Tool For Identity Intelligence
+                        #1 Tool For Identity Search
                     </div>
 
                 <h1 class="mt-7 text-3xl sm:text-4xl lg:text-[2.75rem] xl:text-[3.25rem] font-black tracking-tight max-w-3xl leading-[1.08] mx-auto lg:mx-0 onload-anim onload-delay-100">
-                    <span class="spark-text">AI Tool Will Find Everything About Anyone Online</span>
+                    <span class="spark-text">AI-Powered Digital Footprint Search Engine</span>
                 </h1>
 
                 <p class="mt-6 text-sm sm:text-base lg:text-lg text-black font-semibold max-w-2xl leading-relaxed mx-auto lg:mx-0 onload-anim onload-delay-200">
-                    Deep scan to trace digital footprint of any person and generate intelligent report
+                    Instantly aggregate and summarize publicly available digital footprints into clear, actionable reports
                 </p>
 
                 <!-- Feature Highlights -->
