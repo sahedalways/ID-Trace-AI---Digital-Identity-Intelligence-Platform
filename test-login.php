@@ -13,7 +13,7 @@ if (session_status() === PHP_SESSION_NONE) {
 // --- ALREADY AUTHENTICATED INTERCEPTOR ---
 // If the tester is already signed in, route them straight into the user panel
 if (isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true && isset($_SESSION['user_id'])) {
-    header("Location: " . BASE_URL . "index");
+    header("Location: " . BASE_URL . "my-plan");
     exit;
 }
 
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Record login fingerprint (IP, device, browser, user agent)
         recordLoginSession($pdo, $user['id']);
 
-        header("Location: " . BASE_URL . "index");
+        header("Location: " . BASE_URL . "my-plan");
         exit;
     } catch (Exception $e) {
         $_SESSION['test_login_error'] = "System error during authentication: " . $e->getMessage();
