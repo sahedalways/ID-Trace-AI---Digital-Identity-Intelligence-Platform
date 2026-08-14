@@ -123,6 +123,33 @@ try {
         }
     }
 
+    // 3. FALLBACK RESOLUTION: If the Stripe payload could not be retrieved (e.g. a
+    //    test/demo subscription marker), derive subscription state from the persisted
+    //    database validity window so subscribed users still see an active status.
+    if (!empty($user['stripe_subscription_id']) && !$subscription) {
+        if (!empty($user['validity'])) {
+            $validity_ts = strtotime($user['validity']);
+            if ($validity_ts !== false && $validity_ts >= strtotime(date('Y-m-d'))) {
+                $subscription_status = 'active';
+                $next_charge_date    = date('M d, Y', $validity_ts);
+            }
+        }
+        if (!empty($user['plan'])) {
+            $plan_stmt = $pdo->prepare("SELECT `price`, `validity` FROM `plans` WHERE `name` = ? LIMIT 1");
+            $plan_stmt->execute([$user['plan']]);
+            $plan_data = $plan_stmt->fetch(PDO::FETCH_ASSOC);
+            if ($plan_data) {
+                $plan_amount = number_format((float)$plan_data['price'], 2);
+                $plan_days   = (int)$plan_data['validity'];
+                if ($plan_days == 30)          $plan_frequency = 'Monthly';
+                elseif ($plan_days == 90)      $plan_frequency = 'Quarterly';
+                elseif ($plan_days == 180)     $plan_frequency = 'Biannual';
+                elseif ($plan_days == 365)     $plan_frequency = 'Yearly';
+                else                           $plan_frequency = 'Every ' . $plan_days . ' Days';
+            }
+        }
+    }
+
     if ($last_charge_date === 'N/A' && !empty($user['created_at'])) {
         $last_charge_date = date('M d, Y', strtotime($user['created_at']));
     }
