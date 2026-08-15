@@ -83,7 +83,7 @@ try {
             $tx_query = "INSERT INTO `transactions` (`tid`, `cid`, `stripe_invoice_id`, `uid`, `plan`, `cardholder_name`, `country`, `street`, `zip`, `status`, `created_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'succeeded', NOW())";
             $pdo->prepare($tx_query)->execute([
                 $unique_tid, $affiliate_cid, $stripe_invoice_id, $user_id, $plan_name, $cardholder_name,
-                $user['country'] ?? 'XX', $user['street'] ?? '', $user['zip'] ?? ''
+                $user['country'] ?? '', $user['street'] ?? '', $user['zip'] ?? ''
             ]);
         } catch (PDOException $e) {
             if ($e->getCode() == 23000 || strpos($e->getMessage(), '1062') !== false) {

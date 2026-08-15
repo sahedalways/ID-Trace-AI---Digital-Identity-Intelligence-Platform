@@ -74,7 +74,18 @@ if (empty($country_matrix) || !is_array($country_matrix)) {
     $country_matrix = ['BD' => 'Bangladesh', 'US' => 'United States', 'GB' => 'United Kingdom', 'CA' => 'Canada', 'AU' => 'Australia'];
 }
 
-// 4. Handle Stripe Cloud Handshake with Advanced Redundancy Cleanup and Profile Generation
+// 4. Normalize billing country so Stripe never receives an invalid/empty ISO code.
+//    Invalid placeholders (e.g. 'XX') or missing values fall back to the visitor's
+//    Cloudflare country, then to a safe default, so the country dropdown always
+//    has a valid pre-selection and the Stripe customer record stays clean.
+if (empty($saved_country) || !isset($country_matrix[$saved_country])) {
+    $saved_country = isset($_SERVER['HTTP_CF_IPCOUNTRY']) ? strtoupper(trim($_SERVER['HTTP_CF_IPCOUNTRY'])) : '';
+    if (empty($saved_country) || !isset($country_matrix[$saved_country])) {
+        $saved_country = 'US';
+    }
+}
+
+// 5. Handle Stripe Cloud Handshake with Advanced Redundancy Cleanup and Profile Generation
 $api_key = STRIPE_TEST_SECRET_KEY;
 $pub_key = STRIPE_TEST_PUBLISHABLE_KEY;
 $stripe_customer_id = $ud['stripe_customer_id'] ?? '';
@@ -125,26 +136,44 @@ try {
         ], $api_key);
     }
 
+    // REUSABLE INCOMPLETE SUBSCRIPTION RESOLUTION: If a previous checkout attempt left an
+    // incomplete subscription for the same plan whose payment intent is still confirmable,
+    // reuse it instead of cancelling on every page load. This prevents the flood of canceled
+    // payment intents and protects in-flight 3DS attempts from being wiped by a refresh.
+    $sub_res = null;
     $existing_subs = stripeCoreCall("subscriptions?customer=" . $stripe_customer_id . "&status=incomplete", [], $api_key, 'GET');
     if (isset($existing_subs['data']) && is_array($existing_subs['data'])) {
-        foreach ($existing_subs['data'] as $old_incomplete_sub) {
-            stripeCoreCall("subscriptions/" . $old_incomplete_sub['id'], [], $api_key, 'DELETE');
+        foreach ($existing_subs['data'] as $candidate_sub) {
+            $candidate_price = $candidate_sub['items']['data'][0]['price']['id'] ?? '';
+            if ($candidate_price !== $plan['stripe_price_id']) {
+                stripeCoreCall("subscriptions/" . $candidate_sub['id'], [], $api_key, 'DELETE');
+                continue;
+            }
+            $expand_sub = stripeCoreCall("subscriptions/" . $candidate_sub['id'] . "?expand[0]=latest_invoice.payment_intent", [], $api_key, 'GET');
+            $pi_status = $expand_sub['latest_invoice']['payment_intent']['status'] ?? '';
+            if (in_array($pi_status, ['requires_payment_method', 'requires_action'], true)) {
+                $sub_res = $expand_sub;
+                break;
+            }
+            stripeCoreCall("subscriptions/" . $candidate_sub['id'], [], $api_key, 'DELETE');
         }
     }
 
-    $sub_res = stripeCoreCall('subscriptions', [
-        'customer' => $stripe_customer_id,
-        'items' => [['price' => $plan['stripe_price_id']]],
-        'payment_behavior' => 'default_incomplete',
-        'payment_settings' => ['save_default_payment_method' => 'on_subscription'],
-        'metadata' => [
-            'cardholder_name' => $saved_name,
-            'street'          => $saved_street,
-            'zip'             => $saved_zip,
-            'country'         => $saved_country
-        ],
-        'expand' => ['latest_invoice.payment_intent']
-    ], $api_key);
+    if (!$sub_res) {
+        $sub_res = stripeCoreCall('subscriptions', [
+            'customer' => $stripe_customer_id,
+            'items' => [['price' => $plan['stripe_price_id']]],
+            'payment_behavior' => 'default_incomplete',
+            'payment_settings' => ['save_default_payment_method' => 'on_subscription'],
+            'metadata' => [
+                'cardholder_name' => $saved_name,
+                'street'          => $saved_street,
+                'zip'             => $saved_zip,
+                'country'         => $saved_country
+            ],
+            'expand' => ['latest_invoice.payment_intent']
+        ], $api_key);
+    }
 
     $client_secret = $sub_res['latest_invoice']['payment_intent']['client_secret'] ?? die("Unable duly to generate verification tokens.");
 } catch (Exception $e) {
@@ -292,7 +321,7 @@ $billing_cycle_text = $billing_intervals[$plan['name']] ?? 'every ' . $plan['val
                     </div>
                     <div class="space-y-1">
                         <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Country Jurisdiction *</label>
-                        <select id="billing_country" class="form-input cursor-pointer">
+                        <select id="billing_country" required class="form-input cursor-pointer">
                             <option value="">Select Target Country</option>
                             <?php foreach ($country_matrix as $iso_key => $country_name): ?>
                                 <option value="<?php echo $iso_key; ?>" <?php echo ($saved_country === $iso_key || (empty($saved_country) && $iso_key === 'BD')) ? 'selected' : ''; ?>>

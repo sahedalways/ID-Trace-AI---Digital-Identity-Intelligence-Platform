@@ -216,7 +216,24 @@
             submitBtn.classList.add('hidden');
         });
 
+        function formatStripeError(error) {
+            if (!error) return "An unexpected error occurred. Please refresh and try again.";
+            const code = error.code;
+            const declineCode = error.decline_code;
+            if (code === 'card_declined' && (declineCode === 'generic_decline' || declineCode === 'fraudulent' || declineCode === 'not_permitted' || declineCode === 'do_not_honor')) {
+                return "This transaction was declined by our payment security system or your card issuer. Please try another card or contact your bank for assistance.";
+            }
+            if (code === 'card_declined') {
+                return "Your card was declined by the issuer. Please check the card details or use a different payment method.";
+            }
+            return error.message || "An unexpected error occurred. Please refresh and try again.";
+        }
+
         requestInstance.on('paymentmethod', async (ev) => {
+            if (!validateBillingDetailsFormBlock()) {
+                ev.complete('fail');
+                return;
+            }
             if (!acceptTermsValidation()) {
                 ev.complete('fail');
                 return;
@@ -237,13 +254,13 @@
 
             if (error) {
                 ev.complete('fail');
-                errorConsole.textContent = error.message;
+                errorConsole.textContent = formatStripeError(error);
             } else {
                 ev.complete('success');
                 if (paymentIntent.status === "requires_action") {
                     const { error: actError, paymentIntent: actIntent } = await stripe.confirmCardPayment("<?php echo trim($client_secret); ?>");
                     if (actError) {
-                        errorConsole.textContent = actError.message;
+                        errorConsole.textContent = formatStripeError(actError);
                     } else if (actIntent.status === "succeeded") {
                         window.location.href = successBase + "?payment_intent=" + encodeURIComponent(actIntent.id) + "&plan=<?php echo urlencode($plan_name); ?>&id=<?php echo urlencode($vid); ?>&c_name=" + encodeURIComponent(cardName) + "&c_country=" + encodeURIComponent(country) + "&c_street=" + encodeURIComponent(street) + "&c_zip=" + encodeURIComponent(zip);
                     }
@@ -269,6 +286,12 @@
             if (currentPaymentMethodMode !== 'card') return;
 
             if (!acceptTermsValidation()) return;
+            if (!validateBillingDetailsFormBlock()) {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+                btnText.textContent = "Complete Checkout";
+                return;
+            }
 
             submitBtn.disabled = true;
             submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
@@ -297,7 +320,7 @@
             });
 
             if (error) {
-                errorConsole.textContent = error.message;
+                errorConsole.textContent = formatStripeError(error);
                 submitBtn.disabled = false;
                 submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
                 btnText.textContent = "Complete Checkout";

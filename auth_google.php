@@ -81,8 +81,11 @@ if (isset($_GET['code'])) {
     $name   = trim($user_data['name'] ?? '');
     $avatar = trim($user_data['picture'] ?? ''); 
     
-    // Capture physical location via Cloudflare headers (Matches your OTP flow)
-    $country = isset($_SERVER['HTTP_CF_IPCOUNTRY']) ? strtoupper(trim($_SERVER['HTTP_CF_IPCOUNTRY'])) : 'XX';
+    // Capture physical location via Cloudflare headers (Matches your OTP flow). Default to NULL when unavailable/invalid.
+    $country = isset($_SERVER['HTTP_CF_IPCOUNTRY']) ? strtoupper(trim($_SERVER['HTTP_CF_IPCOUNTRY'])) : null;
+    if ($country === 'XX' || empty($country)) {
+        $country = null;
+    }
 
     try {
         // 1. Check if the user email signature already sits inside the table matrix

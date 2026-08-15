@@ -171,8 +171,11 @@ if (isset($_GET['action'])) {
             exit;
         }
 
-        // Capture client location via Cloudflare headers. Default to 'XX' for local servers.
-        $country = isset($_SERVER['HTTP_CF_IPCOUNTRY']) ? strtoupper(trim($_SERVER['HTTP_CF_IPCOUNTRY'])) : 'XX';
+        // Capture client location via Cloudflare headers. Default to NULL when unavailable/invalid.
+        $country = isset($_SERVER['HTTP_CF_IPCOUNTRY']) ? strtoupper(trim($_SERVER['HTTP_CF_IPCOUNTRY'])) : null;
+        if ($country === 'XX' || empty($country)) {
+            $country = null;
+        }
 
         try {
             // TRACKING INTERCEPT: Pull tracking code from background session (populated by head.php)
