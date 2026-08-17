@@ -101,7 +101,7 @@ function stripeCoreCall($endpoint, $postData, $apiKey, $customMethod = null) {
         curl_setopt($ch, CURLOPT_POST, true);
     }
     
-    if (!empty($postData)) {
+    if (!empty($postData) && (!$customMethod || $customMethod !== 'GET')) {
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
     }
     
@@ -178,7 +178,7 @@ try {
         }
     }
 
-    if (!$sub_res) {
+    if (!$sub_res || !isset($sub_res['id']) || isset($sub_res['error'])) {
         $sub_res = stripeCoreCall('subscriptions', [
             'customer' => $stripe_customer_id,
             'items' => [['price' => $plan['stripe_price_id']]],
@@ -206,41 +206,55 @@ try {
     }
 
     // Safely extract client_secret from subscription response
-    if (isset($sub_res['latest_invoice']) && isset($sub_res['latest_invoice']['payment_intent'])) {
-        $client_secret = $sub_res['latest_invoice']['payment_intent']['client_secret'] ?? '';
-    } else {
-        // Fallback: try to find client_secret from the raw response
-        $client_secret = '';
-        if (isset($sub_res['id'])) {
-            $pi_ch = curl_init("https://api.stripe.com/v1/payment_intents?subscription=" . $sub_res['id']);
-            curl_setopt($pi_ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($pi_ch, CURLOPT_USERPWD, $api_key . ":");
-            $pi_res = json_decode(curl_exec($pi_ch), true);
-            curl_close($pi_ch);
-            if (isset($pi_res['data']) && is_array($pi_res['data']) && count($pi_res['data']) > 0) {
-                $client_secret = $pi_res['data'][0]['client_secret'] ?? '';
-            }
-        }
+    $client_secret = '';
+    if (isset($sub_res['latest_invoice']['payment_intent']['client_secret'])) {
+        $client_secret = $sub_res['latest_invoice']['payment_intent']['client_secret'];
     }
 
-    // Last resort: fetch the latest invoice directly and finalize it to get a client_secret
+    // If client_secret is still empty, ensure invoice is finalized (creates payment_intent)
     if (empty($client_secret) && isset($sub_res['latest_invoice']['id'])) {
         $inv_id = $sub_res['latest_invoice']['id'];
-        stripeCoreCall("invoices/" . $inv_id . "/finalize", [], $api_key);
-        $inv_ch = curl_init("https://api.stripe.com/v1/invoices/" . $inv_id . "?expand[]=payment_intent");
-        curl_setopt($inv_ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($inv_ch, CURLOPT_USERPWD, $api_key . ":");
-        $inv_res = json_decode(curl_exec($inv_ch), true);
-        curl_close($inv_ch);
-        if (isset($inv_res['payment_intent']['client_secret'])) {
-            $client_secret = $inv_res['payment_intent']['client_secret'];
+        $inv_status = $sub_res['latest_invoice']['status'] ?? '';
+        if ($inv_status === 'draft') {
+            stripeCoreCall("invoices/" . $inv_id . "/finalize", [], $api_key);
+        }
+        $inv_detail = stripeCoreCall("invoices/" . $inv_id . "?expand[]=payment_intent", [], $api_key, 'GET');
+        if (!empty($inv_detail['payment_intent']['client_secret'])) {
+            $client_secret = $inv_detail['payment_intent']['client_secret'];
         }
     }
 
-    // Absolute last resort: fetch subscription again with full expand
+    // Fallback 1: find payment_intent linked to subscription
     if (empty($client_secret) && isset($sub_res['id'])) {
-        $final_sub = stripeCoreCall("subscriptions/" . $sub_res['id'] . "?expand[0]=latest_invoice.payment_intent", [], $api_key, 'GET');
-        $client_secret = $final_sub['latest_invoice']['payment_intent']['client_secret'] ?? '';
+        $pi_list = stripeCoreCall("payment_intents?subscription=" . $sub_res['id'] . "&limit=1", [], $api_key, 'GET');
+        if (!empty($pi_list['data'][0]['client_secret'])) {
+            $client_secret = $pi_list['data'][0]['client_secret'];
+        }
+    }
+
+    // Fallback 2: re-fetch subscription with expand
+    if (empty($client_secret) && isset($sub_res['id'])) {
+        $final_sub = stripeCoreCall("subscriptions/" . $sub_res['id'] . "?expand[]=latest_invoice.payment_intent", [], $api_key, 'GET');
+        if (!empty($final_sub['latest_invoice']['payment_intent']['client_secret'])) {
+            $client_secret = $final_sub['latest_invoice']['payment_intent']['client_secret'];
+        }
+    }
+
+    // Fallback 3: create a new payment intent directly
+    if (empty($client_secret) && isset($sub_res['id'])) {
+        $new_pi = stripeCoreCall('payment_intents', [
+            'amount'               => (int)round($plan['price'] * 100),
+            'currency'             => 'usd',
+            'customer'             => $stripe_customer_id,
+            'setup_future_usage'   => 'off_session',
+            'metadata'             => [
+                'subscription_id' => $sub_res['id'],
+                'user_id'         => (string)$user_id,
+            ],
+        ], $api_key);
+        if (!empty($new_pi['client_secret'])) {
+            $client_secret = $new_pi['client_secret'];
+        }
     }
 } catch (Exception $e) {
     die("Stripe Engine Exception: " . $e->getMessage());
