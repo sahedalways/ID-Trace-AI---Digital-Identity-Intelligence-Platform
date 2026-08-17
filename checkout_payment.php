@@ -154,8 +154,15 @@
                     walletTabIcon.className = "fa-brands fa-google text-xs text-[#0072bc]";
                 }
             } else {
+                // Stripe Payment Request not supported - wallet tab hidden,
+                // but card payment still works via card tab
                 walletTab.style.display = 'none';
+                errorConsole.textContent = "Digital Wallet not available on this device. You can pay with credit/debit card instead.";
             }
+        }).catch(function(error) {
+            // Error checking payment methods - fall back to card payment only
+            walletTab.style.display = 'none';
+            errorConsole.textContent = "Error checking payment methods. Card payment still available. " + (error.message || '');
         });
 
         function validateBillingDetailsFormBlock() {
@@ -195,8 +202,9 @@
             submitBtn.classList.remove('hidden');
         });
 
-        walletTab.addEventListener('click', () => {
+walletTab.addEventListener('click', () => {
             if (!validateBillingDetailsFormBlock()) {
+                errorConsole.textContent = "Please fill out all billing details (name, country, address, ZIP) in Step 2 before selecting Digital Wallet.";
                 return; 
             }
             
@@ -213,7 +221,7 @@
             // Deactivate Card: Thin Border Accent
             cardTab.className = "w-full px-4 py-3.5 rounded-xl flex items-center justify-center gap-2.5 font-bold text-sm text-slate-600 bg-emerald-50/40 border border-[#0072bc] hover:bg-emerald-100/60 transition-all duration-200";
             cardTabIcon.className = "fa-solid fa-credit-card text-[#0072bc]";
-
+            
             cardFieldsBlock.classList.add('hidden');
             expressButtonBlock.classList.remove('hidden');
             submitBtn.classList.add('hidden');
