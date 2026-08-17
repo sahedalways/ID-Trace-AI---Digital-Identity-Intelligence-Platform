@@ -77,6 +77,9 @@
                     fontSize: '14px',
                     fontSmoothing: 'antialiased',
                     '::placeholder': { color: '#9ca3af' },
+                    ':-webkit-autofill': {
+                        color: '#111827',
+                    },
                 },
                 invalid: { color: '#ef4444', iconColor: '#ef4444' }
             }
