@@ -66,166 +66,70 @@
 
         let currentPaymentMethodMode = 'card';
 
-        const stripe = Stripe("<?php echo trim($pub_key); ?>");
-        
-        const baseElementsStylesOptions = {
-            style: {
-                base: {
-                    color: '#111827',
-                    fontWeight: '600',
-                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-                    fontSize: '14px',
-                    fontSmoothing: 'antialiased',
-                    '::placeholder': { color: '#9ca3af' },
-                    ':-webkit-autofill': {
-                        color: '#111827',
-                    },
-                },
-                invalid: { color: '#ef4444', iconColor: '#ef4444' }
-            }
-        };
-
-        const elements = stripe.elements({ clientSecret: "<?php echo trim($client_secret); ?>" });
-
-        const cardNumberElement = elements.create('cardNumber', {
-            style: baseElementsStylesOptions.style,
-            showIcon: true
-        });
-        cardNumberElement.mount('#stripeCardNumberTarget');
-
-        const cardExpiryElement = elements.create('cardExpiry', baseElementsStylesOptions);
-        cardExpiryElement.mount('#stripeCardExpiryTarget');
-
-        const cardCvcElement = elements.create('cardCvc', baseElementsStylesOptions);
-        cardCvcElement.mount('#stripeCardCvcTarget');
-
-        cardNumberElement.on('focus', () => {
-            cardNumberWrapper.classList.add('border-[#0072bc]', 'ring-1', 'ring-[#0072bc]');
-        });
-        cardNumberElement.on('blur', () => {
-            cardNumberWrapper.classList.remove('border-[#0072bc]', 'ring-1', 'ring-[#0072bc]');
-        });
-
-        [
-            { el: cardNumberElement, id: '#stripeCardNumberTarget' },
-            { el: cardExpiryElement, id: '#stripeCardExpiryTarget' },
-            { el: cardCvcElement, id: '#stripeCardCvcTarget' }
-        ].forEach(item => {
-            if (item.id !== '#stripeCardNumberTarget') {
-                const wrapper = document.querySelector(item.id);
-                item.el.on('focus', () => wrapper.classList.add('stripe-container-input--focus'));
-                item.el.on('blur', () => wrapper.classList.remove('stripe-container-input--focus'));
-            }
-            item.el.on('change', (e) => {
-                if (e.error) errorConsole.textContent = e.error.message;
-                else errorConsole.textContent = '';
-            });
-        });
-
-        const requestInstance = stripe.paymentRequest({
-            country: 'US',
-            currency: 'usd',
-            total: { label: 'Subscription Payment Plan', amount: Math.round(<?php echo (float)$plan['price']; ?> * 100) },
-            requestPayerName: true,
-            requestPayerEmail: true,
-        });
-
-        const requestButtonWidget = elements.create('paymentRequestButton', {
-            paymentRequest: requestInstance,
-            style: { 
-                paymentRequestButton: { 
-                    theme: 'dark', 
-                    height: '52px', 
-                    type: 'subscribe' 
-                } 
-            }
-        });
-
-        requestInstance.canMakePayment().then(function(result) {
-            if (result) {
-                requestButtonWidget.mount('#stripePaymentRequestExpressTarget');
-                walletTab.disabled = false;
-
-                if (result.applePay) {
-                    walletTabLabel.textContent = "Apple Pay";
-                    walletTabIcon.className = "fa-brands fa-apple text-base text-[#0072bc]";
-                } else {
-                    walletTabLabel.textContent = "Google Pay";
-                    walletTabIcon.className = "fa-brands fa-google text-xs text-[#0072bc]";
-                }
-            } else {
-                // Stripe Payment Request not supported - wallet tab hidden,
-                // but card payment still works via card tab
-                walletTab.style.display = 'none';
-                errorConsole.textContent = "Digital Wallet not available on this device. You can pay with credit/debit card instead.";
-            }
-        }).catch(function(error) {
-            // Error checking payment methods - fall back to card payment only
-            walletTab.style.display = 'none';
-            errorConsole.textContent = "Error checking payment methods. Card payment still available. " + (error.message || '');
-        });
-
-        function validateBillingDetailsFormBlock() {
-            const requiredFieldIds = ['cardholder_name', 'billing_country', 'billing_street', 'billing_zip'];
-            errorConsole.textContent = '';
-            
-            for (let fieldId of requiredFieldIds) {
-                const inputElement = document.getElementById(fieldId);
-                if (!inputElement || !inputElement.value.trim()) {
-                    errorConsole.textContent = "Please fill out all billing details in Step 2 before selecting this payment option.";
-                    inputElement.focus();
-                    inputElement.classList.add('border-red-400');
-                    setTimeout(() => inputElement.classList.remove('border-red-400'), 3000);
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        cardTab.addEventListener('click', () => {
+        function activateCardTab() {
             currentPaymentMethodMode = 'card';
-            
-            // Activate Card: Solid Green (Heavy Border)
             cardTab.className = "w-full px-4 py-3.5 rounded-xl flex items-center justify-center gap-2.5 font-bold text-sm text-white bg-[#0072bc] border-2 border-[#0072bc] transition-all duration-200";
             cardTabIcon.className = "fa-solid fa-credit-card text-white";
-            
-            // Deactivate Wallet: Thin Border Accent
             walletTab.className = "w-full px-4 py-3.5 rounded-xl flex items-center justify-center gap-2.5 font-bold text-sm text-slate-600 bg-emerald-50/40 border border-[#0072bc] hover:bg-emerald-100/60 transition-all duration-200";
             if (walletTabLabel.textContent === "Apple Pay") {
                 walletTabIcon.className = "fa-brands fa-apple text-base text-[#0072bc]";
             } else {
                 walletTabIcon.className = "fa-brands fa-google text-xs text-[#0072bc]";
             }
-
             cardFieldsBlock.classList.remove('hidden');
             expressButtonBlock.classList.add('hidden');
             submitBtn.classList.remove('hidden');
-        });
+            errorConsole.textContent = '';
+        }
 
-walletTab.addEventListener('click', () => {
-            if (!validateBillingDetailsFormBlock()) {
-                errorConsole.textContent = "Please fill out all billing details (name, country, address, ZIP) in Step 2 before selecting Digital Wallet.";
-                return; 
-            }
-            
+        function activateWalletTab() {
+            if (!validateBillingDetailsFormBlock()) return;
             currentPaymentMethodMode = 'wallet';
-            
-            // Activate Wallet: Solid Green (Heavy Border)
             walletTab.className = "w-full px-4 py-3.5 rounded-xl flex items-center justify-center gap-2.5 font-bold text-sm text-white bg-[#0072bc] border-2 border-[#0072bc] transition-all duration-200";
             if (walletTabLabel.textContent === "Apple Pay") {
                 walletTabIcon.className = "fa-brands fa-apple text-base text-white";
             } else {
                 walletTabIcon.className = "fa-brands fa-google text-xs text-white";
             }
-            
-            // Deactivate Card: Thin Border Accent
             cardTab.className = "w-full px-4 py-3.5 rounded-xl flex items-center justify-center gap-2.5 font-bold text-sm text-slate-600 bg-emerald-50/40 border border-[#0072bc] hover:bg-emerald-100/60 transition-all duration-200";
             cardTabIcon.className = "fa-solid fa-credit-card text-[#0072bc]";
-            
             cardFieldsBlock.classList.add('hidden');
             expressButtonBlock.classList.remove('hidden');
             submitBtn.classList.add('hidden');
-        });
+            errorConsole.textContent = '';
+        }
+
+        cardTab.addEventListener('click', activateCardTab);
+        walletTab.addEventListener('click', activateWalletTab);
+
+        function validateBillingDetailsFormBlock() {
+            const requiredFieldIds = ['cardholder_name', 'billing_country', 'billing_street', 'billing_zip'];
+            errorConsole.textContent = '';
+            for (let fieldId of requiredFieldIds) {
+                const inputElement = document.getElementById(fieldId);
+                if (!inputElement || !inputElement.value.trim()) {
+                    errorConsole.textContent = "Please fill out all billing details (name, country, address, ZIP) in Step 2 before selecting this payment option.";
+                    if (inputElement) {
+                        inputElement.focus();
+                        inputElement.classList.add('border-red-400');
+                        setTimeout(() => inputElement.classList.remove('border-red-400'), 3000);
+                    }
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function acceptTermsValidation() {
+            const termsCheckbox = document.getElementById('accept_terms');
+            if (!termsCheckbox) return true;
+            if (!termsCheckbox.checked) {
+                errorConsole.textContent = "Please accept the Terms and Conditions and Privacy Policy to continue.";
+                termsCheckbox.focus();
+                return false;
+            }
+            return true;
+        }
 
         function formatStripeError(error) {
             if (!error) return "An unexpected error occurred. Please refresh and try again.";
@@ -240,69 +144,178 @@ walletTab.addEventListener('click', () => {
             return error.message || "An unexpected error occurred. Please refresh and try again.";
         }
 
-        requestInstance.on('paymentmethod', async (ev) => {
-            if (!validateBillingDetailsFormBlock()) {
-                ev.complete('fail');
-                return;
-            }
-            if (!acceptTermsValidation()) {
-                ev.complete('fail');
-                return;
-            }
+        const clientSecret = "<?php echo trim($client_secret); ?>";
+        const pubKey = "<?php echo trim($pub_key); ?>";
 
-            const cardName = document.getElementById('cardholder_name').value;
-            const country = document.getElementById('billing_country').value;
-            const street = document.getElementById('billing_street').value;
-            const zip = document.getElementById('billing_zip').value;
-            const email = "<?php echo addslashes($checkout_email); ?>";
+        if (!pubKey) {
+            errorConsole.textContent = "Payment system configuration error. Please contact support.";
+            return;
+        }
 
-            const successBase = "<?php echo BASE_URL; ?>success";
+        if (!clientSecret) {
+            errorConsole.textContent = "Unable to initialize payment. Please refresh the page and try again.";
+            return;
+        }
 
-            const { error, paymentIntent } = await stripe.confirmCardPayment(
-                "<?php echo trim($client_secret); ?>",
-                {
-                    payment_method: ev.paymentMethod.id,
-                    receipt_email: email,
-                    billing_details: {
-                        name: cardName,
-                        email: email,
-                        address: {
-                            line1: street,
-                            postal_code: zip,
-                            country: country
-                        }
-                    }
+        try {
+            var stripe = Stripe(pubKey);
+        } catch (e) {
+            errorConsole.textContent = "Payment system failed to load. Please refresh the page.";
+            return;
+        }
+
+        const baseElementsStylesOptions = {
+            style: {
+                base: {
+                    color: '#111827',
+                    fontWeight: '600',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+                    fontSize: '14px',
+                    fontSmoothing: 'antialiased',
+                    '::placeholder': { color: '#9ca3af' },
+                    ':-webkit-autofill': { color: '#111827' },
                 },
-                { handleActions: false }
-            );
+                invalid: { color: '#ef4444', iconColor: '#ef4444' }
+            }
+        };
 
-            if (error) {
-                ev.complete('fail');
-                errorConsole.textContent = formatStripeError(error);
-            } else {
-                ev.complete('success');
-                if (paymentIntent.status === "requires_action") {
-                    const { error: actError, paymentIntent: actIntent } = await stripe.confirmCardPayment("<?php echo trim($client_secret); ?>");
-                    if (actError) {
-                        errorConsole.textContent = formatStripeError(actError);
-                    } else if (actIntent.status === "succeeded") {
-                        window.location.href = successBase + "?payment_intent=" + encodeURIComponent(actIntent.id) + "&plan=<?php echo urlencode($plan_name); ?>&id=<?php echo urlencode($vid); ?>&c_name=" + encodeURIComponent(cardName) + "&c_country=" + encodeURIComponent(country) + "&c_street=" + encodeURIComponent(street) + "&c_zip=" + encodeURIComponent(zip);
+        var elements, cardNumberElement, cardExpiryElement, cardCvcElement;
+        var requestInstance, requestButtonWidget;
+
+        try {
+            elements = stripe.elements({ clientSecret: clientSecret });
+
+            cardNumberElement = elements.create('cardNumber', {
+                style: baseElementsStylesOptions.style,
+                showIcon: true
+            });
+            cardNumberElement.mount('#stripeCardNumberTarget');
+
+            cardExpiryElement = elements.create('cardExpiry', baseElementsStylesOptions);
+            cardExpiryElement.mount('#stripeCardExpiryTarget');
+
+            cardCvcElement = elements.create('cardCvc', baseElementsStylesOptions);
+            cardCvcElement.mount('#stripeCardCvcTarget');
+
+            cardNumberElement.on('focus', () => {
+                cardNumberWrapper.classList.add('border-[#0072bc]', 'ring-1', 'ring-[#0072bc]');
+            });
+            cardNumberElement.on('blur', () => {
+                cardNumberWrapper.classList.remove('border-[#0072bc]', 'ring-1', 'ring-[#0072bc]');
+            });
+
+            [
+                { el: cardExpiryElement, id: '#stripeCardExpiryTarget' },
+                { el: cardCvcElement, id: '#stripeCardCvcTarget' }
+            ].forEach(item => {
+                const wrapper = document.querySelector(item.id);
+                item.el.on('focus', () => wrapper.classList.add('stripe-container-input--focus'));
+                item.el.on('blur', () => wrapper.classList.remove('stripe-container-input--focus'));
+            });
+
+            [cardNumberElement, cardExpiryElement, cardCvcElement].forEach(el => {
+                el.on('change', (e) => {
+                    if (e.error) errorConsole.textContent = e.error.message;
+                    else if (!e.complete) errorConsole.textContent = '';
+                });
+            });
+        } catch (e) {
+            errorConsole.textContent = "Card form failed to load. Please refresh the page.";
+            return;
+        }
+
+        try {
+            requestInstance = stripe.paymentRequest({
+                country: 'US',
+                currency: 'usd',
+                total: { label: 'Subscription Payment Plan', amount: Math.round(<?php echo (float)$plan['price']; ?> * 100) },
+                requestPayerName: true,
+                requestPayerEmail: true,
+            });
+
+            requestInstance.canMakePayment().then(function(result) {
+                if (result) {
+                    requestButtonWidget = elements.create('paymentRequestButton', {
+                        paymentRequest: requestInstance,
+                        style: {
+                            paymentRequestButton: {
+                                theme: 'dark',
+                                height: '52px',
+                                type: 'subscribe'
+                            }
+                        }
+                    });
+                    requestButtonWidget.mount('#stripePaymentRequestExpressTarget');
+                    walletTab.disabled = false;
+                    walletTab.style.display = '';
+
+                    if (result.applePay) {
+                        walletTabLabel.textContent = "Apple Pay";
+                        walletTabIcon.className = "fa-brands fa-apple text-base text-[#0072bc]";
+                    } else {
+                        walletTabLabel.textContent = "Google Pay";
+                        walletTabIcon.className = "fa-brands fa-google text-xs text-[#0072bc]";
                     }
-                } else if (paymentIntent.status === "succeeded") {
-                    window.location.href = successBase + "?payment_intent=" + encodeURIComponent(paymentIntent.id) + "&plan=<?php echo urlencode($plan_name); ?>&id=<?php echo urlencode($vid); ?>&c_name=" + encodeURIComponent(cardName) + "&c_country=" + encodeURIComponent(country) + "&c_street=" + encodeURIComponent(street) + "&c_zip=" + encodeURIComponent(zip);
+                } else {
+                    walletTab.disabled = true;
+                    walletTab.style.display = 'none';
                 }
-            }
-        });
+            }).catch(function() {
+                walletTab.disabled = true;
+                walletTab.style.display = 'none';
+            });
 
-        function acceptTermsValidation() {
-            const termsCheckbox = document.getElementById('accept_terms');
-            if (!termsCheckbox) return true;
-            if (!termsCheckbox.checked) {
-                errorConsole.textContent = "Please accept the Terms and Conditions and Privacy Policy to continue.";
-                termsCheckbox.focus();
-                return false;
-            }
-            return true;
+            requestInstance.on('paymentmethod', async (ev) => {
+                if (!validateBillingDetailsFormBlock()) {
+                    ev.complete('fail');
+                    return;
+                }
+                if (!acceptTermsValidation()) {
+                    ev.complete('fail');
+                    return;
+                }
+
+                const cardName = document.getElementById('cardholder_name').value;
+                const country = document.getElementById('billing_country').value;
+                const street = document.getElementById('billing_street').value;
+                const zip = document.getElementById('billing_zip').value;
+                const email = "<?php echo addslashes($checkout_email); ?>";
+                const successBase = "<?php echo BASE_URL; ?>success";
+
+                const { error, paymentIntent } = await stripe.confirmCardPayment(
+                    clientSecret,
+                    {
+                        payment_method: ev.paymentMethod.id,
+                        receipt_email: email,
+                        billing_details: {
+                            name: cardName,
+                            email: email,
+                            address: { line1: street, postal_code: zip, country: country }
+                        }
+                    },
+                    { handleActions: false }
+                );
+
+                if (error) {
+                    ev.complete('fail');
+                    errorConsole.textContent = formatStripeError(error);
+                } else {
+                    ev.complete('success');
+                    if (paymentIntent.status === "requires_action") {
+                        const { error: actError, paymentIntent: actIntent } = await stripe.confirmCardPayment(clientSecret);
+                        if (actError) {
+                            errorConsole.textContent = formatStripeError(actError);
+                        } else if (actIntent.status === "succeeded") {
+                            window.location.href = successBase + "?payment_intent=" + encodeURIComponent(actIntent.id) + "&plan=<?php echo urlencode($plan_name); ?>&id=<?php echo urlencode($vid); ?>&c_name=" + encodeURIComponent(cardName) + "&c_country=" + encodeURIComponent(country) + "&c_street=" + encodeURIComponent(street) + "&c_zip=" + encodeURIComponent(zip);
+                        }
+                    } else if (paymentIntent.status === "succeeded") {
+                        window.location.href = successBase + "?payment_intent=" + encodeURIComponent(paymentIntent.id) + "&plan=<?php echo urlencode($plan_name); ?>&id=<?php echo urlencode($vid); ?>&c_name=" + encodeURIComponent(cardName) + "&c_country=" + encodeURIComponent(country) + "&c_street=" + encodeURIComponent(street) + "&c_zip=" + encodeURIComponent(zip);
+                    }
+                }
+            });
+        } catch (e) {
+            walletTab.disabled = true;
+            walletTab.style.display = 'none';
         }
 
         form.addEventListener('submit', async (e) => {
@@ -325,20 +338,15 @@ walletTab.addEventListener('click', () => {
             const country = document.getElementById('billing_country').value;
             const street = document.getElementById('billing_street').value;
             const zip = document.getElementById('billing_zip').value;
-
             const successBase = "<?php echo BASE_URL; ?>success";
 
-            const { error, paymentIntent } = await stripe.confirmCardPayment("<?php echo trim($client_secret); ?>", {
+            const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: {
                     card: cardNumberElement,
                     billing_details: {
                         name: cardName,
                         email: "<?php echo addslashes($checkout_email); ?>",
-                        address: {
-                            line1: street,
-                            postal_code: zip,
-                            country: country
-                        }
+                        address: { line1: street, postal_code: zip, country: country }
                     }
                 },
                 receipt_email: "<?php echo addslashes($checkout_email); ?>"
