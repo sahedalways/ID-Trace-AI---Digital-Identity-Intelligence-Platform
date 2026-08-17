@@ -382,10 +382,6 @@ $billing_cycle_text = $billing_intervals[$plan['name']] ?? 'every ' . $plan['val
                 </div>
                 <div class="border border-gray-200 rounded-2xl p-4 bg-white shadow-sm space-y-4">
                     <div class="space-y-1">
-                        <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Cardholder Name *</label>
-                        <input type="text" id="cardholder_name" required class="form-input" placeholder="Name on card" value="<?php echo htmlspecialchars($saved_name); ?>" autocomplete="off">
-                    </div>
-                    <div class="space-y-1">
                         <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Country Jurisdiction *</label>
                         <select id="billing_country" required class="form-input cursor-pointer">
                             <option value="">Select Target Country</option>

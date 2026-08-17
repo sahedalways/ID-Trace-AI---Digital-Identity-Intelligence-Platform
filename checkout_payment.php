@@ -83,21 +83,10 @@
         const expressButtonBlock = document.getElementById('stripePaymentRequestExpressTarget');
         const cardNumberWrapper = document.getElementById('stripeCardNumberWrapper');
 
-        const step2Name = document.getElementById('cardholder_name');
         const step3Name = document.getElementById('step3_cardholder_name');
 
         let currentPaymentMethodMode = 'card';
         let stripeReady = false;
-
-        if (step2Name && step3Name) {
-            step2Name.addEventListener('input', function() {
-                step3Name.value = this.value;
-            });
-            step3Name.addEventListener('input', function() {
-                step2Name.value = this.value;
-            });
-            if (step2Name.value) step3Name.value = step2Name.value;
-        }
 
         function activateCardTab() {
             currentPaymentMethodMode = 'card';
@@ -136,9 +125,7 @@
         walletTab.addEventListener('click', activateWalletTab);
 
         function validateBillingDetailsFormBlock() {
-            const step3NameVal = step3Name ? step3Name.value.trim() : '';
-            const step2NameVal = step2Name ? step2Name.value.trim() : '';
-            const nameVal = step3NameVal || step2NameVal;
+            const nameVal = step3Name ? step3Name.value.trim() : '';
             
             const requiredFields = [
                 { id: 'billing_country', el: document.getElementById('billing_country') },
@@ -147,7 +134,7 @@
             ];
 
             if (!nameVal) {
-                errorConsole.textContent = "Please enter the cardholder name in Step 2 or Step 3.";
+                errorConsole.textContent = "Please enter the cardholder name in Step 3.";
                 if (step3Name) {
                     step3Name.focus();
                     step3Name.classList.add('border-red-400');
@@ -171,9 +158,7 @@
         }
 
         function getCardholderName() {
-            const step3Val = step3Name ? step3Name.value.trim() : '';
-            const step2Val = step2Name ? step2Name.value.trim() : '';
-            return step3Val || step2Val;
+            return step3Name ? step3Name.value.trim() : '';
         }
 
         function acceptTermsValidation() {
