@@ -34,7 +34,7 @@
                     <div id="stripeCardExpiryTarget" class="stripe-container-input"></div>
                 </div>
                 <div class="space-y-1">
-                    <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Security Code</label>
+                    <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">CVC</label>
                     <div id="stripeCardCvcTarget" class="stripe-container-input"></div>
                 </div>
             </div>
