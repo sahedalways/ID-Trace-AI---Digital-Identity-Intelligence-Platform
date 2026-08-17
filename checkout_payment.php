@@ -21,7 +21,12 @@
             </button>
         </div>
 
-        <div id="cardElementsFieldsBlock" class="space-y-4 pt-1">
+        <div id="cardElementsFieldsBlock" class="space-y-4 pt-1 relative" style="min-height: 120px;">
+            <div id="stripeLoadingIndicator" class="absolute inset-0 flex items-center justify-center bg-white/80 rounded-xl z-10">
+                <div class="flex items-center gap-2 text-sm text-gray-400 font-medium">
+                    <i class="fa-solid fa-spinner animate-spin"></i> Loading card form...
+                </div>
+            </div>
             <div class="space-y-1">
                 <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Card Number</label>
                 <div class="w-full border border-gray-200 rounded-xl bg-white transition-all duration-200" id="stripeCardNumberWrapper">
@@ -46,12 +51,22 @@
     </div>
 </div>
 
+<style>
+    #stripeCardNumberTarget iframe,
+    #stripeCardExpiryTarget iframe,
+    #stripeCardCvcTarget iframe {
+        pointer-events: auto !important;
+        opacity: 1 !important;
+        min-height: 20px;
+    }
+</style>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('paymentExecutionForm');
         const submitBtn = document.getElementById('submitPaymentBtn');
         const btnText = document.getElementById('btnText');
         const errorConsole = document.getElementById('card-errors');
+        const loadingIndicator = document.getElementById('stripeLoadingIndicator');
         
         const cardTab = document.getElementById('selectCardTab');
         const cardTabIcon = document.getElementById('cardTabIcon');
@@ -65,6 +80,7 @@
         const cardNumberWrapper = document.getElementById('stripeCardNumberWrapper');
 
         let currentPaymentMethodMode = 'card';
+        let stripeReady = false;
 
         function activateCardTab() {
             currentPaymentMethodMode = 'card';
@@ -144,23 +160,32 @@
             return error.message || "An unexpected error occurred. Please refresh and try again.";
         }
 
+        function hideLoading() {
+            if (loadingIndicator) loadingIndicator.style.display = 'none';
+        }
+
+        function showError(msg) {
+            hideLoading();
+            errorConsole.textContent = msg;
+        }
+
         const clientSecret = "<?php echo trim($client_secret); ?>";
         const pubKey = "<?php echo trim($pub_key); ?>";
 
         if (!pubKey) {
-            errorConsole.textContent = "Payment system configuration error. Please contact support.";
+            showError("Payment system configuration error. Please contact support.");
             return;
         }
 
         if (!clientSecret) {
-            errorConsole.textContent = "Unable to initialize payment. Please refresh the page and try again.";
+            showError("Unable to initialize payment. Please refresh the page and try again.");
             return;
         }
 
         try {
             var stripe = Stripe(pubKey);
         } catch (e) {
-            errorConsole.textContent = "Payment system failed to load. Please refresh the page.";
+            showError("Payment system failed to load. Please refresh the page.");
             return;
         }
 
@@ -197,6 +222,9 @@
             cardCvcElement = elements.create('cardCvc', baseElementsStylesOptions);
             cardCvcElement.mount('#stripeCardCvcTarget');
 
+            hideLoading();
+            stripeReady = true;
+
             cardNumberElement.on('focus', () => {
                 cardNumberWrapper.classList.add('border-[#0072bc]', 'ring-1', 'ring-[#0072bc]');
             });
@@ -219,8 +247,11 @@
                     else if (!e.complete) errorConsole.textContent = '';
                 });
             });
+
+            submitBtn.classList.remove('hidden');
         } catch (e) {
-            errorConsole.textContent = "Card form failed to load. Please refresh the page.";
+            showError("Card form failed to load. Please refresh the page.");
+            submitBtn.classList.add('hidden');
             return;
         }
 

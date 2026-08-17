@@ -222,6 +222,26 @@ try {
             }
         }
     }
+
+    // Last resort: fetch the latest invoice directly and finalize it to get a client_secret
+    if (empty($client_secret) && isset($sub_res['latest_invoice']['id'])) {
+        $inv_id = $sub_res['latest_invoice']['id'];
+        stripeCoreCall("invoices/" . $inv_id . "/finalize", [], $api_key);
+        $inv_ch = curl_init("https://api.stripe.com/v1/invoices/" . $inv_id . "?expand[]=payment_intent");
+        curl_setopt($inv_ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($inv_ch, CURLOPT_USERPWD, $api_key . ":");
+        $inv_res = json_decode(curl_exec($inv_ch), true);
+        curl_close($inv_ch);
+        if (isset($inv_res['payment_intent']['client_secret'])) {
+            $client_secret = $inv_res['payment_intent']['client_secret'];
+        }
+    }
+
+    // Absolute last resort: fetch subscription again with full expand
+    if (empty($client_secret) && isset($sub_res['id'])) {
+        $final_sub = stripeCoreCall("subscriptions/" . $sub_res['id'] . "?expand[0]=latest_invoice.payment_intent", [], $api_key, 'GET');
+        $client_secret = $final_sub['latest_invoice']['payment_intent']['client_secret'] ?? '';
+    }
 } catch (Exception $e) {
     die("Stripe Engine Exception: " . $e->getMessage());
 }
