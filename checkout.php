@@ -205,7 +205,23 @@ try {
         ], $api_key);
     }
 
-    $client_secret = $sub_res['latest_invoice']['payment_intent']['client_secret'] ?? die("Unable duly to generate verification tokens.");
+    // Safely extract client_secret from subscription response
+    if (isset($sub_res['latest_invoice']) && isset($sub_res['latest_invoice']['payment_intent'])) {
+        $client_secret = $sub_res['latest_invoice']['payment_intent']['client_secret'] ?? '';
+    } else {
+        // Fallback: try to find client_secret from the raw response
+        $client_secret = '';
+        if (isset($sub_res['id'])) {
+            $pi_ch = curl_init("https://api.stripe.com/v1/payment_intents?subscription=" . $sub_res['id']);
+            curl_setopt($pi_ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($pi_ch, CURLOPT_USERPWD, $api_key . ":");
+            $pi_res = json_decode(curl_exec($pi_ch), true);
+            curl_close($pi_ch);
+            if (isset($pi_res['data']) && is_array($pi_res['data']) && count($pi_res['data']) > 0) {
+                $client_secret = $pi_res['data'][0]['client_secret'] ?? '';
+            }
+        }
+    }
 } catch (Exception $e) {
     die("Stripe Engine Exception: " . $e->getMessage());
 }
