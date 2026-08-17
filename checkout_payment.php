@@ -96,7 +96,6 @@
                     id="step3_cardholder_name"
                     class="w-full border border-gray-200 rounded-xl bg-white px-4 py-3.5 text-sm font-semibold text-gray-900"
                     placeholder="Name on card"
-                    value="<?php echo htmlspecialchars($saved_name ?? ''); ?>"
                     autocomplete="cc-name">
 
             </div>
