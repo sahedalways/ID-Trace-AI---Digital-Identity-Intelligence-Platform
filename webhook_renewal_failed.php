@@ -6,6 +6,36 @@
 
 $stripe_subscription_id = $object['subscription'] ?? '';
 $stripe_customer_id = $object['customer'] ?? '';
+$stripe_invoice_id = $object['id'] ?? '';
+$amount_paid = isset($object['amount_paid']) ? (float)($object['amount_paid'] / 100) : 0;
+$currency = $object['currency'] ?? 'usd';
+
+// Extract payment failure details
+$last_finalization_error = $object['last_finalization_error'] ?? [];
+$payment_error_code = $last_finalization_error['code'] ?? '';
+$payment_decline_code = $last_finalization_error['decline_code'] ?? '';
+$payment_failure_message = $last_finalization_error['message'] ?? '';
+
+$charges_data = $object['charges']['data'] ?? [];
+if (!empty($charges_data)) {
+    $latest_charge = $charges_data[0] ?? [];
+    if (empty($payment_decline_code)) $payment_decline_code = $latest_charge['failure_code'] ?? '';
+    if (empty($payment_failure_message)) $payment_failure_message = $latest_charge['failure_message'] ?? '';
+}
+
+logStripeWebhookFailure('renewal_payment_failed', [
+    'pi_id'          => $object['payment_intent'] ?? '',
+    'invoice_id'     => $stripe_invoice_id,
+    'customer_id'    => $stripe_customer_id,
+    'subscription_id'=> $stripe_subscription_id,
+    'amount'         => $amount_paid,
+    'currency'       => $currency,
+    'status'         => 'failed',
+    'error_code'     => $payment_error_code,
+    'decline_code'   => $payment_decline_code,
+    'failure_message'=> $payment_failure_message,
+    'event_id'       => $webhook_event_id ?? '',
+]);
 
 try {
     $u_stmt = $pdo->prepare("SELECT `email` FROM `users` WHERE `stripe_subscription_id` = ? OR `stripe_customer_id` = ? LIMIT 1");

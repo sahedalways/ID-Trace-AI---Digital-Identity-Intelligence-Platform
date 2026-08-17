@@ -5,6 +5,47 @@
  */
 
 $stripe_customer_id = $object['customer'] ?? '';
+$stripe_subscription_id = $object['subscription'] ?? '';
+$stripe_invoice_id = $object['id'] ?? '';
+$failure_reason = $object['attempt_count'] ?? 0;
+$amount_paid = isset($object['amount_paid']) ? (float)($object['amount_paid'] / 100) : 0;
+$currency = $object['currency'] ?? 'usd';
+
+// Extract payment failure details from the invoice's last finalization attempt
+$last_finalization_error = $object['last_finalization_error'] ?? [];
+$payment_error_code = $last_finalization_error['code'] ?? '';
+$payment_decline_code = $last_finalization_error['decline_code'] ?? '';
+$payment_error_type = $last_finalization_error['type'] ?? '';
+$payment_failure_message = $last_finalization_error['message'] ?? '';
+
+// Also check the charge object for decline info (if present)
+$charges_data = $object['charges']['data'] ?? [];
+if (!empty($charges_data)) {
+    $latest_charge = $charges_data[0] ?? [];
+    $charge_failure_code = $latest_charge['failure_code'] ?? '';
+    $charge_failure_message = $latest_charge['failure_message'] ?? '';
+    if (empty($payment_decline_code) && !empty($charge_failure_code)) {
+        $payment_decline_code = $charge_failure_code;
+    }
+    if (empty($payment_failure_message) && !empty($charge_failure_message)) {
+        $payment_failure_message = $charge_failure_message;
+    }
+}
+
+// Log the failure for diagnostic purposes
+logStripeWebhookFailure('checkout_payment_failed', [
+    'pi_id'          => $object['payment_intent'] ?? '',
+    'invoice_id'     => $stripe_invoice_id,
+    'customer_id'    => $stripe_customer_id,
+    'subscription_id'=> $stripe_subscription_id,
+    'amount'         => $amount_paid,
+    'currency'       => $currency,
+    'status'         => 'failed',
+    'error_code'     => $payment_error_code,
+    'decline_code'   => $payment_decline_code,
+    'failure_message'=> $payment_failure_message,
+    'event_id'       => $webhook_event_id ?? '',
+]);
 
 try {
     $u_stmt = $pdo->prepare("SELECT `email` FROM `users` WHERE `stripe_customer_id` = ? LIMIT 1");

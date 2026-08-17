@@ -6,6 +6,19 @@
 
 $stripe_subscription_id = $object['subscription'] ?? '';
 $stripe_customer_id = $object['customer'] ?? '';
+$stripe_invoice_id = $object['id'] ?? '';
+$amount_paid = isset($object['amount_paid']) ? (float)($object['amount_paid'] / 100) : 0;
+$currency = $object['currency'] ?? 'usd';
+
+logStripeWebhookFailure('payment_action_required', [
+    'invoice_id'     => $stripe_invoice_id,
+    'customer_id'    => $stripe_customer_id,
+    'subscription_id'=> $stripe_subscription_id,
+    'amount'         => $amount_paid,
+    'currency'       => $currency,
+    'status'         => 'requires_action',
+    'event_id'       => $webhook_event_id ?? '',
+]);
 
 try {
     $u_stmt = $pdo->prepare("SELECT `email` FROM `users` WHERE `stripe_subscription_id` = ? OR `stripe_customer_id` = ? LIMIT 1");

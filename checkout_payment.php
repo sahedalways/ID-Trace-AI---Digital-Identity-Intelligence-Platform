@@ -239,16 +239,29 @@
                 return;
             }
 
-            const cardName = ev.payerName || document.getElementById('cardholder_name').value;
-            const country = document.getElementById('billing_country').value || ev.paymentMethod.billing_details.address.country || 'US';
-            const street = document.getElementById('billing_street').value || ev.paymentMethod.billing_details.address.line1 || '—';
-            const zip = document.getElementById('billing_zip').value || ev.paymentMethod.billing_details.address.postal_code || '—';
+            const cardName = document.getElementById('cardholder_name').value;
+            const country = document.getElementById('billing_country').value;
+            const street = document.getElementById('billing_street').value;
+            const zip = document.getElementById('billing_zip').value;
+            const email = "<?php echo addslashes($checkout_email); ?>";
 
             const successBase = "<?php echo BASE_URL; ?>success";
 
             const { error, paymentIntent } = await stripe.confirmCardPayment(
                 "<?php echo trim($client_secret); ?>",
-                { payment_method: ev.paymentMethod.id },
+                {
+                    payment_method: ev.paymentMethod.id,
+                    receipt_email: email,
+                    billing_details: {
+                        name: cardName,
+                        email: email,
+                        address: {
+                            line1: street,
+                            postal_code: zip,
+                            country: country
+                        }
+                    }
+                },
                 { handleActions: false }
             );
 
@@ -316,7 +329,8 @@
                             country: country
                         }
                     }
-                }
+                },
+                receipt_email: "<?php echo addslashes($checkout_email); ?>"
             });
 
             if (error) {

@@ -16,39 +16,74 @@ $event = null;
 // Your live verified Stripe webhook signing secret key
 $endpoint_secret = STRIPE_WEBHOOK_SECRET;
 
+/**
+ * Logs Stripe webhook payment failure diagnostic info (no sensitive card data).
+ */
+function logStripeWebhookFailure($eventType, $details) {
+    $logEntry = [
+        'timestamp'     => date('c'),
+        'event_type'    => $eventType,
+        'pi_id'         => $details['pi_id'] ?? '',
+        'invoice_id'    => $details['invoice_id'] ?? '',
+        'customer_id'   => $details['customer_id'] ?? '',
+        'subscription_id'=> $details['subscription_id'] ?? '',
+        'amount'        => $details['amount'] ?? '',
+        'currency'      => $details['currency'] ?? '',
+        'status'        => $details['status'] ?? '',
+        'error_code'    => $details['error_code'] ?? '',
+        'decline_code'  => $details['decline_code'] ?? '',
+        'failure_message'=> $details['failure_message'] ?? '',
+        'event_id'      => $details['event_id'] ?? '',
+    ];
+    error_log("[StripeWebhookFailure] " . json_encode($logEntry));
+}
+
 try {
-    if (!empty($endpoint_secret) && !empty($sig_header)) {
-        $sig_parts = explode(',', $sig_header);
-        $timestamp = -1;
-        $signatures = [];
-        foreach ($sig_parts as $part) {
-            $kv = explode('=', $part);
-            if (count($kv) === 2) {
-                if (trim($kv[0]) === 't') $timestamp = (int)$kv[1];
-                if (trim($kv[0]) === 'v1') $signatures[] = trim($kv[1]);
-            }
+    if (empty($endpoint_secret)) {
+        error_log("[StripeWebhook] CRITICAL: STRIPE_WEBHOOK_SECRET is empty — webhook signature verification is disabled. Fix this immediately.");
+        http_response_code(400);
+        echo json_encode(['status' => 'error', 'message' => 'Webhook secret not configured.']);
+        exit;
+    }
+
+    if (empty($sig_header)) {
+        http_response_code(400);
+        echo json_encode(['status' => 'error', 'message' => 'Missing Stripe signature header.']);
+        exit;
+    }
+
+    $sig_parts = explode(',', $sig_header);
+    $timestamp = -1;
+    $signatures = [];
+    foreach ($sig_parts as $part) {
+        $kv = explode('=', $part);
+        if (count($kv) === 2) {
+            if (trim($kv[0]) === 't') $timestamp = (int)$kv[1];
+            if (trim($kv[0]) === 'v1') $signatures[] = trim($kv[1]);
         }
-        
-        $signed_payload = $timestamp . '.' . $payload;
-        $computed_mac = hash_hmac('sha256', $signed_payload, $endpoint_secret);
-        
-        $valid_signature = false;
-        foreach ($signatures as $sig) {
-            if (hash_equals($sig, $computed_mac)) {
-                $valid_signature = true;
-                break;
-            }
+    }
+    
+    $signed_payload = $timestamp . '.' . $payload;
+    $computed_mac = hash_hmac('sha256', $signed_payload, $endpoint_secret);
+    
+    $valid_signature = false;
+    foreach ($signatures as $sig) {
+        if (hash_equals($sig, $computed_mac)) {
+            $valid_signature = true;
+            break;
         }
-        
-        if (!$valid_signature || (time() - $timestamp > 300)) {
-            http_response_code(400);
-            echo json_encode(['status' => 'error', 'message' => 'Signature Validation Intercept Error.']);
-            exit;
-        }
+    }
+    
+    if (!$valid_signature || (time() - $timestamp > 300)) {
+        error_log("[StripeWebhook] Signature validation failed or timestamp expired. IP: " . ($_SERVER['REMOTE_ADDR'] ?? 'unknown'));
+        http_response_code(400);
+        echo json_encode(['status' => 'error', 'message' => 'Signature Validation Intercept Error.']);
+        exit;
     }
     
     $event = json_decode($payload, true);
 } catch (Exception $sigEx) {
+    error_log("[StripeWebhook] Signature verification exception: " . $sigEx->getMessage());
     http_response_code(400);
     echo json_encode(['status' => 'error', 'message' => $sigEx->getMessage()]);
     exit;
@@ -85,6 +120,10 @@ $eventType = $event['type'];
 $object = $event['data']['object'] ?? [];
 $billing_reason = $object['billing_reason'] ?? '';
 $api_key = STRIPE_TEST_SECRET_KEY;
+$webhook_event_id = $event['id'] ?? '';
+
+// Log all incoming webhook events for audit trail
+error_log("[StripeWebhook] Received event: type={$eventType}, id={$webhook_event_id}, object_id=" . ($object['id'] ?? 'unknown'));
 
 switch ($eventType) {
     
@@ -127,6 +166,15 @@ switch ($eventType) {
     case 'customer.subscription.deleted':
         // Includes the Option 1 database guard internally to prevent tier-upgrade wiping interference
         include 'webhook_subscription_deleted.php';
+        break;
+
+    // -------------------------------------------------------------------------
+    // JOB 5: NEW SUBSCRIPTION CREATED (CONFIRMED)
+    // -------------------------------------------------------------------------
+    case 'customer.subscription.created':
+        // Stripe fires this when a subscription transitions to active status.
+        // Useful for tracking initial subscription setup from Checkout Sessions.
+        echo json_encode(['status' => 'success', 'message' => 'Subscription created event received and acknowledged.']);
         break;
 
     // -------------------------------------------------------------------------

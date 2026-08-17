@@ -110,6 +110,8 @@ function stripeCoreCall($endpoint, $postData, $apiKey, $customMethod = null) {
     return $res;
 }
 
+$client_ip = getClientIp();
+
 try {
     if (empty($stripe_customer_id)) {
         $customerPayload = [
@@ -120,6 +122,11 @@ try {
                 'line1' => $saved_street,
                 'postal_code' => $saved_zip,
                 'country' => $saved_country
+            ],
+            'metadata' => [
+                'user_id'     => (string)$user_id,
+                'ip_address'  => $client_ip,
+                'source'      => 'checkout_page',
             ]
         ];
         $cust_res = stripeCoreCall('customers', $customerPayload, $api_key);
@@ -132,30 +139,42 @@ try {
                 'line1' => $saved_street,
                 'postal_code' => $saved_zip,
                 'country' => $saved_country
+            ],
+            'metadata' => [
+                'user_id'     => (string)$user_id,
+                'ip_address'  => $client_ip,
+                'source'      => 'checkout_page',
             ]
         ], $api_key);
     }
 
-    // REUSABLE INCOMPLETE SUBSCRIPTION RESOLUTION: If a previous checkout attempt left an
-    // incomplete subscription for the same plan whose payment intent is still confirmable,
-    // reuse it instead of cancelling on every page load. This prevents the flood of canceled
-    // payment intents and protects in-flight 3DS attempts from being wiped by a refresh.
+    // CLEANUP: Only cancel stale incomplete subscriptions that are truly abandoned
+    // (requires_payment_method = card failed/no card attached). Do NOT cancel in-flight
+    // requires_action subscriptions (e.g. 3DS pending) as that would break a legitimate
+    // checkout attempt in progress.
     $sub_res = null;
     $existing_subs = stripeCoreCall("subscriptions?customer=" . $stripe_customer_id . "&status=incomplete", [], $api_key, 'GET');
     if (isset($existing_subs['data']) && is_array($existing_subs['data'])) {
         foreach ($existing_subs['data'] as $candidate_sub) {
             $candidate_price = $candidate_sub['items']['data'][0]['price']['id'] ?? '';
             if ($candidate_price !== $plan['stripe_price_id']) {
+                // Wrong plan — safe to cancel
                 stripeCoreCall("subscriptions/" . $candidate_sub['id'], [], $api_key, 'DELETE');
                 continue;
             }
             $expand_sub = stripeCoreCall("subscriptions/" . $candidate_sub['id'] . "?expand[0]=latest_invoice.payment_intent", [], $api_key, 'GET');
             $pi_status = $expand_sub['latest_invoice']['payment_intent']['status'] ?? '';
-            if (in_array($pi_status, ['requires_payment_method', 'requires_action'], true)) {
+            if ($pi_status === 'requires_action') {
+                // In-flight 3DS or authentication — reuse this one, don't cancel
                 $sub_res = $expand_sub;
                 break;
             }
-            stripeCoreCall("subscriptions/" . $candidate_sub['id'], [], $api_key, 'DELETE');
+            if ($pi_status === 'requires_payment_method' || $pi_status === 'requires_confirmation') {
+                // Truly failed / no card — safe to cancel
+                stripeCoreCall("subscriptions/" . $candidate_sub['id'], [], $api_key, 'DELETE');
+                continue;
+            }
+            // For any other status, don't cancel — leave it alone
         }
     }
 
@@ -164,12 +183,23 @@ try {
             'customer' => $stripe_customer_id,
             'items' => [['price' => $plan['stripe_price_id']]],
             'payment_behavior' => 'default_incomplete',
-            'payment_settings' => ['save_default_payment_method' => 'on_subscription'],
+            'payment_settings' => [
+                'save_default_payment_method' => 'on_subscription',
+                'statement_descriptor_suffix' => 'IDENTITYSEARCH.AI',
+            ],
+            'payment_method_options' => [
+                'card' => [
+                    'request_three_d_secure' => 'automatic',
+                ],
+            ],
             'metadata' => [
                 'cardholder_name' => $saved_name,
                 'street'          => $saved_street,
                 'zip'             => $saved_zip,
-                'country'         => $saved_country
+                'country'         => $saved_country,
+                'user_id'         => (string)$user_id,
+                'ip_address'      => $client_ip,
+                'plan_name'       => $plan_name,
             ],
             'expand' => ['latest_invoice.payment_intent']
         ], $api_key);

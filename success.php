@@ -1,6 +1,6 @@
 <?php
 /**
- * OSINT Universal Intelligence Console — Verified Success Provisioning Engine
+ * Identity Search AI — Verified Success Provisioning Engine
  * File: success.php
  */
 require_once 'config.php';
@@ -20,12 +20,6 @@ $payment_intent_id = $_GET['payment_intent'] ?? '';
 $plan_name         = $_GET['plan'] ?? '';
 $vid               = $_GET['id'] ?? '';
 
-// Read billing parameters routed securely from checkout.php
-$cardholder_name = $_GET['c_name'] ?? '';
-$country         = $_GET['c_country'] ?? '';
-$street_address  = $_GET['c_street'] ?? '';
-$zip_code        = $_GET['c_zip'] ?? '';
-
 // Capture payment fingerprint (browser, IP, device, user agent) at checkout time
 $pay_ua      = $_SERVER['HTTP_USER_AGENT'] ?? '';
 $pay_ip      = getClientIp();
@@ -37,6 +31,29 @@ $error_message = null;
 
 $should_fire_postback = false;
 $postback_args = [];
+
+/**
+ * Logs payment failure diagnostic info (no sensitive card data).
+ */
+function logStripePaymentFailure($context, $details) {
+    $logEntry = [
+        'timestamp'   => date('c'),
+        'context'     => $context,
+        'user_id'     => $details['user_id'] ?? 'unknown',
+        'pi_id'       => $details['pi_id'] ?? '',
+        'customer_id' => $details['customer_id'] ?? '',
+        'amount'      => $details['amount'] ?? '',
+        'currency'    => $details['currency'] ?? '',
+        'status'      => $details['status'] ?? '',
+        'error_type'  => $details['error_type'] ?? '',
+        'error_code'  => $details['error_code'] ?? '',
+        'decline_code'=> $details['decline_code'] ?? '',
+        'message'     => $details['message'] ?? '',
+        'event_id'    => $details['event_id'] ?? '',
+        'ip_address'  => $details['ip_address'] ?? '',
+    ];
+    error_log("[StripePaymentFailure] " . json_encode($logEntry));
+}
 
 /**
  * Generates a structured 14-character alphanumeric Transaction ID.
@@ -77,6 +94,24 @@ try {
     curl_close($ch);
 
     if (!isset($stripe_intent['status']) || $stripe_intent['status'] !== 'succeeded') {
+        $pi_status = $stripe_intent['status'] ?? 'unknown';
+        $pi_error_code = $stripe_intent['last_payment_error']['code'] ?? '';
+        $pi_decline_code = $stripe_intent['last_payment_error']['decline_code'] ?? '';
+        $pi_error_type = $stripe_intent['last_payment_error']['type'] ?? '';
+        $pi_message = $stripe_intent['last_payment_error']['message'] ?? '';
+        logStripePaymentFailure('success_page_verification_failed', [
+            'user_id'     => $user_id,
+            'pi_id'       => $payment_intent_id,
+            'customer_id' => $stripe_intent['customer'] ?? '',
+            'amount'      => isset($stripe_intent['amount']) ? $stripe_intent['amount'] / 100 : '',
+            'currency'    => $stripe_intent['currency'] ?? '',
+            'status'      => $pi_status,
+            'error_type'  => $pi_error_type,
+            'error_code'  => $pi_error_code,
+            'decline_code'=> $pi_decline_code,
+            'message'     => $pi_message,
+            'ip_address'  => $pay_ip,
+        ]);
         throw new Exception("Payment status failed verification checks.");
     }
 
@@ -102,6 +137,34 @@ try {
 
     $checkout_email = $user_data['email'] ?? '';
     $affiliate_cid = $user_data['cid'] ?? null;
+
+    // Fetch billing details directly from the Stripe PaymentIntent (source of truth)
+    $cardholder_name = $stripe_intent['payment_method_details']['billing_details']['name'] ?? '';
+    $country         = strtoupper(trim($stripe_intent['payment_method_details']['billing_details']['address']['country'] ?? ''));
+    $street_address  = $stripe_intent['payment_method_details']['billing_details']['address']['line1'] ?? '';
+    $zip_code        = $stripe_intent['payment_method_details']['billing_details']['address']['postal_code'] ?? '';
+
+    // Fallback: use billing_details from the top-level of the PI if payment_method_details is absent
+    if (empty($cardholder_name) && !empty($stripe_intent['billing_details'])) {
+        $cardholder_name = $stripe_intent['billing_details']['name'] ?? '';
+        $country         = strtoupper(trim($stripe_intent['billing_details']['address']['country'] ?? ''));
+        $street_address  = $stripe_intent['billing_details']['address']['line1'] ?? '';
+        $zip_code        = $stripe_intent['billing_details']['address']['postal_code'] ?? '';
+    }
+
+    // Final fallback: use saved user profile data if Stripe data is empty
+    if (empty($cardholder_name)) {
+        $cardholder_name = $user_data['cardholder_name'] ?? $user_data['name'] ?? '';
+    }
+    if (empty($country)) {
+        $country = strtoupper(trim($user_data['country'] ?? ''));
+    }
+    if (empty($street_address)) {
+        $street_address = $user_data['street'] ?? '';
+    }
+    if (empty($zip_code)) {
+        $zip_code = $user_data['zip'] ?? '';
+    }
 
     $stripe_subscription_id = '';
     $stripe_invoice_id = null;
@@ -134,7 +197,20 @@ try {
     // 3. SECURE DATABASE WRITE HOOKS & STRIPE CLEANUP SUBSCRIPTION OPERATIONS
     $pdo->beginTransaction();
 
-    // TARGETED STRIPE OPERATIONS: Instantly terminate any old active subscription found locally
+    // IDEMPOTENCY CHECK: If this payment_intent was already processed, skip duplicate work
+    $idempotent_check = $pdo->prepare("SELECT `id` FROM `transactions` WHERE `stripe_invoice_id` = ? LIMIT 1");
+    $idempotent_check->execute([$stripe_invoice_id]);
+    if ($idempotent_check->fetch()) {
+        $pdo->rollBack();
+        // Already processed — redirect silently
+        $_SESSION['last_purchase'] = ['plan' => $plan_name];
+        header("Location: " . ($hasTargetVid ? BASE_URL . "view?id=" . urlencode($vid) : BASE_URL));
+        exit;
+    }
+
+    // TARGETED STRIPE OPERATIONS: Only terminate the specific old subscription if it differs
+    // from the newly created one. Do NOT blindly cancel all active subscriptions as this
+    // can interfere with concurrent checkout flows.
     if (!empty($user_data['stripe_subscription_id']) && $user_data['stripe_subscription_id'] !== $stripe_subscription_id) {
         $ch_del = curl_init("https://api.stripe.com/v1/subscriptions/" . $user_data['stripe_subscription_id']);
         curl_setopt($ch_del, CURLOPT_RETURNTRANSFER, true);
@@ -144,7 +220,9 @@ try {
         curl_close($ch_del);
     }
 
-    // ADVANCED REDUNDANCY CLEANUP: Scan Stripe Profile for any other lurking active layers to eliminate duplication
+    // SAFETY CHECK: Only cancel other active subscriptions if there are more than one active
+    // subscription for this customer AND the new subscription is confirmed active.
+    // This prevents race conditions during concurrent checkout attempts.
     if (!empty($user_data['stripe_customer_id'])) {
         $cust_id = $user_data['stripe_customer_id'];
         $ch_list = curl_init("https://api.stripe.com/v1/subscriptions?customer=" . $cust_id . "&status=active");
@@ -153,16 +231,28 @@ try {
         $sub_list = json_decode(curl_exec($ch_list), true);
         curl_close($ch_list);
 
-        if (isset($sub_list['data']) && is_array($sub_list['data'])) {
+        // Only cancel duplicates if there are genuinely multiple active subscriptions
+        // AND the newly created subscription is in the list
+        if (isset($sub_list['data']) && is_array($sub_list['data']) && count($sub_list['data']) > 1) {
+            $new_sub_found = false;
             foreach ($sub_list['data'] as $active_sub) {
-                $found_sub_id = $active_sub['id'];
-                if ($found_sub_id !== $stripe_subscription_id) {
-                    $ch_cleanup = curl_init("https://api.stripe.com/v1/subscriptions/" . $found_sub_id);
-                    curl_setopt($ch_cleanup, CURLOPT_RETURNTRANSFER, true);
-                    curl_setopt($ch_cleanup, CURLOPT_USERPWD, $api_key . ":");
-                    curl_setopt($ch_cleanup, CURLOPT_CUSTOMREQUEST, 'DELETE');
-                    curl_exec($ch_cleanup);
-                    curl_close($ch_cleanup);
+                if ($active_sub['id'] === $stripe_subscription_id) {
+                    $new_sub_found = true;
+                    break;
+                }
+            }
+            // Only clean up if the new subscription is confirmed active
+            if ($new_sub_found) {
+                foreach ($sub_list['data'] as $active_sub) {
+                    $found_sub_id = $active_sub['id'];
+                    if ($found_sub_id !== $stripe_subscription_id) {
+                        $ch_cleanup = curl_init("https://api.stripe.com/v1/subscriptions/" . $found_sub_id);
+                        curl_setopt($ch_cleanup, CURLOPT_RETURNTRANSFER, true);
+                        curl_setopt($ch_cleanup, CURLOPT_USERPWD, $api_key . ":");
+                        curl_setopt($ch_cleanup, CURLOPT_CUSTOMREQUEST, 'DELETE');
+                        curl_exec($ch_cleanup);
+                        curl_close($ch_cleanup);
+                    }
                 }
             }
         }

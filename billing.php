@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
 // 3. Fetch Data
 $cards = stripeCoreCall("payment_methods?customer=$customer_id&type=card", [], $api_key, 'GET');
-$setup = stripeCoreCall("setup_intents", ['customer' => $customer_id], $api_key, 'POST');
+$setup = stripeCoreCall("setup_intents", ['customer' => $customer_id, 'payment_method_options' => ['card' => ['request_three_d_secure' => 'automatic']]], $api_key, 'POST');
 $cust = stripeCoreCall("customers/$customer_id", [], $api_key, 'GET');
 $default_pm = $cust['invoice_settings']['default_payment_method'] ?? null;
 ?>
