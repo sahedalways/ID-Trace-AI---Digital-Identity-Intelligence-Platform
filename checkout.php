@@ -383,7 +383,7 @@ $billing_cycle_text = $billing_intervals[$plan['name']] ?? 'every ' . $plan['val
                 <div class="border border-gray-200 rounded-2xl p-4 bg-white shadow-sm space-y-4">
                     <div class="space-y-1">
                         <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Cardholder Name *</label>
-                        <input type="text" id="cardholder_name" required class="form-input" placeholder="Name on card" value="" autocomplete="off">
+                        <input type="text" id="cardholder_name" required class="form-input" placeholder="Name on card" value="<?php echo htmlspecialchars($saved_name); ?>" autocomplete="off">
                     </div>
                     <div class="space-y-1">
                         <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Country Jurisdiction *</label>
@@ -422,7 +422,7 @@ $billing_cycle_text = $billing_intervals[$plan['name']] ?? 'every ' . $plan['val
                         <a href="privacy" class="underline text-[#0072bc] hover:text-[#005ea3] transition">Privacy Policy</a>.
                     </span>
                 </label>
-                <button type="submit" id="submitPaymentBtn" class="w-full bg-[#0072bc] hover:bg-[#005ea3] text-white py-4 px-4 rounded-xl text-[15px] font-bold transition shadow-sm flex items-center justify-center gap-2 cursor-pointer">
+                <button type="submit" id="submitPaymentBtn" class="w-full bg-[#0072bc] hover:bg-[#005ea3] text-white py-4 px-4 rounded-xl text-[15px] font-bold transition shadow-sm flex items-center justify-center gap-2 cursor-pointer hidden">
                     <span id="btnText">Complete Checkout</span>
                 </button>
                 <div class="flex items-center justify-center gap-1.5 text-xs font-semibold text-gray-500">

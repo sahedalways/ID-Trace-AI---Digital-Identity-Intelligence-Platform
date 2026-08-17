@@ -21,11 +21,15 @@
             </button>
         </div>
 
-        <div id="cardElementsFieldsBlock" class="space-y-4 pt-1 relative" style="min-height: 120px;">
+        <div id="cardElementsFieldsBlock" class="space-y-4 pt-1 relative" style="min-height: 160px;">
             <div id="stripeLoadingIndicator" class="absolute inset-0 flex items-center justify-center bg-white/80 rounded-xl z-10">
                 <div class="flex items-center gap-2 text-sm text-gray-400 font-medium">
                     <i class="fa-solid fa-spinner animate-spin"></i> Loading card form...
                 </div>
+            </div>
+            <div class="space-y-1">
+                <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Cardholder Name</label>
+                <input type="text" id="step3_cardholder_name" class="w-full border border-gray-200 rounded-xl bg-white px-4 py-3.5 text-sm font-semibold text-gray-900 focus:outline-none focus:border-[#0072bc] focus:ring-1 focus:ring-[#0072bc] transition-all duration-200" placeholder="Name on card" value="<?php echo htmlspecialchars($saved_name); ?>" autocomplete="off">
             </div>
             <div class="space-y-1">
                 <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">Card Number</label>
@@ -39,7 +43,7 @@
                     <div id="stripeCardExpiryTarget" class="stripe-container-input"></div>
                 </div>
                 <div class="space-y-1">
-                    <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">CVC</label>
+                    <label class="text-[11px] font-bold text-gray-400 uppercase tracking-wide">CVV / CVC</label>
                     <div id="stripeCardCvcTarget" class="stripe-container-input"></div>
                 </div>
             </div>
@@ -79,8 +83,21 @@
         const expressButtonBlock = document.getElementById('stripePaymentRequestExpressTarget');
         const cardNumberWrapper = document.getElementById('stripeCardNumberWrapper');
 
+        const step2Name = document.getElementById('cardholder_name');
+        const step3Name = document.getElementById('step3_cardholder_name');
+
         let currentPaymentMethodMode = 'card';
         let stripeReady = false;
+
+        if (step2Name && step3Name) {
+            step2Name.addEventListener('input', function() {
+                step3Name.value = this.value;
+            });
+            step3Name.addEventListener('input', function() {
+                step2Name.value = this.value;
+            });
+            if (step2Name.value) step3Name.value = step2Name.value;
+        }
 
         function activateCardTab() {
             currentPaymentMethodMode = 'card';
@@ -119,21 +136,44 @@
         walletTab.addEventListener('click', activateWalletTab);
 
         function validateBillingDetailsFormBlock() {
-            const requiredFieldIds = ['cardholder_name', 'billing_country', 'billing_street', 'billing_zip'];
-            errorConsole.textContent = '';
-            for (let fieldId of requiredFieldIds) {
-                const inputElement = document.getElementById(fieldId);
-                if (!inputElement || !inputElement.value.trim()) {
-                    errorConsole.textContent = "Please fill out all billing details (name, country, address, ZIP) in Step 2 before selecting this payment option.";
-                    if (inputElement) {
-                        inputElement.focus();
-                        inputElement.classList.add('border-red-400');
-                        setTimeout(() => inputElement.classList.remove('border-red-400'), 3000);
+            const step3NameVal = step3Name ? step3Name.value.trim() : '';
+            const step2NameVal = step2Name ? step2Name.value.trim() : '';
+            const nameVal = step3NameVal || step2NameVal;
+            
+            const requiredFields = [
+                { id: 'billing_country', el: document.getElementById('billing_country') },
+                { id: 'billing_street', el: document.getElementById('billing_street') },
+                { id: 'billing_zip', el: document.getElementById('billing_zip') }
+            ];
+
+            if (!nameVal) {
+                errorConsole.textContent = "Please enter the cardholder name in Step 2 or Step 3.";
+                if (step3Name) {
+                    step3Name.focus();
+                    step3Name.classList.add('border-red-400');
+                    setTimeout(() => step3Name.classList.remove('border-red-400'), 3000);
+                }
+                return false;
+            }
+
+            for (let field of requiredFields) {
+                if (!field.el || !field.el.value.trim()) {
+                    errorConsole.textContent = "Please fill out all billing details (country, address, ZIP) in Step 2 before selecting this payment option.";
+                    if (field.el) {
+                        field.el.focus();
+                        field.el.classList.add('border-red-400');
+                        setTimeout(() => field.el.classList.remove('border-red-400'), 3000);
                     }
                     return false;
                 }
             }
             return true;
+        }
+
+        function getCardholderName() {
+            const step3Val = step3Name ? step3Name.value.trim() : '';
+            const step2Val = step2Name ? step2Name.value.trim() : '';
+            return step3Val || step2Val;
         }
 
         function acceptTermsValidation() {
@@ -306,7 +346,7 @@
                     return;
                 }
 
-                const cardName = document.getElementById('cardholder_name').value;
+                const cardName = getCardholderName();
                 const country = document.getElementById('billing_country').value;
                 const street = document.getElementById('billing_street').value;
                 const zip = document.getElementById('billing_zip').value;
@@ -365,7 +405,7 @@
             submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
             btnText.innerHTML = '<i class="fa-solid fa-spinner animate-spin mr-1"></i> Authorizing transaction...';
 
-            const cardName = document.getElementById('cardholder_name').value;
+            const cardName = getCardholderName();
             const country = document.getElementById('billing_country').value;
             const street = document.getElementById('billing_street').value;
             const zip = document.getElementById('billing_zip').value;
